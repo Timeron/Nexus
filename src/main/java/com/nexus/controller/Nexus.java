@@ -5,18 +5,19 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 	@Controller
 	@RequestMapping("/")
 	public class Nexus {
 		
 		@RequestMapping(value="/", method = RequestMethod.GET)
-		public String HomePage(ModelMap model) {
+		public ModelAndView HomePage(ModelMap model) {
 	 
 			model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
 	 
 			//Spring uses InternalResourceViewResolver and return back index.jsp
-			return "index";
+			return new ModelAndView("/index", "user", new Object());
 	 
 		}
 		
@@ -26,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 			model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
 	 
 			//Spring uses InternalResourceViewResolver and return back index.jsp
-			return "test";
+			return "asd";
 	 
 		}
 	 
