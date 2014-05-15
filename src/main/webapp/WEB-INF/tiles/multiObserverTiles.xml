@@ -1,0 +1,30 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="multiObserverBase" template="/WEB-INF/tiles/templates/multiObserverTemplate.jsp">
+		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
+		<put-attribute name="logInHeader" value="/WEB-INF/tiles/index/logInHeader.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
+	</definition>
+
+	<definition name="multiObserver" extends="multiObserverBase">
+		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserver.jsp" />
+	</definition>
+
+	<definition name="multiObserverAdmin" extends="multiObserverBase">
+		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserverAdmin.jsp" />
+	</definition>
+
+	<definition name="multiObserverAdminAddLinks" extends="multiObserverBase">
+		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserverAdminAddLinks.jsp" />
+	</definition>
+
+	<definition name="multiObserverChangeResult" extends="multiObserverBase">
+		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserverChangeResult.jsp" />
+	</definition>
+</tiles-definitions>

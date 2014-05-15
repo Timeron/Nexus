@@ -1,0 +1,21 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+
+	<definition name="base" template="/WEB-INF/tiles/templates/template.jsp">
+		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
+		<put-attribute name="logInHeader" value="/WEB-INF/tiles/index/logInHeader.jsp" />
+		<put-attribute name="header" value="/WEB-INF/tiles/index/header.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
+	</definition>
+
+	<definition name="nexusBase" extends="base">
+		<put-attribute name="header" value="/WEB-INF/tiles/nexus/header.jsp" />
+	</definition>
+
+	<definition name="nexus_home" extends="nexusBase">
+		<put-attribute name="title" value="Nexus" />
+		<put-attribute name="body" value="/WEB-INF/tiles/nexus/body.jsp" />
+	</definition>
+
+</tiles-definitions>

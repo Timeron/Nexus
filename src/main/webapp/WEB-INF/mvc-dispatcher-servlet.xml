@@ -9,11 +9,11 @@
 
 	<context:component-scan base-package="com.nexus.controller" />
 
-<!-- 	<bean -->
-<!-- 		class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
-<!-- 		<property name="prefix" value="/WEB-INF/nexusPages/" /> -->
-<!-- 		<property name="suffix" value=".jsp" /> -->
-<!-- 	</bean> -->
+	<!-- <bean -->
+	<!-- class="org.springframework.web.servlet.view.InternalResourceViewResolver"> -->
+	<!-- <property name="prefix" value="/WEB-INF/nexusPages/" /> -->
+	<!-- <property name="suffix" value=".jsp" /> -->
+	<!-- </bean> -->
 
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<!--Don't add suffix or prefix like you do with .jsp files -->
@@ -24,7 +24,10 @@
 	<bean id="tilesConfigurer"
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
-			<value>/WEB-INF/tiles.xml</value>
+			<list>
+				<value>/WEB-INF/tiles/nexusTiles.xml</value>
+				<value>/WEB-INF/tiles/multiObserverTiles.xml</value>
+			</list>
 		</property>
 	</bean>
 
