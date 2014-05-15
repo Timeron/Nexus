@@ -17,7 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 			model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
 	 
 			//Spring uses InternalResourceViewResolver and return back index.jsp
-			return new ModelAndView("/index", "user", new Object());
+			return new ModelAndView("index");
 	 
 		}
 		

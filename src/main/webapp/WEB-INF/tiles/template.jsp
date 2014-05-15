@@ -3,6 +3,7 @@
 
 <html>
     <head>
+    	<tiles:getAsString name="title" />
         <tiles:insertAttribute name="meta" />
     </head>
     <body>
