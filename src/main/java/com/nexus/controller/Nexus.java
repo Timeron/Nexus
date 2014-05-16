@@ -14,30 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 		@RequestMapping(value="/", method = RequestMethod.GET)
 		public ModelAndView HomePage(ModelMap model) {
 	 
-			model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
-	 
-			//Spring uses InternalResourceViewResolver and return back index.jsp
 			return new ModelAndView("nexus_home");
 	 
 		}
-		
-		@RequestMapping(value="test", method = RequestMethod.GET)
-		public String welcome(ModelMap model) {
-	 
-			model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
-	 
-			//Spring uses InternalResourceViewResolver and return back index.jsp
-			return "asd";
-	 
-		}
-	 
-		@RequestMapping(value="/welcome/{name}", method = RequestMethod.GET)
-		public String welcomeName(@PathVariable String name, ModelMap model) {
-	 
-			model.addAttribute("message", "Maven Web Project + Spring 3 MVC - " + name);
-			return "index";
-	 
-		}
-
-	
 }
