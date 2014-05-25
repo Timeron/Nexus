@@ -5,20 +5,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class NexusUser {
+public class NexusUserApplication {
 
 	@Id
 	@GeneratedValue
+	private Integer userApplicationId;
 	private Integer userId;
-
-	public Integer getId() {
-		return userId;
-	}
-
-	public void setId(Integer userId) {
-		this.userId = userId;
-	}
-	
+	private Integer applicationId;
 	
 	
 	
