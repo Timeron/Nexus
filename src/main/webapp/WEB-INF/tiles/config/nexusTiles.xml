@@ -17,5 +17,7 @@
 		<put-attribute name="title" value="Nexus" />
 		<put-attribute name="body" value="/WEB-INF/tiles/nexus/body.jsp" />
 	</definition>
+	
+
 
 </tiles-definitions>

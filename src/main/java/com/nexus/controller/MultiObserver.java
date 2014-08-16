@@ -1,14 +1,20 @@
 package com.nexus.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nexus.dao.DaoImp;
+
 @Controller
 @RequestMapping("/multiobserver")
 public class MultiObserver {
 
+	@Autowired
+	private DaoImp dao;
+	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String MultiObserverPage(ModelMap model) {
  
@@ -23,7 +29,7 @@ public class MultiObserver {
 	public String MultiObserverAdminPage(ModelMap model) {
  
 		model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
- 
+		dao.setUser();
 		//Spring uses InternalResourceViewResolver and return back index.jsp
 		return "multiObserverAdmin";
  

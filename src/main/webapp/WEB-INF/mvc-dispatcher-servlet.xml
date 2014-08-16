@@ -25,8 +25,9 @@
 		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
 		<property name="definitions">
 			<list>
-				<value>/WEB-INF/tiles/nexusTiles.xml</value>
-				<value>/WEB-INF/tiles/multiObserverTiles.xml</value>
+				<value>/WEB-INF/tiles/config/nexusTiles.xml</value>
+				<value>/WEB-INF/tiles/config/multiObserverTiles.xml</value>
+				<value>/WEB-INF/tiles/config/contactTiles.xml</value>
 			</list>
 		</property>
 	</bean>
@@ -36,29 +37,52 @@
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
 
-	<tx:annotation-driven transaction-manager="transactionManager" />
+	<!-- JDBC Data Source. -->
 
-	<jdbc:embedded-database type="HSQL" id="dataSource" />
+	<!-- skanowanie kontrolerów - bez tego nie działa mvc łapie też autowired 
+		dla dao -->
+	<context:component-scan base-package="com.nexus.controller" />
+	<!-- skanowanie dao w poszukiwaniu adnotacji autowired dla dao -->
+	<context:component-scan base-package="com.nexus.dao" />
 
-	<bean
-		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-		id="emf">
-		<property name="packagesToScan" value="com.nexus.dao.entity" />
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="jpaProperties">
+		<property name="packagesToScan" value="com.nexus.dao.entity" />
+		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 			</props>
 		</property>
-		<property name="persistenceProvider">
-			<bean class="org.hibernate.jpa.HibernatePersistenceProvider"></bean>
-		</property>
 	</bean>
 
-	<bean class="org.springframework.orm.jpa.JpaTransactionManager"
-		id="transactionManager">
-		<property name="dataSource" ref="dataSource" />
+	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/datatest" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
 	</bean>
 
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+
+
+
+
+	<!-- <tx:annotation-driven /> -->
+
+	<!-- Enable @Controller annotation support -->
+	<!-- <mvc:annotation-driven /> -->
+
+	<!-- jeśli chcesz mieć zmienne w osobnym pliku -->
+	<!-- <context:property-placeholder location="classpath:persistence-mysql.properties" 
+		/> -->
 </beans>
