@@ -201,4 +201,18 @@ public class NexusPerson {
 		this.createTimestamp = createTimestamp;
 	}
 
+	@Override
+	public String toString() {
+		return "NexusPerson [id=" + id + ", firstName=" + firstName
+				+ ", lastName=" + lastName + ", pseudo=" + pseudo + ", email="
+				+ email + ", city=" + city + ", country=" + country
+				+ ", address=" + address + ", phone1=" + phone1 + ", phone2="
+				+ phone2 + ", phone3=" + phone3 + ", description="
+				+ description + ", birthday=" + birthday + ", nameDay="
+				+ nameDay + ", updateTimestamp=" + updateTimestamp
+				+ ", createTimestamp=" + createTimestamp + "]";
+	}
+	
+	
+
 }

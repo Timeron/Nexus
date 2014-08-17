@@ -1,5 +1,6 @@
 package com.nexus.dao.Implementation;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,5 +32,15 @@ public class PersonDAO {
 
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
+	}
+
+	public NexusPerson searchPerson(NexusPerson person) {
+		NexusPerson nexusPerson = new NexusPerson();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery("FROM NexusPerson where firstName = 'Mi&#322;osz'");
+		nexusPerson = (NexusPerson) query.list().get(0);
+		return nexusPerson;
 	}
 }

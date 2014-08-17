@@ -18,10 +18,22 @@
 		<put-attribute name="title" value="Kontakty" />
 		<put-attribute name="body" value="/WEB-INF/tiles/contact/contact.jsp" />
 	</definition>
-	
+
 	<definition name="contactsNew" extends="contactBase">
 		<put-attribute name="title" value="Nowy Kontakty" />
-		<put-attribute name="body" value="/WEB-INF/tiles/contact/newContact.jsp" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/newContact.jsp" />
 	</definition>
-	
+
+	<definition name="searchContacts" extends="contactBase">
+		<put-attribute name="title" value="Nowy Kontakty" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/searchContact.jsp" />
+	</definition>
+
+	<definition name="searchContactsResoults" extends="contactBase">
+		<put-attribute name="title" value="Nowy Kontakty" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/searchContactResoults.jsp" />
+	</definition>
 </tiles-definitions>
