@@ -87,4 +87,5 @@
 	<!-- jeśli chcesz mieć zmienne w osobnym pliku -->
 	<!-- <context:property-placeholder location="classpath:persistence-mysql.properties" 
 		/> -->
+		
 </beans>
