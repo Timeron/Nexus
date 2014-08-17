@@ -1,6 +1,10 @@
 package com.nexus.dao;
 
-public class DAO {
+import org.hibernate.SessionFactory;
 
+public interface DAO {
+
+	public SessionFactory getSessionFactory();
+	public void setSessionFactory(SessionFactory sessionFactory);
 	
 }

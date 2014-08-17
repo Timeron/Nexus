@@ -35,7 +35,7 @@
 	<entity>
 		<entity-name>com.nexus.dao.entity.NexusPerson</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>388</entity-height>
+		<entity-height>408</entity-height>
 		<entity-X-Coordinate>20</entity-X-Coordinate>
 		<entity-Y-Coordinate>-68</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>

@@ -28,10 +28,12 @@ public class NexusApplications {
 	
 	private boolean deployed;
 	
+	@GeneratedValue
 	@Column(name = "updat_timestamp")
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date updateTimestamp;
 	
+	@GeneratedValue
 	@Column(name = "timestamp")
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date createTimestamp;
@@ -40,7 +42,64 @@ public class NexusApplications {
 	@JoinColumn(name="user_id")
 	private NexusUser userId;
 	
+	/*
+	 * getters & setters
+	 */
 	
-	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getApplicationName() {
+		return applicationName;
+	}
+
+	public void setApplicationName(String applicationName) {
+		this.applicationName = applicationName;
+	}
+
+	public String getApplicationDescription() {
+		return applicationDescription;
+	}
+
+	public void setApplicationDescription(String applicationDescription) {
+		this.applicationDescription = applicationDescription;
+	}
+
+	public boolean isDeployed() {
+		return deployed;
+	}
+
+	public void setDeployed(boolean deployed) {
+		this.deployed = deployed;
+	}
+
+	public Date getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Date updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public Date getCreateTimestamp() {
+		return createTimestamp;
+	}
+
+	public void setCreateTimestamp(Date createTimestamp) {
+		this.createTimestamp = createTimestamp;
+	}
+
+	public NexusUser getUserId() {
+		return userId;
+	}
+
+	public void setUserId(NexusUser userId) {
+		this.userId = userId;
+	}
 	
 }

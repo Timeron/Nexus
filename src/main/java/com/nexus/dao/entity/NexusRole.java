@@ -24,10 +24,12 @@ public class NexusRole {
 	private String name;
 	private String description;
 	
+	@GeneratedValue
 	@Column(name = "updat_timestamp")
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date updateTimestamp;
 	
+	@GeneratedValue
 	@Column(name = "timestamp")
 	@Temporal (TemporalType.TIMESTAMP)
 	private Date createTimestamp;
@@ -35,4 +37,58 @@ public class NexusRole {
 	@ManyToOne
 	@JoinColumn(name="user_id")
 	private NexusUser userId;
+
+	/*
+	 * Getters & setters
+	 */
+	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Date getUpdateTimestamp() {
+		return updateTimestamp;
+	}
+
+	public void setUpdateTimestamp(Date updateTimestamp) {
+		this.updateTimestamp = updateTimestamp;
+	}
+
+	public Date getCreateTimestamp() {
+		return createTimestamp;
+	}
+
+	public void setCreateTimestamp(Date createTimestamp) {
+		this.createTimestamp = createTimestamp;
+	}
+
+	public NexusUser getUserId() {
+		return userId;
+	}
+
+	public void setUserId(NexusUser userId) {
+		this.userId = userId;
+	}
+	
+	
 }
