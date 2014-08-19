@@ -1,15 +1,20 @@
 package com.nexus.dao.Implementation;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.nexus.dao.DAO;
 import com.nexus.dao.entity.NexusPerson;
 
 @Repository
-public class PersonDAO {
+public class PersonDAO{
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -34,13 +39,18 @@ public class PersonDAO {
 		this.sessionFactory = sessionFactory;
 	}
 
-	public NexusPerson searchPerson(NexusPerson person) {
-		NexusPerson nexusPerson = new NexusPerson();
+	public List<NexusPerson> searchPerson(NexusPerson person) {
+		List <NexusPerson> nexusPersonList = new ArrayList<NexusPerson>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		Query query = session.createQuery("FROM NexusPerson where firstName = 'Mi&#322;osz'");
-		nexusPerson = (NexusPerson) query.list().get(0);
-		return nexusPerson;
+		Query query = session.createQuery("FROM NexusPerson where firstName like 'M%'");
+		nexusPersonList = (List<NexusPerson>) query.list();
+		if(nexusPersonList.size()>0){
+			return nexusPersonList;
+		}else{
+			List<NexusPerson> emptyList = Collections.emptyList();
+			return emptyList;
+		}
 	}
 }

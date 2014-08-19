@@ -1,5 +1,8 @@
 package com.nexus.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -49,9 +52,9 @@ public class Contacts {
 	
 	@RequestMapping(value="/searchContact", method = RequestMethod.POST)
 	public String SearchContactsResoultsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
-		NexusPerson searchedPerson = new NexusPerson();
-		searchedPerson = personDao.searchPerson(nexusPerson);
-		request.setAttribute("message", searchedPerson.toString());
+		List<NexusPerson> searchedPersonList = new ArrayList<NexusPerson>();
+		searchedPersonList = personDao.searchPerson(nexusPerson);
+		request.setAttribute("message", searchedPersonList);
 		return "searchContactsResoults";
 	}
 
