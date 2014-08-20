@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nexus.dao.DAO;
+import com.nexus.dao.Implementation.Interface.DaoHelper;
 import com.nexus.dao.entity.NexusPerson;
 
 @Repository
@@ -41,10 +42,13 @@ public class PersonDAO{
 
 	public List<NexusPerson> searchPerson(NexusPerson person) {
 		List <NexusPerson> nexusPersonList = new ArrayList<NexusPerson>();
+		
+		PersonDaoHelper personDaoHelper = new PersonDaoHelper();
+		
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		
-		Query query = session.createQuery("FROM NexusPerson where firstName like 'M%'");
+		Query query = session.createQuery(personDaoHelper.buildQuerySearchPerson(person));
 		nexusPersonList = (List<NexusPerson>) query.list();
 		if(nexusPersonList.size()>0){
 			return nexusPersonList;
