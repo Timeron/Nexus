@@ -77,7 +77,6 @@ public class PersonDaoHelper {
 			query += attribute.getKey()+" "+comparatorStr;
 		}
 		query += ";";
-		System.out.println(query);
 		return query;
 	}
 }

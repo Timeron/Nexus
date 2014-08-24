@@ -4,18 +4,23 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.nexus.controller.Nexus;
 import com.nexus.dao.DAO;
 import com.nexus.dao.Implementation.Interface.DaoHelper;
 import com.nexus.dao.entity.NexusPerson;
 
 @Repository
 public class PersonDAO{
+	
+	static Logger log = Logger.getLogger(
+			PersonDAO.class.getName());
 	
 	@Autowired
 	SessionFactory sessionFactory;
@@ -30,6 +35,7 @@ public class PersonDAO{
 		session.save(person);
 		session.getTransaction().commit();
 		session.close();
+		log.info("Person saved");
 	}
 	
 	public SessionFactory getSessionFactory() {

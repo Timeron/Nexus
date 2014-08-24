@@ -6,6 +6,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
@@ -20,6 +21,9 @@ import com.nexus.dao.entity.NexusPerson;
 @Controller
 @RequestMapping("/contacts")
 public class Contacts {
+	
+	static Logger log = Logger.getLogger(
+			Contacts.class.getName());
 	
 	@Autowired
 	PersonDAO personDao;
@@ -42,6 +46,7 @@ public class Contacts {
 	@RequestMapping(value="/newContact", method = RequestMethod.POST)
 	public String newContactsPagePost(ModelMap model, @ModelAttribute NexusPerson nexusPerson) {
 		personDao.savePerson(nexusPerson);
+		log.info("Person added: "+nexusPerson);
 		return "contactsNew";
 	}
 	
