@@ -1,10 +1,7 @@
 package com.nexus.dao;
 
-import javax.annotation.Resource;
-
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -15,10 +12,6 @@ public class DaoImp {
 
 	@Autowired
 	SessionFactory sessionFactory;
-
-	public int getUser(){
-		return 0;
-	}
 	
 	public void setUser(){
 		NexusUser user = new NexusUser();

@@ -11,9 +11,6 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.nexus.controller.Nexus;
-import com.nexus.dao.DAO;
-import com.nexus.dao.Implementation.Interface.DaoHelper;
 import com.nexus.dao.entity.NexusPerson;
 
 @Repository
@@ -24,10 +21,6 @@ public class PersonDAO{
 	
 	@Autowired
 	SessionFactory sessionFactory;
-
-	public int getPerson(){
-		return 0;
-	}
 	
 	public void savePerson(NexusPerson person){
 		Session session = sessionFactory.openSession();
@@ -46,6 +39,7 @@ public class PersonDAO{
 		this.sessionFactory = sessionFactory;
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<NexusPerson> searchPerson(NexusPerson person) {
 		List <NexusPerson> nexusPersonList = new ArrayList<NexusPerson>();
 		
@@ -56,7 +50,7 @@ public class PersonDAO{
 		
 		Query query = session.createQuery(personDaoHelper.buildQuerySearchPerson(person));
 		nexusPersonList = (List<NexusPerson>) query.list();
-		if(nexusPersonList.size()>0){
+		if(nexusPersonList.size() > 0){
 			return nexusPersonList;
 		}else{
 			List<NexusPerson> emptyList = Collections.emptyList();

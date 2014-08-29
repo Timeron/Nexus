@@ -10,6 +10,7 @@ import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name = "nexus_person")
@@ -69,6 +70,17 @@ public class NexusPerson {
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date createTimestamp;
 
+	@Transient
+	private String birthdayYear;
+	@Transient
+	private String birthdayMonth;
+	@Transient
+	private String birthdayDay;
+	@Transient
+	private String nameDayMonth;
+	@Transient
+	private String nameDayDay;
+	
 	/*
 	 * Getters & setters
 	 */
@@ -199,6 +211,46 @@ public class NexusPerson {
 
 	public void setCreateTimestamp(Date createTimestamp) {
 		this.createTimestamp = createTimestamp;
+	}
+
+	public String getBirthdayYear() {
+		return birthdayYear;
+	}
+
+	public void setBirthdayYear(String birthdayYear) {
+		this.birthdayYear = birthdayYear;
+	}
+
+	public String getBirthdayMonth() {
+		return birthdayMonth;
+	}
+
+	public void setBirthdayMonth(String birthdayMonth) {
+		this.birthdayMonth = birthdayMonth;
+	}
+
+	public String getBirthdayDay() {
+		return birthdayDay;
+	}
+
+	public void setBirthdayDay(String birthdayDay) {
+		this.birthdayDay = birthdayDay;
+	}
+
+	public String getNameDayMonth() {
+		return nameDayMonth;
+	}
+
+	public void setNameDayMonth(String nameDayMonth) {
+		this.nameDayMonth = nameDayMonth;
+	}
+
+	public String getNameDayDay() {
+		return nameDayDay;
+	}
+
+	public void setNameDayDay(String nameDayDay) {
+		this.nameDayDay = nameDayDay;
 	}
 
 	@Override
