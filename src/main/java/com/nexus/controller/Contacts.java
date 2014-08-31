@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -39,6 +42,7 @@ public class Contacts {
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String ContactsPage(ModelMap model) {
+		log.info("Open: contactsHome");
 		return "contactsHome";
 	}
 	
@@ -47,52 +51,104 @@ public class Contacts {
 		NexusPerson nexusPerson = new NexusPerson();
 		NexusCalendar nexusCalendar = new NexusCalendar();
 		model.addAttribute("person", nexusPerson);
-		model.addAttribute("years", nexusCalendar.getYears(150));
+		model.addAttribute("years", nexusCalendar.getYears(100));
 		model.addAttribute("months", nexusCalendar.getMonths());
 		model.addAttribute("days", nexusCalendar.getDays());
+		log.info("Open: contactsNew");
 		return "contactsNew";
 	}
 	
 	@RequestMapping(value="/newContact", method = RequestMethod.POST)
 	public String newContactsPagePost(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("person") NexusPerson nexusPerson) {
-		DateFormat formatter = new SimpleDateFormat("yyyy/MM/dd");
+		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy/MM/dd");
 		
-		String birthday = nexusPerson.getBirthdayYear()+"/"+nexusPerson.getBirthdayMonth()+"/"+nexusPerson.getBirthdayDay();
-		String nameDay = nexusPerson.getNameDayMonth()+"/"+nexusPerson.getNameDayDay();
+		String birthday = "";
+		String nameDay = "";
+		DateTime birthdayDate = null;
+		DateTime nameDayDate = null;
 		
-		Date birthdayDate = null;
-		try {
-			birthdayDate = formatter.parse(birthday);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		if(!nexusPerson.getBirthdayYear().equals("NONE") && !nexusPerson.getBirthdayMonth().equals("NONE") && !nexusPerson.getBirthdayDay().equals("NONE")){
+			birthday = nexusPerson.getBirthdayYear()+"/"+nexusPerson.getBirthdayMonth()+"/"+nexusPerson.getBirthdayDay();
+			birthdayDate = formatter.parseDateTime(birthday);
+			nexusPerson.setBirthday(birthdayDate.toDate());
 		}
-		Date nameDayDate = null;
-		try {
-			nameDayDate = formatter.parse(nameDay);
-		} catch (ParseException e) {
-			e.printStackTrace();
+		if(!nexusPerson.getNameDayMonth().equals("NONE") && !nexusPerson.getNameDayDay().equals("NONE")){
+			nameDay = "0001/"+nexusPerson.getNameDayMonth()+"/"+nexusPerson.getNameDayDay();
+			nameDayDate = formatter.parseDateTime(nameDay);
+			nexusPerson.setNameDay(nameDayDate.toDate());
 		}
-		
-		nexusPerson.setBirthday(birthdayDate);
-		nexusPerson.setNameDay(nameDayDate);
-		
+	
 		personDao.savePerson(nexusPerson);
 		
+		nexusPerson = new NexusPerson();
+		NexusCalendar nexusCalendar = new NexusCalendar();
+		model.addAttribute("person", nexusPerson);
+		model.addAttribute("years", nexusCalendar.getYears(100));
+		model.addAttribute("months", nexusCalendar.getMonths());
+		model.addAttribute("days", nexusCalendar.getDays());
+		
 		log.info("Person added: "+nexusPerson);
+		log.info("Open: contactsNew");
 		return "contactsNew";
 	}
 	
 	@RequestMapping(value="/searchContact", method = RequestMethod.GET)
 	public String SearchContactsPage(ModelMap model) {
+		log.info("Open: searchContacts");
 		return "searchContacts";
 	}
 	
 	@RequestMapping(value="/searchContact", method = RequestMethod.POST)
-	public String SearchContactsResoultsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
+	public String SearchContactsResultsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
 		List<NexusPerson> searchedPersonList = new ArrayList<NexusPerson>();
 		searchedPersonList = personDao.searchPerson(nexusPerson);
-		request.setAttribute("message", searchedPersonList);
-		return "searchContactsResoults";
+		
+		if(searchedPersonList.isEmpty()){
+			return "searchContactNoResults";
+		}else
+		if(searchedPersonList.size()>1){
+			request.setAttribute("personList", searchedPersonList);
+			return "searchContactResults";
+		}else
+		if(searchedPersonList.size()==1){
+			request.setAttribute("peronFound", searchedPersonList.get(0));
+			return "searchContactResult";
+		}else
+		return "searchContactErrorResult";
+	}
+	
+	@RequestMapping(value="/editContactSearch", method = RequestMethod.GET)
+	public String EditContactsPage(ModelMap model) {
+		return "editContactsSearch";
+	}
+	
+	@RequestMapping(value="/editContactSearch", method = RequestMethod.POST)
+	public String EditContactsResultsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
+		List<NexusPerson> searchedPersonList = new ArrayList<NexusPerson>();
+		searchedPersonList = personDao.searchPerson(nexusPerson);
+		
+		request.setAttribute("editMode", true);
+		
+		if(searchedPersonList.isEmpty()){
+			return "searchContactNoResults";
+		}else
+		if(searchedPersonList.size()>1){
+			request.setAttribute("personList", searchedPersonList);
+			return "searchContactResults";
+		}else
+		if(searchedPersonList.size()==1){
+			request.setAttribute("personFound", searchedPersonList.get(0));
+			return "editContactSearchResult";
+		}else
+		return "searchContactErrorResult";
+	}
+	
+	@RequestMapping(value="/editContactResult", method = RequestMethod.POST)
+	public String EditContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
+		System.out.println(nexusPerson);
+		personDao.updatePerson(nexusPerson);
+		
+		return "editContactResult";
 	}
 
 }

@@ -1,7 +1,9 @@
 <!DOCTYPE HTML>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
-
-<html>
+<!-- gwarant polskich znaków -->
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<html lang="pl">
 <head>
 <tiles:getAsString name="title" />
 <tiles:insertAttribute name="meta" />

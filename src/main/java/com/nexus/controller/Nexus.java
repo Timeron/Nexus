@@ -22,8 +22,8 @@ import com.nexus.dao.DaoImp;
 		
 		@RequestMapping(value="/", method = RequestMethod.GET)
 		public ModelAndView HomePage(ModelMap model) {
-			
-			return new ModelAndView("nexus_home");
+			log.info("Home page");
+			return new ModelAndView("nexusHome");
 	 
 		}
 }

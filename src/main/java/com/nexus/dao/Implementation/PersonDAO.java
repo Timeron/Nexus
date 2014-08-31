@@ -5,24 +5,25 @@ import java.util.Collections;
 import java.util.List;
 
 import org.apache.log4j.Logger;
+import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.nexus.dao.entity.NexusPerson;
 
 @Repository
-public class PersonDAO{
-	
-	static Logger log = Logger.getLogger(
-			PersonDAO.class.getName());
-	
+public class PersonDAO {
+
+	static Logger log = Logger.getLogger(PersonDAO.class.getName());
+
 	@Autowired
 	SessionFactory sessionFactory;
-	
-	public void savePerson(NexusPerson person){
+
+	public void savePerson(NexusPerson person) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
 		session.save(person);
@@ -30,7 +31,7 @@ public class PersonDAO{
 		session.close();
 		log.info("Person saved");
 	}
-	
+
 	public SessionFactory getSessionFactory() {
 		return sessionFactory;
 	}
@@ -40,21 +41,40 @@ public class PersonDAO{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<NexusPerson> searchPerson(NexusPerson person) {
-		List <NexusPerson> nexusPersonList = new ArrayList<NexusPerson>();
-		
+	public List<NexusPerson> searchPerson(NexusPerson nexusPerson) {
+		List<NexusPerson> nexusPersonList = new ArrayList<NexusPerson>();
+
 		PersonDaoHelper personDaoHelper = new PersonDaoHelper();
-		
+
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		
-		Query query = session.createQuery(personDaoHelper.buildQuerySearchPerson(person));
+
+		Query query = session.createQuery(personDaoHelper
+				.buildQuerySearchPerson(nexusPerson));
 		nexusPersonList = (List<NexusPerson>) query.list();
-		if(nexusPersonList.size() > 0){
+		session.close();
+		if (nexusPersonList.size() > 0) {
 			return nexusPersonList;
-		}else{
+		} else {
 			List<NexusPerson> emptyList = Collections.emptyList();
 			return emptyList;
+		}
+
+	}
+
+	public void updatePerson(NexusPerson nexusPerson) {
+		Session session = sessionFactory.openSession();
+		Transaction tx = null;
+		try {
+			tx = session.beginTransaction();
+			session.update(nexusPerson);
+			tx.commit();
+		} catch (HibernateException e) {
+			if (tx != null)
+				tx.rollback();
+			e.printStackTrace();
+		} finally {
+			session.close();
 		}
 	}
 }

@@ -12,6 +12,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.apache.velocity.runtime.directive.Parse;
+import org.hibernate.annotations.Type;
+import org.joda.time.DateTime;
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "nexus_person")
 public class NexusPerson {
@@ -217,36 +222,36 @@ public class NexusPerson {
 		return birthdayYear;
 	}
 
-	public void setBirthdayYear(String birthdayYear) {
-		this.birthdayYear = birthdayYear;
-	}
-
 	public String getBirthdayMonth() {
 		return birthdayMonth;
-	}
-
-	public void setBirthdayMonth(String birthdayMonth) {
-		this.birthdayMonth = birthdayMonth;
 	}
 
 	public String getBirthdayDay() {
 		return birthdayDay;
 	}
 
-	public void setBirthdayDay(String birthdayDay) {
-		this.birthdayDay = birthdayDay;
-	}
-
 	public String getNameDayMonth() {
 		return nameDayMonth;
 	}
 
-	public void setNameDayMonth(String nameDayMonth) {
-		this.nameDayMonth = nameDayMonth;
-	}
-
 	public String getNameDayDay() {
 		return nameDayDay;
+	}
+	
+	public void setBirthdayYear(String birthdayYear) {
+		this.birthdayYear = birthdayYear;
+	}
+
+	public void setBirthdayMonth(String birthdayMonth) {
+		this.birthdayMonth = birthdayMonth;
+	}
+
+	public void setBirthdayDay(String birthdayDay) {
+		this.birthdayDay = birthdayDay;
+	}
+
+	public void setNameDayMonth(String nameDayMonth) {
+		this.nameDayMonth = nameDayMonth;
 	}
 
 	public void setNameDayDay(String nameDayDay) {

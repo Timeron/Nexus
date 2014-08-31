@@ -13,7 +13,7 @@
 		<put-attribute name="header" value="/WEB-INF/tiles/nexus/header.jsp" />
 	</definition>
 
-	<definition name="nexus_home" extends="nexusBase">
+	<definition name="nexusHome" extends="nexusBase">
 		<put-attribute name="title" value="Nexus" />
 		<put-attribute name="body" value="/WEB-INF/tiles/nexus/body.jsp" />
 	</definition>

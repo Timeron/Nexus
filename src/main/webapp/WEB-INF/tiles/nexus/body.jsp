@@ -3,13 +3,13 @@
       <div class="row">
         <div class="col-md-4">
           <h2>Multi Observer</h2>
-          <p>Organizer zakup體. Bada ceny produkt體 z wybranych sklep體 internetowych.</p>
+          <p>Organizer zakup贸w. Bada ceny produkt贸w z wybranych sklep贸w internetowych.</p>
           <p><a class="btn btn-default" href="./multiobserver/" role="button">View details &raquo;</a></p>
         </div>
         <div class="col-md-4">
           <h2>Kontakty</h2>
-          <p>Lista kontakt體.</p>
-          <p><a class="btn btn-default" href="./contacts/" role="button">Otw髍z aplikacje &raquo;</a></p>
+          <p>Lista kontakt贸w.</p>
+          <p><a class="btn btn-default" href="./contacts/" role="button">Otw贸rz aplikacje &raquo;</a></p>
        </div>
         <div class="col-md-4">
           <h2>Heading</h2>

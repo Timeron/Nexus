@@ -2,11 +2,14 @@
 
 <tiles-definitions>
 
-	<definition name="contact" template="/WEB-INF/tiles/templates/template.jsp">
+	<definition name="contact"
+		template="/WEB-INF/tiles/templates/contactTemplate.jsp">
 		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
 		<put-attribute name="logInHeader"
 			value="/WEB-INF/tiles/index/logInHeader.jsp" />
 		<put-attribute name="header" value="/WEB-INF/tiles/index/header.jsp" />
+		<put-attribute name="menu"
+			value="/WEB-INF/tiles/contact/include/menu.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
 	</definition>
 
@@ -31,9 +34,45 @@
 			value="/WEB-INF/tiles/contact/searchContact.jsp" />
 	</definition>
 
-	<definition name="searchContactsResoults" extends="contactBase">
-		<put-attribute name="title" value="Nowy Kontakty" />
+	<definition name="searchContactResults" extends="contactBase">
+		<put-attribute name="title" value="Wynik wyszukiwania" />
 		<put-attribute name="body"
-			value="/WEB-INF/tiles/contact/searchContactResoults.jsp" />
+			value="/WEB-INF/tiles/contact/searchContactResults.jsp" />
 	</definition>
+
+	<definition name="searchContactResult" extends="contactBase">
+		<put-attribute name="title" value="Wynik wyszukiwania" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/searchContactResult.jsp" />
+	</definition>
+
+	<definition name="searchContactNoResults" extends="contactBase">
+		<put-attribute name="title" value="Wynik wyszukiwania" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/searchContactNoResults.jsp" />
+	</definition>
+
+	<definition name="searchContactErrorResult" extends="contactBase">
+		<put-attribute name="title" value="Wynik wyszukiwania" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/searchContactErrorResult.jsp" />
+	</definition>
+
+	<definition name="editContactsSearch" extends="searchContacts">
+		<put-attribute name="title" value="Edycja" />
+	</definition>
+
+	<definition name="editContactSearchResult" extends="contactBase">
+		<put-attribute name="title" value="Edycja" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/editContact.jsp" />
+	</definition>
+	
+	<definition name="editContactResult" extends="contactBase">
+		<put-attribute name="title" value="Wyedytowano" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/editContactResult.jsp" />
+	</definition>
+	
+	
 </tiles-definitions>

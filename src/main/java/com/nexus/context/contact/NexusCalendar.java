@@ -7,7 +7,7 @@ import java.util.TreeMap;
 public class NexusCalendar {
 
 	private Map<Integer, Integer> years;
-	private Map<String, String> months;
+	private Map<Integer, String> months;
 	private Map<Integer, Integer> days;
 	private static final int DAYSINMONTH = 31;
 	
@@ -19,20 +19,20 @@ public class NexusCalendar {
 		return years;
 	}
 	
-	public Map<String, String> getMonths() {
-		months = new TreeMap<String, String>();
-		months.put("Styczeń", "Styczeń");
-		months.put("Luty", "Luty");
-		months.put("Marzec", "Marzec");
-		months.put("Kwiecień", "Kwiecień");
-		months.put("Maj", "Maj");
-		months.put("Czerwiec", "Czerwiec");
-		months.put("Lipiec", "Lipiec");
-		months.put("Sierpień", "Sierpień");
-		months.put("Wrzesień", "Wrzesień");
-		months.put("Październik", "Październik");
-		months.put("Listopad", "Listopad");
-		months.put("Grudzień", "Grudzień");
+	public Map<Integer, String> getMonths() {
+		months = new TreeMap<Integer, String>();
+		months.put(1, "Styczeń");
+		months.put(2, "Luty");
+		months.put(3, "Marzec");
+		months.put(4, "Kwiecień");
+		months.put(5, "Maj");
+		months.put(6, "Czerwiec");
+		months.put(7, "Lipiec");
+		months.put(8, "Sierpień");
+		months.put(9, "Wrzesień");
+		months.put(10, "Październik");
+		months.put(11, "Listopad");
+		months.put(12, "Grudzień");
 		return months;
 	}
 	
