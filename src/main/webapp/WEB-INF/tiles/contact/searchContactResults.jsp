@@ -11,6 +11,7 @@
 			<th>Imię</th>
 			<th>Nazwisko</th>
 			<th>Pseudo</th>
+			<th>Action</th>
 		</tr>
 
 
@@ -22,6 +23,17 @@
 				<td>${name.firstName}</td>
 				<td>${name.lastName}</td>
 				<td>${name.pseudo}</td>
+				<c:choose>
+					<c:when test="${editMode}">
+						<td><a class="btn btn-primary btn-xs" role="button"
+							href="./editContact?id=${name.id}">Edytuj</a></td>
+					</c:when>
+					<c:otherwise>
+						<td><a class="btn btn-primary btn-xs" role="button"
+							href="./searchContact?id=${name.id}">Otwórz</a></td>
+					</c:otherwise>
+				</c:choose>
+
 			</tr>
 		</c:forEach>
 	</tbody>

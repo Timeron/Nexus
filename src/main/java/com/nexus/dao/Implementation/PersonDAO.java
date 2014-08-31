@@ -61,6 +61,15 @@ public class PersonDAO {
 		}
 
 	}
+	
+	public NexusPerson searchPerson(int id) {
+		NexusPerson nexusPerson = new NexusPerson();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		nexusPerson = (NexusPerson) session.get(NexusPerson.class, id);
+		session.close();
+		return nexusPerson;
+	}
 
 	public void updatePerson(NexusPerson nexusPerson) {
 		Session session = sessionFactory.openSession();

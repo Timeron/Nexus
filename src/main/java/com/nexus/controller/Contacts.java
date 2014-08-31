@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.apache.velocity.runtime.directive.Parse;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
@@ -93,9 +94,17 @@ public class Contacts {
 	}
 	
 	@RequestMapping(value="/searchContact", method = RequestMethod.GET)
-	public String SearchContactsPage(ModelMap model) {
+	public String SearchContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+		if(request.getParameter("id") != null){
+			int id = Integer.parseInt(request.getParameter("id"));
+			NexusPerson searchedPerson = new NexusPerson();
+			searchedPerson = personDao.searchPerson(id);
+			request.setAttribute("peronFound", searchedPerson);
+			return "searchContactResult";
+		}else{
 		log.info("Open: searchContacts");
-		return "searchContacts";
+			return "searchContacts";
+		}
 	}
 	
 	@RequestMapping(value="/searchContact", method = RequestMethod.POST)
@@ -118,7 +127,7 @@ public class Contacts {
 	}
 	
 	@RequestMapping(value="/editContactSearch", method = RequestMethod.GET)
-	public String EditContactsPage(ModelMap model) {
+	public String EditContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		return "editContactsSearch";
 	}
 	
@@ -145,9 +154,7 @@ public class Contacts {
 	
 	@RequestMapping(value="/editContactResult", method = RequestMethod.POST)
 	public String EditContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
-		System.out.println(nexusPerson);
 		personDao.updatePerson(nexusPerson);
-		
 		return "editContactResult";
 	}
 
