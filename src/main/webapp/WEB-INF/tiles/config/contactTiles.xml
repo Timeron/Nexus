@@ -74,5 +74,11 @@
 			value="/WEB-INF/tiles/contact/editContactResult.jsp" />
 	</definition>
 	
+	<definition name="showAllContacts" extends="contactBase">
+		<put-attribute name="title" value="Kontakty" />
+		<put-attribute name="body"
+			value="/WEB-INF/tiles/contact/searchContactNoResults.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>

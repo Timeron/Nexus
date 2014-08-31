@@ -101,4 +101,9 @@ public class PersonDaoHelper {
 		}
 		return query;
 	}
+
+	public String buildGetAllPerson() {
+		String query = "FROM NexusPerson";
+		return query;
+	}
 }

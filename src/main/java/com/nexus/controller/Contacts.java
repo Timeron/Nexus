@@ -145,7 +145,6 @@ public class Contacts {
 		}else{
 			return "editContactsSearch";
 		}
-		
 	}
 
 	@RequestMapping(value="/editContactSearch", method = RequestMethod.POST)
@@ -173,6 +172,13 @@ public class Contacts {
 	public String EditContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
 		personDao.updatePerson(nexusPerson);
 		return "editContactResult";
+	}
+	
+	@RequestMapping(value="/showAllContacts", method = RequestMethod.GET)
+	public String ShowAllContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+		List<NexusPerson> searchedPersonList = personDao.getAllContacts();
+		request.setAttribute("personList", searchedPersonList);
+		return "searchContactResults";
 	}
 
 }

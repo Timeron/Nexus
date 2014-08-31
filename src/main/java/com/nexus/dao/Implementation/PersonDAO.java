@@ -86,4 +86,25 @@ public class PersonDAO {
 			session.close();
 		}
 	}
+
+	public List<NexusPerson> getAllContacts() {
+		List<NexusPerson> nexusPersonList = new ArrayList<NexusPerson>();
+		PersonDaoHelper personDaoHelper = new PersonDaoHelper();
+		
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		Query query = session.createQuery(personDaoHelper
+				.buildGetAllPerson());
+		nexusPersonList = (List<NexusPerson>) query.list();
+		
+		session.close();
+		
+		if (nexusPersonList.size() > 0) {
+			return nexusPersonList;
+		} else {
+			List<NexusPerson> emptyList = Collections.emptyList();
+			return emptyList;
+		}
+	}
 }
