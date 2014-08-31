@@ -26,7 +26,7 @@
 				<c:choose>
 					<c:when test="${editMode}">
 						<td><a class="btn btn-primary btn-xs" role="button"
-							href="./editContact?id=${name.id}">Edytuj</a></td>
+							href="./editContactSearch?id=${name.id}">Edytuj</a></td>
 					</c:when>
 					<c:otherwise>
 						<td><a class="btn btn-primary btn-xs" role="button"

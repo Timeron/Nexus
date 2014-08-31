@@ -48,15 +48,23 @@ public class Contacts {
 	}
 	
 	@RequestMapping(value="/newContact", method = RequestMethod.GET)
-	public String newContactsPageGet(ModelMap model) {
-		NexusPerson nexusPerson = new NexusPerson();
-		NexusCalendar nexusCalendar = new NexusCalendar();
-		model.addAttribute("person", nexusPerson);
-		model.addAttribute("years", nexusCalendar.getYears(100));
-		model.addAttribute("months", nexusCalendar.getMonths());
-		model.addAttribute("days", nexusCalendar.getDays());
-		log.info("Open: contactsNew");
-		return "contactsNew";
+	public String newContactsPageGet(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
+		if(request.getParameter("id") != null){
+			int id = Integer.parseInt(request.getParameter("id"));
+			NexusPerson searchedPerson = new NexusPerson();
+			searchedPerson = personDao.searchPerson(id);
+			request.setAttribute("peronFound", searchedPerson);
+			return "searchContactResult";
+		}else{
+			NexusPerson nexusPerson = new NexusPerson();
+			NexusCalendar nexusCalendar = new NexusCalendar();
+			model.addAttribute("person", nexusPerson);
+			model.addAttribute("years", nexusCalendar.getYears(100));
+			model.addAttribute("months", nexusCalendar.getMonths());
+			model.addAttribute("days", nexusCalendar.getDays());
+			log.info("Open: contactsNew");
+			return "contactsNew";
+		}
 	}
 	
 	@RequestMapping(value="/newContact", method = RequestMethod.POST)
@@ -128,9 +136,18 @@ public class Contacts {
 	
 	@RequestMapping(value="/editContactSearch", method = RequestMethod.GET)
 	public String EditContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		return "editContactsSearch";
+		if(request.getParameter("id") != null){
+			int id = Integer.parseInt(request.getParameter("id"));
+			NexusPerson searchedPerson = new NexusPerson();
+			searchedPerson = personDao.searchPerson(id);
+			request.setAttribute("personFound", searchedPerson);
+			return "editContactSearchResult";
+		}else{
+			return "editContactsSearch";
+		}
+		
 	}
-	
+
 	@RequestMapping(value="/editContactSearch", method = RequestMethod.POST)
 	public String EditContactsResultsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
 		List<NexusPerson> searchedPersonList = new ArrayList<NexusPerson>();
