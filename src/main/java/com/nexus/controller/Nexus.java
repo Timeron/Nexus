@@ -17,9 +17,6 @@ import com.nexus.dao.DaoImp;
 		static Logger log = Logger.getLogger(
 				Nexus.class.getName());
 		
-		@Autowired
-		private DaoImp hib;
-		
 		@RequestMapping(value="/", method = RequestMethod.GET)
 		public ModelAndView HomePage(ModelMap model) {
 			log.info("Home page");

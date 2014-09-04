@@ -13,16 +13,14 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.nexus.dao.DaoImp;
 import com.nexus.dao.entity.NexusPerson;
 
 @Repository
-public class PersonDAO {
+public class PersonDAO extends DaoImp{
 
 	static Logger log = Logger.getLogger(PersonDAO.class.getName());
-
-	@Autowired
-	SessionFactory sessionFactory;
-
+	
 	public void savePerson(NexusPerson person) {
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
@@ -30,14 +28,6 @@ public class PersonDAO {
 		session.getTransaction().commit();
 		session.close();
 		log.info("Person saved");
-	}
-
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
-	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
 	}
 
 	@SuppressWarnings("unchecked")

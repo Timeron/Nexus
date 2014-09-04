@@ -5,5 +5,11 @@
 		<class>com.nexus.dao.entity.NexusPerson</class>
 		<class>com.nexus.dao.entity.NexusRole</class>
 		<class>com.nexus.dao.entity.NexusUser</class>
+		<class>com.nexus.dao.entity.ObservedLinksPackage</class>
+		<class>com.nexus.dao.entity.ObservedObject</class>
+		<class>com.nexus.dao.entity.ObservedSite</class>
+		<class>com.nexus.dao.entity.ObservedSiteHistory</class>
+		<class>com.nexus.dao.entity.Site</class>
+		<class>com.nexus.dao.entity.SiteType</class>
 	</persistence-unit>
 </persistence>
