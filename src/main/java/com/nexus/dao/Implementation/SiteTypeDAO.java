@@ -14,36 +14,35 @@ import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
 
 @Repository
-public class SiteDAO extends DaoImp{
+public class SiteTypeDAO extends DaoImp{
+
+	static Logger log = Logger.getLogger(SiteTypeDAO.class.getName());
 	
-	static Logger log = Logger.getLogger(SiteDAO.class.getName());
-	
-	public void saveSite(Site site){
+	public void saveSiteType(SiteType siteType){
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		session.save(site);
+		session.save(siteType);
 		session.getTransaction().commit();
 		session.close();
 		log.info("Site saved");
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public List<Site> getAllSites() {
-		List<Site> sites = new ArrayList<Site>();
+	public List<SiteType> getAllSiteTypes() {
+		List<SiteType> siteTypes = new ArrayList<SiteType>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
-		String hql = "FROM Site";
-		
+		String hql = "FROM SiteType";
 		
 		Query query = session.createQuery(hql);
-		sites = (List<Site>) query.list();
+		siteTypes = (List<SiteType>) query.list();
 		
 		session.close();
 		
-		if (sites.size() > 0) {
-			return sites;
+		if (siteTypes.size() > 0) {
+			return siteTypes;
 		} else {
-			List<Site> emptyList = Collections.emptyList();
+			List<SiteType> emptyList = Collections.emptyList();
 			return emptyList;
 		}
 	}

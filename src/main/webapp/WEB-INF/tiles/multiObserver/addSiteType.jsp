@@ -6,20 +6,11 @@
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
-		<form:form commandName="site" action="addLinkPackageToSite">
+		<form:form commandName="siteType" action="addSiteTypeResult">
 			<div class="form-group">
-				<label for="imie">Nazwa</label>
-				<form:input type="text" class="form-control" path="name"
-					placeholder="Nazwa" />
-			</div>
-			<div class="form-group">
-				<label for="nazwisko">Url</label>
-				<form:input type="text" cssClass="form-control" path="url"
-					placeholder="Url" />
-			</div>
-			<div class="form-group">
-				<form:checkbox path="valid" placeholder="false" />
-				aktywna
+				<label for="opis">Opis</label>
+				<form:input type="text" class="form-control" path="description"
+					placeholder="Opis" />
 			</div>
 			<div class="form-group, col-md-12">
 				<a href="./" class="btn btn-default">Cofnij</a>

@@ -16,7 +16,7 @@ public class ObservedLinksPackage {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	private String name;
 	private String url;
 	
@@ -31,11 +31,11 @@ public class ObservedLinksPackage {
 	@JoinColumn(name="site_type_id")
 	private SiteType siteType;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -77,6 +77,13 @@ public class ObservedLinksPackage {
 
 	public void setSiteType(SiteType siteType) {
 		this.siteType = siteType;
+	}
+
+	@Override
+	public String toString() {
+		return "ObservedLinksPackage [id=" + id + ", name=" + name + ", url="
+				+ url + ", site=" + site + ", observedSite=" + observedSite
+				+ ", siteType=" + siteType + "]";
 	}
 	
 	

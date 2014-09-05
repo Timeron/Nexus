@@ -1,5 +1,6 @@
 package com.nexus.controller.multiObserver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,8 +17,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.nexus.dao.DaoImp;
 import com.nexus.dao.Implementation.PersonDAO;
 import com.nexus.dao.Implementation.SiteDAO;
+import com.nexus.dao.Implementation.SiteTypeDAO;
 import com.nexus.dao.entity.NexusPerson;
+import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.Site;
+import com.nexus.dao.entity.SiteType;
 
 @Controller
 @RequestMapping("/multiobserver")
@@ -28,11 +32,8 @@ public class MultiObserver {
 	
 	@Autowired
 	SiteDAO siteDAO;
-	
-	@ModelAttribute("site")
-	private Site counstruct(){
-		return new Site();
-	}
+	@Autowired
+	SiteTypeDAO siteTypeDAO;
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String MultiObserverPage(ModelMap model) {
@@ -91,33 +92,55 @@ public class MultiObserver {
 	
 	
 	@RequestMapping(value="/admin/addSite", method = RequestMethod.GET)
-	public String AddSite(ModelMap model) {
+	public String AddSite(ModelMap model , HttpServletRequest request, HttpServletResponse response) {
 		
-		//model.addAttribute("site", "");
- 
-		//Spring uses InternalResourceViewResolver and return back index.jsp
+		Site site =  new Site();
+		model.addAttribute("site", site);
+		
 		return "addSite";
  
 	}
 	
-	@RequestMapping(value="/admin/addSite", method = RequestMethod.POST)
-	public String AddSite(ModelMap model, @ModelAttribute Site site) {
+	@RequestMapping(value="/admin/addLinkPackageToSite", method = RequestMethod.POST)
+	public String AddSite(ModelMap model, @ModelAttribute("site") Site site) {
 		
+		List<SiteType> siteTypes = new ArrayList<SiteType>();
+		siteTypes = siteTypeDAO.getAllSiteTypes();
+		
+		ObservedLinksPackage observedLinksPackage = new ObservedLinksPackage();
+		
+		model.addAttribute("siteTypes", siteTypes);
+		model.addAttribute("observedLinksPackage", observedLinksPackage);
+		model.addAttribute("siteTemp", site);
+ 
+		return "addLinkPackageToSite";
+	}
 	
-		model.addAttribute("site", site);
+	@RequestMapping(value="/admin/addLinkPackageToSiteResult", method = RequestMethod.POST)
+	public String AddLinkPackageToSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site) {
+		log.info("Dodajemy Stronę");
+		//model.addAttribute("observedLinksPackage", observedLinksPackage);
+		model.addAttribute("siteId", site);
 		siteDAO.saveSite(site);
  
 		//Spring uses InternalResourceViewResolver and return back index.jsp
-		return "addSiteResult";
+		return "addLinkPackageToSiteResult";
 	}
 	
-	@RequestMapping(value="/admin/addLinkPackageToSite", method = RequestMethod.GET)
-	public String AddLinkPackageToSite(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute Site site) {
-		
-		String siteId = request.getParameter("siteId");
-		model.addAttribute("siteId", siteId);
- 
-		//Spring uses InternalResourceViewResolver and return back index.jsp
-		return "addLinkPackageToSite";
+	@RequestMapping(value="/admin/addSiteType", method = RequestMethod.GET)
+	public String AddSiteType(ModelMap model) {
+		SiteType siteType = new SiteType();
+		model.addAttribute("siteType", siteType);
+		return "addSiteType";
 	}
+	
+	@RequestMapping(value="/admin/addSiteTypeResult", method = RequestMethod.POST)
+	public String AddSiteTypeResult(ModelMap model, @ModelAttribute("siteType") SiteType siteType) {
+		
+		model.addAttribute("siteType", siteType);
+		siteTypeDAO.saveSiteType(siteType);
+		
+		return "addSiteTypeResult";
+	}
+	
 }

@@ -18,12 +18,12 @@ public class ObservedSite {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	@Column(name="article_name")
 	private String articleName;
 	private String url;
 	@Column(name="hash_url")
-	private int hashUrl;
+	private Integer hashUrl;
 	private Date timestamp;
 	
 	@OneToMany(mappedBy="observedSite")
@@ -37,11 +37,11 @@ public class ObservedSite {
 	@JoinColumn(name="observed_object_id")
 	private ObservedObject observedObject;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -61,11 +61,11 @@ public class ObservedSite {
 		this.url = url;
 	}
 
-	public int getHashUrl() {
+	public Integer getHashUrl() {
 		return hashUrl;
 	}
 
-	public void setHashUrl(int hashUrl) {
+	public void setHashUrl(Integer hashUrl) {
 		this.hashUrl = hashUrl;
 	}
 
@@ -99,6 +99,15 @@ public class ObservedSite {
 
 	public void setObservedObject(ObservedObject observedObject) {
 		this.observedObject = observedObject;
+	}
+
+	@Override
+	public String toString() {
+		return "ObservedSite [id=" + id + ", articleName=" + articleName
+				+ ", url=" + url + ", hashUrl=" + hashUrl + ", timestamp="
+				+ timestamp + ", observedSiteHistory=" + observedSiteHistory
+				+ ", observedLinksPackage=" + observedLinksPackage
+				+ ", observedObject=" + observedObject + "]";
 	}
 
 	

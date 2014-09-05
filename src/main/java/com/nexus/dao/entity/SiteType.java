@@ -14,26 +14,26 @@ public class SiteType {
 
 	@Id
 	@GeneratedValue
-	private int id;
-	private String descriptioon;
+	private Integer id;
+	private String description;
 	
 	@OneToMany(mappedBy="siteType")
 	private List<ObservedLinksPackage> observedLinksPackage;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
-	public String getDescriptioon() {
-		return descriptioon;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDescriptioon(String descriptioon) {
-		this.descriptioon = descriptioon;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public List<ObservedLinksPackage> getObservedLinksPackage() {
@@ -44,6 +44,13 @@ public class SiteType {
 			List<ObservedLinksPackage> observedLinksPackage) {
 		this.observedLinksPackage = observedLinksPackage;
 	}
+
+	@Override
+	public String toString() {
+		return description;
+	}
+
+
 
 
 	

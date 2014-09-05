@@ -17,18 +17,18 @@ public class ObservedObject {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	private String name;
 	private Date timestamp;
 	
 	@OneToMany(mappedBy="observedObject")
 	private List<ObservedSite> observedSite;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -55,5 +55,13 @@ public class ObservedObject {
 	public void setObservedSite(List<ObservedSite> observedSite) {
 		this.observedSite = observedSite;
 	}
+
+	@Override
+	public String toString() {
+		return "ObservedObject [id=" + id + ", name=" + name + ", timestamp="
+				+ timestamp + ", observedSite=" + observedSite + "]";
+	}
+	
+	
 	
 }

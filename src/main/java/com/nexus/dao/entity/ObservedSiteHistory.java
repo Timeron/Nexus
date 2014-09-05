@@ -18,7 +18,7 @@ public class ObservedSiteHistory {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	private float price;
 	@Column(name = "promotion_price")
 	private float promotionPrice;
@@ -31,11 +31,11 @@ public class ObservedSiteHistory {
 	@JoinColumn(name="observed_site_id")
 	private ObservedSite observedSite;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -78,6 +78,15 @@ public class ObservedSiteHistory {
 	public void setObservedSite(ObservedSite observedSite) {
 		this.observedSite = observedSite;
 	}
+
+	@Override
+	public String toString() {
+		return "ObservedSiteHistory [id=" + id + ", price=" + price
+				+ ", promotionPrice=" + promotionPrice + ", oldPrice="
+				+ oldPrice + ", timestamp=" + timestamp + ", observedSite="
+				+ observedSite + "]";
+	}
+	
 	
 	
 }

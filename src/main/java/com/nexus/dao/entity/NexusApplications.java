@@ -18,7 +18,7 @@ public class NexusApplications {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 
 	@Column(name="application_name", length = 30)
 	private String applicationName;
@@ -46,11 +46,11 @@ public class NexusApplications {
 	 * getters & setters
 	 */
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -18,7 +18,7 @@ public class NexusRole {
 
 	@Id
 	@GeneratedValue
-	private int id;
+	private Integer id;
 	
 	@Column(length = 30)
 	private String name;
@@ -42,11 +42,11 @@ public class NexusRole {
 	 * Getters & setters
 	 */
 	
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
