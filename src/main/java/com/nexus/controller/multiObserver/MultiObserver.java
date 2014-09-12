@@ -14,11 +14,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.nexus.dao.DaoImp;
-import com.nexus.dao.Implementation.PersonDAO;
 import com.nexus.dao.Implementation.SiteDAO;
 import com.nexus.dao.Implementation.SiteTypeDAO;
-import com.nexus.dao.entity.NexusPerson;
 import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
@@ -119,11 +116,9 @@ public class MultiObserver {
 	@RequestMapping(value="/admin/addLinkPackageToSiteResult", method = RequestMethod.POST)
 	public String AddLinkPackageToSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site) {
 		log.info("Dodajemy Stronę");
-		//model.addAttribute("observedLinksPackage", observedLinksPackage);
-		model.addAttribute("siteId", site);
+		
 		siteDAO.saveSite(site);
- 
-		//Spring uses InternalResourceViewResolver and return back index.jsp
+		
 		return "addLinkPackageToSiteResult";
 	}
 	

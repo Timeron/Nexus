@@ -46,5 +46,20 @@ public class SiteTypeDAO extends DaoImp{
 			return emptyList;
 		}
 	}
+
+	@SuppressWarnings("unchecked")
+	public SiteType getByDescription(String description) {
+		List<SiteType> siteType = new ArrayList<SiteType>();
+		
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		
+		String hql = "FROM SiteType WHERE description = '"+description+"'";
+		
+		Query query = session.createQuery(hql);
+		siteType = (List<SiteType>) query.list();
+		session.close();
+		return siteType.get(0);
+	}
 	
 }

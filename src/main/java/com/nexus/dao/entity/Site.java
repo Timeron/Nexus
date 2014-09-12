@@ -3,6 +3,7 @@ package com.nexus.dao.entity;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -20,7 +21,7 @@ public class Site {
 	private String url;
 	private boolean valid;
 	private Date timestamp;
-	
+
 	@OneToMany(mappedBy="site")
 	private List<ObservedLinksPackage> observedLinksPackage;
 
