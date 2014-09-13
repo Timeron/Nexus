@@ -1,21 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
-		<entity-name>com.nexus.dao.entity.NexusPerson</entity-name>
+		<entity-name>com.nexus.dao.entity.ProductCategory</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>488</entity-height>
-		<entity-X-Coordinate>10</entity-X-Coordinate>
-		<entity-Y-Coordinate>163</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.NexusRole</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
-		<entity-X-Coordinate>165</entity-X-Coordinate>
-		<entity-Y-Coordinate>327</entity-Y-Coordinate>
+		<entity-height>146</entity-height>
+		<entity-X-Coordinate>586</entity-X-Coordinate>
+		<entity-Y-Coordinate>-200</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -27,39 +16,6 @@
 		<entity-height>226</entity-height>
 		<entity-X-Coordinate>403</entity-X-Coordinate>
 		<entity-Y-Coordinate>-26</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.NexusUser</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>148</entity-height>
-		<entity-X-Coordinate>165</entity-X-Coordinate>
-		<entity-Y-Coordinate>13</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.ObservedLinksPackage</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
-		<entity-X-Coordinate>987</entity-X-Coordinate>
-		<entity-Y-Coordinate>-4</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.ObservedObject</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>166</entity-height>
-		<entity-X-Coordinate>378</entity-X-Coordinate>
-		<entity-Y-Coordinate>237</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -88,6 +44,61 @@
 	</entity>
 
 	<entity>
+		<entity-name>com.nexus.dao.entity.NexusPerson</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>488</entity-height>
+		<entity-X-Coordinate>10</entity-X-Coordinate>
+		<entity-Y-Coordinate>163</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.SiteType</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>166</entity-height>
+		<entity-X-Coordinate>586</entity-X-Coordinate>
+		<entity-Y-Coordinate>26</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.ObservedObject</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>166</entity-height>
+		<entity-X-Coordinate>378</entity-X-Coordinate>
+		<entity-Y-Coordinate>237</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.NexusUser</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>148</entity-height>
+		<entity-X-Coordinate>165</entity-X-Coordinate>
+		<entity-Y-Coordinate>13</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.NexusRole</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>165</entity-X-Coordinate>
+		<entity-Y-Coordinate>327</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
 		<entity-name>com.nexus.dao.entity.Site</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>206</entity-height>
@@ -99,11 +110,11 @@
 	</entity>
 
 	<entity>
-		<entity-name>com.nexus.dao.entity.SiteType</entity-name>
+		<entity-name>com.nexus.dao.entity.ObservedLinksPackage</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>146</entity-height>
-		<entity-X-Coordinate>586</entity-X-Coordinate>
-		<entity-Y-Coordinate>26</entity-Y-Coordinate>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>990</entity-X-Coordinate>
+		<entity-Y-Coordinate>6</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>

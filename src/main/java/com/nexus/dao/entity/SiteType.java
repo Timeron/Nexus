@@ -5,6 +5,8 @@ import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -17,6 +19,10 @@ public class SiteType {
 	private Integer id;
 	private String description;
 	
+	@ManyToOne
+	@JoinColumn(name="MO_product_category_id")
+	private ProductCategory productCategory;
+ 	
 	@OneToMany(mappedBy="siteType")
 	private List<ObservedLinksPackage> observedLinksPackage;
 
@@ -43,6 +49,14 @@ public class SiteType {
 	public void setObservedLinksPackage(
 			List<ObservedLinksPackage> observedLinksPackage) {
 		this.observedLinksPackage = observedLinksPackage;
+	}
+
+	public ProductCategory getProductCategory() {
+		return productCategory;
+	}
+
+	public void setProductCategory(ProductCategory productCategory) {
+		this.productCategory = productCategory;
 	}
 
 	@Override

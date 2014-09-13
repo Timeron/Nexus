@@ -49,6 +49,12 @@
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addLinkPackageToSiteResult.jsp" />
 	</definition>
 	
+	
+	<definition name="chooseProductCategory" extends="multiObserverBase">
+		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/chooseProductCategory.jsp" />
+	</definition>
+	
 	<definition name="addSiteType" extends="multiObserverBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addSiteType.jsp" />
@@ -57,6 +63,16 @@
 	<definition name="addSiteTypeResult" extends="multiObserverBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addSiteTypeResult.jsp" />
+	</definition>
+
+	<definition name="addProductCategory" extends="multiObserverBase">
+		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addProductCategory/addProductCategory.jsp" />
+	</definition>
+	
+	<definition name="addProductCategoryResult" extends="multiObserverBase">
+		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addProductCategory/addProductCategoryResult.jsp" />
 	</definition>
 	
 </tiles-definitions>

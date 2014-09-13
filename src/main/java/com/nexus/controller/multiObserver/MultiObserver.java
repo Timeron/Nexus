@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nexus.dao.Implementation.ProductCategoryDAO;
 import com.nexus.dao.Implementation.SiteDAO;
 import com.nexus.dao.Implementation.SiteTypeDAO;
 import com.nexus.dao.entity.ObservedLinksPackage;
+import com.nexus.dao.entity.ProductCategory;
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
 
@@ -31,6 +33,8 @@ public class MultiObserver {
 	SiteDAO siteDAO;
 	@Autowired
 	SiteTypeDAO siteTypeDAO;
+	@Autowired
+	ProductCategoryDAO productCategoryDAO;
 	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String MultiObserverPage(ModelMap model) {
@@ -98,6 +102,13 @@ public class MultiObserver {
  
 	}
 	
+	/**
+	 * AddSite
+	 * @param model
+	 * @param site
+	 * @return
+	 */
+	
 	@RequestMapping(value="/admin/addLinkPackageToSite", method = RequestMethod.POST)
 	public String AddSite(ModelMap model, @ModelAttribute("site") Site site) {
 		
@@ -113,6 +124,15 @@ public class MultiObserver {
 		return "addLinkPackageToSite";
 	}
 	
+	/**
+	 * 
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @param site
+	 * @return
+	 */
+	
 	@RequestMapping(value="/admin/addLinkPackageToSiteResult", method = RequestMethod.POST)
 	public String AddLinkPackageToSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site) {
 		log.info("Dodajemy Stronę");
@@ -122,20 +142,73 @@ public class MultiObserver {
 		return "addLinkPackageToSiteResult";
 	}
 	
+	/**
+	 * 
+	 * SiteType
+	 * 
+	 * 
+	 */
+	
+	/**
+	 * AddSiteType
+	 * @param model
+	 * @return
+	 */
+	
 	@RequestMapping(value="/admin/addSiteType", method = RequestMethod.GET)
 	public String AddSiteType(ModelMap model) {
 		SiteType siteType = new SiteType();
+		List<ProductCategory> productCategorys;
+		
+		productCategorys = productCategoryDAO.getAll();
+		
+		model.addAttribute("productCategorys", productCategorys);
 		model.addAttribute("siteType", siteType);
+		
 		return "addSiteType";
 	}
 	
 	@RequestMapping(value="/admin/addSiteTypeResult", method = RequestMethod.POST)
 	public String AddSiteTypeResult(ModelMap model, @ModelAttribute("siteType") SiteType siteType) {
+		ProductCategory productCategory = new ProductCategory();
+		
+		productCategory = productCategoryDAO.getById(siteType.getProductCategory().getId());
+		siteType.setProductCategory(productCategory);
 		
 		model.addAttribute("siteType", siteType);
 		siteTypeDAO.saveSiteType(siteType);
 		
 		return "addSiteTypeResult";
+	}
+	
+	
+	/**
+	 * ProductCategory
+	 */
+	
+	/**
+	 * AddProductCategory
+	 * @param model
+	 * @return addProductCategory
+	 */
+	
+	@RequestMapping(value="/admin/addProductCategory", method = RequestMethod.GET)
+	public String AddProductCategory(ModelMap model) {
+		ProductCategory productCategory = new ProductCategory();
+		
+		model.addAttribute("productCategory", productCategory);
+		
+		return "addProductCategory";
+	}
+	
+	@RequestMapping(value="/admin/addProductCategoryResult", method = RequestMethod.POST)
+	public String AddProductCategoryResult(ModelMap model, @ModelAttribute("productCategory") ProductCategory productCategory) {
+		
+		productCategoryDAO.saveProductCategory(productCategory);
+		
+		model.addAttribute("productCategory", productCategory);
+		
+		return "addProductCategoryResult";
 	}
 	
 }

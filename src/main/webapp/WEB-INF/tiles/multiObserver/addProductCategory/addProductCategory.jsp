@@ -6,13 +6,7 @@
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
-		<form:form commandName="siteType" action="addSiteTypeResult">
-			<div class="form-group">
-				<form:select path="productCategory.id" cssClass="form-control">
-					<form:option value="NONE" label="typ strony" />
-					<form:options items="${productCategorys}" itemValue="id" itemLabel="description" />
-				</form:select>
-			</div>
+		<form:form commandName="productCategory" action="addProductCategoryResult">
 			<div class="form-group">
 				<label for="opis">Opis</label>
 				<form:input type="text" class="form-control" path="description"
