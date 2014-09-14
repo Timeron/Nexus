@@ -75,16 +75,22 @@ public class MultiObserver {
 		return "multiObserverChangeResult";
  
 	}
-	
+	/**
+	 * AddNewLinkPackage
+	 * 
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping(value="/admin/addLinkPackage", method = RequestMethod.GET)
 	public String AddNewLinkPackage(ModelMap model) {
 		
+		Site site = new Site();
 		List<Site> sites;
-		SiteDAO siteDAO = new SiteDAO();
 		
 		sites = siteDAO.getAllSites();
  
 		model.addAttribute("siteTemp", sites);
+		model.addAttribute("site", site);
  
 		//Spring uses InternalResourceViewResolver and return back index.jsp
 		return "addNewLinkPackage";
@@ -104,6 +110,7 @@ public class MultiObserver {
 	
 	/**
 	 * AddSite
+	 * 
 	 * @param model
 	 * @param site
 	 * @return
@@ -111,6 +118,11 @@ public class MultiObserver {
 	
 	@RequestMapping(value="/admin/addLinkPackageToSite", method = RequestMethod.POST)
 	public String AddSite(ModelMap model, @ModelAttribute("site") Site site) {
+		
+		//site.id jest ustawione gdy nie dodajemy nowej strony a wybieramy ją z listy w AddNewLinkPackage
+		if(site.getId()!=null){
+			site = siteDAO.getSiteById(site.getId());
+		}
 		
 		List<SiteType> siteTypes = new ArrayList<SiteType>();
 		siteTypes = siteTypeDAO.getAllSiteTypes();
@@ -125,6 +137,7 @@ public class MultiObserver {
 	}
 	
 	/**
+	 * AddLinkPackageToSiteResult
 	 * 
 	 * @param model
 	 * @param request

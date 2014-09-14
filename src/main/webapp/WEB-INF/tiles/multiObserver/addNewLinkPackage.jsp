@@ -6,14 +6,20 @@
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
-		<form:form commandName="site">
-			<label for="Strona">Strona</label>
-			<br>
-			<div class="form-group, col-md-4">
-				<form:select path="site" class="form-control">
-					<form:option value="NONE" label="wybierz stronę" />
-					<form:options items="sites" />
-				</form:select>
+		<form:form commandName="site" action="addLinkPackageToSite">
+			<div class="form-group">
+				<label for="Strona">Strona</label> <br>
+				<div class="form-group">
+					<form:select path="id" class="form-control">
+						<form:option value="NONE" label="wybierz stronę" />
+						<form:options items="${siteTemp}" itemValue="id" itemLabel="name" />
+					</form:select>
+				</div>
+			</div>
+			<div class="form-group">
+				<a href="./" class="btn btn-default">Cofnij</a>
+				<button type="reset" class="btn btn-default">Resetuj</button>
+				<input type="submit" value="Dalej" class="btn btn-default" />
 			</div>
 		</form:form>
 	</div>

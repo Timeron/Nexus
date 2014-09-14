@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nexus.dao.DaoImp;
 import com.nexus.dao.entity.ObservedLinksPackage;
+import com.nexus.dao.entity.ProductCategory;
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
 
@@ -60,6 +61,16 @@ public class SiteDAO extends DaoImp{
 			List<Site> emptyList = Collections.emptyList();
 			return emptyList;
 		}
+	}
+
+	public Site getSiteById(Integer id) {
+		Site site = new Site();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		site = (Site) session.get(Site.class, id);
+		session.close();
+		return site;
+		
 	}
 	
 }
