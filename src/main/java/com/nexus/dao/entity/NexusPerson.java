@@ -12,11 +12,6 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
-import org.apache.velocity.runtime.directive.Parse;
-import org.hibernate.annotations.Type;
-import org.joda.time.DateTime;
-import org.springframework.format.annotation.DateTimeFormat;
-
 @Entity
 @Table(name = "nexus_person")
 public class NexusPerson {

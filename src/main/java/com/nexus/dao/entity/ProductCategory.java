@@ -1,7 +1,9 @@
 package com.nexus.dao.entity;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -16,7 +18,9 @@ public class ProductCategory {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	@Column(length = 100)
 	private String Description;
+	private Date timestamp;
 	
 	@OneToMany(fetch = FetchType.EAGER, mappedBy="productCategory")
 	private List<SiteType> SiteTypes;
@@ -43,6 +47,14 @@ public class ProductCategory {
 
 	public void setSiteTypes(List<SiteType> siteTypes) {
 		SiteTypes = siteTypes;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@Override

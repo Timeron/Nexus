@@ -1,6 +1,7 @@
 package com.nexus.controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,9 +81,11 @@ public class Contacts {
 			nameDayDate = formatter.parseDateTime(nameDay);
 			nexusPerson.setNameDay(nameDayDate.toDate());
 		}
+		
+		nexusPerson.setCreateTimestamp(new Date());
+		nexusPerson.setUpdateTimestamp(new Date());
 	
 		personDao.savePerson(nexusPerson);
-		System.out.println();
 		nexusPerson = new NexusPerson();
 		NexusCalendar nexusCalendar = new NexusCalendar();
 		model.addAttribute("person", nexusPerson);
@@ -164,6 +167,7 @@ public class Contacts {
 	
 	@RequestMapping(value="/editContactResult", method = RequestMethod.POST)
 	public String EditContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
+		nexusPerson.setUpdateTimestamp(new Date());
 		personDao.updatePerson(nexusPerson);
 		return "editContactResult";
 	}

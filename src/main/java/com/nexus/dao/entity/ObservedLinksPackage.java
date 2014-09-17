@@ -1,5 +1,6 @@
 package com.nexus.dao.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -19,6 +20,7 @@ public class ObservedLinksPackage {
 	private Integer id;
 	private String name;
 	private String url;
+	private Date timestamp;
 	
 	@ManyToOne
 	@JoinColumn(name="site_id")
@@ -79,12 +81,23 @@ public class ObservedLinksPackage {
 		this.siteType = siteType;
 	}
 
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
+	}
+
 	@Override
 	public String toString() {
 		return "ObservedLinksPackage [id=" + id + ", name=" + name + ", url="
-				+ url + ", site=" + site + ", observedSite=" + observedSite
-				+ ", siteType=" + siteType + "]";
+				+ url + ", timestamp=" + timestamp + ", site=" + site
+				+ ", observedSite=" + observedSite + ", siteType=" + siteType
+				+ "]";
 	}
+
+
 	
 	
 }

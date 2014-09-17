@@ -1,6 +1,7 @@
 package com.nexus.controller.multiObserver;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -150,6 +151,10 @@ public class MultiObserver {
 	public String AddLinkPackageToSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site) {
 		log.info("Dodajemy Stronę");
 		
+		site.setTimestamp(new Date());
+		for (ObservedLinksPackage observedLinksPackage : site.getObservedLinksPackage()){
+			observedLinksPackage.setTimestamp(new Date());
+		}
 		siteDAO.saveSite(site);
 		
 		return "addLinkPackageToSiteResult";
@@ -187,6 +192,7 @@ public class MultiObserver {
 		
 		productCategory = productCategoryDAO.getById(siteType.getProductCategory().getId());
 		siteType.setProductCategory(productCategory);
+		siteType.setTimestamp(new Date());
 		
 		model.addAttribute("siteType", siteType);
 		siteTypeDAO.saveSiteType(siteType);
@@ -216,6 +222,7 @@ public class MultiObserver {
 	
 	@RequestMapping(value="/admin/addProductCategoryResult", method = RequestMethod.POST)
 	public String AddProductCategoryResult(ModelMap model, @ModelAttribute("productCategory") ProductCategory productCategory) {
+		productCategory.setTimestamp(new Date());
 		
 		productCategoryDAO.saveProductCategory(productCategory);
 		

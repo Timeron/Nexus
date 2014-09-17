@@ -1,7 +1,9 @@
 package com.nexus.dao.entity;
 
+import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -17,7 +19,9 @@ public class SiteType {
 	@Id
 	@GeneratedValue
 	private Integer id;
+	@Column(length = 100)
 	private String description;
+	private Date timestamp;
 	
 	@ManyToOne
 	@JoinColumn(name="MO_product_category_id")
@@ -57,6 +61,14 @@ public class SiteType {
 
 	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
+	}
+
+	public Date getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Date timestamp) {
+		this.timestamp = timestamp;
 	}
 
 	@Override

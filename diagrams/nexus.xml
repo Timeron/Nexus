@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?><entities>
 	<entity>
-		<entity-name>com.nexus.dao.entity.ProductCategory</entity-name>
+		<entity-name>com.nexus.dao.entity.NexusApplications</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>146</entity-height>
-		<entity-X-Coordinate>586</entity-X-Coordinate>
-		<entity-Y-Coordinate>-200</entity-Y-Coordinate>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>403</entity-X-Coordinate>
+		<entity-Y-Coordinate>-26</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
 	</entity>
 
 	<entity>
-		<entity-name>com.nexus.dao.entity.NexusApplications</entity-name>
+		<entity-name>com.nexus.dao.entity.ProductCategory</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>226</entity-height>
-		<entity-X-Coordinate>403</entity-X-Coordinate>
-		<entity-Y-Coordinate>-26</entity-Y-Coordinate>
+		<entity-height>166</entity-height>
+		<entity-X-Coordinate>586</entity-X-Coordinate>
+		<entity-Y-Coordinate>-200</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -57,7 +57,7 @@
 	<entity>
 		<entity-name>com.nexus.dao.entity.SiteType</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>166</entity-height>
+		<entity-height>186</entity-height>
 		<entity-X-Coordinate>586</entity-X-Coordinate>
 		<entity-Y-Coordinate>26</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
@@ -112,7 +112,7 @@
 	<entity>
 		<entity-name>com.nexus.dao.entity.ObservedLinksPackage</entity-name>
 		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
+		<entity-height>226</entity-height>
 		<entity-X-Coordinate>990</entity-X-Coordinate>
 		<entity-Y-Coordinate>6</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
