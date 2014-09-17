@@ -65,7 +65,6 @@ public class Contacts {
 	@RequestMapping(value="/newContact", method = RequestMethod.POST)
 	public String newContactsPagePost(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("person") NexusPerson nexusPerson) {
 		DateTimeFormatter formatter = DateTimeFormat.forPattern("yyyy/MM/dd");
-		
 		String birthday = "";
 		String nameDay = "";
 		DateTime birthdayDate = null;
@@ -83,7 +82,7 @@ public class Contacts {
 		}
 	
 		personDao.savePerson(nexusPerson);
-		
+		System.out.println();
 		nexusPerson = new NexusPerson();
 		NexusCalendar nexusCalendar = new NexusCalendar();
 		model.addAttribute("person", nexusPerson);

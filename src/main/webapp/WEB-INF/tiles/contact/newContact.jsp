@@ -6,7 +6,7 @@
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
-		<form:form commandName="person">
+		<form:form commandName="person" accept-charset="UTF-8">
 			<div class="form-group, col-md-6">
 				<div class="form-group">
 					<label for="imie">Imie</label>
