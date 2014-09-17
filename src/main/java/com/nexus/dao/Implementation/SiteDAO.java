@@ -12,9 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import com.nexus.dao.DaoImp;
 import com.nexus.dao.entity.ObservedLinksPackage;
-import com.nexus.dao.entity.ProductCategory;
 import com.nexus.dao.entity.Site;
-import com.nexus.dao.entity.SiteType;
 
 @Repository
 public class SiteDAO extends DaoImp{

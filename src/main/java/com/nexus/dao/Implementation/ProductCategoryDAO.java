@@ -26,6 +26,7 @@ public class ProductCategoryDAO extends DaoImp{
 		log.info("Site saved");
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<ProductCategory> getAll() {
 		List<ProductCategory> productCategory = new ArrayList<ProductCategory>();
 		Session session = sessionFactory.openSession();

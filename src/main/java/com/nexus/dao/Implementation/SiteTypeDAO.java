@@ -10,7 +10,6 @@ import org.hibernate.Session;
 import org.springframework.stereotype.Repository;
 
 import com.nexus.dao.DaoImp;
-import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
 
 @Repository

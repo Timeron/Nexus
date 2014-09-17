@@ -9,9 +9,6 @@
 <tiles:insertAttribute name="meta" />
 </head>
 <body>
-<!-- 	<div id="topHeader"> -->
-<%-- 		<tiles:insertAttribute name="logInHeader" /> --%>
-<!-- 	</div> -->
 	<div id="header">
 		<tiles:insertAttribute name="header" />
 	</div>
