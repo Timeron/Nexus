@@ -6,6 +6,7 @@
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
+		<h1>Dodaj stronę.</h1>
 		<form:form commandName="site" action="addLinkPackageToSite">
 			<div class="form-group">
 				<label for="imie">Nazwa</label>

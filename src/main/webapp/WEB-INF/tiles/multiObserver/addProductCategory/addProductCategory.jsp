@@ -6,6 +6,7 @@
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
+		<h1>Dodaj kategorię produktu.</h1>
 		<form:form commandName="productCategory" action="addProductCategoryResult">
 			<div class="form-group">
 				<label for="opis">Opis</label>
