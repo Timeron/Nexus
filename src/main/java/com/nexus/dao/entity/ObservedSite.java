@@ -11,6 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.CascadeType;
 
 @Entity
 @Table(name="MO_observed_site")
@@ -26,7 +27,7 @@ public class ObservedSite {
 	private Integer hashUrl;
 	private Date timestamp;
 	
-	@OneToMany(mappedBy="observedSite")
+	@OneToMany(mappedBy="observedSite", cascade=CascadeType.ALL)
 	private List<ObservedSiteHistory> observedSiteHistory;
 	
 	@ManyToOne
