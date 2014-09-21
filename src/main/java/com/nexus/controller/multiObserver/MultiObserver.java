@@ -82,6 +82,7 @@ public class MultiObserver {
  
 	}
 	
+	//do usunięcia lub przebudowy
 	
 	@RequestMapping(value="/admin/linkadded", method = RequestMethod.GET)
 	public String MultiObserverAdminLinkAddedPage(ModelMap model) {
@@ -92,8 +93,14 @@ public class MultiObserver {
 		return "multiObserverChangeResult";
  
 	}
+	
+	/**
+	 * Dodawanie Stron i pakietów linków
+	 */
+	
 	/**
 	 * AddNewLinkPackage
+	 * Wybieramy stronę aby dodać do niej pakiet linków
 	 * 
 	 * @param model
 	 * @return
@@ -114,6 +121,15 @@ public class MultiObserver {
  
 	}
 	
+	/**
+	 * AddSite
+	 * Dodajemy stronę
+	 * 
+	 * @param model
+	 * @param request
+	 * @param response
+	 * @return
+	 */
 	
 	@RequestMapping(value="/admin/addSite", method = RequestMethod.GET)
 	public String AddSite(ModelMap model , HttpServletRequest request, HttpServletResponse response) {
