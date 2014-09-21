@@ -37,6 +37,13 @@ public class MultiObserver {
 	@Autowired
 	ProductCategoryDAO productCategoryDAO;
 	
+	/**
+	 * strona główna Multi Observera
+	 * 
+	 * @param model
+	 * @return
+	 */
+	
 	@RequestMapping(value="/", method = RequestMethod.GET)
 	public String MultiObserverPage(ModelMap model) {
  
@@ -47,6 +54,13 @@ public class MultiObserver {
  
 	}
 	
+	/**
+	 * Administracja Muiltiobserverem
+	 * 
+	 * @param model
+	 * @return
+	 */
+	
 	@RequestMapping(value="/admin", method = RequestMethod.GET)
 	public String MultiObserverAdminPage(ModelMap model) {
  
@@ -55,6 +69,8 @@ public class MultiObserver {
 		return "multiObserverAdmin";
  
 	}
+	
+	//do usunięcia lub przebudowy
 	
 	@RequestMapping(value="/admin/addLinks", method = RequestMethod.GET)
 	public String MultiObserverAdminAddLinksPage(ModelMap model) {
@@ -110,7 +126,7 @@ public class MultiObserver {
 	}
 	
 	/**
-	 * AddSite
+	 * AddSite Dodawanie pakietów linków do wybranej lub dodanej strony.
 	 * 
 	 * @param model
 	 * @param site
@@ -138,7 +154,8 @@ public class MultiObserver {
 	}
 	
 	/**
-	 * AddLinkPackageToSiteResult
+	 * AddLinkPackageToSiteResult 
+	 * Zapisywanie strony wraz z jej pakietami.
 	 * 
 	 * @param model
 	 * @param request
@@ -169,6 +186,8 @@ public class MultiObserver {
 	
 	/**
 	 * AddSiteType
+	 * Dadawanie typu artykułu
+	 * 
 	 * @param model
 	 * @return
 	 */
@@ -185,6 +204,15 @@ public class MultiObserver {
 		
 		return "addSiteType";
 	}
+	
+	/**
+	 * AddSiteTypeResult
+	 * Zapisywanie nowego typu artykułu
+	 * 
+	 * @param model
+	 * @param siteType
+	 * @return
+	 */
 	
 	@RequestMapping(value="/admin/addSiteTypeResult", method = RequestMethod.POST)
 	public String AddSiteTypeResult(ModelMap model, @ModelAttribute("siteType") SiteType siteType) {
@@ -207,6 +235,8 @@ public class MultiObserver {
 	
 	/**
 	 * AddProductCategory
+	 * Dodawanie nowej kategorii produktu
+	 * 
 	 * @param model
 	 * @return addProductCategory
 	 */
@@ -219,6 +249,15 @@ public class MultiObserver {
 		
 		return "addProductCategory";
 	}
+	
+	/**
+	 * AddProductCategoryResult
+	 * Zapisywanie nowej kategori produktu
+	 * 
+	 * @param model
+	 * @param productCategory
+	 * @return
+	 */
 	
 	@RequestMapping(value="/admin/addProductCategoryResult", method = RequestMethod.POST)
 	public String AddProductCategoryResult(ModelMap model, @ModelAttribute("productCategory") ProductCategory productCategory) {
