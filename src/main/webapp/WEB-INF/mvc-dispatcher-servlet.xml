@@ -15,7 +15,7 @@
 
 	<context:component-scan base-package="com.nexus.controller" />
 
-	<mvc:resources mapping="/resources/*" location="/js/" />
+	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:annotation-driven />
 
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -66,8 +66,8 @@
 
 	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/datatest?characterEncoding=utf8" /> -->
-		<property name="url" value="jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8" />
+		<property name="url" value="jdbc:mysql://localhost:3306/datatest?characterEncoding=utf8" />
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8" /> -->
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>
