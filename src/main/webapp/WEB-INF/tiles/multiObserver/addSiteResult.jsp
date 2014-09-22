@@ -1,9 +1,10 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+	
 ${site}<br>
-<a class="btn btn-primary btn-ms" role="button" href="addLinkPackageToSite?siteId=${site.id}">Nowy pakiet linków do strony</a>
+<a class="btn btn-primary btn-ms" role="button" href="addLinkPackageToSite?siteId=${site.id}">Nowy pakiet linkÃ³w do strony</a>
 
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 
 <div class="container">
 	<!-- Example row of columns -->

@@ -3,12 +3,13 @@
 <!-- gwarant polskich znaków -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<script src="<c:url value="/resources/validation.js" />"></script>
+
 
 <html lang="pl">  
 <head>
 <tiles:getAsString name="title" />
 <tiles:insertAttribute name="meta" />
+
 </head>
 <body>
 	<div id="topHeader">
@@ -23,5 +24,6 @@
 	<div id="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>
+	<script src="<c:url value="/resources/validation.js" />"></script>
 </body>
 </html>

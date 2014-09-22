@@ -1,4 +1,5 @@
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
@@ -9,7 +10,7 @@
 		<h1>Dodaj typ produktu.</h1>
 		<form:form commandName="siteType" action="addSiteTypeResult">
 			<div class="form-group">
-			<label>Wybierz kategorię produktu</label>
+			<label>Wybierz kategoriÄ produktu</label>
 				<form:select path="productCategory.id" cssClass="form-control">
 					<form:option value="NONE" label="typ strony" />
 					<form:options items="${productCategorys}" itemValue="id" itemLabel="description" />
