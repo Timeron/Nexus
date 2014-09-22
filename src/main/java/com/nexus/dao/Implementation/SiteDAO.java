@@ -25,11 +25,13 @@ public class SiteDAO extends DaoImp{
 	static Logger log = Logger.getLogger(SiteDAO.class.getName());
 	
 	public void saveSite(Site site){
-		Session session = sessionFactory.openSession();
-		session.beginTransaction();
-		session.save(site);
-		session.getTransaction().commit();
-		session.close();
+		if(site.getId()!=null){
+			Session session = sessionFactory.openSession();
+			session.beginTransaction();
+			session.save(site);
+			session.getTransaction().commit();
+			session.close();
+		}
 		if(!site.getObservedLinksPackage().isEmpty()){
 			for(ObservedLinksPackage observedLinksPackage : site.getObservedLinksPackage()){
 				observedLinksPackage.setSite(site);

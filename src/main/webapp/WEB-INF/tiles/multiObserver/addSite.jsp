@@ -3,19 +3,21 @@
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
 		<h1>Dodaj stronę.</h1>
-		<form:form commandName="site" action="addLinkPackageToSite">
-			<div class="form-group">
+		<form:form commandName="site" action="addLinkPackageToSite"
+			id="formSite">
+			<div class="form-group" id="divName">
 				<label for="imie">Nazwa</label>
-				<form:input type="text" class="form-control" path="name"
-					placeholder="Nazwa" />
+				<form:input type="text" class="form-control" path="name" id="name"
+					placeholder="Nazwa" for="inputSuccess2" />
 			</div>
-			<div class="form-group">
+			<div class="form-group" id="divUrl">
 				<label for="nazwisko">Url</label>
-				<form:input type="text" cssClass="form-control" path="url"
+				<form:input type="text" cssClass="form-control" path="url" id="url"
 					placeholder="Url" />
 			</div>
 			<div class="form-group">
@@ -30,3 +32,22 @@
 		</form:form>
 	</div>
 </div>
+
+<script>
+	$(function() {
+		$('#formSite').submit(function() {
+			var name = document.getElementById("name").value;
+			var url = document.getElementById("url").value;
+
+			removeValidation();
+			
+			if(checkIfExist(name, "divName") & checkIfExist(url, "divUrl")){
+				return true;
+			}
+			return false;
+		});
+	});
+	
+	
+
+</script>

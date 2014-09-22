@@ -15,6 +15,7 @@
 
 	<context:component-scan base-package="com.nexus.controller" />
 
+	<mvc:resources mapping="/resources/*" location="/js/" />
 	<mvc:annotation-driven />
 
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
@@ -53,7 +54,7 @@
 		<property name="packagesToScan" value="com.nexus.dao.entity" />
 		<property name="hibernateProperties">
 			<props>
-				<prop key="hibernate.hbm2ddl.auto">create</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.show_sql">true</prop>
 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop>
 				<prop key="hibernate.connection.useUnicode">yes</prop>
@@ -65,7 +66,8 @@
 
 	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://localhost:3306/datatest?characterEncoding=utf8" />
+<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/datatest?characterEncoding=utf8" /> -->
+		<property name="url" value="jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8" />
 		<property name="username" value="root" />
 		<property name="password" value="" />
 	</bean>

@@ -114,11 +114,4 @@
 		</form:form>
 	</div>
 </div>
-<script>
-	$(function() {
-		$('#person').submit(function() {
-			alert("tets");
-			return true; // return false to cancel form action
-		});
-	});
-</script>
+

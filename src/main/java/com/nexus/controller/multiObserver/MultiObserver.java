@@ -160,10 +160,12 @@ public class MultiObserver {
 		List<SiteType> siteTypes = new ArrayList<SiteType>();
 		siteTypes = siteTypeDAO.getAllSiteTypes();
 		
+		Site emptySite = new Site();
 		ObservedLinksPackage observedLinksPackage = new ObservedLinksPackage();
 		
 		model.addAttribute("siteTypes", siteTypes);
 		model.addAttribute("observedLinksPackage", observedLinksPackage);
+		model.addAttribute("site", emptySite);
 		model.addAttribute("siteTemp", site);
  
 		return "addLinkPackageToSite";
