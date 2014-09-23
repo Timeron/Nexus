@@ -106,7 +106,7 @@ public class MultiObserver {
 	 * @return
 	 */
 	@RequestMapping(value="/admin/addLinkPackage", method = RequestMethod.GET)
-	public String AddNewLinkPackage(ModelMap model) {
+	public String AddNewLinkPackage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		
 		Site site = new Site();
 		List<Site> sites;
@@ -132,7 +132,7 @@ public class MultiObserver {
 	 */
 	
 	@RequestMapping(value="/admin/addSite", method = RequestMethod.GET)
-	public String AddSite(ModelMap model , HttpServletRequest request, HttpServletResponse response) {
+	public String AddSite(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
 		
 		Site site =  new Site();
 		model.addAttribute("site", site);
@@ -160,13 +160,11 @@ public class MultiObserver {
 		List<SiteType> siteTypes = new ArrayList<SiteType>();
 		siteTypes = siteTypeDAO.getAllSiteTypes();
 		
-		Site emptySite = new Site();
 		ObservedLinksPackage observedLinksPackage = new ObservedLinksPackage();
 		
 		model.addAttribute("siteTypes", siteTypes);
 		model.addAttribute("observedLinksPackage", observedLinksPackage);
-		model.addAttribute("site", emptySite);
-		model.addAttribute("siteTemp", site);
+		model.addAttribute("site", site);
  
 		return "addLinkPackageToSite";
 	}
@@ -188,6 +186,8 @@ public class MultiObserver {
 		
 		site.setTimestamp(new Date());
 		for (ObservedLinksPackage observedLinksPackage : site.getObservedLinksPackage()){
+			observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
+			observedLinksPackage.setSite(site);
 			observedLinksPackage.setTimestamp(new Date());
 		}
 		siteDAO.saveSite(site);

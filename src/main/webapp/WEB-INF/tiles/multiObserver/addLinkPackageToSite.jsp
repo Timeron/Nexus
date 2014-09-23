@@ -8,25 +8,26 @@
 
 
 	<div class="row">
-		<form:form commandName="site" action="addLinkPackageToSiteResult">
+		<form:form commandName="site" action="addLinkPackageToSiteResult"
+			id="formSite">
 			<div class="form-group col-md-12">
 				<h1>Strona</h1>
 			</div>
 			<div class="form-group col-md-12">
-				<div class="form-group col-md-2">
+				<div class="form-group col-md-2" id="divSiteId">
 					<label for="Id strony">Nazwa strony</label>
-					<form:input type="text" class="form-control" path="id"
+					<form:input type="text" class="form-control" path="id" id="siteId"
 						placeholder="${siteTemp.id}" readonly="true" />
 				</div>
-				<div class="form-group col-md-5">
+				<div class="form-group col-md-5" id="divSiteUrl">
 					<label for="Id strony">Nazwa strony</label>
 					<form:input type="text" class="form-control" path="url"
-						placeholder="${siteTemp.url}" readonly="true" />
+						id="siteUrl" placeholder="${siteTemp.url}" />
 				</div>
-				<div class="form-group col-md-5">
+				<div class="form-group col-md-5" id="divSiteName">
 					<label for="Id strony">Nazwa strony</label>
 					<form:input type="text" class="form-control" path="name"
-						placeholder="${siteTemp.name}" readonly="true" />
+						id="siteName" placeholder="${siteTemp.name}" readonly="true" />
 				</div>
 			</div>
 			<br>
@@ -35,32 +36,40 @@
 			</div>
 			<br>
 			<div class="form-group col-md-12">
-				<div class="form-group col-md-4">
+				<div class="form-group col-md-3">
 					<label for="imie">Nazwa</label>
 				</div>
 				<div class="form-group col-md-5">
 					<label for="nazwisko">Url</label>
 				</div>
-				<div class="form-group col-md-2">
+				<div class="form-group col-md-3">
 					<label for="nazwisko">Typ Strony</label>
 				</div>
 				<div class="form-group col-md-1">
 					<label for="nazwisko">Usuń</label>
 				</div>
-				<div class="form-group col-md-4">
-					<form:input type="text" class="form-control"
-						path="observedLinksPackage[0].name" placeholder="Name" />
+				<div class="form-group col-md-3" >
+					<div id="divPackageName">
+						<form:input type="text" class="form-control"
+							path="observedLinksPackage[0].name" placeholder="Name"
+							id="packageName" />
+					</div>
 				</div>
-				<div class="form-group col-md-5">
-					<form:input type="text" cssClass="form-control"
-						path="observedLinksPackage[0].url" placeholder="Url" />
+				<div class="form-group col-md-5" >
+					<div id="divPackageUrl">
+						<form:input type="text" class="form-control"
+							path="observedLinksPackage[0].url" placeholder="Url"
+							id="packageUrl" />
+					</div>
 				</div>
-				<div class="form-group, col-md-2">
-					<form:select path="observedLinksPackage[0].siteType.description"
-						cssClass="form-control">
-						<form:option value="NONE" label="typ strony" />
-						<form:options items="${siteTypes}" />
-					</form:select>
+				<div class="form-group, col-md-3" >
+					<div id="divPackageSiteType">
+						<form:select path="observedLinksPackage[0].siteType.description"
+							class="form-control" id="packageSiteType">
+							<form:option value="NONE" label="typ strony" />
+							<form:options items="${siteTypes}" />
+						</form:select>
+					</div>
 				</div>
 				<div class="form-group col-md-1">
 					<button type="button" class="btn btn-danger">-</button>
@@ -79,3 +88,28 @@
 		</form:form>
 	</div>
 </div>
+
+<script>
+	$(function() {
+		$('#formSite')
+				.submit(
+						function() {
+							var packageName = document
+									.getElementById("packageName").value;
+							var packageUrl = document
+									.getElementById("packageUrl").value;
+							var packageSiteType = document
+									.getElementById("packageSiteType").value;
+
+							removeValidation();
+							if (checkIfExist(packageName, "divPackageName")
+									& checkIfExist(packageUrl, "divPackageUrl")
+									& checkIfExist(packageSiteType,
+											"divPackageSiteType")) {
+								return true;
+							}
+							return false;
+						});
+	});
+</script>
+

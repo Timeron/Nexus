@@ -2,22 +2,18 @@ function checkIfExist(value, id) {
 
 	if (value == "") {
 		var spanNode = document.createElement("span");
-		spanNode.setAttribute("class",
-				"glyphicon glyphicon-remove form-control-feedback");
+		spanNode.setAttribute("class", "glyphicon glyphicon-remove form-control-feedback");
 		spanNode.setAttribute("name", "validation");
 
-		document.getElementById(id).setAttribute("class",
-				"form-group has-error has-feedback");
+		document.getElementById(id).setAttribute("class", " has-error has-feedback");
 		document.getElementById(id).appendChild(spanNode);
 		return false;
 	} else {
 		var spanNode = document.createElement("span");
-		spanNode.setAttribute("class",
-				"glyphicon glyphicon-ok form-control-feedback");
+		spanNode.setAttribute("class", "glyphicon glyphicon-ok form-control-feedback");
 		spanNode.setAttribute("name", "validation");
 
-		document.getElementById(id).setAttribute("class",
-				"form-group has-success has-feedback");
+		document.getElementById(id).setAttribute("class", " has-success has-feedback");
 		document.getElementById(id).appendChild(spanNode);
 		return true;
 	}

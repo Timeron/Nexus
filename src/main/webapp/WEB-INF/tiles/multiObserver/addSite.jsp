@@ -13,7 +13,7 @@
 			<div class="form-group" id="divName">
 				<label for="imie">Nazwa</label>
 				<form:input type="text" class="form-control" path="name" id="name"
-					placeholder="Nazwa" for="inputSuccess2" />
+					placeholder="Nazwa" />
 			</div>
 			<div class="form-group" id="divUrl">
 				<label for="nazwisko">Url</label>

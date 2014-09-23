@@ -25,20 +25,18 @@ public class SiteDAO extends DaoImp{
 	static Logger log = Logger.getLogger(SiteDAO.class.getName());
 	
 	public void saveSite(Site site){
-		if(site.getId()!=null){
-			Session session = sessionFactory.openSession();
-			session.beginTransaction();
-			session.save(site);
-			session.getTransaction().commit();
-			session.close();
-		}
-		if(!site.getObservedLinksPackage().isEmpty()){
-			for(ObservedLinksPackage observedLinksPackage : site.getObservedLinksPackage()){
-				observedLinksPackage.setSite(site);
-				observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
-				observedLinksPackageDAO.save(observedLinksPackage);
-			}
-		}
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		session.save(site);
+		session.getTransaction().commit();
+		session.close();
+//		if(!site.getObservedLinksPackage().isEmpty()){
+//			for(ObservedLinksPackage observedLinksPackage : site.getObservedLinksPackage()){
+//				observedLinksPackage.setSite(site);
+//				observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
+//				observedLinksPackageDAO.save(observedLinksPackage);
+//			}
+//		}
 		log.info("Site saved");
 	}
 
