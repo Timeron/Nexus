@@ -54,13 +54,6 @@ public class NexusUser extends NexusPerson{
 	public void setRoles(List<NexusRole> roles) {
 		this.roles = roles;
 	}
-
-	@Override
-	public String toString() {
-		return "NexusUser [admin=" + admin + ", active=" + active
-				+ ", userApplications=" + userApplications + ", roles=" + roles
-				+ "]";
-	}
 	
 	
 }

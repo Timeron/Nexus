@@ -78,15 +78,5 @@ public class ObservedSiteHistory {
 	public void setObservedSite(ObservedSite observedSite) {
 		this.observedSite = observedSite;
 	}
-
-	@Override
-	public String toString() {
-		return "ObservedSiteHistory [id=" + id + ", price=" + price
-				+ ", promotionPrice=" + promotionPrice + ", oldPrice="
-				+ oldPrice + ", timestamp=" + timestamp + ", observedSite="
-				+ observedSite + "]";
-	}
-	
-	
 	
 }

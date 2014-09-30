@@ -252,18 +252,6 @@ public class NexusPerson {
 	public void setNameDayDay(String nameDayDay) {
 		this.nameDayDay = nameDayDay;
 	}
-
-	@Override
-	public String toString() {
-		return "NexusPerson [id=" + id + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", pseudo=" + pseudo + ", email="
-				+ email + ", city=" + city + ", country=" + country
-				+ ", address=" + address + ", phone1=" + phone1 + ", phone2="
-				+ phone2 + ", phone3=" + phone3 + ", description="
-				+ description + ", birthday=" + birthday + ", nameDay="
-				+ nameDay + ", updateTimestamp=" + updateTimestamp
-				+ ", createTimestamp=" + createTimestamp + "]";
-	}
 	
 	
 

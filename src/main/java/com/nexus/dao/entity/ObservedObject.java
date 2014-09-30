@@ -55,13 +55,5 @@ public class ObservedObject {
 	public void setObservedSite(List<ObservedSite> observedSite) {
 		this.observedSite = observedSite;
 	}
-
-	@Override
-	public String toString() {
-		return "ObservedObject [id=" + id + ", name=" + name + ", timestamp="
-				+ timestamp + ", observedSite=" + observedSite + "]";
-	}
-	
-	
 	
 }

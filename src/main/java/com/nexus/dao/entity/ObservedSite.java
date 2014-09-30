@@ -101,18 +101,5 @@ public class ObservedSite {
 	public void setObservedObject(ObservedObject observedObject) {
 		this.observedObject = observedObject;
 	}
-
-	@Override
-	public String toString() {
-		return "ObservedSite [id=" + id + ", articleName=" + articleName
-				+ ", url=" + url + ", hashUrl=" + hashUrl + ", timestamp="
-				+ timestamp + ", observedSiteHistory=" + observedSiteHistory
-				+ ", observedLinksPackage=" + observedLinksPackage
-				+ ", observedObject=" + observedObject + "]";
-	}
-
-	
-	
-	
 	
 }

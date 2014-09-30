@@ -71,14 +71,6 @@ public class SiteType {
 		this.timestamp = timestamp;
 	}
 
-	@Override
-	public String toString() {
-		return description;
-	}
-
-
-
-
 	
 	
 }

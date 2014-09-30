@@ -89,14 +89,6 @@ public class NexusRole {
 	public void setUserId(NexusUser userId) {
 		this.userId = userId;
 	}
-
-	@Override
-	public String toString() {
-		return "NexusRole [id=" + id + ", name=" + name + ", description="
-				+ description + ", updateTimestamp=" + updateTimestamp
-				+ ", createTimestamp=" + createTimestamp + ", userId=" + userId
-				+ "]";
-	}
 	
 	
 	

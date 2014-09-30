@@ -57,12 +57,4 @@ public class ProductCategory {
 		this.timestamp = timestamp;
 	}
 
-	@Override
-	public String toString() {
-		return "ProductCategory [id=" + id + ", Description=" + Description
-				+ ", SiteTypes=" + SiteTypes + "]";
-	}
-	
-	
-	
 }

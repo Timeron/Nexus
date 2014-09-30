@@ -101,15 +101,6 @@ public class NexusApplications {
 	public void setUserId(NexusUser userId) {
 		this.userId = userId;
 	}
-
-	@Override
-	public String toString() {
-		return "NexusApplications [id=" + id + ", applicationName="
-				+ applicationName + ", applicationDescription="
-				+ applicationDescription + ", deployed=" + deployed
-				+ ", updateTimestamp=" + updateTimestamp + ", createTimestamp="
-				+ createTimestamp + ", userId=" + userId + "]";
-	}
 	
 	
 }

@@ -88,16 +88,6 @@ public class ObservedLinksPackage {
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
 	}
-
-	@Override
-	public String toString() {
-		return "ObservedLinksPackage [id=" + id + ", name=" + name + ", url="
-				+ url + ", timestamp=" + timestamp + ", site=" + site
-				+ ", observedSite=" + observedSite + ", siteType=" + siteType
-				+ "]";
-	}
-
-
 	
 	
 }
