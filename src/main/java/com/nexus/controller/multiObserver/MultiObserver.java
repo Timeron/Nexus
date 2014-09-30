@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nexus.dao.Implementation.ObservedLinksPackageDAO;
 import com.nexus.dao.Implementation.ProductCategoryDAO;
 import com.nexus.dao.Implementation.SiteDAO;
 import com.nexus.dao.Implementation.SiteTypeDAO;
@@ -22,156 +23,156 @@ import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.ProductCategory;
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
+import com.nexus.form.multiObserver.AddProductCategoryForm;
+import com.nexus.form.multiObserver.AddProductCategoryResultForm;
+import com.nexus.form.multiObserver.AddSiteTypeForm;
+import com.nexus.form.multiObserver.AddSiteTypeResultForm;
 
 @Controller
 @RequestMapping("/multiobserver")
 public class MultiObserver {
 
-	static Logger log = Logger.getLogger(
-			MultiObserver.class.getName());
-	
+	static Logger log = Logger.getLogger(MultiObserver.class.getName());
+
 	@Autowired
 	SiteDAO siteDAO;
 	@Autowired
 	SiteTypeDAO siteTypeDAO;
 	@Autowired
 	ProductCategoryDAO productCategoryDAO;
-	
+	@Autowired
+	ObservedLinksPackageDAO observedLinksPackageDAO;
+
 	/**
 	 * strona główna Multi Observera
 	 * 
 	 * @param model
 	 * @return
 	 */
-	
-	@RequestMapping(value="/", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String MultiObserverPage(ModelMap model) {
- 
-		model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
- 
-		//Spring uses InternalResourceViewResolver and return back index.jsp
+
+		model.addAttribute("message",
+				"Maven Web Project + Spring 3 MVC - welcome()");
+
+		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "multiObserver";
- 
+
 	}
-	
+
 	/**
 	 * Administracja Muiltiobserverem
 	 * 
 	 * @param model
 	 * @return
 	 */
-	
-	@RequestMapping(value="/admin", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/admin", method = RequestMethod.GET)
 	public String MultiObserverAdminPage(ModelMap model) {
- 
-		model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
-		//Spring uses InternalResourceViewResolver and return back index.jsp
+
+		model.addAttribute("message",
+				"Maven Web Project + Spring 3 MVC - welcome()");
+		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "multiObserverAdmin";
- 
+
 	}
-	
-	//do usunięcia lub przebudowy
-	
-	@RequestMapping(value="/admin/addLinks", method = RequestMethod.GET)
-	public String MultiObserverAdminAddLinksPage(ModelMap model) {
- 
-		model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
- 
-		//Spring uses InternalResourceViewResolver and return back index.jsp
-		return "multiObserverAdminAddLinks";
- 
-	}
-	
-	//do usunięcia lub przebudowy
-	
-	@RequestMapping(value="/admin/linkadded", method = RequestMethod.GET)
-	public String MultiObserverAdminLinkAddedPage(ModelMap model) {
- 
-		model.addAttribute("message", "Maven Web Project + Spring 3 MVC - welcome()");
- 
-		//Spring uses InternalResourceViewResolver and return back index.jsp
-		return "multiObserverChangeResult";
- 
-	}
-	
+
 	/**
 	 * Dodawanie Stron i pakietów linków
 	 */
-	
+
 	/**
-	 * AddNewLinkPackage
-	 * Wybieramy stronę aby dodać do niej pakiet linków
+	 * AddNewLinkPackage Wybieramy stronę aby dodać do niej pakiet linków
 	 * 
 	 * @param model
 	 * @return
 	 */
-	@RequestMapping(value="/admin/addLinkPackage", method = RequestMethod.GET)
-	public String AddNewLinkPackage(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		
+	@RequestMapping(value = "/admin/addLinkPackage", method = RequestMethod.GET)
+	public String AddNewLinkPackage(ModelMap model, HttpServletRequest request,
+			HttpServletResponse response) {
+
 		Site site = new Site();
 		List<Site> sites;
-		
+
 		sites = siteDAO.getAllSites();
- 
+
 		model.addAttribute("siteTemp", sites);
 		model.addAttribute("site", site);
- 
-		//Spring uses InternalResourceViewResolver and return back index.jsp
+
+		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "addNewLinkPackage";
- 
+
 	}
-	
+
 	/**
-	 * AddSite
-	 * Dodajemy stronę
+	 * AddSite Dodajemy stronę
 	 * 
 	 * @param model
 	 * @param request
 	 * @param response
 	 * @return
 	 */
-	
-	@RequestMapping(value="/admin/addSite", method = RequestMethod.GET)
-	public String AddSite(ModelMap model, HttpServletRequest request, HttpServletResponse response) {
-		
-		Site site =  new Site();
+
+	@RequestMapping(value = "/admin/addSite", method = RequestMethod.GET)
+	public String AddSite(ModelMap model, HttpServletRequest request,
+			HttpServletResponse response) {
+
+		Site site = new Site();
 		model.addAttribute("site", site);
-		
+
 		return "addSite";
- 
+
 	}
-	
+
 	/**
-	 * AddSite Dodawanie pakietów linków do wybranej lub dodanej strony.
+	 * AddToNewSite Dodawanie pakietów linków do dodanej strony.
 	 * 
 	 * @param model
 	 * @param site
 	 * @return
 	 */
-	
-	@RequestMapping(value="/admin/addLinkPackageToSite", method = RequestMethod.POST)
-	public String AddSite(ModelMap model, @ModelAttribute("site") Site site) {
-		
-		//site.id jest ustawione gdy nie dodajemy nowej strony a wybieramy ją z listy w AddNewLinkPackage
-		if(site.getId()!=null){
-			site = siteDAO.getSiteById(site.getId());
-		}
-		
+
+	@RequestMapping(value = "/admin/addLinkPackageToNewSite", method = RequestMethod.POST)
+	public String AddLinksPackageToNewSite(ModelMap model, @ModelAttribute("site") Site site) {
 		List<SiteType> siteTypes = new ArrayList<SiteType>();
 		siteTypes = siteTypeDAO.getAllSiteTypes();
-		
+
 		ObservedLinksPackage observedLinksPackage = new ObservedLinksPackage();
-		
+
 		model.addAttribute("siteTypes", siteTypes);
 		model.addAttribute("observedLinksPackage", observedLinksPackage);
 		model.addAttribute("site", site);
- 
-		return "addLinkPackageToSite";
+
+		return "addLinkPackageToNewSite";
 	}
-	
+
 	/**
-	 * AddLinkPackageToSiteResult 
-	 * Zapisywanie strony wraz z jej pakietami.
+	 * AddToOldSite Dodawanie pakietów linków do wybranej strony.
+	 * 
+	 * @param model
+	 * @param site
+	 * @return
+	 */
+
+	@RequestMapping(value = "/admin/addLinkPackageToOldSite", method = RequestMethod.POST)
+	public String AddLinksPackageToOldSite(ModelMap model, @ModelAttribute("site") Site site) {
+		site = siteDAO.getSiteById(site.getId());
+
+		List<SiteType> siteTypes = new ArrayList<SiteType>();
+		siteTypes = siteTypeDAO.getAllSiteTypes();
+		log.info("!!!1 " + site);
+		ObservedLinksPackage observedLinksPackage = new ObservedLinksPackage();
+
+		model.addAttribute("siteTypes", siteTypes);
+		model.addAttribute("observedLinksPackage", observedLinksPackage);
+		model.addAttribute("site", site);
+
+		return "addLinkPackageToOldSite";
+	}
+
+	/**
+	 * AddLinkPackageToSiteResult Zapisywanie strony wraz z jej pakietami.
 	 * 
 	 * @param model
 	 * @param request
@@ -179,113 +180,129 @@ public class MultiObserver {
 	 * @param site
 	 * @return
 	 */
-	
-	@RequestMapping(value="/admin/addLinkPackageToSiteResult", method = RequestMethod.POST)
-	public String AddLinkPackageToSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site) {
+
+	@RequestMapping(value = "/admin/addLinkPackageToNewSiteResult", method = RequestMethod.POST)
+	public String AddLinkPackageToNewSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site) {
 		log.info("Dodajemy Stronę");
-		
+
 		site.setTimestamp(new Date());
-		for (ObservedLinksPackage observedLinksPackage : site.getObservedLinksPackage()){
-			observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
+		for (ObservedLinksPackage observedLinksPackage : site
+				.getObservedLinksPackage()) {
+			observedLinksPackage.setSiteType(siteTypeDAO
+					.getByDescription(observedLinksPackage.getSiteType()
+							.getDescription()));
 			observedLinksPackage.setSite(site);
 			observedLinksPackage.setTimestamp(new Date());
 		}
 		siteDAO.saveSite(site);
-		
+
 		return "addLinkPackageToSiteResult";
 	}
-	
+
+	@RequestMapping(value = "/admin/addLinkPackageToOldSiteResult", method = RequestMethod.POST)
+	public String AddLinkPackageToOldSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site, @ModelAttribute("observedLinksPackage") ObservedLinksPackage observedLinksPackage) {
+		log.info("Dodajemy Stronę");
+		
+		observedLinksPackage.setSite(site);
+		observedLinksPackage.setTimestamp(new Date());
+
+		observedLinksPackageDAO.save(observedLinksPackage);
+
+		return "addLinkPackageToSiteResult";
+	}
+
 	/**
 	 * 
 	 * SiteType
 	 * 
 	 * 
 	 */
-	
+
 	/**
-	 * AddSiteType
-	 * Dadawanie typu artykułu
+	 * AddSiteType Dadawanie typu artykułu
 	 * 
 	 * @param model
 	 * @return
 	 */
-	
-	@RequestMapping(value="/admin/addSiteType", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/admin/addSiteType", method = RequestMethod.GET)
 	public String AddSiteType(ModelMap model) {
-		SiteType siteType = new SiteType();
-		List<ProductCategory> productCategorys;
+		AddSiteTypeForm addSiteTypeForm = new AddSiteTypeForm();
 		
-		productCategorys = productCategoryDAO.getAll();
-		
-		model.addAttribute("productCategorys", productCategorys);
-		model.addAttribute("siteType", siteType);
-		
+		addSiteTypeForm.setProductCategorys(productCategoryDAO.getAll());
+
+		model.addAttribute("addSiteTypeForm", addSiteTypeForm);
+
 		return "addSiteType";
 	}
-	
+
 	/**
-	 * AddSiteTypeResult
-	 * Zapisywanie nowego typu artykułu
+	 * AddSiteTypeResult Zapisywanie nowego typu artykułu
 	 * 
 	 * @param model
 	 * @param siteType
 	 * @return
 	 */
-	
-	@RequestMapping(value="/admin/addSiteTypeResult", method = RequestMethod.POST)
-	public String AddSiteTypeResult(ModelMap model, @ModelAttribute("siteType") SiteType siteType) {
+
+	@RequestMapping(value = "/admin/addSiteTypeResult", method = RequestMethod.POST)
+	public String AddSiteTypeResult(ModelMap model,
+			@ModelAttribute("addSiteTypeForm") AddSiteTypeForm addSiteTypeForm) {
+		
 		ProductCategory productCategory = new ProductCategory();
-		
-		productCategory = productCategoryDAO.getById(siteType.getProductCategory().getId());
-		siteType.setProductCategory(productCategory);
-		siteType.setTimestamp(new Date());
-		
-		model.addAttribute("siteType", siteType);
-		siteTypeDAO.saveSiteType(siteType);
-		
+		AddSiteTypeResultForm addSiteTypeResultForm = new AddSiteTypeResultForm();
+
+		productCategory = productCategoryDAO.getById(addSiteTypeForm.getSiteType().getProductCategory().getId());
+		addSiteTypeForm.getSiteType().setProductCategory(productCategory);
+		addSiteTypeForm.getSiteType().setTimestamp(new Date());
+
+		model.addAttribute("addSiteTypeResultForm", addSiteTypeResultForm);
+		siteTypeDAO.saveSiteType(addSiteTypeForm.getSiteType());
+
 		return "addSiteTypeResult";
 	}
-	
-	
+
 	/**
 	 * ProductCategory
 	 */
-	
+
 	/**
-	 * AddProductCategory
-	 * Dodawanie nowej kategorii produktu
+	 * AddProductCategory Dodawanie nowej kategorii produktu
 	 * 
 	 * @param model
 	 * @return addProductCategory
 	 */
-	
-	@RequestMapping(value="/admin/addProductCategory", method = RequestMethod.GET)
+
+	@RequestMapping(value = "/admin/addProductCategory", method = RequestMethod.GET)
 	public String AddProductCategory(ModelMap model) {
-		ProductCategory productCategory = new ProductCategory();
-		
-		model.addAttribute("productCategory", productCategory);
-		
+		AddProductCategoryForm addProductCategoryForm = new AddProductCategoryForm();
+
+		model.addAttribute("addProductCategoryForm", addProductCategoryForm);
+
 		return "addProductCategory";
 	}
-	
+
 	/**
-	 * AddProductCategoryResult
-	 * Zapisywanie nowej kategori produktu
+	 * AddProductCategoryResult Zapisywanie nowej kategori produktu
 	 * 
 	 * @param model
 	 * @param productCategory
 	 * @return
 	 */
-	
-	@RequestMapping(value="/admin/addProductCategoryResult", method = RequestMethod.POST)
-	public String AddProductCategoryResult(ModelMap model, @ModelAttribute("productCategory") ProductCategory productCategory) {
-		productCategory.setTimestamp(new Date());
+
+	@RequestMapping(value = "/admin/addProductCategoryResult", method = RequestMethod.POST)
+	public String AddProductCategoryResult(ModelMap model,
+			@ModelAttribute("addProductCategoryForm") AddProductCategoryForm addProductCategoryForm) {
 		
-		productCategoryDAO.saveProductCategory(productCategory);
+		AddProductCategoryResultForm addProductCategoryResultForm = new AddProductCategoryResultForm();
 		
-		model.addAttribute("productCategory", productCategory);
+		addProductCategoryForm.getProductCategory().setTimestamp(new Date());
+
+		productCategoryDAO.saveProductCategory(addProductCategoryForm.getProductCategory());
 		
+		addProductCategoryResultForm.setProductCategory(addProductCategoryForm.getProductCategory());
+		model.addAttribute("addProductCategoryResultForm", addProductCategoryResultForm);
+
 		return "addProductCategoryResult";
 	}
-	
+
 }

@@ -7,11 +7,11 @@
 <div class="container">
 	<!-- Example row of columns -->
 	<div class="row">
-		<h1>Dodaj kategoriÄ produktu.</h1>
-		<form:form commandName="productCategory" action="addProductCategoryResult">
+		<h1>Dodaj kategorię produktu.</h1>
+		<form:form commandName="addProductCategoryForm" action="addProductCategoryResult">
 			<div class="form-group">
 				<label for="opis">Opis</label>
-				<form:input type="text" class="form-control" path="description"
+				<form:input type="text" class="form-control" path="productCategory.description"
 					placeholder="Opis" />
 			</div>
 			<div class="form-group, col-md-12">
