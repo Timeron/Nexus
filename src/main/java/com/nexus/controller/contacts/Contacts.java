@@ -1,4 +1,4 @@
-package com.nexus.controller;
+package com.nexus.controller.contacts;
 
 import java.util.ArrayList;
 import java.util.Date;
