@@ -23,6 +23,9 @@ import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.ProductCategory;
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
+import com.nexus.form.multiObserver.AddLinksPackageToOldSiteForm;
+import com.nexus.form.multiObserver.AddLinksPackageToOldSiteResultForm;
+import com.nexus.form.multiObserver.AddNewLinkPackageForm;
 import com.nexus.form.multiObserver.AddProductCategoryForm;
 import com.nexus.form.multiObserver.AddProductCategoryResultForm;
 import com.nexus.form.multiObserver.AddSiteTypeForm;
@@ -91,16 +94,12 @@ public class MultiObserver {
 	@RequestMapping(value = "/admin/addLinkPackage", method = RequestMethod.GET)
 	public String AddNewLinkPackage(ModelMap model, HttpServletRequest request,
 			HttpServletResponse response) {
+		AddNewLinkPackageForm addNewLinkPackageForm = new AddNewLinkPackageForm();
 
-		Site site = new Site();
-		List<Site> sites;
+		addNewLinkPackageForm.setSites(siteDAO.getAllSites());
 
-		sites = siteDAO.getAllSites();
+		model.addAttribute("addNewLinkPackageForm", addNewLinkPackageForm);
 
-		model.addAttribute("siteTemp", sites);
-		model.addAttribute("site", site);
-
-		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "addNewLinkPackage";
 
 	}
@@ -156,17 +155,13 @@ public class MultiObserver {
 	 */
 
 	@RequestMapping(value = "/admin/addLinkPackageToOldSite", method = RequestMethod.POST)
-	public String AddLinksPackageToOldSite(ModelMap model, @ModelAttribute("site") Site site) {
-		site = siteDAO.getSiteById(site.getId());
+	public String AddLinksPackageToOldSite(ModelMap model, @ModelAttribute("addNewLinkPackageForm") AddNewLinkPackageForm addNewLinkPackageForm) {
+		AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm = new AddLinksPackageToOldSiteForm();
+		
+		addLinksPackageToOldSiteForm.setSite(siteDAO.getSiteById(addNewLinkPackageForm.getSite().getId()));
+		addLinksPackageToOldSiteForm.setSiteTypes(siteTypeDAO.getAllSiteTypes());
 
-		List<SiteType> siteTypes = new ArrayList<SiteType>();
-		siteTypes = siteTypeDAO.getAllSiteTypes();
-		log.info("!!!1 " + site);
-		ObservedLinksPackage observedLinksPackage = new ObservedLinksPackage();
-
-		model.addAttribute("siteTypes", siteTypes);
-		model.addAttribute("observedLinksPackage", observedLinksPackage);
-		model.addAttribute("site", site);
+		model.addAttribute("addLinksPackageToOldSiteForm", addLinksPackageToOldSiteForm);
 
 		return "addLinkPackageToOldSite";
 	}
@@ -199,15 +194,18 @@ public class MultiObserver {
 		return "addLinkPackageToSiteResult";
 	}
 
-	@RequestMapping(value = "/admin/addLinkPackageToOldSiteResult", method = RequestMethod.POST)
-	public String AddLinkPackageToOldSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site, @ModelAttribute("observedLinksPackage") ObservedLinksPackage observedLinksPackage) {
-		log.info("Dodajemy Stronę");
+	@RequestMapping(value = "/admin/addLinksPackageToOldSiteResult", method = RequestMethod.POST)
+	public String AddLinksPackageToOldSiteResult(ModelMap model, @ModelAttribute("addLinksPackageToOldSiteForm") AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm) {
+		AddLinksPackageToOldSiteResultForm addLinksPackageToOldSiteResultForm = new AddLinksPackageToOldSiteResultForm();
+		addLinksPackageToOldSiteForm.getObservedLinksPackage().setSite(addLinksPackageToOldSiteForm.getSite());
+		SiteType siteType = siteTypeDAO.getByDescription(addLinksPackageToOldSiteForm.getObservedLinksPackage().getSiteType().getDescription());
+		addLinksPackageToOldSiteForm.getObservedLinksPackage().setSiteType(siteType);
+		addLinksPackageToOldSiteForm.getObservedLinksPackage().setTimestamp(new Date());
+
+		observedLinksPackageDAO.save(addLinksPackageToOldSiteForm.getObservedLinksPackage());
+
+		model.addAttribute("addLinksPackageToOldSiteResultForm", addLinksPackageToOldSiteResultForm);
 		
-		observedLinksPackage.setSite(site);
-		observedLinksPackage.setTimestamp(new Date());
-
-		observedLinksPackageDAO.save(observedLinksPackage);
-
 		return "addLinkPackageToSiteResult";
 	}
 
