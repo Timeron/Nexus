@@ -247,6 +247,8 @@ public class MultiObserver {
 		productCategory = productCategoryDAO.getById(addSiteTypeForm.getSiteType().getProductCategory().getId());
 		addSiteTypeForm.getSiteType().setProductCategory(productCategory);
 		addSiteTypeForm.getSiteType().setTimestamp(new Date());
+		
+		addSiteTypeResultForm.setSiteType(addSiteTypeForm.getSiteType());
 
 		model.addAttribute("addSiteTypeResultForm", addSiteTypeResultForm);
 		siteTypeDAO.saveSiteType(addSiteTypeForm.getSiteType());
