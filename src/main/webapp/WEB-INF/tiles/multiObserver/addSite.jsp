@@ -8,20 +8,20 @@
 	<!-- Example row of columns -->
 	<div class="row">
 		<h1>Dodaj stronę.</h1>
-		<form:form commandName="site" action="addLinkPackageToSite"
+		<form:form commandName="addSiteForm" action="addLinkPackageToNewSite"
 			id="formSite">
 			<div class="form-group" id="divName">
 				<label for="imie">Nazwa</label>
-				<form:input type="text" class="form-control" path="name" id="name"
+				<form:input type="text" class="form-control" path="site.name" id="name"
 					placeholder="Nazwa" />
 			</div>
 			<div class="form-group" id="divUrl">
 				<label for="nazwisko">Url</label>
-				<form:input type="text" cssClass="form-control" path="url" id="url"
+				<form:input type="text" cssClass="form-control" path="site.url" id="url"
 					placeholder="Url" />
 			</div>
 			<div class="form-group">
-				<form:checkbox path="valid" placeholder="false" />
+				<form:checkbox path="site.valid" placeholder="false" />
 				aktywna
 			</div>
 			<div class="form-group, col-md-12">

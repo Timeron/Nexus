@@ -2,7 +2,6 @@ package com.nexus.controller.multiObserver;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,13 +20,14 @@ import com.nexus.dao.Implementation.SiteDAO;
 import com.nexus.dao.Implementation.SiteTypeDAO;
 import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.ProductCategory;
-import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
+import com.nexus.form.multiObserver.AddLinksPackageToNewSiteForm;
 import com.nexus.form.multiObserver.AddLinksPackageToOldSiteForm;
 import com.nexus.form.multiObserver.AddLinksPackageToOldSiteResultForm;
 import com.nexus.form.multiObserver.AddNewLinkPackageForm;
 import com.nexus.form.multiObserver.AddProductCategoryForm;
 import com.nexus.form.multiObserver.AddProductCategoryResultForm;
+import com.nexus.form.multiObserver.AddSiteForm;
 import com.nexus.form.multiObserver.AddSiteTypeForm;
 import com.nexus.form.multiObserver.AddSiteTypeResultForm;
 
@@ -114,11 +114,11 @@ public class MultiObserver {
 	 */
 
 	@RequestMapping(value = "/admin/addSite", method = RequestMethod.GET)
-	public String AddSite(ModelMap model, HttpServletRequest request,
-			HttpServletResponse response) {
+	public String AddSite(ModelMap model) {
 
-		Site site = new Site();
-		model.addAttribute("site", site);
+		AddSiteForm addSiteForm = new AddSiteForm();
+		
+		model.addAttribute("addSiteForm", addSiteForm);
 
 		return "addSite";
 
@@ -133,15 +133,13 @@ public class MultiObserver {
 	 */
 
 	@RequestMapping(value = "/admin/addLinkPackageToNewSite", method = RequestMethod.POST)
-	public String AddLinksPackageToNewSite(ModelMap model, @ModelAttribute("site") Site site) {
-		List<SiteType> siteTypes = new ArrayList<SiteType>();
-		siteTypes = siteTypeDAO.getAllSiteTypes();
+	public String AddLinksPackageToNewSite(ModelMap model, @ModelAttribute("addSiteForm") AddSiteForm addSiteForm) {
+		
+		AddLinksPackageToNewSiteForm addLinksPackageToNewSiteForm = new AddLinksPackageToNewSiteForm();
+		addLinksPackageToNewSiteForm.setSiteTypes(siteTypeDAO.getAllSiteTypes());
+		addLinksPackageToNewSiteForm.setSite(addSiteForm.getSite());
 
-		ObservedLinksPackage observedLinksPackage = new ObservedLinksPackage();
-
-		model.addAttribute("siteTypes", siteTypes);
-		model.addAttribute("observedLinksPackage", observedLinksPackage);
-		model.addAttribute("site", site);
+		model.addAttribute("addLinksPackageToNewSiteForm", addLinksPackageToNewSiteForm);
 
 		return "addLinkPackageToNewSite";
 	}
@@ -177,19 +175,16 @@ public class MultiObserver {
 	 */
 
 	@RequestMapping(value = "/admin/addLinkPackageToNewSiteResult", method = RequestMethod.POST)
-	public String AddLinkPackageToNewSiteResult(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute("site") Site site) {
+	public String AddLinkPackageToNewSiteResult(ModelMap model, @ModelAttribute("addLinksPackageToOldSiteForm") AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm) {
 		log.info("Dodajemy Stronę");
 
-		site.setTimestamp(new Date());
-		for (ObservedLinksPackage observedLinksPackage : site
-				.getObservedLinksPackage()) {
-			observedLinksPackage.setSiteType(siteTypeDAO
-					.getByDescription(observedLinksPackage.getSiteType()
-							.getDescription()));
-			observedLinksPackage.setSite(site);
+		addLinksPackageToOldSiteForm.getSite().setTimestamp(new Date());
+		for (ObservedLinksPackage observedLinksPackage : addLinksPackageToOldSiteForm.getSite().getObservedLinksPackage()) {
+			observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
+			observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
 			observedLinksPackage.setTimestamp(new Date());
 		}
-		siteDAO.saveSite(site);
+		siteDAO.saveSite(addLinksPackageToOldSiteForm.getSite());
 
 		return "addLinkPackageToSiteResult";
 	}
