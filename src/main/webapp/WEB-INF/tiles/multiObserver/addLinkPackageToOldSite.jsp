@@ -3,39 +3,48 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<!-- <script type="text/javascript" -->
+<!-- 	src="assets/twitterbootstrap/js/bootstrap-tab.js"></script> -->
+<!-- <link href="../bootstrap/css/bootstrap.css" rel="stylesheet"> -->
+<!-- <script type="text/javascript" -->
+<!-- 	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script> -->
 
 <div class="container">
-
+	<div class="form-group col-md-12">
+		<h1>Strona</h1>
+	</div>
+	<div class="form-group col-md-12">
+		<div class="form-group col-md-2" id="divSiteId">
+			<label for="Id strony">Nazwa strony</label> <input type="text"
+				class="form-control" placeholder="${addLinksPackageToOldSiteForm.site.id}"
+				readonly="true" />
+		</div>
+		<div class="form-group col-md-5" id="divSiteUrl">
+			<label for="Id strony">Nazwa strony</label> <input type="text"
+				class="form-control" placeholder="${addLinksPackageToOldSiteForm.site.url}"
+				readonly="true" />
+		</div>
+		<div class="form-group col-md-5" id="divSiteName">
+			<label for="Id strony">Nazwa strony</label> <input type="text"
+				class="form-control" placeholder="${addLinksPackageToOldSiteForm.site.name}"
+				readonly="true" />
+		</div>
+	</div>
 
 	<div class="row">
-		<form:form commandName="site" action="addLinkPackageToSiteResult"
-			id="formSite">
-			<div class="form-group col-md-12">
-				<h1>Strona</h1>
-			</div>
-			<div class="form-group col-md-12">
-				<div class="form-group col-md-2" id="divSiteId">
-					<label for="Id strony">Nazwa strony</label>
-					<form:input type="text" class="form-control" path="id" id="siteId"
-						placeholder="${siteTemp.id}" readonly="true" />
-				</div>
-				<div class="form-group col-md-5" id="divSiteUrl">
-					<label for="Id strony">Nazwa strony</label>
-					<form:input type="text" class="form-control" path="url"
-						id="siteUrl" placeholder="${siteTemp.url}" />
-				</div>
-				<div class="form-group col-md-5" id="divSiteName">
-					<label for="Id strony">Nazwa strony</label>
-					<form:input type="text" class="form-control" path="name"
-						id="siteName" placeholder="${siteTemp.name}" readonly="true" />
-				</div>
-			</div>
+		
+		<form:form commandName="addLinksPackageToOldSiteForm"
+			action="addLinksPackageToOldSiteResult" id="formSite">
+			<input type="hidden" name="site.id" value="${addLinksPackageToOldSiteForm.site.id}" /> 
+			<input type="hidden" name="site.name" value="${addLinksPackageToOldSiteForm.site.name}" /> 
+			<input type="hidden" name="site.url" value="${addLinksPackageToOldSiteForm.site.url}" /> 
 			<br>
 			<div class="form-group col-md-12">
 				<h1>Pakiety linków</h1>
 			</div>
 			<br>
 			<div class="form-group col-md-12">
+				
 				<div class="form-group col-md-3">
 					<label for="imie">Nazwa</label>
 				</div>
@@ -48,26 +57,23 @@
 				<div class="form-group col-md-1">
 					<label for="nazwisko">Usuń</label>
 				</div>
-				<div class="form-group col-md-3" >
+				<div class="form-group col-md-3">
 					<div id="divPackageName">
-						<form:input type="text" class="form-control"
-							path="observedLinksPackage[0].name" placeholder="Name"
-							id="packageName" />
+						<form:input type="text" class="form-control" path="observedLinksPackage.name"
+							placeholder="Name" id="packageName" />
 					</div>
 				</div>
-				<div class="form-group col-md-5" >
+				<div class="form-group col-md-5">
 					<div id="divPackageUrl">
-						<form:input type="text" class="form-control"
-							path="observedLinksPackage[0].url" placeholder="Url"
-							id="packageUrl" />
+						<form:input type="text" class="form-control" path="observedLinksPackage.url"
+							placeholder="Url" id="packageUrl" />
 					</div>
 				</div>
-				<div class="form-group, col-md-3" >
+				<div class="form-group, col-md-3">
 					<div id="divPackageSiteType">
-						<form:select path="observedLinksPackage[0].siteType.description"
-							class="form-control" id="packageSiteType">
-							<form:option value="NONE" label="typ strony" />
-							<form:options items="${siteTypes}" />
+						<form:select path="observedLinksPackage.siteType.description" class="form-control"
+							id="packageSiteType">
+							<form:options items="${addLinksPackageToOldSiteForm.siteTypes}" />
 						</form:select>
 					</div>
 				</div>
@@ -88,6 +94,8 @@
 		</form:form>
 	</div>
 </div>
+
+
 
 <script>
 	$(function() {
