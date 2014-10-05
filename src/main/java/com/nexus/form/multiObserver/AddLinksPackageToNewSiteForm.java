@@ -3,7 +3,8 @@ package com.nexus.form.multiObserver;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.nexus.dao.entity.ObservedLinksPackage;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
 
@@ -11,6 +12,7 @@ public class AddLinksPackageToNewSiteForm {
 
 	Site site = new Site();
 	List<SiteType> siteTypes = new ArrayList<SiteType>();
+	MultipartFile file;
 	
 	public Site getSite() {
 		return site;
@@ -27,6 +29,5 @@ public class AddLinksPackageToNewSiteForm {
 	public void setSiteTypes(List<SiteType> siteTypes) {
 		this.siteTypes = siteTypes;
 	}
-	
 	
 }

@@ -1,6 +1,5 @@
 package com.nexus.controller.multiObserver;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
@@ -192,16 +191,30 @@ public class MultiObserver {
 	@RequestMapping(value = "/admin/addLinksPackageToOldSiteResult", method = RequestMethod.POST)
 	public String AddLinksPackageToOldSiteResult(ModelMap model, @ModelAttribute("addLinksPackageToOldSiteForm") AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm) {
 		AddLinksPackageToOldSiteResultForm addLinksPackageToOldSiteResultForm = new AddLinksPackageToOldSiteResultForm();
-		addLinksPackageToOldSiteForm.getObservedLinksPackage().setSite(addLinksPackageToOldSiteForm.getSite());
-		SiteType siteType = siteTypeDAO.getByDescription(addLinksPackageToOldSiteForm.getObservedLinksPackage().getSiteType().getDescription());
-		addLinksPackageToOldSiteForm.getObservedLinksPackage().setSiteType(siteType);
-		addLinksPackageToOldSiteForm.getObservedLinksPackage().setTimestamp(new Date());
-
-		observedLinksPackageDAO.save(addLinksPackageToOldSiteForm.getObservedLinksPackage());
+		for(ObservedLinksPackage observedLinksPackage : addLinksPackageToOldSiteForm.getObservedLinksPackage()){
+			observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
+			SiteType siteType = siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription());
+			observedLinksPackage.setSiteType(siteType);
+			observedLinksPackage.setTimestamp(new Date());
+	
+			observedLinksPackageDAO.save(observedLinksPackage);
+		}
 
 		model.addAttribute("addLinksPackageToOldSiteResultForm", addLinksPackageToOldSiteResultForm);
 		
 		return "addLinkPackageToSiteResult";
+	}
+	
+	@RequestMapping(value = "/admin/addLinksPackageFromFileResult", method = RequestMethod.POST)
+	public String AddLinksPackageFromFileResult(ModelMap model, @ModelAttribute("addLinksPackageToOldSiteForm") AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm){
+		
+//		 try (InputStream in = URI.create(addLinksPackageToOldSiteForm.getFile().getPath()).toURL().openStream()) {
+//		        Files.copy(in, Paths.get("C:/test.txt"));
+//		    } catch (IOException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+		return "addLinksPackageFromFileResult";
 	}
 
 	/**
