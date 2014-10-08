@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="nexus">
+		<class>com.nexus.dao.entity.JHistory</class>
+		<class>com.nexus.dao.entity.JNote</class>
+		<class>com.nexus.dao.entity.JProject</class>
+		<class>com.nexus.dao.entity.JStatus</class>
+		<class>com.nexus.dao.entity.JTask</class>
+		<class>com.nexus.dao.entity.JTaskType</class>
 		<class>com.nexus.dao.entity.NexusApplications</class>
 		<class>com.nexus.dao.entity.NexusPerson</class>
 		<class>com.nexus.dao.entity.NexusRole</class>

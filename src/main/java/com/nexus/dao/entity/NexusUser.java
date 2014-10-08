@@ -19,6 +19,18 @@ public class NexusUser extends NexusPerson{
 	@OneToMany(mappedBy="userId")
 	private List<NexusRole> roles;
 	
+	@OneToMany(mappedBy="user")
+	private List<JHistory> history;
+	
+	@OneToMany(mappedBy="user")
+	private List<JTask> task;
+	
+	@OneToMany(mappedBy="user")
+	private List<JNote> note;
+	
+	@OneToMany(mappedBy="user")
+	private List<JProject> project;
+	
 	/*
 	 * Getters & setters
 	 */
@@ -54,6 +66,40 @@ public class NexusUser extends NexusPerson{
 	public void setRoles(List<NexusRole> roles) {
 		this.roles = roles;
 	}
+
+	public List<JHistory> getHistory() {
+		return history;
+	}
+
+	public void setHistory(List<JHistory> history) {
+		this.history = history;
+	}
+
+	public List<JTask> getTask() {
+		return task;
+	}
+
+	public void setTask(List<JTask> task) {
+		this.task = task;
+	}
+
+	public List<JNote> getNote() {
+		return note;
+	}
+
+	public void setNote(List<JNote> note) {
+		this.note = note;
+	}
+
+	public List<JProject> getProject() {
+		return project;
+	}
+
+	public void setProject(List<JProject> project) {
+		this.project = project;
+	}
+	
+	
 	
 	
 }
