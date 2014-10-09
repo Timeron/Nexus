@@ -16,7 +16,6 @@ import org.springframework.web.servlet.ModelAndView;
 		
 		@RequestMapping(value="/", method = RequestMethod.GET)
 		public ModelAndView HomePage(ModelMap model) {
-			log.info("Home page");
 			return new ModelAndView("nexusHome");
 	 
 		}
