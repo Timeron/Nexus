@@ -4,8 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nexus.dao.entity.ProductCategory;
+import com.nexus.form.MainForm;
 
-public class AddProductCategoryForm {
+public class AddProductCategoryForm extends MainForm {
 
 	ProductCategory productCategory = new ProductCategory();
 	List<ProductCategory> allProductCategorys = new ArrayList<ProductCategory>();

@@ -1,5 +1,7 @@
 package com.nexus.form.multiObserver;
 
-public class MultiObserverAdminForm {
+import com.nexus.form.MainForm;
+
+public class MultiObserverAdminForm extends MainForm {
 
 }

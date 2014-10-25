@@ -1,8 +1,9 @@
 package com.nexus.form.multiObserver;
 
 import com.nexus.dao.entity.Site;
+import com.nexus.form.MainForm;
 
-public class AddSiteForm {
+public class AddSiteForm extends MainForm {
 
 	Site site = new Site();
 

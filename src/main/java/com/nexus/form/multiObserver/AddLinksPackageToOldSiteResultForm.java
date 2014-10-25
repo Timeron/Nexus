@@ -1,5 +1,7 @@
 package com.nexus.form.multiObserver;
 
-public class AddLinksPackageToOldSiteResultForm {
+import com.nexus.form.MainForm;
+
+public class AddLinksPackageToOldSiteResultForm extends MainForm {
 
 }

@@ -29,6 +29,7 @@ import com.nexus.form.multiObserver.AddProductCategoryResultForm;
 import com.nexus.form.multiObserver.AddSiteForm;
 import com.nexus.form.multiObserver.AddSiteTypeForm;
 import com.nexus.form.multiObserver.AddSiteTypeResultForm;
+import com.nexus.form.multiObserver.MultiObserverForm;
 
 @Controller
 @RequestMapping("/multiobserver/admin")
@@ -55,8 +56,9 @@ public class MultiObserverAdmin {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String MultiObserverAdminPage(ModelMap model) {
 
-		model.addAttribute("message",
-				"Admin home");
+		MultiObserverForm multiObserverForm = new MultiObserverForm();
+		
+		model.addAttribute("form", multiObserverForm);
 
 		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "multiObserver";
@@ -80,7 +82,7 @@ public class MultiObserverAdmin {
 
 		addNewLinkPackageForm.setSites(siteDAO.getAllSites());
 
-		model.addAttribute("addNewLinkPackageForm", addNewLinkPackageForm);
+		model.addAttribute("form", addNewLinkPackageForm);
 
 		return "addNewLinkPackage";
 
@@ -100,7 +102,7 @@ public class MultiObserverAdmin {
 
 		AddSiteForm addSiteForm = new AddSiteForm();
 		
-		model.addAttribute("addSiteForm", addSiteForm);
+		model.addAttribute("form", addSiteForm);
 
 		return "addSite";
 
@@ -121,7 +123,7 @@ public class MultiObserverAdmin {
 		addLinksPackageToNewSiteForm.setSiteTypes(siteTypeDAO.getAllSiteTypes());
 		addLinksPackageToNewSiteForm.setSite(addSiteForm.getSite());
 
-		model.addAttribute("addLinksPackageToNewSiteForm", addLinksPackageToNewSiteForm);
+		model.addAttribute("form", addLinksPackageToNewSiteForm);
 
 		return "addLinkPackageToNewSite";
 	}
@@ -141,7 +143,7 @@ public class MultiObserverAdmin {
 		addLinksPackageToOldSiteForm.setSite(siteDAO.getSiteById(addNewLinkPackageForm.getSite().getId()));
 		addLinksPackageToOldSiteForm.setSiteTypes(siteTypeDAO.getAllSiteTypes());
 
-		model.addAttribute("addLinksPackageToOldSiteForm", addLinksPackageToOldSiteForm);
+		model.addAttribute("form", addLinksPackageToOldSiteForm);
 
 		return "addLinkPackageToOldSite";
 	}
@@ -183,7 +185,7 @@ public class MultiObserverAdmin {
 			observedLinksPackageDAO.save(observedLinksPackage);
 		}
 
-		model.addAttribute("addLinksPackageToOldSiteResultForm", addLinksPackageToOldSiteResultForm);
+		model.addAttribute("form", addLinksPackageToOldSiteResultForm);
 		
 		return "addLinkPackageToSiteResult";
 	}
@@ -220,7 +222,7 @@ public class MultiObserverAdmin {
 		
 		addSiteTypeForm.setProductCategorys(productCategoryDAO.getAll());
 
-		model.addAttribute("addSiteTypeForm", addSiteTypeForm);
+		model.addAttribute("form", addSiteTypeForm);
 
 		return "addSiteType";
 	}
@@ -246,7 +248,7 @@ public class MultiObserverAdmin {
 		
 		addSiteTypeResultForm.setSiteType(addSiteTypeForm.getSiteType());
 
-		model.addAttribute("addSiteTypeResultForm", addSiteTypeResultForm);
+		model.addAttribute("form", addSiteTypeResultForm);
 		siteTypeDAO.saveSiteType(addSiteTypeForm.getSiteType());
 
 		return "addSiteTypeResult";
@@ -269,7 +271,7 @@ public class MultiObserverAdmin {
 
 		addProductCategoryForm.setAllProductCategorys(productCategoryDAO.getAll());
 		
-		model.addAttribute("addProductCategoryForm", addProductCategoryForm);
+		model.addAttribute("form", addProductCategoryForm);
 
 		return "addProductCategory";
 	}
@@ -293,9 +295,9 @@ public class MultiObserverAdmin {
 			productCategoryDAO.saveProductCategory(addProductCategoryForm.getProductCategory());
 			addProductCategoryResultForm.setProductCategory(addProductCategoryForm.getProductCategory());
 		}else{
-			addProductCategoryResultForm.setAlert("Kategoria już istnieje");
+			addProductCategoryResultForm.setWarning("Kategoria już istnieje");
 		}		
-		model.addAttribute("addProductCategoryResultForm", addProductCategoryResultForm);
+		model.addAttribute("form", addProductCategoryResultForm);
 
 		return "addProductCategoryResult";
 	}

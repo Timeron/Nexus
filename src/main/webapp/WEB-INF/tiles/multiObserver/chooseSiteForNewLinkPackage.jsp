@@ -8,13 +8,13 @@
 	<!-- Example row of columns -->
 	<div class="row">
 		<h1>Dodaj pakiet</h1>
-		<form:form commandName="addNewLinkPackageForm" action="addLinkPackageToOldSite">
+		<form:form commandName="form" action="addLinkPackageToOldSite">
 			<div class="form-group">
 				<label for="Strona">Wybierz stronę</label> <br>
 				<div class="form-group">
 					<form:select path="site.id" class="form-control">
 						<form:option value="NONE" label="wybierz stronę" />
-						<form:options items="${addNewLinkPackageForm.sites}" itemValue="id" itemLabel="name" />
+						<form:options items="${form.sites}" itemValue="id" itemLabel="name" />
 					</form:select>
 				</div>
 			</div>

@@ -11,7 +11,7 @@
 
 
 	<div class="row">
-		<form:form commandName="addLinksPackageToNewSiteForm" action="addLinkPackageToNewSiteResult"
+		<form:form commandName="form" action="addLinkPackageToNewSiteResult"
 			id="formSite">
 			<div class="form-group col-md-12">
 				<h1>Strona</h1>
@@ -20,17 +20,17 @@
 				<div class="form-group col-md-2" id="divSiteId">
 					<label for="Id strony">Nazwa strony</label>
 					<form:input type="text" class="form-control" path="site.id" id="siteId"
-						placeholder="${addLinksPackageToNewSiteForm.site.id}" readonly="true" />
+						placeholder="${form.site.id}" readonly="true" />
 				</div>
 				<div class="form-group col-md-5" id="divSiteUrl">
 					<label for="Id strony">Nazwa strony</label>
 					<form:input type="text" class="form-control" path="site.url"
-						id="siteUrl" placeholder="${addLinksPackageToNewSiteForm.site.url}" />
+						id="siteUrl" placeholder="${form.site.url}" />
 				</div>
 				<div class="form-group col-md-5" id="divSiteName">
 					<label for="Id strony">Nazwa strony</label>
 					<form:input type="text" class="form-control" path="site.name"
-						id="siteName" placeholder="${addLinksPackageToNewSiteForm.site.name}" readonly="true" />
+						id="siteName" placeholder="${form.site.name}" readonly="true" />
 				</div>
 			</div>
 			<br>
@@ -69,7 +69,7 @@
 					<div id="divPackageSiteType">
 						<form:select path="site.observedLinksPackage[0].siteType.description"
 							class="form-control" id="packageSiteType">
-							<form:options items="${addLinksPackageToNewSiteForm.siteTypes}" />
+							<form:options items="${form.siteTypes}" />
 						</form:select>
 					</div>
 				</div>

@@ -8,7 +8,7 @@
 	<!-- Example row of columns -->
 	<div class="row">
 		<h1>Dodaj kategorię produktu.</h1>
-		<form:form commandName="addProductCategoryForm" action="addProductCategoryResult">
+		<form:form commandName="form" action="addProductCategoryResult">
 			<div class="form-group">
 				<label for="opis">Opis</label>
 				<form:input type="text" class="form-control" path="productCategory.description"
@@ -20,5 +20,8 @@
 				<input type="submit" value="Zapisz" class="btn btn-default" />
 			</div>
 		</form:form>
+		<c:forEach items="${form.allProductCategorys}" var="productCategorys">
+			<p>${productCategorys.description}</p>
+		</c:forEach>
 	</div>
 </div>

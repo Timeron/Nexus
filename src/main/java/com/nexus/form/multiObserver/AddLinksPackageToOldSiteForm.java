@@ -7,8 +7,9 @@ import java.util.List;
 import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
+import com.nexus.form.MainForm;
 
-public class AddLinksPackageToOldSiteForm {
+public class AddLinksPackageToOldSiteForm extends MainForm {
 
 	Site site = new Site();
 	List<SiteType> siteTypes = new ArrayList<SiteType>();

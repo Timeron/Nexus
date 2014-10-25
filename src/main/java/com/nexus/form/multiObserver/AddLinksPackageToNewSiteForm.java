@@ -7,8 +7,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
+import com.nexus.form.MainForm;
 
-public class AddLinksPackageToNewSiteForm {
+public class AddLinksPackageToNewSiteForm extends MainForm {
 
 	Site site = new Site();
 	List<SiteType> siteTypes = new ArrayList<SiteType>();

@@ -13,33 +13,33 @@
 		<div class="form-group col-md-2" id="divSiteId">
 			<label for="Id strony">Nazwa strony</label> <input type="text"
 				class="form-control"
-				placeholder="${addLinksPackageToOldSiteForm.site.id}"
+				placeholder="${form.site.id}"
 				readonly="true" />
 		</div>
 		<div class="form-group col-md-5" id="divSiteUrl">
 			<label for="Id strony">Nazwa strony</label> <input type="text"
 				class="form-control"
-				placeholder="${addLinksPackageToOldSiteForm.site.url}"
+				placeholder="${form.site.url}"
 				readonly="true" />
 		</div>
 		<div class="form-group col-md-5" id="divSiteName">
 			<label for="Id strony">Nazwa strony</label> <input type="text"
 				class="form-control"
-				placeholder="${addLinksPackageToOldSiteForm.site.name}"
+				placeholder="${form.site.name}"
 				readonly="true" />
 		</div>
 	</div>
 
 	<div class="row">
 
-		<form:form commandName="addLinksPackageToOldSiteForm"
+		<form:form commandName="form"
 			action="addLinksPackageToOldSiteResult" id="formSite">
 			<input type="hidden" name="site.id"
-				value="${addLinksPackageToOldSiteForm.site.id}" />
+				value="${form.site.id}" />
 			<input type="hidden" name="site.name"
-				value="${addLinksPackageToOldSiteForm.site.name}" />
+				value="${form.site.name}" />
 			<input type="hidden" name="site.url"
-				value="${addLinksPackageToOldSiteForm.site.url}" />
+				value="${form.site.url}" />
 			<br>
 			<div class="form-group col-md-12">
 				<h1>Pakiety linków</h1>
@@ -78,7 +78,7 @@
 					<div id="divPackageSiteType_0">
 						<form:select path="observedLinksPackage[0].siteType.description"
 							class="form-control" id="packageSiteType_0">
-							<form:options items="${addLinksPackageToOldSiteForm.siteTypes}" />
+							<form:options items="${form.siteTypes}" />
 						</form:select>
 					</div>
 				</div>
@@ -100,7 +100,7 @@
 		<p id="test"></p>
 
 
-		<%-- 		<form:form commandName="addLinksPackageToOldSiteForm" --%>
+		<%-- 		<form:form commandName="form" --%>
 		<%-- 			action="addLinksPackageFromFileResult" id="formSite"> --%>
 		<!-- 			<div class="form-group col-md-12"> -->
 		<!-- 				<h1>Pakiet z pliku</h1> -->
@@ -146,7 +146,7 @@
 	var packageOptions = "";
 	alert(packageOptions);
 	
-	<c:forEach items="${addLinksPackageToOldSiteForm.siteTypes}" var="pack" varStatus="packStatus"> 
+	<c:forEach items="${form.siteTypes}" var="pack" varStatus="packStatus"> 
 		packageOptionsArray.push("${pack.description}");
  	</c:forEach> 
  	

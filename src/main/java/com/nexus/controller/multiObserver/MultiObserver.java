@@ -6,6 +6,8 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.nexus.form.multiObserver.MultiObserverForm;
+
 @Controller
 @RequestMapping("/multiobserver")
 public class MultiObserver {
@@ -15,8 +17,9 @@ public class MultiObserver {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String MultiObserverPage(ModelMap model) {
 
-		model.addAttribute("message",
-				"Admin home");
+		MultiObserverForm multiObserverForm = new MultiObserverForm();
+		
+		model.addAttribute("form", multiObserverForm);
 
 		// Spring uses InternalResourceViewResolver and return back index.jsp
 		return "multiObserver";

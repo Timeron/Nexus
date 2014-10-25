@@ -1,8 +1,9 @@
 package com.nexus.form.multiObserver;
 
 import com.nexus.dao.entity.ProductCategory;
+import com.nexus.form.MainForm;
 
-public class AddProductCategoryResultForm {
+public class AddProductCategoryResultForm extends MainForm {
 
 	ProductCategory productCategory = new ProductCategory();
 
@@ -13,6 +14,8 @@ public class AddProductCategoryResultForm {
 	public void setProductCategory(ProductCategory productCategory) {
 		this.productCategory = productCategory;
 	}
+	
+	
 	
 	
 }

@@ -8,12 +8,12 @@
 	<!-- Example row of columns -->
 	<div class="row">
 		<h1>Dodaj typ produktu.</h1>
-		<form:form commandName="addSiteTypeForm" action="addSiteTypeResult">
+		<form:form commandName="form" action="addSiteTypeResult">
 			<div class="form-group">
 			<label>Wybierz kategorię produktu</label>
 				<form:select path="siteType.productCategory.id" cssClass="form-control">
 					<form:option value="NONE" label="typ strony" />
-					<form:options items="${addSiteTypeForm.productCategorys}" itemValue="id" itemLabel="description" />
+					<form:options items="${form.productCategorys}" itemValue="id" itemLabel="description" />
 				</form:select>
 			</div>
 			<div class="form-group">

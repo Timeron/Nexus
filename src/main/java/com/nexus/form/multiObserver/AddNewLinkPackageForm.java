@@ -3,8 +3,9 @@ package com.nexus.form.multiObserver;
 import java.util.List;
 
 import com.nexus.dao.entity.Site;
+import com.nexus.form.MainForm;
 
-public class AddNewLinkPackageForm {
+public class AddNewLinkPackageForm extends MainForm {
 
 	Site site = new Site();
 	List<Site> sites;
