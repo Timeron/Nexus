@@ -55,4 +55,25 @@ public class ProductCategoryDAO extends DaoImp{
 		return productCategory;
 	}
 
+	@SuppressWarnings("unchecked")
+	public List<ProductCategory> getByDescription(String description) {
+		List<ProductCategory> productCategory = new ArrayList<ProductCategory>();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		String hql = "FROM ProductCategory WHERE upper(description) = '"+description.toUpperCase()+"'";
+		
+		Query query = session.createQuery(hql);
+		productCategory = (List<ProductCategory>) query.list();
+		
+		session.close();
+		
+		if (productCategory.size() > 0) {
+			return productCategory;
+		} else {
+			List<ProductCategory> emptyList = Collections.emptyList();
+			return emptyList;
+		}
+		
+	}
+
 }

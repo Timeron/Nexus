@@ -267,13 +267,15 @@ public class MultiObserverAdmin {
 	public String AddProductCategory(ModelMap model) {
 		AddProductCategoryForm addProductCategoryForm = new AddProductCategoryForm();
 
+		addProductCategoryForm.setAllProductCategorys(productCategoryDAO.getAll());
+		
 		model.addAttribute("addProductCategoryForm", addProductCategoryForm);
 
 		return "addProductCategory";
 	}
 
 	/**
-	 * AddProductCategoryResult Zapisywanie nowej kategori produktu
+	 * AddProductCategoryResult Zapisywanie nowej kategorii produktu
 	 * 
 	 * @param model
 	 * @param productCategory
@@ -286,11 +288,13 @@ public class MultiObserverAdmin {
 		
 		AddProductCategoryResultForm addProductCategoryResultForm = new AddProductCategoryResultForm();
 		
-		addProductCategoryForm.getProductCategory().setTimestamp(new Date());
-
-		productCategoryDAO.saveProductCategory(addProductCategoryForm.getProductCategory());
-		
-		addProductCategoryResultForm.setProductCategory(addProductCategoryForm.getProductCategory());
+		if(productCategoryDAO.getByDescription(addProductCategoryForm.getProductCategory().getDescription()).isEmpty()){
+			addProductCategoryForm.getProductCategory().setTimestamp(new Date());
+			productCategoryDAO.saveProductCategory(addProductCategoryForm.getProductCategory());
+			addProductCategoryResultForm.setProductCategory(addProductCategoryForm.getProductCategory());
+		}else{
+			addProductCategoryResultForm.setAlert("Kategoria już istnieje");
+		}		
 		model.addAttribute("addProductCategoryResultForm", addProductCategoryResultForm);
 
 		return "addProductCategoryResult";
