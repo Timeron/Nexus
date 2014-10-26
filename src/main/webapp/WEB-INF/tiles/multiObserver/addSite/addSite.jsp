@@ -8,7 +8,7 @@
 	<!-- Example row of columns -->
 	<div class="row">
 		<h1>Dodaj stronę.</h1>
-		<form:form commandName="addSiteForm" action="addLinkPackageToNewSite"
+		<form:form commandName="form" action="addLinkPackageToNewSite"
 			id="formSite">
 			<div class="form-group" id="divName">
 				<label for="imie">Nazwa</label>
