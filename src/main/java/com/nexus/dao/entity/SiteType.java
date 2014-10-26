@@ -76,6 +76,12 @@ public class SiteType {
 		return description;
 	}
 
-	
+	public boolean isEmpty(){
+		if(this.description == null || this.description.isEmpty()){
+			return true;
+		}else{
+			return false;
+		}
+	}
 	
 }

@@ -58,7 +58,11 @@ public class SiteTypeDAO extends DaoImp{
 		Query query = session.createQuery(hql);
 		siteType = (List<SiteType>) query.list();
 		session.close();
-		return siteType.get(0);
+		if(siteType.isEmpty()){
+			return new SiteType();
+		}else{
+			return siteType.get(0);
+		}
 	}
 	
 }

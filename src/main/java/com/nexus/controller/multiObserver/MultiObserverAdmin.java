@@ -239,17 +239,22 @@ public class MultiObserverAdmin {
 	public String AddSiteTypeResult(ModelMap model,
 			@ModelAttribute("addSiteTypeForm") AddSiteTypeForm addSiteTypeForm) {
 		
-		ProductCategory productCategory = new ProductCategory();
 		AddSiteTypeResultForm addSiteTypeResultForm = new AddSiteTypeResultForm();
-
-		productCategory = productCategoryDAO.getById(addSiteTypeForm.getSiteType().getProductCategory().getId());
-		addSiteTypeForm.getSiteType().setProductCategory(productCategory);
-		addSiteTypeForm.getSiteType().setTimestamp(new Date());
 		
-		addSiteTypeResultForm.setSiteType(addSiteTypeForm.getSiteType());
-
+		if(siteTypeDAO.getByDescription(addSiteTypeForm.getSiteType().getDescription()).isEmpty()){
+			ProductCategory productCategory = new ProductCategory();
+			
+			productCategory = productCategoryDAO.getById(addSiteTypeForm.getSiteType().getProductCategory().getId());
+			addSiteTypeForm.getSiteType().setProductCategory(productCategory);
+			addSiteTypeForm.getSiteType().setTimestamp(new Date());
+			
+			addSiteTypeResultForm.setSiteType(addSiteTypeForm.getSiteType());
+			
+			siteTypeDAO.saveSiteType(addSiteTypeForm.getSiteType());
+		}else{
+			addSiteTypeResultForm.setError("SiteType już istnieje");
+		}
 		model.addAttribute("form", addSiteTypeResultForm);
-		siteTypeDAO.saveSiteType(addSiteTypeForm.getSiteType());
 
 		return "addSiteTypeResult";
 	}
