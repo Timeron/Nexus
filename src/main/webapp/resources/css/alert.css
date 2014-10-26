@@ -1,0 +1,12 @@
+@CHARSET "ISO-8859-1";
+div .error{
+	background-color: red;
+}
+
+div .warning{
+	background-color: yellow;
+}
+
+div .info{
+	background-color: blue;
+}
