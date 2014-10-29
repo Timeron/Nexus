@@ -1,7 +1,7 @@
 /**
  * 
  */
-alert("!!!");
+
 	var packageNr = 0;
 	$( "#addNextPackage" ).click(function() {
 		packageNr++;
