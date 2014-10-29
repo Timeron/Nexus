@@ -161,15 +161,26 @@ public class MultiObserverAdmin {
 	@RequestMapping(value = "/addLinkPackageToNewSiteResult", method = RequestMethod.POST)
 	public String AddLinkPackageToNewSiteResult(ModelMap model, @ModelAttribute("addLinksPackageToOldSiteForm") AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm) {
 		log.info("Dodajemy Stronę");
-
+		
+		AddLinksPackageToOldSiteResultForm addLinksPackageToOldSiteResultForm = new AddLinksPackageToOldSiteResultForm();
+		
 		addLinksPackageToOldSiteForm.getSite().setTimestamp(new Date());
 		for (ObservedLinksPackage observedLinksPackage : addLinksPackageToOldSiteForm.getSite().getObservedLinksPackage()) {
-			observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
-			observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
-			observedLinksPackage.setTimestamp(new Date());
+			if(observedLinksPackageDAO.getByUrl(observedLinksPackage.getUrl()).isEmpty()){
+				observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
+				observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
+				observedLinksPackage.setTimestamp(new Date());
+				siteDAO.saveSite(addLinksPackageToOldSiteForm.getSite());
+				log.info("LinksPackage dodany: "+observedLinksPackage.getUrl());
+			}else{
+				observedLinksPackage.setDuplicated(true);
+				log.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
+			}
 		}
-		siteDAO.saveSite(addLinksPackageToOldSiteForm.getSite());
+		
 
+		model.addAttribute("form", addLinksPackageToOldSiteResultForm);
+		
 		return "addLinkPackageToSiteResult";
 	}
 
@@ -177,12 +188,17 @@ public class MultiObserverAdmin {
 	public String AddLinksPackageToOldSiteResult(ModelMap model, @ModelAttribute("addLinksPackageToOldSiteForm") AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm) {
 		AddLinksPackageToOldSiteResultForm addLinksPackageToOldSiteResultForm = new AddLinksPackageToOldSiteResultForm();
 		for(ObservedLinksPackage observedLinksPackage : addLinksPackageToOldSiteForm.getObservedLinksPackage()){
-			observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
-			SiteType siteType = siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription());
-			observedLinksPackage.setSiteType(siteType);
-			observedLinksPackage.setTimestamp(new Date());
-	
-			observedLinksPackageDAO.save(observedLinksPackage);
+			if(observedLinksPackageDAO.getByUrl(observedLinksPackage.getUrl()).isEmpty()){
+				observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
+				SiteType siteType = siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription());
+				observedLinksPackage.setSiteType(siteType);
+				observedLinksPackage.setTimestamp(new Date());
+				
+				observedLinksPackageDAO.save(observedLinksPackage);
+			}else{
+				observedLinksPackage.setDuplicated(true);
+				log.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
+			}
 		}
 
 		model.addAttribute("form", addLinksPackageToOldSiteResultForm);

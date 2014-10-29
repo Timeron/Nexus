@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="MO_observed_links_package")
@@ -21,6 +22,9 @@ public class ObservedLinksPackage {
 	private String name;
 	private String url;
 	private Date timestamp;
+	
+	@Transient
+	private boolean duplicated = false;
 	
 	@ManyToOne
 	@JoinColumn(name="site_id")
@@ -87,6 +91,18 @@ public class ObservedLinksPackage {
 
 	public void setTimestamp(Date timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	
+	/*
+	 * @Transient
+	 */
+	public boolean isDuplicated() {
+		return duplicated;
+	}
+
+	public void setDuplicated(boolean duplicated) {
+		this.duplicated = duplicated;
 	}
 	
 	
