@@ -197,6 +197,7 @@ public class MultiObserverAdmin {
 				observedLinksPackageDAO.save(observedLinksPackage);
 			}else{
 				observedLinksPackage.setDuplicated(true);
+				addLinksPackageToOldSiteResultForm.setWarning("Pakiet już istnieje: "+observedLinksPackage.getUrl());
 				log.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
 			}
 		}
