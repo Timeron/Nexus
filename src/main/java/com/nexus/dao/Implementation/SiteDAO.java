@@ -8,10 +8,10 @@ import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateJdbcException;
 import org.springframework.stereotype.Repository;
 
 import com.nexus.dao.DaoImp;
-import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.Site;
 
 @Repository
@@ -41,7 +41,7 @@ public class SiteDAO extends DaoImp{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Site> getAllSites() {
+	public List<Site> getAllSites() throws HibernateJdbcException {
 		List<Site> sites = new ArrayList<Site>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();

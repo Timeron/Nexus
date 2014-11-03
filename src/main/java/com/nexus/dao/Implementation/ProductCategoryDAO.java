@@ -1,5 +1,6 @@
 package com.nexus.dao.Implementation;
 
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.springframework.orm.hibernate4.HibernateJdbcException;
 import org.springframework.stereotype.Repository;
 
 import com.nexus.dao.DaoImp;
@@ -27,7 +29,7 @@ public class ProductCategoryDAO extends DaoImp{
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<ProductCategory> getAll() {
+	public List<ProductCategory> getAll() throws HibernateJdbcException {
 		List<ProductCategory> productCategory = new ArrayList<ProductCategory>();
 		Session session = sessionFactory.openSession();
 		session.beginTransaction();
