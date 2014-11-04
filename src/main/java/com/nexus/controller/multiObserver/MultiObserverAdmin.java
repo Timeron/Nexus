@@ -1,7 +1,6 @@
 package com.nexus.controller.multiObserver;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +21,6 @@ import com.nexus.dao.Implementation.SiteDAO;
 import com.nexus.dao.Implementation.SiteTypeDAO;
 import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.ProductCategory;
-import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
 import com.nexus.form.multiObserver.AddLinksPackageToNewSiteForm;
 import com.nexus.form.multiObserver.AddLinksPackageToOldSiteForm;
@@ -87,7 +85,7 @@ public class MultiObserverAdmin {
 		try {
 			addNewLinkPackageForm.setSites(siteDAO.getAllSites());
 		} catch (HibernateJdbcException e){
-			addNewLinkPackageForm.setError("Poï¿½ï¿½czenie z bazï¿½ danych przerwane");
+			addNewLinkPackageForm.setError("Po³¹czenie z baz¹ danych przerwane");
 			e.printStackTrace();
 		} catch(GenericJDBCException e){
 			e.printStackTrace();
@@ -181,15 +179,7 @@ public class MultiObserverAdmin {
 				observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
 				observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
 				observedLinksPackage.setTimestamp(new Date());
-				
-				//sprawdz czy juz taka strona istnieje
-				List<Site> site = siteDAO.getByName(addLinksPackageToOldSiteForm.getSite().getName());
-				if(!site.isEmpty()){
-					//jeÅ›li tak to chcemy tylko zaktualizowaÄ‡
-					addLinksPackageToOldSiteForm.getSite().setId(site.get(0).getId());
-				}
 				siteDAO.saveSite(addLinksPackageToOldSiteForm.getSite());
-				
 				log.info("LinksPackage dodany: "+observedLinksPackage.getUrl());
 			}else{
 				observedLinksPackage.setDuplicated(true);
@@ -216,8 +206,7 @@ public class MultiObserverAdmin {
 				observedLinksPackageDAO.save(observedLinksPackage);
 			}else{
 				observedLinksPackage.setDuplicated(true);
-				addLinksPackageToOldSiteResultForm.setWarning("Pakiet juÅ¼ istnieje: "+observedLinksPackage.getUrl());
-				log.warn("LinksPackage juï¿½ istnieje: "+observedLinksPackage.getUrl());
+				log.warn("LinksPackage ju¿ istnieje: "+observedLinksPackage.getUrl());
 			}
 		}
 
@@ -259,7 +248,7 @@ public class MultiObserverAdmin {
 		try {
 			addSiteTypeForm.setProductCategorys(productCategoryDAO.getAll());
 		} catch (HibernateJdbcException e) {
-			addSiteTypeForm.setError("Poï¿½ï¿½czenie z bazï¿½ danych przerwane");
+			addSiteTypeForm.setError("Po³¹czenie z baz¹ danych przerwane");
 			e.printStackTrace();
 		}
 
@@ -318,7 +307,7 @@ public class MultiObserverAdmin {
 		try {
 			addProductCategoryForm.setAllProductCategorys(productCategoryDAO.getAll());
 		} catch (HibernateJdbcException e) {
-			addProductCategoryForm.setError("Poï¿½ï¿½czenie z bazï¿½ danych przerwane");
+			addProductCategoryForm.setError("Po³¹czenie z baz¹ danych przerwane");
 			e.printStackTrace();
 		}
 		

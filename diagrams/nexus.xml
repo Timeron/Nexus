@@ -3,8 +3,8 @@
 		<entity-name>com.nexus.dao.entity.NexusApplications</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>226</entity-height>
-		<entity-X-Coordinate>403</entity-X-Coordinate>
-		<entity-Y-Coordinate>-26</entity-Y-Coordinate>
+		<entity-X-Coordinate>-175</entity-X-Coordinate>
+		<entity-Y-Coordinate>450</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -44,11 +44,33 @@
 	</entity>
 
 	<entity>
+		<entity-name>com.nexus.dao.entity.JStatus</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>186</entity-height>
+		<entity-X-Coordinate>-569</entity-X-Coordinate>
+		<entity-Y-Coordinate>-712</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
 		<entity-name>com.nexus.dao.entity.NexusPerson</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>488</entity-height>
-		<entity-X-Coordinate>-19</entity-X-Coordinate>
-		<entity-Y-Coordinate>291</entity-Y-Coordinate>
+		<entity-X-Coordinate>-584</entity-X-Coordinate>
+		<entity-Y-Coordinate>246</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.JNote</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>-70</entity-X-Coordinate>
+		<entity-Y-Coordinate>-240</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -60,6 +82,28 @@
 		<entity-height>186</entity-height>
 		<entity-X-Coordinate>538</entity-X-Coordinate>
 		<entity-Y-Coordinate>-220</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.JHistory</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>206</entity-height>
+		<entity-X-Coordinate>-182</entity-X-Coordinate>
+		<entity-Y-Coordinate>-671</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.JProject</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>-812</entity-X-Coordinate>
+		<entity-Y-Coordinate>-620</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -80,8 +124,8 @@
 		<entity-name>com.nexus.dao.entity.NexusUser</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>228</entity-height>
-		<entity-X-Coordinate>165</entity-X-Coordinate>
-		<entity-Y-Coordinate>13</entity-Y-Coordinate>
+		<entity-X-Coordinate>-323</entity-X-Coordinate>
+		<entity-Y-Coordinate>69</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -91,8 +135,8 @@
 		<entity-name>com.nexus.dao.entity.NexusRole</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>206</entity-height>
-		<entity-X-Coordinate>218</entity-X-Coordinate>
-		<entity-Y-Coordinate>326</entity-Y-Coordinate>
+		<entity-X-Coordinate>-323</entity-X-Coordinate>
+		<entity-Y-Coordinate>450</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -110,66 +154,11 @@
 	</entity>
 
 	<entity>
-		<entity-name>com.nexus.dao.entity.ObservedLinksPackage</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>226</entity-height>
-		<entity-X-Coordinate>766</entity-X-Coordinate>
-		<entity-Y-Coordinate>31</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.JHistory</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>206</entity-height>
-		<entity-X-Coordinate>-323</entity-X-Coordinate>
-		<entity-Y-Coordinate>-335</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.JNote</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>226</entity-height>
-		<entity-X-Coordinate>-288</entity-X-Coordinate>
-		<entity-Y-Coordinate>75</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.JProject</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>226</entity-height>
-		<entity-X-Coordinate>-619</entity-X-Coordinate>
-		<entity-Y-Coordinate>-530</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
-		<entity-name>com.nexus.dao.entity.JStatus</entity-name>
-		<entity-width>120</entity-width>
-		<entity-height>186</entity-height>
-		<entity-X-Coordinate>-491</entity-X-Coordinate>
-		<entity-Y-Coordinate>-84</entity-Y-Coordinate>
-		<primary-collapsed>false</primary-collapsed>
-		<relation-collapsed>false</relation-collapsed>
-		<basic-collapsed>false</basic-collapsed>
-	</entity>
-
-	<entity>
 		<entity-name>com.nexus.dao.entity.JTask</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>346</entity-height>
-		<entity-X-Coordinate>-569</entity-X-Coordinate>
-		<entity-Y-Coordinate>165</entity-Y-Coordinate>
+		<entity-X-Coordinate>-451</entity-X-Coordinate>
+		<entity-Y-Coordinate>-410</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
@@ -179,8 +168,19 @@
 		<entity-name>com.nexus.dao.entity.JTaskType</entity-name>
 		<entity-width>120</entity-width>
 		<entity-height>146</entity-height>
-		<entity-X-Coordinate>-774</entity-X-Coordinate>
-		<entity-Y-Coordinate>51</entity-Y-Coordinate>
+		<entity-X-Coordinate>-830</entity-X-Coordinate>
+		<entity-Y-Coordinate>-55</entity-Y-Coordinate>
+		<primary-collapsed>false</primary-collapsed>
+		<relation-collapsed>false</relation-collapsed>
+		<basic-collapsed>false</basic-collapsed>
+	</entity>
+
+	<entity>
+		<entity-name>com.nexus.dao.entity.ObservedLinksPackage</entity-name>
+		<entity-width>120</entity-width>
+		<entity-height>226</entity-height>
+		<entity-X-Coordinate>766</entity-X-Coordinate>
+		<entity-Y-Coordinate>31</entity-Y-Coordinate>
 		<primary-collapsed>false</primary-collapsed>
 		<relation-collapsed>false</relation-collapsed>
 		<basic-collapsed>false</basic-collapsed>
