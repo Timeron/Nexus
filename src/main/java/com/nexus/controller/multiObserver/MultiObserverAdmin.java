@@ -1,12 +1,15 @@
 package com.nexus.controller.multiObserver;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.orm.hibernate4.HibernateJdbcException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,6 +22,7 @@ import com.nexus.dao.Implementation.SiteDAO;
 import com.nexus.dao.Implementation.SiteTypeDAO;
 import com.nexus.dao.entity.ObservedLinksPackage;
 import com.nexus.dao.entity.ProductCategory;
+import com.nexus.dao.entity.Site;
 import com.nexus.dao.entity.SiteType;
 import com.nexus.form.multiObserver.AddLinksPackageToNewSiteForm;
 import com.nexus.form.multiObserver.AddLinksPackageToOldSiteForm;
@@ -80,7 +84,14 @@ public class MultiObserverAdmin {
 			HttpServletResponse response) {
 		AddNewLinkPackageForm addNewLinkPackageForm = new AddNewLinkPackageForm();
 
-		addNewLinkPackageForm.setSites(siteDAO.getAllSites());
+		try {
+			addNewLinkPackageForm.setSites(siteDAO.getAllSites());
+		} catch (HibernateJdbcException e){
+			addNewLinkPackageForm.setError("Po��czenie z baz� danych przerwane");
+			e.printStackTrace();
+		} catch(GenericJDBCException e){
+			e.printStackTrace();
+		}
 
 		model.addAttribute("form", addNewLinkPackageForm);
 
@@ -170,7 +181,15 @@ public class MultiObserverAdmin {
 				observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
 				observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
 				observedLinksPackage.setTimestamp(new Date());
+				
+				//sprawdz czy juz taka strona istnieje
+				List<Site> site = siteDAO.getByName(addLinksPackageToOldSiteForm.getSite().getName());
+				if(!site.isEmpty()){
+					//jeśli tak to chcemy tylko zaktualizować
+					addLinksPackageToOldSiteForm.getSite().setId(site.get(0).getId());
+				}
 				siteDAO.saveSite(addLinksPackageToOldSiteForm.getSite());
+				
 				log.info("LinksPackage dodany: "+observedLinksPackage.getUrl());
 			}else{
 				observedLinksPackage.setDuplicated(true);
@@ -198,7 +217,7 @@ public class MultiObserverAdmin {
 			}else{
 				observedLinksPackage.setDuplicated(true);
 				addLinksPackageToOldSiteResultForm.setWarning("Pakiet już istnieje: "+observedLinksPackage.getUrl());
-				log.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
+				log.warn("LinksPackage ju� istnieje: "+observedLinksPackage.getUrl());
 			}
 		}
 
@@ -237,7 +256,12 @@ public class MultiObserverAdmin {
 	public String AddSiteType(ModelMap model) {
 		AddSiteTypeForm addSiteTypeForm = new AddSiteTypeForm();
 		
-		addSiteTypeForm.setProductCategorys(productCategoryDAO.getAll());
+		try {
+			addSiteTypeForm.setProductCategorys(productCategoryDAO.getAll());
+		} catch (HibernateJdbcException e) {
+			addSiteTypeForm.setError("Po��czenie z baz� danych przerwane");
+			e.printStackTrace();
+		}
 
 		model.addAttribute("form", addSiteTypeForm);
 
@@ -291,7 +315,12 @@ public class MultiObserverAdmin {
 	public String AddProductCategory(ModelMap model) {
 		AddProductCategoryForm addProductCategoryForm = new AddProductCategoryForm();
 
-		addProductCategoryForm.setAllProductCategorys(productCategoryDAO.getAll());
+		try {
+			addProductCategoryForm.setAllProductCategorys(productCategoryDAO.getAll());
+		} catch (HibernateJdbcException e) {
+			addProductCategoryForm.setError("Po��czenie z baz� danych przerwane");
+			e.printStackTrace();
+		}
 		
 		model.addAttribute("form", addProductCategoryForm);
 
