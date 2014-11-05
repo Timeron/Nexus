@@ -85,7 +85,7 @@ public class MultiObserverAdmin {
 		try {
 			addNewLinkPackageForm.setSites(siteDAO.getAllSites());
 		} catch (HibernateJdbcException e){
-			addNewLinkPackageForm.setError("Po³¹czenie z baz¹ danych przerwane");
+			addNewLinkPackageForm.setError("PoÅ‚Ä…czenie z bazÄ… danych przerwane");
 			e.printStackTrace();
 		} catch(GenericJDBCException e){
 			e.printStackTrace();
@@ -206,7 +206,7 @@ public class MultiObserverAdmin {
 				observedLinksPackageDAO.save(observedLinksPackage);
 			}else{
 				observedLinksPackage.setDuplicated(true);
-				log.warn("LinksPackage ju¿ istnieje: "+observedLinksPackage.getUrl());
+				log.warn("LinksPackage juÅ¼ istnieje: "+observedLinksPackage.getUrl());
 			}
 		}
 
@@ -248,7 +248,7 @@ public class MultiObserverAdmin {
 		try {
 			addSiteTypeForm.setProductCategorys(productCategoryDAO.getAll());
 		} catch (HibernateJdbcException e) {
-			addSiteTypeForm.setError("Po³¹czenie z baz¹ danych przerwane");
+			addSiteTypeForm.setError("PoÅ‚Ä…czenie z bazÄ… danych przerwane");
 			e.printStackTrace();
 		}
 
@@ -307,7 +307,7 @@ public class MultiObserverAdmin {
 		try {
 			addProductCategoryForm.setAllProductCategorys(productCategoryDAO.getAll());
 		} catch (HibernateJdbcException e) {
-			addProductCategoryForm.setError("Po³¹czenie z baz¹ danych przerwane");
+			addProductCategoryForm.setError("PoÅ‚Ä…czenie z bazÄ… danych przerwane");
 			e.printStackTrace();
 		}
 		

@@ -71,4 +71,25 @@ public class SiteDAO extends DaoImp{
 		
 	}
 	
+	public List<Site> getByName(String name) {
+		List<Site> sites = new ArrayList<Site>();
+		Session session = sessionFactory.openSession();
+		session.beginTransaction();
+		String hql = "FROM Site WHERE name ='"+name+"'";
+		
+		
+		Query query = session.createQuery(hql);
+		sites = (List<Site>) query.list();
+		
+		session.close();
+		
+		if (sites.size() > 0) {
+			return sites;
+		} else {
+			List<Site> emptyList = Collections.emptyList();
+			return emptyList;
+		}
+		
+	}
+	
 }
