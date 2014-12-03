@@ -1,6 +1,5 @@
 package com.nexus.dao.Implementation;
 
-import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;

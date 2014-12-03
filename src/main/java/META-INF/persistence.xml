@@ -16,6 +16,7 @@
 		<class>com.nexus.dao.entity.ObservedSite</class>
 		<class>com.nexus.dao.entity.ObservedSiteHistory</class>
 		<class>com.nexus.dao.entity.ProductCategory</class>
+		<class>com.nexus.dao.entity.ProposedProductKay</class>
 		<class>com.nexus.dao.entity.Site</class>
 		<class>com.nexus.dao.entity.SiteType</class>
 	</persistence-unit>

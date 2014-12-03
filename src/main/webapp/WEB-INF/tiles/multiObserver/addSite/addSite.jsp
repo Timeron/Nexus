@@ -11,14 +11,61 @@
 		<form:form commandName="form" action="addLinkPackageToNewSite"
 			id="formSite">
 			<div class="form-group" id="divName">
-				<label for="imie">Nazwa</label>
-				<form:input type="text" class="form-control" path="site.name" id="name"
-					placeholder="Nazwa" />
+				<label for="name">Nazwa</label>
+				<form:input type="text" class="form-control" path="site.name"
+					id="name" placeholder="Nazwa" />
 			</div>
 			<div class="form-group" id="divUrl">
-				<label for="nazwisko">Url</label>
-				<form:input type="text" cssClass="form-control" path="site.url" id="url"
-					placeholder="Url" />
+				<label for="url">Url</label>
+				<form:input type="text" cssClass="form-control" path="site.url"
+					id="url" placeholder="Url" />
+			</div>
+			<div class="form-group" id="articlesDivXPath">
+				<label for="articlesDivXPath">articlesDivXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.articlesDivXPath" id="articlesDivXPath"
+					placeholder="articlesDivXPath" />
+			</div>
+			<div class="form-group" id="nextXPath">
+				<label for="nextXPath">nextXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.nextXPath" id="nextXPath" placeholder="nextXPath" />
+			</div>
+			<div class="form-group" id="productNameXPath">
+				<label for="productNameXPath">productNameXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.productNameXPath" id="productNameXPath"
+					placeholder="NameXPath" />
+			</div>
+			<div class="form-group" id="productURLXPath">
+				<label for="productURLXPath">productURLXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.productURLXPath" id="productURLXPath"
+					placeholder="URLXPath" />
+			</div>
+			<div class="form-group" id="productPriceXPath">
+				<label for="productPriceXPath">productPriceXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.productPriceXPath" id="productPriceXPath"
+					placeholder="PriceXPath" />
+			</div>
+			<div class="form-group" id="productNewPriceXPath">
+				<label for="productNewPriceXPath">productNewPriceXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.productNewPriceXPath" id="productNewPriceXPath"
+					placeholder="NewPriceXPath" />
+			</div>
+			<div class="form-group" id="productOldPriceXPath">
+				<label for="productOldPriceXPath">productOldPriceXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.productOldPriceXPath" id="productOldPriceXPath"
+					placeholder="OldPriceXPath" />
+			</div>
+			<div class="form-group" id="productKayXPath">
+				<label for="productKayXPath">productKayXPath</label>
+				<form:input type="text" cssClass="form-control"
+					path="site.productKayXPath" id="productKayXPath"
+					placeholder="KayXPath" />
 			</div>
 			<div class="form-group">
 				<form:checkbox path="site.valid" placeholder="false" />
@@ -40,14 +87,11 @@
 			var url = document.getElementById("url").value;
 
 			removeValidation();
-			
-			if(checkIfExist(name, "divName") & checkIfExist(url, "divUrl")){
+
+			if (checkIfExist(name, "divName") & checkIfExist(url, "divUrl")) {
 				return true;
 			}
 			return false;
 		});
 	});
-	
-	
-
 </script>

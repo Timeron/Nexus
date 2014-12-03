@@ -37,7 +37,7 @@ import com.nexus.form.multiObserver.MultiObserverForm;
 @RequestMapping("/multiobserver/admin")
 public class MultiObserverAdmin {
 
-	static Logger log = Logger.getLogger(MultiObserverAdmin.class.getName());
+	static Logger LOG = Logger.getLogger(MultiObserverAdmin.class.getName());
 
 	@Autowired
 	SiteDAO siteDAO;
@@ -63,7 +63,7 @@ public class MultiObserverAdmin {
 		model.addAttribute("form", multiObserverForm);
 
 		// Spring uses InternalResourceViewResolver and return back index.jsp
-		return "multiObserver";
+		return "multiObserverAdmin";
 
 	}
 
@@ -127,7 +127,7 @@ public class MultiObserverAdmin {
 
 	@RequestMapping(value = "/addLinkPackageToNewSite", method = RequestMethod.POST)
 	public String AddLinksPackageToNewSite(ModelMap model, @ModelAttribute("addSiteForm") AddSiteForm addSiteForm) {
-		
+		LOG.info(addSiteForm.getSite().getArticlesDivXPath());
 		AddLinksPackageToNewSiteForm addLinksPackageToNewSiteForm = new AddLinksPackageToNewSiteForm();
 		addLinksPackageToNewSiteForm.setSiteTypes(siteTypeDAO.getAllSiteTypes());
 		addLinksPackageToNewSiteForm.setSite(addSiteForm.getSite());
@@ -169,7 +169,7 @@ public class MultiObserverAdmin {
 
 	@RequestMapping(value = "/addLinkPackageToNewSiteResult", method = RequestMethod.POST)
 	public String AddLinkPackageToNewSiteResult(ModelMap model, @ModelAttribute("addLinksPackageToOldSiteForm") AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm) {
-		log.info("Dodajemy Stronę");
+		LOG.info("Dodajemy Stronę");
 		
 		AddLinksPackageToOldSiteResultForm addLinksPackageToOldSiteResultForm = new AddLinksPackageToOldSiteResultForm();
 		
@@ -180,10 +180,11 @@ public class MultiObserverAdmin {
 				observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
 				observedLinksPackage.setTimestamp(new Date());
 				siteDAO.saveSite(addLinksPackageToOldSiteForm.getSite());
-				log.info("LinksPackage dodany: "+observedLinksPackage.getUrl());
+				LOG.info("LinksPackage dodany: "+observedLinksPackage.getUrl());
 			}else{
 				observedLinksPackage.setDuplicated(true);
-				log.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
+				addLinksPackageToOldSiteResultForm.setError("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
+				LOG.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
 			}
 		}
 		
@@ -206,7 +207,7 @@ public class MultiObserverAdmin {
 				observedLinksPackageDAO.save(observedLinksPackage);
 			}else{
 				observedLinksPackage.setDuplicated(true);
-				log.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
+				LOG.warn("LinksPackage już istnieje: "+observedLinksPackage.getUrl());
 			}
 		}
 

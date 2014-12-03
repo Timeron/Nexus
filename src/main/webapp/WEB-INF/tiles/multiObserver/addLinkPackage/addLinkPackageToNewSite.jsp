@@ -3,9 +3,11 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<script type="text/javascript" src="assets/twitterbootstrap/js/bootstrap-tab.js"></script>
+<script type="text/javascript"
+	src="assets/twitterbootstrap/js/bootstrap-tab.js"></script>
 <link href="../bootstrap/css/bootstrap.css" rel="stylesheet">
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
+<script type="text/javascript"
+	src="http://ajax.googleapis.com/ajax/libs/jquery/1.7/jquery.js"></script>
 
 <div class="container">
 
@@ -19,8 +21,8 @@
 			<div class="form-group col-md-12">
 				<div class="form-group col-md-2" id="divSiteId">
 					<label for="Id strony">Nazwa strony</label>
-					<form:input type="text" class="form-control" path="site.id" id="siteId"
-						placeholder="${form.site.id}" readonly="true" />
+					<form:input type="text" class="form-control" path="site.id"
+						id="siteId" placeholder="${form.site.id}" readonly="true" />
 				</div>
 				<div class="form-group col-md-5" id="divSiteUrl">
 					<label for="Id strony">Nazwa strony</label>
@@ -32,6 +34,26 @@
 					<form:input type="text" class="form-control" path="site.name"
 						id="siteName" placeholder="${form.site.name}" readonly="true" />
 				</div>
+
+				<!-- ukryte wartości site -->
+				<form:input type="hidden" path="site.articlesDivXPath" id="articlesDivXPath"
+					value="${form.site.articlesDivXPath}" />
+				<form:input type="hidden" path="site.nextXPath" id="nextXPath"
+					value="${form.site.nextXPath}" />
+				<form:input type="hidden" path="site.productNameXPath"
+					id="productNameXPath" value="${form.site.productNameXPath}" />
+				<form:input type="hidden" path="site.productURLXPath"
+					id="productURLXPath" value="${form.site.productURLXPath}" />
+				<form:input type="hidden" path="site.productPriceXPath"
+					id="productPriceXPath" value="${form.site.productPriceXPath}" />
+				<form:input type="hidden" path="site.productNewPriceXPath"
+					id="productNewPriceXPath" value="${form.site.productNewPriceXPath}" />
+				<form:input type="hidden" path="site.productOldPriceXPath"
+					id="productOldPriceXPath" value="${form.site.productOldPriceXPath}" />
+				<form:input type="hidden" path="site.productKayXPath"
+					id="productKayXPath" value="${form.site.productKayXPath}" />
+				<!-- ukryte wartości site/ -->
+
 			</div>
 			<br>
 			<div class="form-group col-md-12">
@@ -67,7 +89,8 @@
 				</div>
 				<div class="form-group, col-md-3">
 					<div id="divPackageSiteType">
-						<form:select path="site.observedLinksPackage[0].siteType.description"
+						<form:select
+							path="site.observedLinksPackage[0].siteType.description"
 							class="form-control" id="packageSiteType">
 							<form:options items="${form.siteTypes}" />
 						</form:select>

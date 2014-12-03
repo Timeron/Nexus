@@ -1,83 +1,98 @@
 <!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
 
 <tiles-definitions>
-
+	<!-- Base -->
 	<definition name="multiObserverBase" template="/WEB-INF/tiles/templates/multiObserverTemplate.jsp">
 		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
 		<put-attribute name="logInHeader" value="/WEB-INF/tiles/index/logInHeader.jsp" />
-		<put-attribute name="menu" value="/WEB-INF/tiles/multiObserver/include/menu.jsp" />
 		<put-attribute name="alerts" value="/WEB-INF/tiles/multiObserver/alert/alert.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/tiles/multiObserver/include/menu.jsp" />
 	</definition>
-
+	
 	<definition name="multiObserver" extends="multiObserverBase">
-		<put-attribute name="title" value="Multi Observer" />
+		<put-attribute name="title" value="Multi Observer Main Site" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserver.jsp" />
 	</definition>
+	<!-- Base -->
+	<definition name="multiObserverAdminBase" extends="multiObserverBase">
+		<put-attribute name="menu" value="/WEB-INF/tiles/multiObserver/include/adminMenu.jsp" />
+	</definition>
 
-	<definition name="multiObserverAdmin" extends="multiObserverBase">
+	<definition name="multiObserverAdmin" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserverAdmin.jsp" />
 	</definition>
 
-	<definition name="multiObserverAdminAddLinks" extends="multiObserverBase">
+	<definition name="multiObserverAdminAddLinks" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserverAdminAddLinks.jsp" />
 	</definition>
 
-	<definition name="multiObserverChangeResult" extends="multiObserverBase">
+	<definition name="multiObserverChangeResult" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserverChangeResult.jsp" />
 	</definition>
 	
-	<definition name="addNewLinkPackage" extends="multiObserverBase">
+	<definition name="addNewLinkPackage" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addLinkPackage/chooseSiteForNewLinkPackage.jsp" />
 	</definition>
 	
-	<definition name="addSite" extends="multiObserverBase">
+	<definition name="addSite" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addSite/addSite.jsp" />
 	</definition>
 	
-	<definition name="addLinkPackageToNewSite" extends="multiObserverBase">
+	<definition name="addLinkPackageToNewSite" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addLinkPackage/addLinkPackageToNewSite.jsp" />
 	</definition>
 	
-	<definition name="addLinkPackageToOldSite" extends="multiObserverBase">
+	<definition name="addLinkPackageToOldSite" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addLinkPackage/addLinkPackageToOldSite.jsp" />
 	</definition>
 	
-	<definition name="addLinkPackageToSiteResult" extends="multiObserverBase">
+	<definition name="addLinkPackageToSiteResult" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addLinkPackage/addLinkPackageToNewSiteResult.jsp" />
 	</definition>
 	
-	<definition name="chooseProductCategory" extends="multiObserverBase">
+	<definition name="chooseProductCategory" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/chooseProductCategory.jsp" />
 	</definition>
 	
-	<definition name="addSiteType" extends="multiObserverBase">
+	<definition name="addSiteType" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addSiteType/addSiteType.jsp" />
 	</definition>
 	
-	<definition name="addSiteTypeResult" extends="multiObserverBase">
+	<definition name="addSiteTypeResult" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addSiteType/addSiteTypeResult.jsp" />
 	</definition>
 
-	<definition name="addProductCategory" extends="multiObserverBase">
+	<definition name="addProductCategory" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addProductCategory/addProductCategory.jsp" />
 	</definition>
 	
-	<definition name="addProductCategoryResult" extends="multiObserverBase">
+	<definition name="addProductCategoryResult" extends="multiObserverAdminBase">
 		<put-attribute name="title" value="Multi Observer" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/addProductCategory/addProductCategoryResult.jsp" />
+	</definition>
+	
+<!-- 	Viewer -->
+	<!-- Base -->
+	<definition name="multiObserverViewer" extends="multiObserverBase">
+		<put-attribute name="menu" value="/WEB-INF/tiles/multiObserver/include/menu.jsp" />
+	</definition>
+	
+	<definition name="searchObjects" extends="multiObserverViewer">
+		<put-attribute name="title" value="Multi Observer Viewer" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/viewer/searchObservedSite.jsp" />
 	</definition>
 	
 </tiles-definitions>
