@@ -10,6 +10,13 @@
 		<put-attribute name="menu" value="/WEB-INF/tiles/multiObserver/include/menu.jsp" />
 	</definition>
 	
+	<definition name="multiObserverSearchBase" template="/WEB-INF/tiles/templates/multiObserverSearchTemplate.jsp">
+		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
+		<put-attribute name="logInHeader" value="/WEB-INF/tiles/index/logInHeader.jsp" />
+		<put-attribute name="alerts" value="/WEB-INF/tiles/multiObserver/alert/alert.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
+	</definition>
+	
 	<definition name="multiObserver" extends="multiObserverBase">
 		<put-attribute name="title" value="Multi Observer Main Site" />
 		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/multiObserver.jsp" />
@@ -86,13 +93,25 @@
 	
 <!-- 	Viewer -->
 	<!-- Base -->
-	<definition name="multiObserverViewer" extends="multiObserverBase">
+	<definition name="multiObserverViewer" extends="multiObserverSearchBase">
 		<put-attribute name="menu" value="/WEB-INF/tiles/multiObserver/include/menu.jsp" />
 	</definition>
 	
-	<definition name="searchObjects" extends="multiObserverViewer">
-		<put-attribute name="title" value="Multi Observer Viewer" />
-		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/viewer/searchObservedSite.jsp" />
+	<definition name="searchObservedSite" extends="multiObserverViewer">
+		<put-attribute name="title" value="Multi Observer Search" />
+		<put-attribute name="searchForm" value="/WEB-INF/tiles/multiObserver/viewer/searchObservedSite.jsp" />
+		<put-attribute name="results" value="/WEB-INF/tiles/multiObserver/viewer/resultObservedSite.jsp" />
+	</definition>
+	
+	<definition name="searchObservedObject" extends="multiObserverViewer">
+		<put-attribute name="title" value="Multi Observer Search" />
+		<put-attribute name="searchForm" value="/WEB-INF/tiles/multiObserver/viewer/searchObservedObject.jsp" />
+		<put-attribute name="results" value="/WEB-INF/tiles/multiObserver/viewer/resultObservedObject.jsp" />
+	</definition>
+	
+	<definition name="editObservedSite" extends="multiObserverBase">
+		<put-attribute name="title" value="Edit Observed Site" />
+		<put-attribute name="body" value="/WEB-INF/tiles/multiObserver/viewer/editObservedSite.jsp" />
 	</definition>
 	
 </tiles-definitions>
