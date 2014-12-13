@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.nexus.dao.Implementation.ObservedObjectDAO;
 import com.nexus.dao.Implementation.ObservedSiteDAO;
 import com.nexus.dao.entity.ObservedObject;
+import com.nexus.dao.entity.ObservedSite;
 import com.nexus.form.multiObserver.AddSiteForm;
 import com.nexus.form.multiObserver.EditObservedSiteForm;
 import com.nexus.form.multiObserver.SearchObservedObjectsForm;
@@ -76,11 +77,16 @@ public class MultiObserverViewer {
 			HttpServletResponse response){
 		EditObservedSiteForm editObservedSiteForm = new EditObservedSiteForm();
 		
+		ObservedSite observedSite = observedSiteDAO.getById(Integer.parseInt(request.getParameter("id")));
+		
 		editObservedSiteForm.setObservedSite(observedSiteDAO.getById(Integer.parseInt(request.getParameter("id"))));
+		editObservedSiteForm.setObservedObject(observedSite.getObservedObject());
 		
 		model.addAttribute("form", editObservedSiteForm);
 
 		return "editObservedSite";
 	}
+	
+	
 	
 }

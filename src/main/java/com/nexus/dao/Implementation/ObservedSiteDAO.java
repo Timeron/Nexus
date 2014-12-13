@@ -202,9 +202,9 @@ public class ObservedSiteDAO extends DaoImp {
 		}
 		if(!searchParameters.getArticleName().isEmpty() && searchParameters.getArticleName()!=null){
 			if(searchParameters.getArticleName().contains("%")){
-				criteria.add(Restrictions.like("articleName", searchParameters.getArticleName()));
+				criteria.add(Restrictions.ilike("articleName", searchParameters.getArticleName()));
 			}
-			criteria.add(Restrictions.like("articleName", "%"+searchParameters.getArticleName().trim()+"%"));
+			criteria.add(Restrictions.ilike("articleName", "%"+searchParameters.getArticleName().trim()+"%"));
 		}
 		if(!searchParameters.getUrl().isEmpty() && searchParameters.getUrl()!=null){
 			if(searchParameters.getUrl().contains("%")){
@@ -212,6 +212,10 @@ public class ObservedSiteDAO extends DaoImp {
 			}
 			criteria.add(Restrictions.like("url", searchParameters.getUrl().trim()));
 		}
+//		if(searchParameters.isApprovedProductKay()){
+//			
+//			criteria.add(Restrictions.eq("proposedProductKay", searchParameters.isApprovedProductKay()));
+//		}
 		result = criteria.list();
 		session.close();
 		

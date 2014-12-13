@@ -23,6 +23,11 @@
 			<form:input type="text" cssClass="form-control" path="searchParameters.url"
 				id="URL" placeholder="URL" />
 		</div>
+		<div class="form-group" id="divApprovedProductKay">
+			<label for="approvedProductKay">Zatwierdzony</label>
+			<form:checkbox cssClass="form-control" path="searchParameters.approvedProductKay"
+				id="approvedProductKay" placeholder="approvedProductKay" />
+		</div>
 		<div class="form-group, col-md-12">
 			<a href="./" class="btn btn-default">Cofnij</a>
 			<button type="reset" class="btn btn-default">Resetuj</button>

@@ -4,6 +4,7 @@
 		<tr>
 			<th>#</th>
 			<th>Nazwa</th>
+			<th>URL</th>
 			<th>Zatwierdzony</th>
 		</tr>
 		<c:forEach items="${form.results}" var="observedSites">
@@ -11,6 +12,7 @@
 				<td>${observedSites.id}</td>
 				<td><a
 					href="/timeron-nexus/multiobserver/viewer/editObservedSite?id=${observedSites.id}">${observedSites.articleName}</a></td>
+				<td>${observedSites.url}</td>
 				<td>${observedSites.approvedProductKay}</td>
 			</tr>
 		</c:forEach>

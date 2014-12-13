@@ -9,7 +9,7 @@
 	<form:form commandName="form" action="searchObservedObject"
 		id="searchParameters">
 		<div class="form-group" id="divId">
-			<label for="name">Nazwa</label>
+			<label for="name">Id</label>
 			<form:input type="text" class="form-control" path="searchParameters.id"
 				id="name" placeholder="Id" />
 		</div>
