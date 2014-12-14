@@ -23,9 +23,27 @@
 		</tr>
 		<tr>
 			<td>${form.observedObject.id}</td>
-			<td>${form.observedObject.articleName}</a></td>
-			<td>${form.observedObject.url}</a></td>
+			<td>${form.observedObject.name}</a></td>
+			<td>${form.observedObject.productKay}</a></td>
 		</tr>
 	</table>
+	
+		<table class="table table-striped">
+		<tr>
+			<th>#</th>
+			<th>Data</th>
+			<th>cena</th>
+			<th>stara cena</th>
+		</tr>
+		<c:forEach items="${form.observedSiteHistory}" var="history">
+			<tr>
+				<td>${history.id}</td>
+				<td>${history.timestamp}</a></td>
+				<td>${history.price}</td>
+				<td>${history.oldPrice}</td>
+			</tr>
+		</c:forEach>
+	</table>
+	
 </div>
 

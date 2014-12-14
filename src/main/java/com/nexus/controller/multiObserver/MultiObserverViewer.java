@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nexus.dao.Implementation.ObservedObjectDAO;
 import com.nexus.dao.Implementation.ObservedSiteDAO;
+import com.nexus.dao.Implementation.ObservedSiteHistoryDAO;
 import com.nexus.dao.entity.ObservedObject;
 import com.nexus.dao.entity.ObservedSite;
 import com.nexus.form.multiObserver.AddSiteForm;
@@ -27,6 +28,8 @@ public class MultiObserverViewer {
 	ObservedSiteDAO observedSiteDAO;
 	@Autowired
 	ObservedObjectDAO observedObjectDAO;
+	@Autowired
+	ObservedSiteHistoryDAO observedSiteHistoryDAO;
 	
 	@RequestMapping(value = "/searchObservedObject", method = RequestMethod.GET)
 	public String searchObservedObjectInit(ModelMap model){
@@ -81,6 +84,7 @@ public class MultiObserverViewer {
 		
 		editObservedSiteForm.setObservedSite(observedSiteDAO.getById(Integer.parseInt(request.getParameter("id"))));
 		editObservedSiteForm.setObservedObject(observedSite.getObservedObject());
+		editObservedSiteForm.setObservedSiteHistory(observedSiteHistoryDAO.getByObservedSite(observedSite));
 		
 		model.addAttribute("form", editObservedSiteForm);
 

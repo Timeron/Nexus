@@ -208,14 +208,14 @@ public class ObservedSiteDAO extends DaoImp {
 		}
 		if(!searchParameters.getUrl().isEmpty() && searchParameters.getUrl()!=null){
 			if(searchParameters.getUrl().contains("%")){
-				criteria.add(Restrictions.like("url", searchParameters.getArticleName()));
+				criteria.add(Restrictions.ilike("url", searchParameters.getArticleName()));
 			}
-			criteria.add(Restrictions.like("url", searchParameters.getUrl().trim()));
+			criteria.add(Restrictions.ilike("url", searchParameters.getUrl().trim()));
 		}
-//		if(searchParameters.isApprovedProductKay()){
-//			
-//			criteria.add(Restrictions.eq("proposedProductKay", searchParameters.isApprovedProductKay()));
-//		}
+		if(searchParameters.isApprovedProductKay()){
+			
+			criteria.add(Restrictions.eq("approvedProductKay", true));
+		}
 		result = criteria.list();
 		session.close();
 		
