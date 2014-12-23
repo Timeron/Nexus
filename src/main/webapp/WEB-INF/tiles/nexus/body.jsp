@@ -18,6 +18,11 @@
           <p>Zadania do wykonania</p>
           <p><a class="btn btn-default" href="./jtask/" role="button">View details &raquo;</a></p>
         </div>
+        <div class="col-md-4">
+          <h2>Wallet</h2>
+          <p>Portfel</p>
+          <p><a class="btn btn-default" href="./wallet/" role="button">View details &raquo;</a></p>
+        </div>
       </div>
 
       <hr>

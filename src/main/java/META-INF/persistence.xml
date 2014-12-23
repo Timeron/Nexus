@@ -19,5 +19,8 @@
 		<class>com.nexus.dao.entity.ProposedProductKay</class>
 		<class>com.nexus.dao.entity.Site</class>
 		<class>com.nexus.dao.entity.SiteType</class>
+		<class>com.nexus.dao.entity.WalletAccount</class>
+		<class>com.nexus.dao.entity.WalletRecord</class>
+		<class>com.nexus.dao.entity.WalletType</class>
 	</persistence-unit>
 </persistence>

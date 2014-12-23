@@ -22,7 +22,7 @@ import com.nexus.form.multiObserver.SearchObservedSiteForm;
 
 @Controller
 @RequestMapping("/multiobserver/viewer")
-public class MultiObserverViewer {
+public class MultiObserverViewerController {
 
 	@Autowired
 	ObservedSiteDAO observedSiteDAO;

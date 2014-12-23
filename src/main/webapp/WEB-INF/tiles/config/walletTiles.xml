@@ -1,0 +1,58 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- Base -->
+	<definition name="walletBase" template="/WEB-INF/tiles/templates/walletTemplate.jsp">
+		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
+		<put-attribute name="logInHeader" value="/WEB-INF/tiles/index/logInHeader.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/tiles/wallet/include/menu.jsp" />
+		<put-attribute name="chart" value="" />
+	</definition>
+	
+	<definition name="walletMainSite" extends="walletBase">
+		<put-attribute name="title" value="Wallet" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/wallet.jsp"/>
+		<put-attribute name="chart" value="/WEB-INF/tiles/wallet/include/charts/lineChart.jsp" />
+	</definition>
+	
+	<definition name="walletAddAccount" extends="walletBase">
+		<put-attribute name="title" value="Add Account" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletAddAccount.jsp"/>
+	</definition>
+	
+	<definition name="walletAddAccountResult" extends="walletBase">
+		<put-attribute name="title" value="Add Account Result" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletAddAccountResult.jsp"/>
+	</definition>
+	
+	<definition name="walletAccout" extends="walletBase">
+		<put-attribute name="title" value="Account" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletAccout.jsp"/>
+	</definition>
+	
+	<definition name="walletAddRecord" extends="walletBase">
+		<put-attribute name="title" value="Add Record" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletAddRecord.jsp"/>
+	</definition>
+	
+	<definition name="walletAddType" extends="walletBase">
+		<put-attribute name="title" value="Add Type" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletAddType.jsp"/>
+	</definition>
+	
+	<definition name="walletAddTypeResult" extends="walletBase">
+		<put-attribute name="title" value="Add Type" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletAddTypeResult.jsp"/>
+	</definition>
+	
+	<definition name="walletAddRecordResult" extends="walletBase">
+		<put-attribute name="title" value="Add Type" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletAddRecordResult.jsp"/>
+	</definition>
+	
+	<definition name="walletEditRecord" extends="walletBase">
+		<put-attribute name="title" value="Edit record" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletEditRecord.jsp"/>
+	</definition>
+</tiles-definitions>
