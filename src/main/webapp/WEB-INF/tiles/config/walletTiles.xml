@@ -55,4 +55,15 @@
 		<put-attribute name="title" value="Edit record" />
 		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletEditRecord.jsp"/>
 	</definition>
+	
+	<definition name="showTypes" extends="walletBase">
+		<put-attribute name="title" value="All types" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletShowTypes.jsp"/>
+	</definition>
+	
+	<definition name="walletEditType" extends="walletBase">
+		<put-attribute name="title" value="Update type" />
+		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletEditType.jsp"/>
+	</definition>
+	
 </tiles-definitions>

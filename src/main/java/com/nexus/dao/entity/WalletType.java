@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -30,7 +31,7 @@ public class WalletType {
 	@JoinColumn(name="parent_type")
 	private WalletType parentType;
 	
-	@OneToMany(mappedBy="parentType")
+	@OneToMany(mappedBy="parentType", fetch=FetchType.EAGER)
 	private List<WalletType> childrenTypes;
 
 	public int getId() {

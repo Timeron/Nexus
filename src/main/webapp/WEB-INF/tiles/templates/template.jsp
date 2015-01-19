@@ -24,6 +24,5 @@
 	<div id="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>
-	<script src="<c:url value="/resources/validation.js" />"></script>
 </body>
 </html>

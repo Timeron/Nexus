@@ -23,8 +23,9 @@ import com.nexus.controller.wallet.form.WalletAddRecordResultForm;
 import com.nexus.controller.wallet.form.WalletAddTypeForm;
 import com.nexus.controller.wallet.form.WalletAddTypeResultForm;
 import com.nexus.controller.wallet.form.WalletEditRecordForm;
+import com.nexus.controller.wallet.form.WalletEditTypeForm;
 import com.nexus.controller.wallet.form.WalletMainSiteForm;
-import com.nexus.controller.wallet.form.WalletRemoveRecordForm;
+import com.nexus.controller.wallet.form.WalletShowTypesForm;
 import com.nexus.dao.Implementation.WalletAccountDAO;
 import com.nexus.dao.Implementation.WalletDAO;
 import com.nexus.dao.Implementation.WalletRecordDAO;
@@ -109,6 +110,17 @@ public class WalletController {
 		return "walletAddType";
 	}
 	
+	@RequestMapping(value = "/showTypes")
+	public String walletShowTypes(ModelMap model){
+		WalletShowTypesForm walletShowTypesForm = new WalletShowTypesForm();
+		
+		walletShowTypesForm.setWalletTypes(walletTypeDAO.getAllParents());
+		
+		model.addAttribute("form", walletShowTypesForm);
+
+		return "showTypes";
+	}
+	
 	@RequestMapping(value = "/addTypeResult", method = RequestMethod.POST)
 	public String walletAddTypeResult(ModelMap model, @ModelAttribute("form") WalletAddTypeForm walletAddTypeForm){
 		WalletAddTypeResultForm walletAddTypetResultForm = new WalletAddTypeResultForm();
@@ -120,6 +132,23 @@ public class WalletController {
 		}
 		
 		walletTypeDAO.save(walletAddTypeForm.getWalletType());
+		
+		model.addAttribute("form", walletAddTypetResultForm);
+
+		return "walletAddTypeResult";
+	}
+	
+	@RequestMapping(value = "/updateTypeResult", method = RequestMethod.POST)
+	public String walletUpdateTypeResult(ModelMap model, @ModelAttribute("form") WalletEditTypeForm walletEditTypeForm){
+		WalletAddTypeResultForm walletAddTypetResultForm = new WalletAddTypeResultForm();
+		
+		WalletType newWalletType = walletEditTypeForm.getNewWalletType();
+		newWalletType.setTimestamp(new Date());
+		if(walletEditTypeForm.getNewWalletTypeParentTypeId()!=null){
+			newWalletType.setParentType(walletTypeDAO.getById(walletEditTypeForm.getNewWalletTypeParentTypeId()));
+		}
+		
+		walletTypeDAO.update(newWalletType);
 		
 		model.addAttribute("form", walletAddTypetResultForm);
 
@@ -236,5 +265,31 @@ public class WalletController {
 
 			return "walletMainSite";
 		}
+	}
+	
+	@RequestMapping(value = "/walletEditType", method = RequestMethod.GET)
+	public String walletEditType(ModelMap model, HttpServletRequest request, HttpServletResponse response){
+		WalletEditTypeForm walletEditTypeForm = new WalletEditTypeForm();
+		
+		walletEditTypeForm.setWalletTypes(walletTypeDAO.getAllParents());
+		walletEditTypeForm.setWalletType(walletTypeDAO.getById(Integer.parseInt(request.getParameter("id"))));
+		
+		model.addAttribute("form", walletEditTypeForm);
+
+		return "walletEditType";
+	}
+	
+	@RequestMapping(value = "/walletRemoveType", method = RequestMethod.GET)
+	public String walletRemoveType(ModelMap model, HttpServletRequest request, HttpServletResponse response){
+
+		WalletShowTypesForm walletShowTypesForm = new WalletShowTypesForm();
+		
+		walletTypeDAO.removeById(Integer.parseInt(request.getParameter("id")));
+		walletShowTypesForm.setWalletTypes(walletTypeDAO.getAllParents());
+		
+		model.addAttribute("form", walletShowTypesForm);
+
+		return "showTypes";
+		
 	}
 }
