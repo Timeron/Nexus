@@ -11,6 +11,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="wallet_account")
 public class WalletAccount {
@@ -21,7 +23,10 @@ public class WalletAccount {
 	private String name;
 	private String description;
 	private String currency;
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss.S")
 	private Date timestamp;
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss.S")
+	private Date updated;
 	
 	@OneToMany(mappedBy="walletAccount")
 	private List<WalletRecord> walletRecords;
@@ -71,9 +76,10 @@ public class WalletAccount {
 	public void setCurrency(String currency) {
 		this.currency = currency;
 	}
-	
-	
-	
-	
-	
+	public Date getUpdated() {
+		return updated;
+	}
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
 }

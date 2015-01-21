@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name="wallet_type")
 public class WalletType {
@@ -25,7 +27,10 @@ public class WalletType {
 	private int defaultValue;
 	private String color;
 	private String icon;
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss.S")
 	private Date timestamp;
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss.S")
+	private Date updated;
 	
 	@ManyToOne
 	@JoinColumn(name="parent_type")
@@ -96,6 +101,14 @@ public class WalletType {
 
 	public void setChildrenTypes(List<WalletType> childrenTypes) {
 		this.childrenTypes = childrenTypes;
+	}
+
+	public Date getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 	
 }

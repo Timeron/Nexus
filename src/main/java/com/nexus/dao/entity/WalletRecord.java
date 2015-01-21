@@ -24,6 +24,8 @@ public class WalletRecord {
 	private boolean transfer;
 	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss.S")
 	private Date date;
+	@DateTimeFormat(pattern = "YYYY-MM-DD HH:mm:ss.S")
+	private Date updated;
 	
 	@ManyToOne
 	@JoinColumn(name="wallet_type")
@@ -88,6 +90,12 @@ public class WalletRecord {
 	}
 	public void setDestinationWalletAccount(WalletAccount destinationWalletAccount) {
 		this.destinationWalletAccount = destinationWalletAccount;
+	}
+	public Date getUpdated() {
+		return updated;
+	}
+	public void setUpdated(Date updated) {
+		this.updated = updated;
 	}
 	
 	

@@ -9,6 +9,7 @@
 		<h1><a class="btn btn-primary btn-ms" role="button" href="/timeron-nexus/wallet/addRecord?id=${form.walletAccount.id}">+</a></h1>
 	</div>
 </div>
+
 	<c:choose>
 
 		<c:when test="${not empty form.walletRecords}">
@@ -42,3 +43,10 @@
 		</c:otherwise>
 	</c:choose>
 </div>
+${form.draft}
+<script>
+var gson = ${form.draft};
+alert(gson);
+var json = JSON.parse(gson);
+alert(json.recordList);
+</script>
