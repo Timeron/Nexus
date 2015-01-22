@@ -46,7 +46,7 @@
 
 	<!-- skanowanie kontrolerów - bez tego nie działa mvc łapie też autowired 
 		dla dao -->
-	<context:component-scan base-package="com.nexus.controller" />
+	<context:component-scan base-package="com.nexus.apps" />
 	<!-- skanowanie dao w poszukiwaniu adnotacji autowired dla dao -->
 	<context:component-scan base-package="com.nexus.dao" />
 
