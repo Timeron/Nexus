@@ -2,12 +2,12 @@ package com.nexus.apps.wallet.form;
 
 import java.util.List;
 
-import com.nexus.dao.DaoImp;
-import com.nexus.dao.entity.WalletAccount;
-import com.nexus.dao.entity.WalletRecord;
-import com.nexus.dao.entity.WalletType;
+import com.nexus.apps.form.MainForm;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletType;
 
-public class WalletEditRecordForm extends DaoImp {
+public class WalletEditRecordForm extends MainForm {
 
 	private WalletRecord walletRecord;
 	private List<WalletAccount> walletAccount;

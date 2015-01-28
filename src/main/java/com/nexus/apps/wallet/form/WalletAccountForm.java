@@ -4,8 +4,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.WalletAccount;
-import com.nexus.dao.entity.WalletRecord;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 
 public class WalletAccountForm extends MainForm{
 

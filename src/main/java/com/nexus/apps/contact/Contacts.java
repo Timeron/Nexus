@@ -11,7 +11,6 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -19,8 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.nexus.calendar.NexusCalendar;
-import com.nexus.dao.Implementation.PersonDAO;
-import com.nexus.dao.entity.NexusPerson;
+import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
+import com.timeron.NexusDatabaseLibrary.dao.PersonDAO;
 
 @Controller
 @RequestMapping("/contacts")
@@ -29,8 +28,7 @@ public class Contacts {
 	static Logger log = Logger.getLogger(
 			Contacts.class.getName());
 	
-	@Autowired
-	PersonDAO personDao;
+	PersonDAO personDao = new PersonDAO(NexusPerson.class);
 	
 	@ModelAttribute("person")
 	private NexusPerson counstruct(){
@@ -48,7 +46,7 @@ public class Contacts {
 		if(request.getParameter("id") != null){
 			int id = Integer.parseInt(request.getParameter("id"));
 			NexusPerson searchedPerson = new NexusPerson();
-			searchedPerson = personDao.searchPerson(id);
+			searchedPerson = personDao.getById(id);
 			request.setAttribute("peronFound", searchedPerson);
 			return "searchContactResult";
 		}else{
@@ -85,7 +83,7 @@ public class Contacts {
 		nexusPerson.setCreateTimestamp(new Date());
 		nexusPerson.setUpdateTimestamp(new Date());
 	
-		personDao.savePerson(nexusPerson);
+		personDao.save(nexusPerson);
 		nexusPerson = new NexusPerson();
 		NexusCalendar nexusCalendar = new NexusCalendar();
 		model.addAttribute("person", nexusPerson);
@@ -103,7 +101,7 @@ public class Contacts {
 		if(request.getParameter("id") != null){
 			int id = Integer.parseInt(request.getParameter("id"));
 			NexusPerson searchedPerson = new NexusPerson();
-			searchedPerson = personDao.searchPerson(id);
+			searchedPerson = personDao.getById(id);
 			request.setAttribute("peronFound", searchedPerson);
 			return "searchContactResult";
 		}else{
@@ -136,7 +134,7 @@ public class Contacts {
 		if(request.getParameter("id") != null){
 			int id = Integer.parseInt(request.getParameter("id"));
 			NexusPerson searchedPerson = new NexusPerson();
-			searchedPerson = personDao.searchPerson(id);
+			searchedPerson = personDao.getById(id);
 			request.setAttribute("personFound", searchedPerson);
 			return "editContactSearchResult";
 		}else{
@@ -168,7 +166,7 @@ public class Contacts {
 	@RequestMapping(value="/editContactResult", method = RequestMethod.POST)
 	public String EditContactsPage(ModelMap model, HttpServletRequest request, HttpServletResponse response, @ModelAttribute NexusPerson nexusPerson) {
 		nexusPerson.setUpdateTimestamp(new Date());
-		personDao.updatePerson(nexusPerson);
+		personDao.update(nexusPerson);
 		return "editContactResult";
 	}
 	

@@ -1,7 +1,7 @@
 package com.nexus.apps.wallet.form;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.WalletType;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletType;
 
 public class WalletAddTypeResultForm extends MainForm{
 

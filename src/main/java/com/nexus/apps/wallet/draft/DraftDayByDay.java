@@ -2,7 +2,7 @@ package com.nexus.apps.wallet.draft;
 
 import java.util.List;
 
-import com.nexus.dao.entity.WalletRecord;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 
 public class DraftDayByDay {
 

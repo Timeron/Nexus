@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.Site;
-import com.nexus.dao.entity.SiteType;
+import com.timeron.NexusDatabaseLibrary.Entity.Site;
+import com.timeron.NexusDatabaseLibrary.Entity.SiteType;
 
 public class AddLinksPackageToNewSiteForm extends MainForm {
 

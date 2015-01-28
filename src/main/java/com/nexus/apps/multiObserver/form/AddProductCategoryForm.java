@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.ProductCategory;
+import com.timeron.NexusDatabaseLibrary.Entity.ProductCategory;
 
 public class AddProductCategoryForm extends MainForm {
 

@@ -10,7 +10,6 @@ import java.util.TreeMap;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,32 +29,27 @@ import com.nexus.apps.wallet.form.WalletEditTypeForm;
 import com.nexus.apps.wallet.form.WalletMainSiteForm;
 import com.nexus.apps.wallet.form.WalletShowTypesForm;
 import com.nexus.apps.wallet.form.dto.WalletDraft;
-import com.nexus.dao.Implementation.WalletAccountDAO;
-import com.nexus.dao.Implementation.WalletDAO;
-import com.nexus.dao.Implementation.WalletRecordDAO;
-import com.nexus.dao.Implementation.WalletTypeDAO;
-import com.nexus.dao.entity.WalletAccount;
-import com.nexus.dao.entity.WalletRecord;
-import com.nexus.dao.entity.WalletType;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletType;
+import com.timeron.NexusDatabaseLibrary.dao.WalletAccountDAO;
+import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
+import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
+
 @Controller
 @RequestMapping("/wallet")
 public class WalletController {
 
-	@Autowired
-	private WalletDAO walletDAO;
-	@Autowired
-	private WalletRecordDAO walletRecordDAO;
-	@Autowired
-	private WalletTypeDAO walletTypeDAO;
-	@Autowired
-	private WalletAccountDAO walletAccountDAO;
+	private WalletAccountDAO walletAccountDAO = new WalletAccountDAO(WalletAccount.class);
+	private WalletRecordDAO walletRecordDAO = new WalletRecordDAO(WalletRecord.class);
+	private WalletTypeDAO walletTypeDAO = new WalletTypeDAO(WalletType.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String walletMainSite(ModelMap model){
 		WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
 		List<Float> recordsValue = new ArrayList<Float>();
 		
-		walletMainSiteForm.setAccounts(walletDAO.getAll());
+		walletMainSiteForm.setAccounts(walletAccountDAO.getAll());
 		walletMainSiteForm.setRecords(walletRecordDAO.getAll());
 		for(WalletRecord walletRecord : walletMainSiteForm.getRecords() ){
 			recordsValue.add(walletRecord.getValue());
@@ -81,7 +75,7 @@ public class WalletController {
 		WalletAddAccountResultForm walletAddAccountResultForm = new WalletAddAccountResultForm();
 		
 		walletAddAccountForm.getWalletAccount().setTimestamp(new Date());
-		walletDAO.save(walletAddAccountForm.getWalletAccount());
+		walletAccountDAO.save(walletAddAccountForm.getWalletAccount());
 		
 		model.addAttribute("form", walletAddAccountResultForm);
 
@@ -91,7 +85,7 @@ public class WalletController {
 	@RequestMapping(value = "/walletAccout", method = RequestMethod.GET)
 	public String walletAccount(ModelMap model, HttpServletRequest request, HttpServletResponse response){
 		WalletAccountForm walletAccountForm = new WalletAccountForm();
-		WalletAccount currentAccount = walletDAO.getById(Integer.parseInt(request.getParameter("id")));
+		WalletAccount currentAccount = walletAccountDAO.getById(Integer.parseInt(request.getParameter("id")));
 		
 		walletAccountForm.setWalletAccount(currentAccount);
 		walletAccountForm.setWalletRecords(walletRecordDAO.getRecordsFromAccount(currentAccount));
@@ -176,7 +170,7 @@ public class WalletController {
 	public String walletAddRecord(ModelMap model, HttpServletRequest request, HttpServletResponse response){
 		WalletAddRecordForm walletAddRecordForm = new WalletAddRecordForm();
 		
-		List<WalletAccount> otherWallet = walletDAO.getAll();
+		List<WalletAccount> otherWallet = walletAccountDAO.getAll();
 		Iterator<WalletAccount> otherWalletIterator = otherWallet.iterator();
 		while(otherWalletIterator.hasNext()){
 			WalletAccount wallet = otherWalletIterator.next();
@@ -249,7 +243,7 @@ public class WalletController {
 	public String walletEditRecord(ModelMap model, HttpServletRequest request, HttpServletResponse response){
 		WalletEditRecordForm walletEditRecordForm = new WalletEditRecordForm();
 		
-		walletEditRecordForm.setWalletAccount(walletDAO.getAll());
+		walletEditRecordForm.setWalletAccount(walletAccountDAO.getAll());
 		walletEditRecordForm.setWalletRecord(walletRecordDAO.getById(Integer.parseInt(request.getParameter("id"))));
 		
 		model.addAttribute("form", walletEditRecordForm);
@@ -264,7 +258,7 @@ public class WalletController {
 		
 		if(request.getParameter("account")!=null){
 			WalletAccountForm walletAccountForm = new WalletAccountForm();
-			WalletAccount currentAccount = walletDAO.getById(Integer.parseInt(request.getParameter("account")));
+			WalletAccount currentAccount = walletAccountDAO.getById(Integer.parseInt(request.getParameter("account")));
 			
 			walletAccountForm.setWalletAccount(currentAccount);
 			walletAccountForm.setWalletRecords(walletRecordDAO.getRecordsFromAccount(currentAccount));
@@ -275,7 +269,7 @@ public class WalletController {
 		}else{
 			WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
 			
-			walletMainSiteForm.setAccounts(walletDAO.getAll());
+			walletMainSiteForm.setAccounts(walletAccountDAO.getAll());
 			walletMainSiteForm.setRecords(walletRecordDAO.getAll());
 			
 			model.addAttribute("form", walletMainSiteForm);

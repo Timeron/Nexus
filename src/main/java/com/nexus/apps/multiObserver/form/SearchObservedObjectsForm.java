@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.log4j.Logger;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.ObservedObject;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedObject;
 
 public class SearchObservedObjectsForm extends MainForm{
 

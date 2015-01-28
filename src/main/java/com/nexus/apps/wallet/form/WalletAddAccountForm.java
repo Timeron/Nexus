@@ -1,6 +1,6 @@
 package com.nexus.apps.wallet.form;
 
-import com.nexus.dao.entity.WalletAccount;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 
 public class WalletAddAccountForm {
 

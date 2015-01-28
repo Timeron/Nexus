@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.ObservedLinksPackage;
-import com.nexus.dao.entity.Site;
-import com.nexus.dao.entity.SiteType;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedLinksPackage;
+import com.timeron.NexusDatabaseLibrary.Entity.Site;
+import com.timeron.NexusDatabaseLibrary.Entity.SiteType;
 
 public class AddLinksPackageToOldSiteForm extends MainForm {
 

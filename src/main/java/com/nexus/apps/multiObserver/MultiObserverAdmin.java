@@ -7,7 +7,6 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.hibernate.exception.GenericJDBCException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateJdbcException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -25,13 +24,14 @@ import com.nexus.apps.multiObserver.form.AddSiteForm;
 import com.nexus.apps.multiObserver.form.AddSiteTypeForm;
 import com.nexus.apps.multiObserver.form.AddSiteTypeResultForm;
 import com.nexus.apps.multiObserver.form.MultiObserverForm;
-import com.nexus.dao.Implementation.ObservedLinksPackageDAO;
-import com.nexus.dao.Implementation.ProductCategoryDAO;
-import com.nexus.dao.Implementation.SiteDAO;
-import com.nexus.dao.Implementation.SiteTypeDAO;
-import com.nexus.dao.entity.ObservedLinksPackage;
-import com.nexus.dao.entity.ProductCategory;
-import com.nexus.dao.entity.SiteType;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedLinksPackage;
+import com.timeron.NexusDatabaseLibrary.Entity.ProductCategory;
+import com.timeron.NexusDatabaseLibrary.Entity.Site;
+import com.timeron.NexusDatabaseLibrary.Entity.SiteType;
+import com.timeron.NexusDatabaseLibrary.dao.ObservedLinksPackageDAO;
+import com.timeron.NexusDatabaseLibrary.dao.ProductCategoryDAO;
+import com.timeron.NexusDatabaseLibrary.dao.SiteDAO;
+import com.timeron.NexusDatabaseLibrary.dao.SiteTypeDAO;
 
 @Controller
 @RequestMapping("/multiobserver/admin")
@@ -39,14 +39,10 @@ public class MultiObserverAdmin {
 
 	static Logger LOG = Logger.getLogger(MultiObserverAdmin.class.getName());
 
-	@Autowired
-	SiteDAO siteDAO;
-	@Autowired
-	SiteTypeDAO siteTypeDAO;
-	@Autowired
-	ProductCategoryDAO productCategoryDAO;
-	@Autowired
-	ObservedLinksPackageDAO observedLinksPackageDAO;
+	SiteDAO siteDAO = new SiteDAO(Site.class);
+	SiteTypeDAO siteTypeDAO = new SiteTypeDAO(SiteType.class);
+	ProductCategoryDAO productCategoryDAO = new ProductCategoryDAO(ProductCategory.class);
+	ObservedLinksPackageDAO observedLinksPackageDAO = new ObservedLinksPackageDAO(ObservedLinksPackage.class);
 
 	/**
 	 * strona główna Admin Multi Observera
@@ -83,7 +79,7 @@ public class MultiObserverAdmin {
 		AddNewLinkPackageForm addNewLinkPackageForm = new AddNewLinkPackageForm();
 
 		try {
-			addNewLinkPackageForm.setSites(siteDAO.getAllSites());
+			addNewLinkPackageForm.setSites(siteDAO.getAll());
 		} catch (HibernateJdbcException e){
 			addNewLinkPackageForm.setError("Połączenie z bazą danych przerwane");
 			e.printStackTrace();
@@ -129,7 +125,7 @@ public class MultiObserverAdmin {
 	public String AddLinksPackageToNewSite(ModelMap model, @ModelAttribute("addSiteForm") AddSiteForm addSiteForm) {
 		LOG.info(addSiteForm.getSite().getArticlesDivXPath());
 		AddLinksPackageToNewSiteForm addLinksPackageToNewSiteForm = new AddLinksPackageToNewSiteForm();
-		addLinksPackageToNewSiteForm.setSiteTypes(siteTypeDAO.getAllSiteTypes());
+		addLinksPackageToNewSiteForm.setSiteTypes(siteTypeDAO.getAll());
 		addLinksPackageToNewSiteForm.setSite(addSiteForm.getSite());
 
 		model.addAttribute("form", addLinksPackageToNewSiteForm);
@@ -149,8 +145,8 @@ public class MultiObserverAdmin {
 	public String AddLinksPackageToOldSite(ModelMap model, @ModelAttribute("addNewLinkPackageForm") AddNewLinkPackageForm addNewLinkPackageForm) {
 		AddLinksPackageToOldSiteForm addLinksPackageToOldSiteForm = new AddLinksPackageToOldSiteForm();
 		
-		addLinksPackageToOldSiteForm.setSite(siteDAO.getSiteById(addNewLinkPackageForm.getSite().getId()));
-		addLinksPackageToOldSiteForm.setSiteTypes(siteTypeDAO.getAllSiteTypes());
+		addLinksPackageToOldSiteForm.setSite(siteDAO.getById(addNewLinkPackageForm.getSite().getId()));
+		addLinksPackageToOldSiteForm.setSiteTypes(siteTypeDAO.getAll());
 
 		model.addAttribute("form", addLinksPackageToOldSiteForm);
 
@@ -179,7 +175,7 @@ public class MultiObserverAdmin {
 				observedLinksPackage.setSiteType(siteTypeDAO.getByDescription(observedLinksPackage.getSiteType().getDescription()));
 				observedLinksPackage.setSite(addLinksPackageToOldSiteForm.getSite());
 				observedLinksPackage.setTimestamp(new Date());
-				siteDAO.saveSite(addLinksPackageToOldSiteForm.getSite());
+				siteDAO.save(addLinksPackageToOldSiteForm.getSite());
 				LOG.info("LinksPackage dodany: "+observedLinksPackage.getUrl());
 			}else{
 				observedLinksPackage.setDuplicated(true);
@@ -281,7 +277,7 @@ public class MultiObserverAdmin {
 			
 			addSiteTypeResultForm.setSiteType(addSiteTypeForm.getSiteType());
 			
-			siteTypeDAO.saveSiteType(addSiteTypeForm.getSiteType());
+			siteTypeDAO.save(addSiteTypeForm.getSiteType());
 		}else{
 			addSiteTypeResultForm.setError("SiteType już istnieje");
 		}
@@ -333,7 +329,7 @@ public class MultiObserverAdmin {
 		
 		if(productCategoryDAO.getByDescription(addProductCategoryForm.getProductCategory().getDescription()).isEmpty()){
 			addProductCategoryForm.getProductCategory().setTimestamp(new Date());
-			productCategoryDAO.saveProductCategory(addProductCategoryForm.getProductCategory());
+			productCategoryDAO.save(addProductCategoryForm.getProductCategory());
 			addProductCategoryResultForm.setProductCategory(addProductCategoryForm.getProductCategory());
 		}else{
 			addProductCategoryResultForm.setWarning("Kategoria już istnieje");

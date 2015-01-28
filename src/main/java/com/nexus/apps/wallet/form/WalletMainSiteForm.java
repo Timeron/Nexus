@@ -2,8 +2,8 @@ package com.nexus.apps.wallet.form;
 
 import java.util.List;
 
-import com.nexus.dao.entity.WalletAccount;
-import com.nexus.dao.entity.WalletRecord;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 
 public class WalletMainSiteForm {
 

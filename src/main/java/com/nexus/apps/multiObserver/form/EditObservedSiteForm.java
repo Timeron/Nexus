@@ -3,9 +3,9 @@ package com.nexus.apps.multiObserver.form;
 import java.util.List;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.ObservedObject;
-import com.nexus.dao.entity.ObservedSite;
-import com.nexus.dao.entity.ObservedSiteHistory;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedObject;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedSite;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedSiteHistory;
 
 public class EditObservedSiteForm extends MainForm{
 	private ObservedSite observedSite;

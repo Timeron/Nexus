@@ -1,7 +1,7 @@
 package com.nexus.apps.multiObserver.form;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.Site;
+import com.timeron.NexusDatabaseLibrary.Entity.Site;
 
 public class AddSiteForm extends MainForm {
 

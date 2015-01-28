@@ -3,7 +3,7 @@ package com.nexus.apps.multiObserver.form;
 import java.util.List;
 
 import com.nexus.apps.form.MainForm;
-import com.nexus.dao.entity.ObservedSite;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedSite;
 
 public class SearchObservedSiteForm extends MainForm{
 

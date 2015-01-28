@@ -5,6 +5,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.nexus.apps.car.dto.addRecordDTO;
+
 @Controller
 @RequestMapping("/car")
 public class CarController {
@@ -21,6 +23,8 @@ public class CarController {
 	
 	@RequestMapping("/addRecord")
 	public String addRecord(ModelMap model){
+		addRecordDTO addRecordDTO = new addRecordDTO();
+		model.addAttribute("form", addRecordDTO);
 		return "carAddRecord";
 	}
 	

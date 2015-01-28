@@ -3,33 +3,29 @@ package com.nexus.apps.multiObserver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.nexus.apps.multiObserver.form.AddSiteForm;
 import com.nexus.apps.multiObserver.form.EditObservedSiteForm;
 import com.nexus.apps.multiObserver.form.SearchObservedObjectsForm;
 import com.nexus.apps.multiObserver.form.SearchObservedSiteForm;
-import com.nexus.dao.Implementation.ObservedObjectDAO;
-import com.nexus.dao.Implementation.ObservedSiteDAO;
-import com.nexus.dao.Implementation.ObservedSiteHistoryDAO;
-import com.nexus.dao.entity.ObservedObject;
-import com.nexus.dao.entity.ObservedSite;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedObject;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedSite;
+import com.timeron.NexusDatabaseLibrary.Entity.ObservedSiteHistory;
+import com.timeron.NexusDatabaseLibrary.dao.ObservedObjectDAO;
+import com.timeron.NexusDatabaseLibrary.dao.ObservedSiteDAO;
+import com.timeron.NexusDatabaseLibrary.dao.ObservedSiteHistoryDAO;
 
 @Controller
 @RequestMapping("/multiobserver/viewer")
 public class MultiObserverViewerController {
 
-	@Autowired
-	ObservedSiteDAO observedSiteDAO;
-	@Autowired
-	ObservedObjectDAO observedObjectDAO;
-	@Autowired
-	ObservedSiteHistoryDAO observedSiteHistoryDAO;
+	ObservedSiteDAO observedSiteDAO = new ObservedSiteDAO(ObservedSite.class);
+	ObservedObjectDAO observedObjectDAO = new ObservedObjectDAO(ObservedObject.class);
+	ObservedSiteHistoryDAO observedSiteHistoryDAO = new ObservedSiteHistoryDAO(ObservedSiteHistory.class);
 	
 	@RequestMapping(value = "/searchObservedObject", method = RequestMethod.GET)
 	public String searchObservedObjectInit(ModelMap model){
