@@ -33,6 +33,7 @@
 				<value>/WEB-INF/tiles/config/contactTiles.xml</value>
 				<value>/WEB-INF/tiles/config/jTaskTiles.xml</value>
 				<value>/WEB-INF/tiles/config/walletTiles.xml</value>
+				<value>/WEB-INF/tiles/config/carTiles.xml</value>
 			</list>
 		</property>
 	</bean>

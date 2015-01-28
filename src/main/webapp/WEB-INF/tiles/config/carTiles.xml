@@ -1,0 +1,23 @@
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<!-- Base -->
+	<definition name="carBase" template="/WEB-INF/tiles/templates/carTemplate.jsp">
+		<put-attribute name="header" value="/WEB-INF/tiles/car/header.jsp" />
+		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
+		<put-attribute name="logInHeader" value="/WEB-INF/tiles/index/logInHeader.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/tiles/car/include/menu.jsp" />
+	</definition>
+	
+	<definition name="carMainSite" extends="carBase">
+		<put-attribute name="title" value="Car" />
+		<put-attribute name="body" value="/WEB-INF/tiles/car/mainSite.jsp" />
+	</definition>
+	
+	<definition name="carAddRecord" extends="carBase">
+		<put-attribute name="title" value="Car" />
+		<put-attribute name="body" value="/WEB-INF/tiles/car/carAddRecord.jsp" />
+	</definition>
+	
+</tiles-definitions>

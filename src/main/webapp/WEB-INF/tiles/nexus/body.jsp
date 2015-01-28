@@ -23,6 +23,11 @@
           <p>Portfel</p>
           <p><a class="btn btn-default" href="./wallet/" role="button">View details &raquo;</a></p>
         </div>
+        <div class="col-md-4">
+          <h2>Car</h2>
+          <p>Spalanie</p>
+          <p><a class="btn btn-default" href="./car/" role="button">View details &raquo;</a></p>
+        </div>
       </div>
 
       <hr>
