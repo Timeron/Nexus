@@ -2,7 +2,7 @@ package com.nexus.apps.car.dto;
 
 import com.timeron.NexusDatabaseLibrary.Entity.Fuel;
 
-public class addRecordDTO {
+public class AddRecordDTO {
 
 	private Fuel record;
 

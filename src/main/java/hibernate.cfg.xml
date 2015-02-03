@@ -21,6 +21,7 @@
 		<property name="hibernate.connection.password"></property>
 
 		<!-- List of XML mapping files -->
+		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.Fuel" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.JHistory" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.JNote" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.JProject" />
