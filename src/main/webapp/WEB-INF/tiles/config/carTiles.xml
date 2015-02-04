@@ -25,4 +25,14 @@
 		<put-attribute name="body" value="/WEB-INF/tiles/car/addRecordResult.jsp" />
 	</definition>
 	
+	<definition name="carRecords" extends="carBase">
+		<put-attribute name="title" value="Car" />
+		<put-attribute name="body" value="/WEB-INF/tiles/car/carRecords.jsp" />
+	</definition>
+	
+	<definition name="carEditRecord" extends="carBase">
+		<put-attribute name="title" value="Car" />
+		<put-attribute name="body" value="/WEB-INF/tiles/car/carEditRecord.jsp" />
+	</definition>
+	
 </tiles-definitions>

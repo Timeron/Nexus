@@ -3,6 +3,9 @@ package com.nexus.apps.car.controller;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -10,7 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.nexus.apps.car.dto.AddRecordDTO;
+import com.nexus.apps.car.dto.EditRecordDTO;
 import com.nexus.apps.car.dto.MainSiteDTO;
+import com.nexus.apps.car.dto.RecordsDTO;
 import com.timeron.NexusDatabaseLibrary.Entity.Fuel;
 import com.timeron.NexusDatabaseLibrary.dao.FuelDAO;
 
@@ -49,6 +54,14 @@ public class CarController {
 		return "carAddRecord";
 	}
 	
+	@RequestMapping("/carRecords")
+	public String records(ModelMap model){
+		RecordsDTO recordDTO = new RecordsDTO();
+		recordDTO.setRecords(fuelDAO.getAll());
+		model.addAttribute("form", recordDTO);
+		return "carRecords";
+	}
+	
 	@RequestMapping("/addRecordResult")
 	public String addRecordResult(ModelMap model, @ModelAttribute("addRecordDTO") AddRecordDTO addRecordDTO){
 		Fuel fuel;
@@ -61,14 +74,40 @@ public class CarController {
 		return "addRecordResult";
 	}
 	
-	@RequestMapping("editRecord")
-	public String editRecord(ModelMap model){
-		return null;
+	@RequestMapping("carEditRecord")
+	public String editRecord(ModelMap model, HttpServletRequest request, HttpServletResponse response){
+		int id = Integer.parseInt(request.getParameter("id"));
+		EditRecordDTO editRecordDTO = new EditRecordDTO();
+		editRecordDTO.setNewFuel(new Fuel());
+		editRecordDTO.setOldFuel(fuelDAO.getById(id));
+		model.addAttribute("form", editRecordDTO);
+		
+		return "carEditRecord";
 	}
 	
-	@RequestMapping("removeRecord")
-	public String removeRecord(ModelMap model){
-		return null;
+	@RequestMapping("/editRecordResult")
+	public String editRecordResult(ModelMap model, @ModelAttribute("editRecordDTO") EditRecordDTO editRecordDTO){
+		Fuel fuel = editRecordDTO.getNewFuel();
+		fuelDAO.update(fuel);
+		
+		RecordsDTO recordDTO = new RecordsDTO();
+		recordDTO.setRecords(fuelDAO.getAll());
+		model.addAttribute("form", recordDTO);
+		
+		model.addAttribute("form", recordDTO);
+		return "carRecords";
+	}
+	
+	@RequestMapping("carRemoveRecord")
+	public String removeRecord(ModelMap model, HttpServletRequest request, HttpServletResponse response){
+		int id = Integer.parseInt(request.getParameter("id"));
+		fuelDAO.removeById(id);
+		
+		RecordsDTO recordDTO = new RecordsDTO();
+		recordDTO.setRecords(fuelDAO.getAll());
+		model.addAttribute("form", recordDTO);
+		
+		return "carRecords";
 	}
 	
 	private float lastFuel(List<Fuel> records) {
