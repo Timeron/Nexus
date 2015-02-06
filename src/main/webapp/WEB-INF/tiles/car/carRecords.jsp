@@ -8,35 +8,31 @@
 		<table class="table table-striped">
 			<tr>
 				<th>#</th>
-				
+
 				<th>Litry</th>
 				<th>Kilometry</th>
 				<th>Miasto</th>
 				<th>Mieszany</th>
 				<th>Data</th>
-				
-				<th>Edytuj</th>
-				<th>Usuń</th>
+
+				<th>Edytuj/Usuń</th>
 			</tr>
 			<c:forEach items="${form.records}" var="record">
 				<tr>
 					<td>${record.id}</td>
-					
+
 					<td>${record.liters}</td>
 					<td>${record.distance}</td>
 					<td>${record.city}</td>
 					<td>${record.mixed}</td>
 					<td>${record.date}</td>
-					
+
 					<td><a id="transferButton" class="btn btn-primary"
-						href="/timeron-nexus/car/carEditRecord?id=${record.id}">
-							<span class="glyphicon glyphicon-edit" aria-hidden="true">
-						</span>
-					</a></td>
-					<td><a id="transferButton" class="btn btn-danger"
-						href="/timeron-nexus/car/carRemoveRecord?id=${record.id}">
-							<span class="glyphicon glyphicon-trash" aria-hidden="true">
-						</span>
+						href="/timeron-nexus/car/carEditRecord?id=${record.id}"> <span
+							class="glyphicon glyphicon-edit" aria-hidden="true"> </span>
+					</a> <a id="transferButton" class="btn btn-danger"
+						href="/timeron-nexus/car/carRemoveRecord?id=${record.id}"> <span
+							class="glyphicon glyphicon-trash" aria-hidden="true"> </span>
 					</a></td>
 				</tr>
 			</c:forEach>

@@ -1,6 +1,5 @@
 package com.nexus.apps.car.controller;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +65,6 @@ public class CarController {
 	public String addRecordResult(ModelMap model, @ModelAttribute("addRecordDTO") AddRecordDTO addRecordDTO){
 		Fuel fuel;
 		fuel = addRecordDTO.getRecord();
-		fuel.setDate(new Date());
 		
 		fuelDAO.save(fuel);
 		

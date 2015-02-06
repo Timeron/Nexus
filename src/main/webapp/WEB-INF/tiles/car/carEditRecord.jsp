@@ -10,18 +10,26 @@
 	<div class="row">
 		<h1>Spalanie</h1>
 
-		<form:form commandName="form" action="editRecordResult">
+		<form:form commandName="form" action="editRecordResult" id="form">
 			<form:hidden id="id" path="newFuel.id" value="${form.oldFuel.id}" />
-			<form:hidden id="date" path="newFuel.date" value="${form.oldFuel.date}" />
 			<div class="form-group">
 			<label>Przebieg w kilometrach</label>
-				<form:input type="text" class="form-control" path="newFuel.distance"
+				<form:input id="distance" type="text" class="form-control" path="newFuel.distance"
 					value="${form.oldFuel.distance }" />
 			</div>
 			<div class="form-group">
 				<label for="opis">Litry paliwa</label>
-				<form:input type="text" class="form-control" path="newFuel.liters"
+				<form:input id="liters" type="text" class="form-control" path="newFuel.liters"
 					value="${form.oldFuel.liters }" />
+			</div>
+			<div class="form-group">
+				<label for="value">Data</label>
+				<div class='input-group date' id='datetimepicker1'>
+					<form:input id="date" type='text' class="form-control"
+						data-date-format="YYYY-MM-DD HH:mm:ss.S" path="newFuel.date" value="${form.oldFuel.date}"/>
+					<span class="input-group-addon"><span
+						class="glyphicon glyphicon-calendar"></span> </span>
+				</div>
 			</div>
 			<form:hidden id="city" path="newFuel.city" value="${form.oldFuel.city}" />
 			<form:hidden id="mixed" path="newFuel.mixed" value="${form.oldFuel.mixed}" />
@@ -84,15 +92,29 @@ $(document).ready(function(){
 	
 	if(city === "true"){
 		setCity($('#trafficButton'));
-		alert("setCity");
 	}else if(mixed === "true"){
 		setMixed($('#trafficButton'));
-		alert("setMixed");
 	}else{
 		setHighWay($('#trafficButton'));
-		alert("setHighWay");
 	}
-}	
-);
+});
+
+$(function() {
+	$('#datetimepicker1').datetimepicker();
+});
+
+$("#form").submit(function(){
+	
+	var distance = $("#distance").val();
+	var liters = $("#liters").val();
+	
+	$('#distance').val(floatValue(distance));
+	$('#liters').val(floatValue(liters));
+});
+
+function floatValue(value){
+	var result = value.replace(',', '.');
+	return result;
+};
 
 </script>
