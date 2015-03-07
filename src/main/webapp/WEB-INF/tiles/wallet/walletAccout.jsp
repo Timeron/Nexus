@@ -4,15 +4,26 @@
 <div class="container-fluid">
 
 	<h1>${form.walletAccount.name}</h1>
-<div class="bs-example">
-	<div class="btn-group">
-		<h1><a class="btn btn-primary btn-ms" role="button" href="/timeron-nexus/wallet/addRecord?id=${form.walletAccount.id}">+</a></h1>
+	<div class="bs-example">
+		<div class="btn-group">
+			<h1>
+				<a class="btn btn-primary btn-ms" role="button"
+					href="/timeron-nexus/wallet/addRecord?id=${form.walletAccount.id}">+</a>
+			</h1>
+		</div>
 	</div>
-</div>
-
+	
+	<h1>Saldo całkowite:</h1>
+	<h3>${form.sum} zł</h3>
+	</br>
 	<c:choose>
 
 		<c:when test="${not empty form.walletRecords}">
+
+			<h1>Wykres</h1>
+			<div id="chart"></div>
+
+			<h1>Rekordy</h1>
 			<table class="table table-striped">
 				<tr>
 					<th>#</th>
@@ -39,14 +50,35 @@
 			</table>
 		</c:when>
 		<c:otherwise>
-		empty
 		</c:otherwise>
 	</c:choose>
 </div>
-${form.draft}
+
+<style>
+#chart {
+	width: 100%;
+	padding: 15px 10px 50px 10px;
+	font: 10px sans-serif;
+	text-align: center;
+}
+
+.axis path,.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+	stroke-width: 2.5px;
+}
+
+.area {
+	fill: steelblue;
+}
+</style>
+
 <script>
-var gson = ${form.draft};
-alert(gson);
-var json = JSON.parse(gson);
-alert(json.recordList);
+	var string = '${form.chart}';
+	var json = JSON.parse(string);
+	var data = json.chart;
+	var yDescription = "Stan konta (zł)";
+
 </script>
+<script src="<c:url value="/resources/js/chart/SingleLineChart.js" />"></script>

@@ -1,6 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<style>
+<!--
+.redFont {
+	color: #FF0000;
+}
+-->
+</style>
 <div class="container-fluid">
 	<div class="bs-example">
 		<c:choose>
@@ -13,15 +20,19 @@
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
-		test
-		</c:otherwise>
+			</c:otherwise>
 		</c:choose>
 	</div>
-	<h1>Wszystkie operacje</h1>
 </div>
+<h1>Saldo całkowite:</h1>
+<h3>${form.sum}zł</h3>
+</br>
 <c:choose>
 
 	<c:when test="${not empty form.records}">
+		<h1>Wykres</h1>
+		<div id="chart"></div>
+		<h1>Rekordy</h1>
 		<table class="table table-striped">
 			<tr>
 				<th>#</th>
@@ -31,43 +42,75 @@
 				<th>date</th>
 				<th>transfer</th>
 				<th>income</th>
+				<th>Transfer z</th>
 				<th>Transfer do</th>
 				<th>Edytuj</th>
 				<th>Usuń</th>
 			</tr>
 			<c:forEach items="${form.records}" var="record">
 				<tr>
-					<td class="tdRecordId" >${record.id}</td>
+					<td class="tdRecordId">${record.id}</td>
 					<td>${record.walletType.icon}</td>
-					<td class="tdRecordValue" >${record.value}</td>
+					<c:choose>
+						<c:when test="${record.value < 0}">
+							<td class="redFont">${record.value}</td>
+						</c:when>
+						<c:otherwise>
+							<td>${record.value}</td>
+						</c:otherwise>
+					</c:choose>
 					<td>${record.description}</td>
 					<td>${record.date}</td>
 					<td>${record.transfer}</td>
 					<td>${record.income}</td>
+					<td>${record.sourceWalletAccount.name}</td>
 					<td>${record.destinationWalletAccount.name}</td>
-					<td>
-						<a id="transferButton" class="btn btn-primary" href="/timeron-nexus/wallet/walletEditRecord?id=${record.id}">
+					<td><a id="transferButton" class="btn btn-primary"
+						href="/timeron-nexus/wallet/walletEditRecord?id=${record.id}">
 							<span class="glyphicon glyphicon-edit" aria-hidden="true">
-							</span>
-						</a>
-					</td>
-					<td>
-						<a id="transferButton" class="btn btn-danger" href="/timeron-nexus/wallet/walletRemoveRecord?id=${record.id}">
+						</span>
+					</a></td>
+					<td><a id="transferButton" class="btn btn-danger"
+						href="/timeron-nexus/wallet/walletRemoveRecord?id=${record.id}">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true">
-							</span>
-						</a>
-					</td>
+						</span>
+					</a></td>
 				</tr>
 			</c:forEach>
 		</table>
 	</c:when>
 	<c:otherwise>
-		empty
 	</c:otherwise>
 </c:choose>
-</div>
 
-</div>
 
+<style>
+#chart {
+	width: 100%;
+	padding: 15px 10px 50px 10px;
+	font: 10px sans-serif;
+	text-align: center;
+}
+
+.axis path,.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+	stroke-width: 2.5px;
+}
+
+.area {
+	fill: steelblue;
+}
+</style>
+
+<script>
+	var string = '${form.chart}';
+	var json = JSON.parse(string);
+	var data = json.chart;
+	var yDescription = "Stan konta (zł)";
+
+</script>
+<script src="<c:url value="/resources/js/chart/SingleLineChart.js" />"></script>
 
 

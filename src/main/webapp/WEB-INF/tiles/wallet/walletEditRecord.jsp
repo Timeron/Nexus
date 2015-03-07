@@ -148,7 +148,6 @@
 		console.log(log);
 		var log = "walletType " + $("#walletType").val();
 		console.log(log);
-		alert();
 		return true;
 	});
 </script>

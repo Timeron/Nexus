@@ -103,7 +103,6 @@
 		console.log(log);
 		var log = "walletParentType "+$("#walletParentType").val();
 		console.log(log);
-		alert();
 	    return true; 
 	});
 </script>

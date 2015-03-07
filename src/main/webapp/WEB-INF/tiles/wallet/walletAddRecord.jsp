@@ -34,7 +34,7 @@
 				</div>
 
 				<div class="form-group">
-					<label for="value">Data</label>
+					<label for="value">Data (YYYY-MM-DD hh:mm:ss.s)</label>
 					<div class='input-group date' id='datetimepicker1'>
 						<form:input id="date" type='text' class="form-control" data-date-format="YYYY-MM-DD HH:mm:ss.S"
 							path="walletRecord.date" />
@@ -130,8 +130,12 @@
 	});
 
 	$(function() {
-		$('#datetimepicker1').datetimepicker();
+		$('#datetimepicker1').datetimepicker({
+			dateFormat:'YYYY-MM-DD HH:mm:ss.S'
+		});
 	});
+	
+	
 
 	$("#formAddRecord").submit(function(e) {
 		var log = "transfer " + $("#transfer").val();
@@ -142,11 +146,14 @@
 		console.log(log);
 		var log = "date" + $("#date").val();
 		console.log(log);
-		var log = "walletAccount " + $("#walletAccount").val();
+		var log = "walletAccount " + $("#AccountId").val();
 		console.log(log);
 		var log = "walletType " + $("#walletType").val();
 		console.log(log);
-		alert();
+		moment().format('L')
+		var date = $("#date").val();
+		alert(date);
 		return true;
 	});
+	
 </script>

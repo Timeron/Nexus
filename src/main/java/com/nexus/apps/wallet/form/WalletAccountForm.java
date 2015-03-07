@@ -2,7 +2,6 @@ package com.nexus.apps.wallet.form;
 
 import java.util.List;
 
-import com.google.gson.Gson;
 import com.nexus.apps.form.MainForm;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
@@ -12,7 +11,8 @@ public class WalletAccountForm extends MainForm{
 	private WalletAccount walletAccount;
 	private List<WalletRecord> walletRecords;
 	private WalletRecord newRecord;
-	private String draft;
+	private String chart;
+	private float sum = 0;
 
 	public List<WalletRecord> getWalletRecords() {
 		return walletRecords;
@@ -38,14 +38,22 @@ public class WalletAccountForm extends MainForm{
 		this.walletAccount = walletAccount;
 	}
 
-	public String getDraft() {
-		return draft;
+	public String getChart() {
+		return chart;
 	}
 
-	public void setDraft(String draft) {
-		this.draft = draft;
+	public void setChart(String chart) {
+		this.chart = chart;
 	}
 
+	public float getSum() {
+		return sum;
+	}
+
+	public void setSum(float sum) {
+		this.sum = sum;
+	}
+	
 	
 	
 }

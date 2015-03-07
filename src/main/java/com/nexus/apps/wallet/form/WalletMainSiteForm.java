@@ -10,6 +10,8 @@ public class WalletMainSiteForm {
 	private List<WalletAccount> accounts;
 	private List<WalletRecord> records;
 	private List<Float> recordsValue;
+	private String chart = "";
+	private float sum = 0;
 
 	public List<WalletAccount> getAccounts() {
 		return accounts;
@@ -33,6 +35,22 @@ public class WalletMainSiteForm {
 
 	public void setRecordsValue(List<Float> recordsValue) {
 		this.recordsValue = recordsValue;
+	}
+
+	public String getChart() {
+		return chart;
+	}
+
+	public void setChart(String chart) {
+		this.chart = chart;
+	}
+
+	public float getSum() {
+		return sum;
+	}
+
+	public void setSum(float sum) {
+		this.sum = sum;
 	}
 	
 }

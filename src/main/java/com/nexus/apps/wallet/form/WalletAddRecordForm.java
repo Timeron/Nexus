@@ -14,6 +14,7 @@ public class WalletAddRecordForm extends MainForm {
 	private WalletAccount walletAccount;
 	private Integer walletAccountId;
 	private Integer destinationAccountId;
+	private String date;
 	
 	private List<WalletType> walletTypes;
 	private List<WalletAccount> walletAccounts;
@@ -59,6 +60,12 @@ public class WalletAddRecordForm extends MainForm {
 	}
 	public void setDestinationAccountId(Integer destinationAccountId) {
 		this.destinationAccountId = destinationAccountId;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;		
 	}
 	
 

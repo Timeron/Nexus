@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,13 +26,15 @@ import com.nexus.apps.wallet.form.WalletEditRecordForm;
 import com.nexus.apps.wallet.form.WalletEditTypeForm;
 import com.nexus.apps.wallet.form.WalletMainSiteForm;
 import com.nexus.apps.wallet.form.WalletShowTypesForm;
-import com.nexus.apps.wallet.form.dto.WalletDraft;
+import com.nexus.apps.wallet.form.dto.WalletChart;
+import com.nexus.chart.Chart;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletType;
 import com.timeron.NexusDatabaseLibrary.dao.WalletAccountDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
+import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 
 @Controller
 @RequestMapping("/wallet")
@@ -48,13 +48,21 @@ public class WalletController {
 	public String walletMainSite(ModelMap model){
 		WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
 		List<Float> recordsValue = new ArrayList<Float>();
+		int maxRows = 25;
+		
+		List<WalletRecord> walletRecounds = walletRecordDAO.getAll("date", Direction.ASC);
+		List<WalletRecord> walletLimitedRecounds = walletRecordDAO.getAll("date", Direction.DESC, maxRows);
 		
 		walletMainSiteForm.setAccounts(walletAccountDAO.getAll());
-		walletMainSiteForm.setRecords(walletRecordDAO.getAll());
+		walletMainSiteForm.setRecords(walletLimitedRecounds);
+		
 		for(WalletRecord walletRecord : walletMainSiteForm.getRecords() ){
 			recordsValue.add(walletRecord.getValue());
 		}
+		
 		walletMainSiteForm.setRecordsValue(recordsValue);
+		walletMainSiteForm.setSum(sumRecordValue(walletRecounds));
+		walletMainSiteForm.setChart(createSingleLineChartJSON(walletRecounds));
 		
 		model.addAttribute("form", walletMainSiteForm);
 
@@ -84,25 +92,17 @@ public class WalletController {
 	
 	@RequestMapping(value = "/walletAccout", method = RequestMethod.GET)
 	public String walletAccount(ModelMap model, HttpServletRequest request, HttpServletResponse response){
+		int maxRows = 15;
 		WalletAccountForm walletAccountForm = new WalletAccountForm();
 		WalletAccount currentAccount = walletAccountDAO.getById(Integer.parseInt(request.getParameter("id")));
 		
 		walletAccountForm.setWalletAccount(currentAccount);
-		walletAccountForm.setWalletRecords(walletRecordDAO.getRecordsFromAccount(currentAccount));
+		List<WalletRecord> walletAllAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount);
+		List<WalletRecord> walletAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, maxRows);
+		walletAccountForm.setWalletRecords(walletAccountRecounds);
 		
-		Gson gson = new Gson();
-		Map<String, Float> recordList = new TreeMap<String, Float>();
-
-		for(WalletRecord record : walletAccountForm.getWalletRecords()){
-			recordList.put(record.getDate().toString(), record.getValue());
-		}
-		WalletDraft walletDraft = new WalletDraft();
-		walletDraft.setValues(recordList);
-		String json = gson.toJson(walletDraft);
-	 
-		System.out.println(json);
-		
-		walletAccountForm.setDraft(json);
+		walletAccountForm.setChart(createSingleLineChartJSON(walletAllAccountRecounds));
+		walletAccountForm.setSum(sumRecordValue(walletAccountRecounds));
 		
 		model.addAttribute("form", walletAccountForm);
 
@@ -268,12 +268,25 @@ public class WalletController {
 			return "walletAccout";
 		}else{
 			WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
+			List<Float> recordsValue = new ArrayList<Float>();
+			int maxRows = 25;
+			
+			List<WalletRecord> walletRecounds = walletRecordDAO.getAll("date", Direction.ASC);
+			List<WalletRecord> walletLimitedRecounds = walletRecordDAO.getAll("date", Direction.DESC, maxRows);
 			
 			walletMainSiteForm.setAccounts(walletAccountDAO.getAll());
-			walletMainSiteForm.setRecords(walletRecordDAO.getAll());
+			walletMainSiteForm.setRecords(walletLimitedRecounds);
+			
+			for(WalletRecord walletRecord : walletMainSiteForm.getRecords() ){
+				recordsValue.add(walletRecord.getValue());
+			}
+			
+			walletMainSiteForm.setRecordsValue(recordsValue);
+			walletMainSiteForm.setSum(sumRecordValue(walletRecounds));
+			walletMainSiteForm.setChart(createSingleLineChartJSON(walletRecounds));
 			
 			model.addAttribute("form", walletMainSiteForm);
-
+			
 			return "walletMainSite";
 		}
 	}
@@ -303,4 +316,37 @@ public class WalletController {
 		return "showTypes";
 		
 	}
+	
+	private float sumRecordValue(List<WalletRecord> records){
+		float sum = 0;
+		for (WalletRecord record : records){
+			sum += record.getValue();
+		}
+		return sum;
+	} 
+	
+	private String createSingleLineChartJSON (List<WalletRecord> walletRecounds){
+		Gson gson = new Gson();
+		Chart chart = new Chart();
+		WalletChart walletDraft = null;
+		float value = 0;
+
+		for(WalletRecord record : walletRecounds){
+			walletDraft = new WalletChart();
+			walletDraft.setDate(record.getDate());
+			value += record.getValue();
+			walletDraft.setValue(value);
+			chart.add(walletDraft);
+		}
+		
+		if(walletDraft!=null){
+			walletDraft = new WalletChart();
+			walletDraft.setDate(new Date());
+			walletDraft.setValue(value);
+			chart.add(walletDraft);
+		}
+		
+		return gson.toJson(chart);
+	}
+
 }

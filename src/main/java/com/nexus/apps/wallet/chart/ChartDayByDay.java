@@ -1,10 +1,10 @@
-package com.nexus.apps.wallet.draft;
+package com.nexus.apps.wallet.chart;
 
 import java.util.List;
 
 import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 
-public class DraftDayByDay {
+public class ChartDayByDay {
 
 	private List<WalletRecord> recordList;
 
