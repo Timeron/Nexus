@@ -21,6 +21,7 @@
 <script src="<c:url value="/resources/bootstrap/datapicker/bootstrap-datetimepicker.min.js" />" ></script>
 
 <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<%-- <script src="<c:url value="/resources/chart/Chart.min.js" />"></script> --%>
 
 
 
