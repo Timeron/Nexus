@@ -13,7 +13,10 @@ public class CarReportDTO {
 	private float totalFuel;
 	private float lastDistance;
 	private float lastFuel;
-	private String chart = "{[ {'date':'1-May-13','close':58.13},{'date':'30-Apr-13','close':53.98},{'date':'27-Apr-13','close':67.00},{'date':'26-Apr-13','close':89.70},  {'date':'25-Apr-13','close':99.00},  {'date':'24-Apr-13','close':130.28},  {'date':'23-Apr-13','close':166.70},  {'date':'20-Apr-13','close':234.98},  {'date':'19-Apr-13','close':345.44},  {'date':'18-Apr-13','close':443.34},]}";
+	private String chart;
+	private String chartDistance;
+	private String chartRefuel;
+	
 	
 	public float getAverageFuelConsumption() {
 		return averageFuelConsumption;
@@ -61,12 +64,23 @@ public class CarReportDTO {
 	}
 	
 	public String getChart() {
-		System.out.println(chart);
 		return chart;
 	}
 	
 	public void setChart(String chart) {
 		this.chart = chart;
+	}
+	public String getChartDistance() {
+		return chartDistance;
+	}
+	public void setChartDistance(String chartDistance) {
+		this.chartDistance = chartDistance;
+	}
+	public String getChartRefuel() {
+		return chartRefuel;
+	}
+	public void setChartRefuel(String chartRefuel) {
+		this.chartRefuel = chartRefuel;
 	}
 	
 }

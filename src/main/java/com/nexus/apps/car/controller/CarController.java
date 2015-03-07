@@ -20,9 +20,11 @@ import com.nexus.apps.car.dto.EditRecordDTO;
 import com.nexus.apps.car.dto.MainSiteDTO;
 import com.nexus.apps.car.dto.RecordsDTO;
 import com.nexus.apps.car.dto.chart.ConsumptionChart;
+import com.nexus.apps.car.dto.chart.DateValueChart;
 import com.nexus.chart.Chart;
 import com.timeron.NexusDatabaseLibrary.Entity.Fuel;
 import com.timeron.NexusDatabaseLibrary.dao.FuelDAO;
+import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 
 @Controller
 @RequestMapping("/car")
@@ -116,24 +118,18 @@ public class CarController {
 	@RequestMapping("/carReport")
 	public String carReport(ModelMap model){
 		CarReportDTO carReportDTO = new CarReportDTO();
-		Chart consumptionList = new Chart();
 		Gson gson = new Gson();
-		
-		List<Fuel> records = fuelDAO.getAll();
+		List<Fuel> records = fuelDAO.getAll("date", Direction.ASC);
 		List<Fuel> buildFuelList = buildFuelList(records);
 		
 		if(records.size()>0){
-			int id = 0;
-			for (Fuel record : buildFuelList){
-				ConsumptionChart consumptionChart = new ConsumptionChart();
-				consumptionChart.setInterval(id++);
-				consumptionChart.setValue(consumption(record.getLiters(), record.getDistance()));
-				consumptionList.add(consumptionChart);
-			}
+			String chartConsumption = gson.toJson(buildConsumptionChart(buildFuelList));
+			String chartDistance = gson.toJson(buildDistanceChart(buildFuelList));
+			String chartRefuel = gson.toJson(buildRefuelChart(records));
 			
-			String str = gson.toJson(consumptionList);
-			
-			carReportDTO.setChart(str);
+			carReportDTO.setChart(chartConsumption);
+			carReportDTO.setChartDistance(chartDistance);
+			carReportDTO.setChartRefuel(chartRefuel);
 			
 			carReportDTO.setRecords(buildFuelList);
 			carReportDTO.setTotalDistance(totalDistance(records));
@@ -237,6 +233,47 @@ public class CarController {
 			return liters*100/kilometers;
 		}
 		return 0;
+	}
+	
+	private Chart buildConsumptionChart(List<Fuel> records){
+		
+		Chart consumptionList = new Chart();
+
+		int id = 0;
+		for (Fuel record : records) {
+			ConsumptionChart consumptionChart = new ConsumptionChart();
+			consumptionChart.setInterval(id++);
+			consumptionChart.setValue(consumption(record.getLiters(),
+					record.getDistance()));
+			consumptionList.add(consumptionChart);
+		}
+		return consumptionList;
+	}
+	
+	private Chart buildDistanceChart(List<Fuel> records){
+		Chart distanceList = new Chart();
+		DateValueChart chartRow;
+		for (Fuel record : records) {
+			chartRow = new DateValueChart();
+			chartRow.setDate(record.getDate());
+			chartRow.setValue(record.getDistance());
+			distanceList.add(chartRow);
+		}
+		
+		return distanceList;
+	}
+	
+	private Chart buildRefuelChart(List<Fuel> records){
+		Chart refuelList = new Chart();
+		DateValueChart chartRow;
+		for (Fuel record : records) {
+			chartRow = new DateValueChart();
+			chartRow.setDate(record.getDate());
+			chartRow.setValue(record.getLiters());
+			refuelList.add(chartRow);
+		}
+		
+		return refuelList;
 	}
 
 }

@@ -1,21 +1,62 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
+<script src="<c:url value='/resources/js/chart/SingleBarChart.js'/>"></script>
 <style>
 <!--
+h1{
+	width: 960px;
+}
+
+.charts {
+	font: 10px sans-serif;
+	float: none;
+}
+
+#chart1 {
+	width: 65%;
+	height: 600px;
+	float: left;
+}
+
+#chart2 {
+	width: 35%;
+	height: 300px;
+	float: left;
+}
+
+#chart3 {
+	width: 35%;
+	height: 300px;
+	float: left;
+}
 
 .bar {
-  fill: steelblue;
+	fill: steelblue;
 }
 
 .bar:hover {
-  fill: brown;
+	fill: brown;
 }
 
 .axis {
-  font: 10px sans-serif;
+	font: 10px sans-serif;
 }
+
+.axis path,.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.x.axis path {
+	display: none;
+}
+
+
+
+
+
 
 .axis path,
 .axis line {
@@ -28,10 +69,32 @@
   display: none;
 }
 
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
+}
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+.range {
+    fill: #eee;
+    opacity: .4;
+    pointer-events: all;
+    shape-rendering: crispEdges;
+}
 -->
 </style>
 
-<div class="container">
+<div>
 	<h1>Streszczenie</h1>
 	<div class="row">
 		<h3>Srednie spalanie: <b>${form.averageFuelConsumption } l/km</b></h3>
@@ -50,7 +113,11 @@
 <c:choose>
 	<c:when test="${not empty form.records}">
 		<h1>Wykres</h1>
-		<div id="chart1"></div>
+		<div class="charts">
+			<div id="chart1"></div>
+			<div id="chart2"></div>
+			<div id="chart3"></div>
+		</div>
 		<h1>Rekordy</h1>
 		<table class="table table-striped">
 			<tr>
@@ -88,18 +155,31 @@
 
 
 
-
 <script>
+var stringDistance = '${form.chartDistance}';
+var jsonDistance = JSON.parse(stringDistance);
+var dataDistance = jsonDistance.chart;
+
+var stringDistance1 = '${form.chartRefuel}';
+var jsonDistance1 = JSON.parse(stringDistance1);
+var dataDistance1 = jsonDistance1.chart;
+
+console.log(dataDistance);
+singleBarChart("#chart3", $('#chart2').width(), $('#chart2').height()-50, dataDistance, "Dystens (km)", "km");
+singleBarChart("#chart2", $('#chart2').width(), $('#chart2').height()-50, dataDistance1, "Dystens (km)", "km");
+
 var data = ${form.chart};
 var string = '${form.chart}';
 var json = JSON.parse(string);
 var data = json.chart;
-
+var width = $('#chart1').width();
+var height = $('#chart1').height();
+console.log(string);
 console.log(data);
 
-var margin = {top: 20, right: 20, bottom: 30, left: 40},
-width = 960 - margin.left - margin.right,
-height = 500 - margin.top - margin.bottom;
+var margin = {top: 10, right: 20, bottom: 65, left: 40},
+ width = width - margin.left - margin.right,
+ height = height - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal()
 .rangeRoundBands([0, width], .1);
@@ -157,5 +237,7 @@ function type(d) {
 d.value = +d.value;
 return d;
 }
+
+
 
 </script>
