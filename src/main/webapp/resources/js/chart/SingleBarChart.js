@@ -4,22 +4,22 @@ function singleBarChart(div, divWidth, divHeight, data, axisText, unit){
 	width = divWidth - margin.left - margin.right,
 	height = divHeight - margin.top - margin.bottom;
 	
-	var parseDate = d3.time.format("%b %d, %Y %I:%M:%S %p").parse,
-	bisectDate = d3.bisector(function(d) { return d.date; }).left,
-	format = d3.format(",.2f"),
-	formatValue = function(d) { return format(d)+unit; };
+	var parseDate = d3.time.format("%b %d, %Y %I:%M:%S %p").parse,		//formatowanie daty wchodzącej do wykresu
+	bisectDate = d3.bisector(function(d) { return d.date; }).left,		//
+	format = d3.format(",.2f"),											//formatowanie wartości która bedzie wyświetlana po najechaniu na wykres
+	formatValue = function(d) { return format(d)+unit; };				//foramtowanie do tekstu wartości która bedzie wyświetlona
 	
-	var x = d3.time.scale()
+	var x = d3.time.scale()			//zasięg wykresu w szerokości
 	.range([0, width]);
 	
-	var y = d3.scale.linear()
+	var y = d3.scale.linear()		//zasięg wykresu na wysokości
 	.range([height, 0]);
 	
-	var xAxis = d3.svg.axis()
+	var xAxis = d3.svg.axis()		//skala X na dole wtkresu
 	.scale(x)
 	.orient("bottom");
 	
-	var yAxis = d3.svg.axis()
+	var yAxis = d3.svg.axis()		//skala Y po lewej stronie wtkresu
 	.scale(y)
 	.orient("left");
 	
@@ -27,18 +27,18 @@ function singleBarChart(div, divWidth, divHeight, data, axisText, unit){
 	.x(function(d) { return x(d.date); })
 	.y(function(d) { return y(d.value); });
 	
-	var svg = d3.select(div).append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
-	.append("g")
-	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+	var svg = d3.select(div).append("svg")					//umiejscowienie wykresu w htmlu
+	.attr("width", width + margin.left + margin.right)		//długość wykresu
+	.attr("height", height + margin.top + margin.bottom)	//wysokość wykresu
+	.append("g")											//grupowanie
+	.attr("transform", "translate(" + margin.left + "," + margin.top + ")");	//przesuniecie grupy o marginesy
 	
-	data.forEach(function(d) {
+	data.forEach(function(d) {			//formatowanie danych wejsciowych
 		d.date = parseDate(d.date);
 		d.value = +d.value;
 	});
 	    
-	data.sort(function(a, b) {
+	data.sort(function(a, b) {			//sposób sortowania daty
 		return a.date - b.date;
 	});
 	
@@ -60,19 +60,19 @@ function singleBarChart(div, divWidth, divHeight, data, axisText, unit){
 	  .style("text-anchor", "end")
 	  .text(axisText);   
 	
-	svg.append("path")
-	  .datum(data)
-	  .attr("class", "line")
-	  .attr("d", line);
+	svg.append("path")		//budowanie lini na wykresie
+	  .datum(data)			//dodanie danych
+	  .attr("class", "line")	//rozpoznanie przez css jako class="line"
+	  .attr("d", line);		//przekazanie danych 
 	
 	var focus = svg.append("g")
 	  .attr("class", "focus")
 	  .style("display", "none");
 	
-	focus.append("circle")
+	focus.append("circle")		//budowa markera (zaznaczenie danych na wykresie)
 	  .attr("r", 4.5);
 	
-	focus.append("text")
+	focus.append("text")		//formatowanie textu na markerze
 	  .attr("x", 9)
 	  .attr("dy", ".35em");
 	

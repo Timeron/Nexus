@@ -102,15 +102,38 @@
 .area {
 	fill: steelblue;
 }
-</style>
 
+
+
+
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+.range {
+    fill: #eee;
+    opacity: .4;
+    pointer-events: all;
+    shape-rendering: crispEdges;
+}
+</style>
+<script src="<c:url value="/resources/js/chart/SingleLineChart.js" />"></script>
 <script>
 	var string = '${form.chart}';
 	var json = JSON.parse(string);
 	var data = json.chart;
 	var yDescription = "Stan konta (zł)";
 
+	singleLineFieldChart("#chart", $("#chart").width(), $("#chart").height(), data, "Stan konta", "zł");
 </script>
-<script src="<c:url value="/resources/js/chart/SingleLineChart.js" />"></script>
+
+
 
 

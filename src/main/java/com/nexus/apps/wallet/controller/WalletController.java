@@ -100,6 +100,7 @@ public class WalletController {
 		List<WalletRecord> walletAllAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount);
 		List<WalletRecord> walletAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, maxRows);
 		walletAccountForm.setWalletRecords(walletAccountRecounds);
+		walletAccountForm.setAccounts(walletAccountDAO.getAll());
 		
 		walletAccountForm.setChart(createSingleLineChartJSON(walletAllAccountRecounds));
 		walletAccountForm.setSum(sumRecordValue(walletAccountRecounds));

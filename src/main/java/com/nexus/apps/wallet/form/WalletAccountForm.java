@@ -9,6 +9,7 @@ import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 public class WalletAccountForm extends MainForm{
 
 	private WalletAccount walletAccount;
+	private List<WalletAccount> accounts;
 	private List<WalletRecord> walletRecords;
 	private WalletRecord newRecord;
 	private String chart;
@@ -52,6 +53,14 @@ public class WalletAccountForm extends MainForm{
 
 	public void setSum(float sum) {
 		this.sum = sum;
+	}
+
+	public List<WalletAccount> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(List<WalletAccount> accounts) {
+		this.accounts = accounts;
 	}
 	
 	

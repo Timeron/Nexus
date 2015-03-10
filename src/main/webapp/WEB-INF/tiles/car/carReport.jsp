@@ -160,13 +160,13 @@ var stringDistance = '${form.chartDistance}';
 var jsonDistance = JSON.parse(stringDistance);
 var dataDistance = jsonDistance.chart;
 
-var stringDistance1 = '${form.chartRefuel}';
-var jsonDistance1 = JSON.parse(stringDistance1);
-var dataDistance1 = jsonDistance1.chart;
+var stringRefuel = '${form.chartRefuel}';
+var jsonRefuel = JSON.parse(stringRefuel);
+var dataRefuel = jsonRefuel.chart;
 
 console.log(dataDistance);
-singleBarChart("#chart3", $('#chart2').width(), $('#chart2').height()-50, dataDistance, "Dystens (km)", "km");
-singleBarChart("#chart2", $('#chart2').width(), $('#chart2').height()-50, dataDistance1, "Dystens (km)", "km");
+singleBarChart("#chart3", $('#chart2').width(), $('#chart2').height()-50, dataRefuel, "Litry (L)", "zł");
+singleBarChart("#chart2", $('#chart2').width(), $('#chart2').height()-50, dataDistance, "Dystens (km)", "km");
 
 var data = ${form.chart};
 var string = '${form.chart}';

@@ -1,11 +1,16 @@
-	var dateFormat = "%b %d, %Y %I:%M:%S %p";
+function singleLineFieldChart(div, divWidth, divHeight, data, axisText, unit){	
+
+var dateFormat = "%b %d, %Y %I:%M:%S %p";
 	
 	var margin = {top : 20, right : 20, 
 					bottom : 30, left : 50}, 
 					width = $(window).width() - margin.left - margin.right - 100, 
 					height = 500 - margin.top - margin.bottom;
 
-	var parseDate = d3.time.format(dateFormat).parse;
+	var parseDate = d3.time.format(dateFormat).parse,
+	bisectDate = d3.bisector(function(d) { return d.date; }).left,
+	format = d3.format(",.2f"),
+	formatValue = function(d) { return format(d)+"unit";};
 
 	var x = d3.time.scale().range([ 0, width ]);
 
@@ -61,3 +66,34 @@
 		.attr("y", 6).attr("dy", ".71em")
 		.style("text-anchor", "end")
 		.text(yDescription);
+	//***************
+	var focus = svg.append("g")
+	  .attr("class", "focus")
+	  .style("display", "none");
+	
+	focus.append("circle")		//budowa markera (zaznaczenie danych na wykresie)
+	  .attr("r", 5);
+	
+	focus.append("text")		//formatowanie textu na markerze
+	  .attr("x", 4)
+	  .attr("y", -15)
+	  .attr("dy", ".45em");
+	
+	svg.append("rect")
+	  .attr("class", "overlay")
+	  .attr("width", width)
+	  .attr("height", height)
+	  .on("mouseover", function() { focus.style("display", null); })
+	  .on("mouseout", function() { focus.style("display", "none"); })
+	  .on("mousemove", mousemove);
+	
+	function mousemove() {
+	var x0 = x.invert(d3.mouse(this)[0]),
+	    i = bisectDate(data, x0, 1),
+	    d0 = data[i - 1],
+	    d1 = data[i],
+	    d = x0 - d0.date > d1.date - x0 ? d1 : d0;
+	focus.attr("transform", "translate(" + x(d.date) + "," + y(d.value) + ")");
+	focus.select("text").text(formatValue(d.value));
+	}
+}
