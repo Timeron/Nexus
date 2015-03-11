@@ -318,6 +318,11 @@ public class WalletController {
 		
 	}
 	
+	/**
+	 * Suma wszystkich podanych operacji
+	 * @param records
+	 * @return
+	 */
 	private float sumRecordValue(List<WalletRecord> records){
 		float sum = 0;
 		for (WalletRecord record : records){
@@ -350,6 +355,11 @@ public class WalletController {
 		return gson.toJson(chart);
 	}
 	
+	/**
+	 * Zmienia wartoś dla widoku (tam ma być tylko wartość to czy minus czy plus jest wyrazone kolorem)
+	 * @param walletRecord
+	 * @return
+	 */
 	private WalletRecord absolutValue(WalletRecord walletRecord){
 		if(walletRecord.getValue() < 0){
 			walletRecord.setValue(walletRecord.getValue()*-1);
