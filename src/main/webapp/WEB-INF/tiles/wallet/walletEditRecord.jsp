@@ -22,10 +22,8 @@
 <!-- 					</span> Transfer -->
 <!-- 				</p> -->
 				
-<!-- 				<p id="incomeButton" class="btn btn-success btn-lg" label="income"> -->
-<!-- 					<span class="glyphicon glyphicon-plus" aria-hidden="true"> -->
-<!-- 						Dochód -->
-<!-- 				</p> -->
+				<p id="incomeButton" >
+				</p>
 
 				<div class="form-group">
 					<label for="value">Wartość</label>
@@ -80,10 +78,28 @@
 </div>
 
 
-
+${form.walletRecord.income}
 <script>
+
+var income = '${form.walletRecord.income}';
+
 	$("#walletAccounts").hide();
 
+	if(income == "true"){
+		$("#incomeButton").append('<span class="glyphicon glyphicon-plus" aria-hidden="true"></span>');
+		$("#incomeButton").attr("class", "btn btn-success btn-lg");
+		$("#incomeButton").append("Dochód");
+		$("#income").prop('value', 1);
+		$("#incomeButton").attr("label", "income");
+	}else{
+		$("#incomeButton").append('<span class="glyphicon glyphicon-minus" aria-hidden="true"></span> ');
+		$("#incomeButton").attr("class", "btn btn-warning btn-lg");
+		$("#incomeButton").append("Wydatki");
+		$("#income").prop('value', 0);
+		$("#incomeButton").attr("label", "expense");
+	};
+	
+	
 	$("#incomeButton")
 			.click(
 					function() {

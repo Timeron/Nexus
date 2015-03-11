@@ -245,7 +245,7 @@ public class WalletController {
 		WalletEditRecordForm walletEditRecordForm = new WalletEditRecordForm();
 		
 		walletEditRecordForm.setWalletAccount(walletAccountDAO.getAll());
-		walletEditRecordForm.setWalletRecord(walletRecordDAO.getById(Integer.parseInt(request.getParameter("id"))));
+		walletEditRecordForm.setWalletRecord(absolutValue(walletRecordDAO.getById(Integer.parseInt(request.getParameter("id")))));
 		
 		model.addAttribute("form", walletEditRecordForm);
 
@@ -348,6 +348,13 @@ public class WalletController {
 		}
 		
 		return gson.toJson(chart);
+	}
+	
+	private WalletRecord absolutValue(WalletRecord walletRecord){
+		if(walletRecord.getValue() < 0){
+			walletRecord.setValue(walletRecord.getValue()*-1);
+		}
+		return walletRecord;
 	}
 
 }
