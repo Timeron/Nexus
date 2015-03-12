@@ -10,7 +10,7 @@ var dateFormat = "%b %d, %Y %I:%M:%S %p";
 	var parseDate = d3.time.format(dateFormat).parse,
 	bisectDate = d3.bisector(function(d) { return d.date; }).left,
 	format = d3.format(",.2f"),
-	formatValue = function(d) { return format(d)+"unit";};
+	formatValue = function(d) { return format(d)+" "+unit;};
 
 	var x = d3.time.scale().range([ 0, width ]);
 
