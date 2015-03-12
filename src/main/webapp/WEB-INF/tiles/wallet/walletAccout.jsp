@@ -84,7 +84,14 @@
 					<tr>
 						<td>${record.id}</td>
 						<td>${record.walletType.icon}</td>
-						<td>${record.value}</td>
+						<c:choose>
+							<c:when test="${record.value < 0}">
+								<td class="redFont">${record.value}</td>
+							</c:when>
+							<c:otherwise>
+								<td>${record.value}</td>
+							</c:otherwise>
+						</c:choose>
 						<td>${record.description}</td>
 						<td>${record.date}</td>
 						<td>${record.transfer}</td>

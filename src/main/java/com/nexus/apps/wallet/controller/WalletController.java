@@ -48,7 +48,7 @@ public class WalletController {
 	public String walletMainSite(ModelMap model){
 		WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
 		List<Float> recordsValue = new ArrayList<Float>();
-		int maxRows = 25;
+		int maxRows = 10;
 		
 		List<WalletRecord> walletRecounds = walletRecordDAO.getAll("date", Direction.ASC);
 		List<WalletRecord> walletLimitedRecounds = walletRecordDAO.getAll("date", Direction.DESC, maxRows);
@@ -62,7 +62,8 @@ public class WalletController {
 		
 		walletMainSiteForm.setRecordsValue(recordsValue);
 		walletMainSiteForm.setSum(sumRecordValue(walletRecounds));
-		walletMainSiteForm.setChart(createSingleLineChartJSON(walletRecounds));
+		Chart chart = createSingleLineChart(walletRecounds);
+		walletMainSiteForm.setChart(transformToJSON(chart));
 		
 		model.addAttribute("form", walletMainSiteForm);
 
@@ -92,17 +93,17 @@ public class WalletController {
 	
 	@RequestMapping(value = "/walletAccout", method = RequestMethod.GET)
 	public String walletAccount(ModelMap model, HttpServletRequest request, HttpServletResponse response){
-		int maxRows = 15;
+		int maxRows = 10;
 		WalletAccountForm walletAccountForm = new WalletAccountForm();
 		WalletAccount currentAccount = walletAccountDAO.getById(Integer.parseInt(request.getParameter("id")));
 		
 		walletAccountForm.setWalletAccount(currentAccount);
-		List<WalletRecord> walletAllAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount);
-		List<WalletRecord> walletAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, maxRows);
-		walletAccountForm.setWalletRecords(walletAccountRecounds);
+		List<WalletRecord> walletAllAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, Direction.ASC);
+		List<WalletRecord> walletAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, Direction.DESC, maxRows);
+		walletAccountForm.setWalletRecords(markTransfer(walletAccountRecounds, currentAccount));
 		walletAccountForm.setAccounts(walletAccountDAO.getAll());
-		
-		walletAccountForm.setChart(createSingleLineChartJSON(walletAllAccountRecounds));
+		Chart chart = createSingleLineChart(walletAllAccountRecounds, currentAccount);
+		walletAccountForm.setChart(transformToJSON(chart));
 		walletAccountForm.setSum(sumRecordValue(walletAccountRecounds));
 		
 		model.addAttribute("form", walletAccountForm);
@@ -219,6 +220,7 @@ public class WalletController {
 		if(newWalletRecord.isTransfer()){
 			if(walletAddRecordForm.getDestinationAccountId()!=null){
 				newWalletRecord.setDestinationWalletAccount(walletAccountDAO.getById(walletAddRecordForm.getDestinationAccountId()));
+				newWalletRecord.setSourceWalletAccount(walletAccountDAO.getById(walletAddRecordForm.getWalletAccountId()));
 				newWalletRecord.setIncome(false);
 			}
 		}else{
@@ -268,9 +270,10 @@ public class WalletController {
 
 			return "walletAccout";
 		}else{
+			Chart chart;
 			WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
 			List<Float> recordsValue = new ArrayList<Float>();
-			int maxRows = 25;
+			int maxRows = 10;
 			
 			List<WalletRecord> walletRecounds = walletRecordDAO.getAll("date", Direction.ASC);
 			List<WalletRecord> walletLimitedRecounds = walletRecordDAO.getAll("date", Direction.DESC, maxRows);
@@ -284,7 +287,8 @@ public class WalletController {
 			
 			walletMainSiteForm.setRecordsValue(recordsValue);
 			walletMainSiteForm.setSum(sumRecordValue(walletRecounds));
-			walletMainSiteForm.setChart(createSingleLineChartJSON(walletRecounds));
+			chart = createSingleLineChart(walletRecounds);
+			walletMainSiteForm.setChart(transformToJSON(chart));
 			
 			model.addAttribute("form", walletMainSiteForm);
 			
@@ -331,28 +335,49 @@ public class WalletController {
 		return sum;
 	} 
 	
-	private String createSingleLineChartJSON (List<WalletRecord> walletRecounds){
-		Gson gson = new Gson();
+	private Chart createSingleLineChart(List<WalletRecord> walletRecounds){
+		return createSingleLineChart(walletRecounds, null);
+	}
+	
+	private Chart createSingleLineChart (List<WalletRecord> walletRecounds, WalletAccount account){
 		Chart chart = new Chart();
-		WalletChart walletDraft = null;
+		WalletChart walletChart = null;
 		float value = 0;
 
 		for(WalletRecord record : walletRecounds){
-			walletDraft = new WalletChart();
-			walletDraft.setDate(record.getDate());
-			value += record.getValue();
-			walletDraft.setValue(value);
-			chart.add(walletDraft);
+			if(account == null){
+				if(!record.isTransfer()){
+					value += record.getValue();
+					walletChart = new WalletChart();
+					walletChart.setDate(record.getDate());
+					walletChart.setValue(value);
+				}
+			}else{
+				if(record.isTransfer()){
+					if(record.getSourceWalletAccount().getId() == account.getId()){
+						value -= record.getValue();
+					}else{
+						value += record.getValue();
+					}
+					walletChart = new WalletChart();
+					walletChart.setDate(record.getDate());
+					walletChart.setValue(value);
+				}else{
+					value += record.getValue();
+					walletChart = new WalletChart();
+					walletChart.setDate(record.getDate());
+					walletChart.setValue(value);
+				}
+			}
+			chart.add(walletChart);
 		}
 		
-		if(walletDraft!=null){
-			walletDraft = new WalletChart();
-			walletDraft.setDate(new Date());
-			walletDraft.setValue(value);
-			chart.add(walletDraft);
-		}
+		walletChart = new WalletChart();
+		walletChart.setDate(new Date());
+		walletChart.setValue(value);
+		chart.add(walletChart);
 		
-		return gson.toJson(chart);
+		return chart;
 	}
 	
 	/**
@@ -366,5 +391,21 @@ public class WalletController {
 		}
 		return walletRecord;
 	}
+	
+	private List<WalletRecord> markTransfer(List<WalletRecord> walletRecords, WalletAccount account){
+		for (WalletRecord record : walletRecords){
+			if(record.isTransfer() && record.getSourceWalletAccount().getId() == account.getId()){
+				record.setValue(record.getValue()*-1);
+			}
+		}
+		return walletRecords;
+	}
+	
+	private String transformToJSON(Object object){
+		Gson gson = new Gson();
+		return gson.toJson(object); 
+	}
+	
+	
 
 }
