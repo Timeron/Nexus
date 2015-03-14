@@ -45,7 +45,22 @@
 }
 -->
 </style>
-
+<div class="container-fluid">
+	<div class="bs-example">
+		<c:choose>
+			<c:when test="${not empty form.accounts}">
+				<c:forEach items="${form.accounts}" var="account">
+					<div class="btn-group">
+						<a class="btn btn-primary btn-ms" role="button"
+							href="/timeron-nexus/wallet/walletAccout?id=${account.id}">${account.name}</a>
+					</div>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+			</c:otherwise>
+		</c:choose>
+	</div>
+</div>
 <div class="container-fluid">
 
 	<h1>${form.walletAccount.name}</h1>
