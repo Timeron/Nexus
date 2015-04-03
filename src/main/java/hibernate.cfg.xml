@@ -28,6 +28,7 @@
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.JStatus" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.JTask" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.JTaskType" />
+		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.JRelease" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.NexusApplications" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.NexusConfig" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.NexusPerson" />
@@ -44,6 +45,7 @@
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.WalletAccount" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.WalletRecord" />
 		<mapping class="com.timeron.NexusDatabaseLibrary.Entity.WalletType" />
+		
 		
 
 	</session-factory>

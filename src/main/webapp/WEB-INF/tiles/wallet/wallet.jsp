@@ -6,6 +6,42 @@
 .redFont {
 	color: #FF0000;
 }
+
+#chart {
+	width: 100%;
+	padding: 15px 10px 50px 10px;
+	font: 10px sans-serif;
+	text-align: center;
+}
+
+.axis path,.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+	stroke-width: 2.5px;
+}
+
+.area {
+	fill: steelblue;
+}
+
+
+.overlay {
+  fill: none;
+  pointer-events: all;
+}
+
+.focus circle {
+  fill: none;
+  stroke: steelblue;
+}
+
+.range {
+    fill: #eee;
+    opacity: .4;
+    pointer-events: all;
+    shape-rendering: crispEdges;
+}
 -->
 </style>
 <div class="container-fluid">
@@ -83,54 +119,13 @@
 	</c:otherwise>
 </c:choose>
 
-
-<style>
-#chart {
-	width: 100%;
-	padding: 15px 10px 50px 10px;
-	font: 10px sans-serif;
-	text-align: center;
-}
-
-.axis path,.axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-	stroke-width: 2.5px;
-}
-
-.area {
-	fill: steelblue;
-}
-
-
-
-
-
-.overlay {
-  fill: none;
-  pointer-events: all;
-}
-
-.focus circle {
-  fill: none;
-  stroke: steelblue;
-}
-
-.range {
-    fill: #eee;
-    opacity: .4;
-    pointer-events: all;
-    shape-rendering: crispEdges;
-}
-</style>
 <script src="<c:url value="/resources/js/chart/SingleLineChart.js" />"></script>
 <script>
 	var string = '${form.chart}';
 	var json = JSON.parse(string);
 	var data = json.chart;
 	var yDescription = "Stan konta (zł)";
-
+console.log($("#chart").height());
 	singleLineFieldChart("#chart", $("#chart").width(), $("#chart").height(), data, "Stan konta", "zł");
 </script>
 

@@ -3,7 +3,7 @@
 <tiles-definitions>
 
 	<definition name="jtaskBasic" template="/WEB-INF/tiles/templates/jTaskTemplate.jsp">
-		<put-attribute name="meta" value="/WEB-INF/tiles/index/meta.jsp" />
+		<put-attribute name="meta" value="/WEB-INF/tiles/jTask/include/meta.jsp" />
 		<put-attribute name="title" value="JTask" />
 		<put-attribute name="header" value="/WEB-INF/tiles/nexus/header.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/tiles/jTask/include/menu.jsp" />
@@ -11,7 +11,15 @@
 	</definition>
 
 	<definition name="jtaskMainSite" extends="jtaskBasic">
-		<put-attribute name="body" value="/WEB-INF/tiles/jTask/body.jsp" />
+		<put-attribute name="body" value="/WEB-INF/domain/app/JTask/view/dashboard.jsp" />
+	</definition>
+
+	<definition name="jtaskAddProject" extends="jtaskBasic">
+		<put-attribute name="body" value="/WEB-INF/tiles/jTask/jtaskAddProject.jsp" />
+	</definition>
+	
+	<definition name="jtaskAddTask" extends="jtaskBasic">
+		<put-attribute name="body" value="/WEB-INF/tiles/jTask/jtaskAddTask.jsp" />
 	</definition>
 
 </tiles-definitions>

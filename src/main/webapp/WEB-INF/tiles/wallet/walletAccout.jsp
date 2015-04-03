@@ -4,10 +4,11 @@
 
 <style>
 <!--
-
+/* rekordz */
 .redFont {
 	color: #FF0000;
 }
+/* wykresy */
 
 #chart {
 	width: 100%;
@@ -28,20 +29,20 @@
 }
 
 .overlay {
-  fill: none;
-  pointer-events: all;
+	fill: none;
+	pointer-events: all;
 }
 
 .focus circle {
-  fill: none;
-  stroke: steelblue;
+	fill: none;
+	stroke: steelblue;
 }
 
 .range {
-    fill: #eee;
-    opacity: .4;
-    pointer-events: all;
-    shape-rendering: crispEdges;
+	fill: #eee;
+	opacity: .4;
+	pointer-events: all;
+	shape-rendering: crispEdges;
 }
 -->
 </style>
@@ -72,9 +73,9 @@
 			</h1>
 		</div>
 	</div>
-	
+
 	<h1>Saldo całkowite:</h1>
-	<h3>${form.sum} zł</h3>
+	<h3>${form.sum}zł</h3>
 	</br>
 	<c:choose>
 
@@ -82,6 +83,8 @@
 
 			<h1>Wykres</h1>
 			<div id="chart"></div>
+			
+			<div id="pieChart"></div>
 
 			<h1>Rekordy</h1>
 			<table class="table table-striped">
@@ -121,31 +124,20 @@
 	</c:choose>
 </div>
 
-<style>
-#chart {
-	width: 100%;
-	padding: 15px 10px 50px 10px;
-	font: 10px sans-serif;
-	text-align: center;
-}
-
-.axis path,.axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-	stroke-width: 2.5px;
-}
-
-.area {
-	fill: steelblue;
-}
-</style>
 <script src="<c:url value="/resources/js/chart/SingleLineChart.js" />"></script>
+<script src="<c:url value="/resources/js/chart/PieChart.js" />"></script>
 <script>
 	var string = '${form.chart}';
 	var json = JSON.parse(string);
 	var data = json.chart;
 	var yDescription = "Stan konta (zł)";
 	singleLineFieldChart("#chart", $("#chart").width(), $("#chart").height(), data, "Stan konta", "zł");
+
+	SimplePieChart("#pieChart", 210, 11);
+	SimplePieChart("#pieChart", 200, 120);
+	
+	
+
+	
 </script>
 
