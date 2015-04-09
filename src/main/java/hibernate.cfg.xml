@@ -15,8 +15,8 @@
 		<property name="hibernate.connection.characterEncoding">UTF-8</property>
 
 		<!-- Assume test is the database name -->
-		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test_nexus?characterEncoding=utf8</property>
-<!-- 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8</property> -->
+<!-- 		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/test_nexus?characterEncoding=utf8</property> -->
+		<property name="hibernate.connection.url">jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8</property>
 		<property name="hibernate.connection.username">root</property>
 		<property name="hibernate.connection.password"></property>
 

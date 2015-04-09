@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.nexus.apps.jTask.dto.JProjectListDTO;
+import com.nexus.apps.jTask.dto.list.JProjectListDTO;
 import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 
@@ -23,7 +23,9 @@ public class JTaskRestService {
 	
 	@RequestMapping(value = "/getAllProjects", method = RequestMethod.GET)
 	public String getAllProjects(){
-		return gson.toJson(helper.getProjectList());
+		String result = gson.toJson(helper.getProjectList());
+		System.out.println(result);
+		return gson.toJson(result);
 	}
 	
 }

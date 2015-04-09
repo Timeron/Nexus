@@ -5,7 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import com.nexus.apps.jTask.dto.JProjectDTO;
+import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 
@@ -24,9 +24,8 @@ public class JTaskControler {
 	@RequestMapping(value = "/addProject", method = RequestMethod.GET)
 	public String addProject(Model model){
 		JProject jProject = new JProject();
-		JProjectDTO jProjectDTO = new JProjectDTO();
+		JProjectDTO jProjectDTO = new JProjectDTO(jProject);
 		
-		jProjectDTO.setjProject(jProject);
 		model.addAttribute("form", jProjectDTO);
 		return "jtaskAddProject";
 	}
