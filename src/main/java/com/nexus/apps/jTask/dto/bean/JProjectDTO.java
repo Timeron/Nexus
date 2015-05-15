@@ -1,6 +1,8 @@
 package com.nexus.apps.jTask.dto.bean;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 
@@ -10,6 +12,7 @@ public class JProjectDTO {
 	private String name;
 	private String description;
 	private Date created;
+	private List<JTaskDTO> tasks = new ArrayList<JTaskDTO>();
 	
 	public JProjectDTO(JProject project) {
 		this.id = project.getId();
@@ -48,6 +51,22 @@ public class JProjectDTO {
 
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public List<JTaskDTO> getTasks() {
+		return tasks;
+	}
+
+	public void setTasks(List<JTaskDTO> tasks) {
+		this.tasks = tasks;
+	}
+
+	public void addTasks(List<JTaskDTO> tasks) {
+		this.tasks.addAll(tasks);
+	}
+	
+	public void addTask(JTaskDTO task) {
+		this.tasks.add(task);
 	}
 
 	public void setjProject(JProject jProject) {

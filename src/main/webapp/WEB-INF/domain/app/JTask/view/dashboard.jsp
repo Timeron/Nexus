@@ -1,21 +1,144 @@
 <div data-ng-app="nexus">
 
-	<div data-ng-controller = "JTask">
-		<input type="text" data-ng-model="data.label">
-		{{data.label}} 
+	<!-- Modal -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="JTaskNewProjectCtr">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+				</div>
+				<div class="modal-body">
+					<div id="newProject" class="modalTest" >
+						<div>
+							<input type="text" data-ng-model="newProjectName">
+							{{newProjectName}} <input type="text" data-ng-model="newProjectDescription">
+							{{newProjectDescription}}
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-ng-click="addProject()" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="newTaskModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="JTaskNewTaskCtr"> 
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Add new task</h4>
+				</div>
+				<div class="modal-body">
+					<table class="formContainer">
+						<tbody>
+							<tr>
+								<td class="bold">Summary: </td>
+								<td><input type="text" data-ng-model="newSummary"></td>
+							</tr>
+							<tr>
+								<td class="bold">Type: </td>
+								<td>
+									<select ng-model="newType" ng-options="taskType.name for taskType in taskTypes">
+      									<option value="1"></option>
+    								</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Priority: </td>
+								<td>
+									<select ng-model="newPriority" ng-options="priority.id for priority in priorities">
+      									<option value=""></option>
+    								</select>
+								</td>
+							</tr>
+							<tr class="separator"><td colspan="2"><hr></td></tr>
+							<tr>
+								<td>Description: </td>
+								<td><textarea cols="40" rows="5" data-ng-model="newDescription"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-ng-click="saveTask()" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
+		</div>
 	</div>
 	
-	<div>
-		<table>
-			<thead>
-<!-- 				<tr ng-repeat=""> -->
-<!-- 					<th> -->
-<!-- 					</th> -->
-<!-- 				</tr> -->
-			</thead>
-			<tbody>
-				
-			</tbody>
-		</table>
+	<div id="dashboard" class="view" data-ng-controller = "JTaskBoardCtr">
+		<div data-ng-repeat="project in projects">
+			<div>
+				<projectColumn index="{{$index}}" class="column" >
+					<div class="projectColumnName btn btn-success" data-ng-click="openProject($index)">{{project.name}}</div>
+					<div class="projectColumnExtend btn btn-success" data-ng-click="extendProject($index)" ><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span></div>
+				</projectColumn>
+			</div>
+		</div>
 	</div>
+	
+
+	<div id="project" class="view" data-ng-controller = "JTaskProjectCtr">
+		<div class="projectHeader">
+			<div class="projectName">
+				{{project.name}}
+			</div>
+			<div class="headerMenu">
+				<div class="addTask btn btn-primary btn-xs" data-toggle="modal" data-target="#newTaskModal">Add Task <span class="glyphicon glyphicon-plus" aria-hidden="true"></div>
+			</div>
+		</div>
+		<div>
+			<projectBoardColumn>
+				<div class="columnName">Wait</div>
+			</projectBoardColumn>
+			<projectBoardColumn>
+				<div class="columnName">To Do</div>
+				<div class="task" data-ng-repeat="task in project.tasks">
+					<div class="type-{{task.taskTypeId}}"></div>
+					<div class="taskContent">
+						<table class="taksTable">
+							<tbody>
+								<tr>
+									<td class="taskIconContainer"></td>
+									<td class="taskName bold">{{task.name}}</td>
+									<td class="userIcon"></td>
+								</tr>
+								<tr>
+									<td class="priority">{{task.priority}}</td>
+									<td class="taskSummary">{{task.summary}}</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+<!-- 					<div class="taskContent"> -->
+<!-- 						<div class="userIcon"></div> -->
+<!-- 						<div class="taskIconContainer"> -->
+<!-- 							<div class="icon-{{task.taskTypeId}}"></div> -->
+<!-- 							<div class="priority">{{task.priority}}</div> -->
+<!-- 						</div> -->
+<!-- 						<div class="taskName bold">{{task.name}}</div> -->
+<!-- 						<div>{{task.summary}}</div> -->
+						
+<!-- 					</div> -->
+				</div>
+			</projectBoardColumn>
+			<projectBoardColumn><div class="columnName">In progres</div></projectBoardColumn>
+			<projectBoardColumn><div class="columnName">Test</div></projectBoardColumn>
+			<projectBoardColumn><div class="columnName">Done</div></projectBoardColumn>
+		</div>
+	</div>
+
 </div>

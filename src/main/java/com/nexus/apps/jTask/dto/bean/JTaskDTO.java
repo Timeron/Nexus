@@ -11,6 +11,11 @@ public class JTaskDTO {
 	private String summary;
 	private String description;
 	private Date created;
+	private Date updated;
+	private Integer mainTaskId;
+	private Integer taskTypeId;
+	private Integer priority;
+	private Integer projectId;
 	
 	public JTaskDTO(JTask jTask) {
 		this.id = jTask.getId();
@@ -18,6 +23,16 @@ public class JTaskDTO {
 		this.summary = jTask.getSummary();
 		this.description = jTask.getDescription();
 		this.created = jTask.getCreated();
+		this.priority = jTask.getPriority();
+		this.updated = jTask.getUpdated();
+		this.projectId = jTask.getProject().getId();
+		
+		if(jTask.getMainTask() != null){
+			this.mainTaskId = jTask.getMainTask().getId();
+		}
+		if(jTask.getTaskType() != null){
+			this.taskTypeId = jTask.getTaskType().getId();
+		}
 	}
 	public int getId() {
 		return id;
@@ -49,6 +64,37 @@ public class JTaskDTO {
 	public void setCreated(Date created) {
 		this.created = created;
 	}
+	public Integer getPriority() {
+		return priority;
+	}
+	public void setPriority(Integer priority) {
+		this.priority = priority;
+	}
+	public Date getUpdated() {
+		return updated;
+	}
+	public void setUpdated(Date updated) {
+		this.updated = updated;
+	}
+	public Integer getMainTaskId() {
+		return mainTaskId;
+	}
+	public void setMainTaskId(Integer mainTaskId) {
+		this.mainTaskId = mainTaskId;
+	}
+	public Integer getTaskTypeId() {
+		return taskTypeId;
+	}
+	public void setTaskTypeId(Integer taskTypeId) {
+		this.taskTypeId = taskTypeId;
+	}
+	public Integer getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+
 	
 	
 }

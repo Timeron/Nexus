@@ -1,0 +1,147 @@
+@CHARSET "UTF-8";
+
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+body {
+	padding-right: 3px;
+	padding-left: 3px;
+}
+
+.view {
+	width: 100%;
+	float: left;
+	background-color: #eee;
+}
+
+div span .icon {
+	width: 100px;
+}
+
+.projectColumnName{
+	float: left;
+	width: 80%;
+	background-color: #eee;
+}
+
+.projectColumnExtend {
+	float: left;
+	width: 20%;
+}
+
+.projectHeader {
+	width: 100%;
+	float: left;
+}
+
+.projectName{
+	padding: 35px 0px 60px 150px;
+	float: left;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+.columnName{
+	background-color: #ccc;
+	padding-top: 15px;
+	padding-bottom: 10px;
+	font-size: 20px;
+	font-weight: bold;
+	text-align: center;
+}
+
+.task {
+	border: 1px;
+	margin-top: 2px;
+	margin-bottom: 2px;
+	height: 110px;
+	width: 100%;
+	background-color: #FAFAFA;
+	float: right;
+	border-style: solid;
+    border-width: 1px;
+    border-color: #ccc;
+}
+
+.task .type-1 {
+	background-color: #44E;
+	height: 100%;
+	width: 2%;
+	float: left;
+}
+
+.task .type-2 {
+	background-color: #E44;
+	height: 100%;
+	width: 2%;
+	float: left;
+}
+
+.task .type-3 {
+	background-color: #EE4;
+	height: 100%;
+	width: 2%;
+	float: left;
+}
+
+.taskContent {
+	float: left;
+	width: 98%;
+	padding: 4px;
+}
+
+.userIcon{
+	width: 30px;
+	height: 30px;
+}
+
+.taskIconContainer {
+	background: url("../../image/jTask/bug.png") no-repeat center;
+	width: 25px;
+	height:25px;
+}
+
+.priority {
+	text-align: center;
+}
+
+.taskName {
+	padding-left: 10px;
+	font-size: 14px;
+	height: 22px;
+}
+
+.taskSummary {
+	padding-left: 10px;
+}
+
+.taksTable {
+	width: 100%;
+}
+
+/* Modals */
+
+
+.headerMenu {
+	float: right;
+}
+
+.headerMenu .btn {
+	
+} 
+
+.bold {
+	font-weight: bold;
+}
+
+.formContainer td{
+	height: 33px;
+	padding: 0px 15px 0px 5px;
+}
+
+.formContainer .separator td{
+	height: 3px;
+}

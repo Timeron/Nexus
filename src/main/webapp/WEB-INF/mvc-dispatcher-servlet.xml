@@ -13,8 +13,6 @@
         http://www.springframework.org/schema/context 
         http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
-	<context:component-scan base-package="com.nexus.controller" />
-
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources mapping="/domain/**" location="/WEB-INF/domain/" />
 	<mvc:annotation-driven />
@@ -39,18 +37,12 @@
 		</property>
 	</bean>
 
-	<context:component-scan base-package="com.nexus">
-		<context:exclude-filter type="annotation"
-			expression="org.springframework.stereotype.Controller" />
-	</context:component-scan>
-
-	<!-- JDBC Data Source. -->
-
 	<!-- skanowanie kontrolerów - bez tego nie działa mvc łapie też autowired 
 		dla dao -->
-	<context:component-scan base-package="com.nexus.apps" />
-	<!-- skanowanie dao w poszukiwaniu adnotacji autowired dla dao -->
-<!-- 	<context:component-scan base-package="com.timeron.NexusDatabaseLibrary.dao" /> -->
+	<context:component-scan base-package="com.nexus.apps" >
+<!-- 		<context:exclude-filter type="annotation" -->
+<!-- 			expression="org.springframework.stereotype.Controller" /> -->
+	</context:component-scan>
 
 <!-- 	<bean id="sessionFactory" -->
 <!-- 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
@@ -88,7 +80,7 @@
 
 
 
-	<!-- <tx:annotation-driven /> -->
+<!-- 	<tx:annotation-driven /> -->
 
 	<!-- Enable @Controller annotation support -->
 	<!-- <mvc:annotation-driven /> -->
