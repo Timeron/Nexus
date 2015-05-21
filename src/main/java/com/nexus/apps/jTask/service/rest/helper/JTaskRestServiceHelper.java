@@ -62,32 +62,9 @@ public class JTaskRestServiceHelper {
 		}
 		return result;
 	}
-
-	public List<JTaskDTO> getProjectTasksList(JProjectDTO jProjectDTO) {
-		LOG.info("Service coled: getProjectTasksList");
-		List<JTaskDTO> jTasksDTO = new ArrayList<JTaskDTO>();
-		for(JTask jTask : jTaskDAO.getByProject(jProjectDAO.getById(jProjectDTO.getId()))){
-			jTasksDTO.add(new JTaskDTO(jTask));
-		}
-		return jTasksDTO;
-	}
-
-	public List<JTaskDTO> getTaskList() {
-		LOG.info("Service coled: getTaskList");
-		List<JTaskDTO> jTasksDTO = new ArrayList<JTaskDTO>();
-		for(JTask jTask : jTaskDAO.getAll()){
-			jTasksDTO.add(new JTaskDTO(jTask));
-		}
-		return jTasksDTO;
-	}
-
-	public JTaskDTO getTask(int jTaskId) {
-		LOG.info("Service coled: getTask");
-		JTaskDTO jTaskDTO = new JTaskDTO(jTaskDAO.getById(jTaskId));
-		return jTaskDTO;
-	}
-
-	public ServiceResult saveTask(JTaskDTO jTaskDTO, ServiceResult result) {
+	
+	public ServiceResult addNewTask(JTaskDTO jTaskDTO, ServiceResult result) {
+		LOG.info("Service coled: addNewTask");
 		int nextId = jTaskDAO.getLastId()+1;
 		JTask jTask = new JTask();
 		jTask.setId(nextId);
@@ -112,6 +89,31 @@ public class JTaskRestServiceHelper {
 			result.addMessage("Wystąpił błąd: Task nie dodany!");
 		}
 		return result;
+	}
+
+	public List<JTaskDTO> getProjectTasksList(JProjectDTO jProjectDTO) {
+		LOG.info("Service coled: getProjectTasksList");
+		List<JTaskDTO> jTasksDTO = new ArrayList<JTaskDTO>();
+		JProject jProject = jProjectDAO.getById(jProjectDTO.getId());
+		for(JTask jTask : jTaskDAO.getByProject(jProject)){
+			jTasksDTO.add(new JTaskDTO(jTask));
+		}
+		return jTasksDTO;
+	}
+
+	public List<JTaskDTO> getTaskList() {
+		LOG.info("Service coled: getTaskList");
+		List<JTaskDTO> jTasksDTO = new ArrayList<JTaskDTO>();
+		for(JTask jTask : jTaskDAO.getAll()){
+			jTasksDTO.add(new JTaskDTO(jTask));
+		}
+		return jTasksDTO;
+	}
+
+	public JTaskDTO getTask(int jTaskId) {
+		LOG.info("Service coled: getTask");
+		JTaskDTO jTaskDTO = new JTaskDTO(jTaskDAO.getById(jTaskId));
+		return jTaskDTO;
 	}
 	
 	public String getProjectPrefix(int id){

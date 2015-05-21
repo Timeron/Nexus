@@ -15,7 +15,19 @@ app.service("JTaskService", function($http, $q){
 	
 	//post
 	
-	
+	this.addProject = function(newProjectName, newProjectDescription){
+		$http.post("http://timeron.ddns.net:8080/timeron-nexus/v1/jtask/addProject", 
+				{
+					name: newProjectName, 
+					description: newProjectDescription
+				})
+		.success(function(data){
+			return data;
+		})
+		.error(function(data){
+			return data;
+		});
+	};
 	
 	this.addNewTask = function(tProjectId, tTaskSummary, tType, tPriority, tDescription){
 		addTask = $q.defer();
@@ -123,8 +135,6 @@ app.directive("inline", function(){
 
 app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskService){
 	$rootScope.projects = [];
-//	$scope.newProjectName;
-//	$scope.newProjectDescription;
 	$scope.messages = [];
 	$scope.errorMessages = [];
 	
@@ -134,8 +144,6 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	});
 	
 	$scope.openProject = function(index){
-//		var data = JTaskService.getAllProjectTask($rootScope.projects[index].projectId);
-//		console.log(data);
 		$rootScope.projectId = $rootScope.projects[index].id;
 		setProjectInScope();
 	};
@@ -152,6 +160,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, JTaskService){
 		angular.forEach($rootScope.projects, function(p){
 			if(p.id === $rootScope.projectId){
 				$scope.project = p;
+				return null;
 			}
 		});
 		console.log("project");
@@ -161,24 +170,17 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, JTaskService){
 
 });
 
-app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http){
+app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskService){
 	$scope.projectId;
 	$scope.projectName;
 	$rootScope.projects = [];
 	
-	$scope.addProject = function(){
-		$http.post("http://timeron.ddns.net:8080/timeron-nexus/v1/jtask/addProject", 
-				{
-					name: $scope.newProjectName, 
-					description: $scope.newProjectDescription
-				})
-		.success(function(data){
+	$scope.addProject = function() {
+		data = JTaskService.addProject($scope.newProjectName, $scope.newProjectDescription);
+		if(data.success == true){
 			$scope.messages = data.messages;
 			$rootScope.projects.push(data.object);
-		})
-		.error(function(data){
-			$scope.errorMessages = data.messages;
-		});
+		}
 	};
 });
 
@@ -207,10 +209,11 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	$scope.newDescription;
 	
 	$scope.saveTask = function(){
-		addTaskPromise = JTaskService.addNewTask($rootScope.projectId, $scope.newSummary, $scope.newType.id, $scope.newPriority.id, $scope.newDescription);
-		projectPromise = JTaskService.getProjects();
-		projectPromise.then(function(data){
-			$rootScope.projects = angular.fromJson(data.data);
+		$scope.addTaskPromise = JTaskService.addNewTask($rootScope.projectId, $scope.newSummary, $scope.newType.id, $scope.newPriority.id, $scope.newDescription);
+		$scope.projectPromise = JTaskService.getAllProjectTask($rootScope.projectId);
+		$scope.projectPromise.then(function(data){
+			console.log($rootScope.projects);
+			setProjectInScope();
 		});
 	};
 });

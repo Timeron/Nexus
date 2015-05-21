@@ -83,7 +83,7 @@ public class JTaskRestService extends RestService{
 		ServiceResult result = new ServiceResult();
 		LOG.info("json "+json);
 		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
-		result = helper.saveTask(jTaskDTO, result);
+		result = helper.addNewTask(jTaskDTO, result);
 		LOG.info("service response: addTask -> "+gson.toJson(result));
 		return gson.toJson(result);
 	}
