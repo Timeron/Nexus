@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -40,9 +41,12 @@ import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 @RequestMapping("/wallet")
 public class WalletController {
 
-	private WalletAccountDAO walletAccountDAO = new WalletAccountDAO(WalletAccount.class);
-	private WalletRecordDAO walletRecordDAO = new WalletRecordDAO(WalletRecord.class);
-	private WalletTypeDAO walletTypeDAO = new WalletTypeDAO(WalletType.class);
+	@Autowired
+	private WalletAccountDAO walletAccountDAO;
+	@Autowired
+	private WalletRecordDAO walletRecordDAO;
+	@Autowired
+	private WalletTypeDAO walletTypeDAO;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String walletMainSite(ModelMap model){

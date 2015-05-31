@@ -11,6 +11,7 @@ import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +29,8 @@ public class Contacts {
 	static Logger log = Logger.getLogger(
 			Contacts.class.getName());
 	
-	PersonDAO personDao = new PersonDAO(NexusPerson.class);
+	@Autowired
+	PersonDAO personDao;
 	
 	@ModelAttribute("person")
 	private NexusPerson counstruct(){

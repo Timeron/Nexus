@@ -1,5 +1,6 @@
 package com.nexus.apps.jTask.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,7 +14,8 @@ import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 @RequestMapping("/jtask")
 public class JTaskControler {
 	
-	JProjectDAO jProjectDAO = new JProjectDAO();
+	@Autowired
+	JProjectDAO jProjectDAO;
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String mainSite(Model model){

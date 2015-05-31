@@ -2,6 +2,7 @@ package com.nexus.apps.jTask.service.rest;
 
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,7 +23,8 @@ public class JTaskRestService extends RestService{
 	
 	static Logger LOG = Logger.getLogger(JTaskRestService.class);
 
-	JTaskRestServiceHelper helper = new JTaskRestServiceHelper();
+	@Autowired
+	JTaskRestServiceHelper helper;
 	
 	Gson gson = new Gson();
 	ObjectMapper objectMapper = new ObjectMapper();
@@ -49,11 +51,11 @@ public class JTaskRestService extends RestService{
 	 */
 
 	@RequestMapping(value = "/getProjectTasks", method = RequestMethod.POST)
-	public String getAllProjectTask(@RequestBody String json){
-		LOG.info("service: getAllProjectTask <- "+json);
+	public String getAllProjectTasks(@RequestBody String json){
+		LOG.info("service: getAllProjectTasks <- "+json);
 		JProjectDTO jProjectDTO = gson.fromJson(json, JProjectDTO.class);
 		String result = gson.toJson(helper.getProjectTasksList(jProjectDTO));
-		LOG.info("service response: getAllProjectTask -> "+result);
+		LOG.info("service response: getAllProjectTasks -> "+result);
 		return result;
 	}
 	

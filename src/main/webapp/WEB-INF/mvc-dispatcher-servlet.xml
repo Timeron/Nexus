@@ -16,6 +16,9 @@
 	<mvc:resources mapping="/resources/**" location="/resources/" />
 	<mvc:resources mapping="/domain/**" location="/WEB-INF/domain/" />
 	<mvc:annotation-driven />
+	
+	<import resource="classpath:dataSources.xml" />
+	<import resource="classpath:jpa.xml" />
 
 	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
 		<!--Don't add suffix or prefix like you do with .jsp files -->
@@ -39,54 +42,9 @@
 
 	<!-- skanowanie kontrolerów - bez tego nie działa mvc łapie też autowired 
 		dla dao -->
-	<context:component-scan base-package="com.nexus.apps" >
-<!-- 		<context:exclude-filter type="annotation" -->
-<!-- 			expression="org.springframework.stereotype.Controller" /> -->
-	</context:component-scan>
-
-<!-- 	<bean id="sessionFactory" -->
-<!-- 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean"> -->
-<!-- 		<property name="dataSource" ref="dataSource" /> -->
-<!-- 		<property name="packagesToScan" value="com.timeron.NexusDatabaseLibrary.entity" /> -->
-<!-- 		<property name="hibernateProperties"> -->
-<!-- 			<props> -->
-<!-- 				<prop key="hibernate.hbm2ddl.auto">update</prop> -->
-<!-- 				<prop key="hibernate.show_sql">true</prop> -->
-<!-- 				<prop key="hibernate.dialect">org.hibernate.dialect.MySQL5Dialect</prop> -->
-<!-- 				<prop key="hibernate.connection.useUnicode">yes</prop> -->
-<!-- 				<prop key="hibernate.connection.characterEncoding">UTF-8</prop> -->
-<!--                 <prop key="hibernate.connection.charSet">UTF-8</prop>  -->
-<!-- 			</props> -->
-<!-- 		</property> -->
-<!-- 	</bean> -->
-
-<!-- 	<bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource"> -->
-<!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
-<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/datatest?characterEncoding=utf8" /> -->
-<!-- 		<property name="url" value="jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8" /> -->
-<!-- 		<property name="username" value="root" /> -->
-<!-- 		<property name="password" value="" /> -->
-<!-- 	</bean> -->
-
-<!-- 	<bean id="transactionManager" -->
-<!-- 		class="org.springframework.orm.hibernate4.HibernateTransactionManager"> -->
-<!-- 		<property name="sessionFactory" ref="sessionFactory" /> -->
-<!-- 	</bean> -->
-
-<!-- 	<bean id="persistenceExceptionTranslationPostProcessor" -->
-<!-- 		class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" /> -->
+	<context:component-scan base-package="com.nexus.*, com.timeron.NexusDatabaseLibrary.dao" />
+		<!-- <context:exclude-filter type="annotation" -->
+		<!-- expression="org.springframework.stereotype.Controller" /> -->
 
 
-
-
-
-<!-- 	<tx:annotation-driven /> -->
-
-	<!-- Enable @Controller annotation support -->
-	<!-- <mvc:annotation-driven /> -->
-
-	<!-- jeśli chcesz mieć zmienne w osobnym pliku -->
-	<!-- <context:property-placeholder location="classpath:persistence-mysql.properties" 
-		/> -->
-		
 </beans>

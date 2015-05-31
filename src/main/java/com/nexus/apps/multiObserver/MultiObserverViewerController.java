@@ -3,6 +3,7 @@ package com.nexus.apps.multiObserver;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,9 +24,12 @@ import com.timeron.NexusDatabaseLibrary.dao.ObservedSiteHistoryDAO;
 @RequestMapping("/multiobserver/viewer")
 public class MultiObserverViewerController {
 
-	ObservedSiteDAO observedSiteDAO = new ObservedSiteDAO(ObservedSite.class);
-	ObservedObjectDAO observedObjectDAO = new ObservedObjectDAO(ObservedObject.class);
-	ObservedSiteHistoryDAO observedSiteHistoryDAO = new ObservedSiteHistoryDAO(ObservedSiteHistory.class);
+	@Autowired
+	ObservedSiteDAO observedSiteDAO;
+	@Autowired
+	ObservedObjectDAO observedObjectDAO;
+	@Autowired
+	ObservedSiteHistoryDAO observedSiteHistoryDAO;
 	
 	@RequestMapping(value = "/searchObservedObject", method = RequestMethod.GET)
 	public String searchObservedObjectInit(ModelMap model){

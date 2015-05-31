@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
 import org.hibernate.exception.GenericJDBCException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate4.HibernateJdbcException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,7 +27,6 @@ import com.nexus.apps.multiObserver.form.AddSiteTypeResultForm;
 import com.nexus.apps.multiObserver.form.MultiObserverForm;
 import com.timeron.NexusDatabaseLibrary.Entity.ObservedLinksPackage;
 import com.timeron.NexusDatabaseLibrary.Entity.ProductCategory;
-import com.timeron.NexusDatabaseLibrary.Entity.Site;
 import com.timeron.NexusDatabaseLibrary.Entity.SiteType;
 import com.timeron.NexusDatabaseLibrary.dao.ObservedLinksPackageDAO;
 import com.timeron.NexusDatabaseLibrary.dao.ProductCategoryDAO;
@@ -39,10 +39,14 @@ public class MultiObserverAdmin {
 
 	static Logger LOG = Logger.getLogger(MultiObserverAdmin.class.getName());
 
-	SiteDAO siteDAO = new SiteDAO(Site.class);
-	SiteTypeDAO siteTypeDAO = new SiteTypeDAO(SiteType.class);
-	ProductCategoryDAO productCategoryDAO = new ProductCategoryDAO(ProductCategory.class);
-	ObservedLinksPackageDAO observedLinksPackageDAO = new ObservedLinksPackageDAO(ObservedLinksPackage.class);
+	@Autowired
+	SiteDAO siteDAO;
+	@Autowired
+	SiteTypeDAO siteTypeDAO;
+	@Autowired
+	ProductCategoryDAO productCategoryDAO;
+	@Autowired
+	ObservedLinksPackageDAO observedLinksPackageDAO;
 
 	/**
 	 * strona główna Admin Multi Observera
