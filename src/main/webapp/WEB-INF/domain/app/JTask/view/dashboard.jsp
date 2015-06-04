@@ -78,7 +78,9 @@
 		</div>
 	</div>
 	
+<!-- 	lista projektów -->
 	<div id="dashboard" class="view" data-ng-controller = "JTaskBoardCtr">
+		
 		<div data-ng-repeat="project in projects">
 			<div>
 				<projectColumn index="{{$index}}" class="column" >
@@ -89,7 +91,7 @@
 		</div>
 	</div>
 	
-
+<!-- 	tablica projektów -->
 	<div id="project" class="view" data-ng-controller = "JTaskProjectCtr">
 		<div class="projectHeader">
 			<div class="projectName">
@@ -135,9 +137,10 @@
 <!-- 					</div> -->
 				</div>
 			</projectBoardColumn>
-			<projectBoardColumn><div class="columnName">In progres</div></projectBoardColumn>
-			<projectBoardColumn><div class="columnName">Test</div></projectBoardColumn>
+			<projectBoardColumn><div class="columnName">In progress</div></projectBoardColumn>
+			<projectBoardColumn><div class="columnName">In review</div></projectBoardColumn>
 			<projectBoardColumn><div class="columnName">Done</div></projectBoardColumn>
+			<projectBoardColumn><div class="columnName">Details</div></projectBoardColumn>
 		</div>
 	</div>
 

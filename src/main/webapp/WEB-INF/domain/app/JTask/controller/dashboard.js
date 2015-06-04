@@ -83,38 +83,73 @@ app.service("JTaskService", function($http, $q){
 
 //Directives
 
-app.directive("projectcolumn", function(){
+app.directive("projectcolumn", function($window){
 	return {
 		restrict: "AE",
 		link: function(scope, element, attrs){
-			scrWidth = element[0].parentNode.clientWidth - 20;
-			width = (scrWidth / scope.projects.length);
-			element[0].style.float = "left";
-			if(width >= 300){
-				element[0].style.width = width+"px";
-			}else{
-				maxCol = Math.round(scrWidth / 300);
-				width = scrWidth / maxCol;
-				element[0].style.width = width+"px";
-				
-				if(attrs.projectColumn >= maxCol){
-					element[0].style.display = "none";
+			var scrWidth = 0;
+			var w = angular.element($window);
+	        scope.getWindowDimensions = function () {
+	            return {
+	                'h': w.height(),
+	                'w': w.width()
+	            };
+	        };
+	        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+	            scope.windowHeight = newValue.h;
+	            scope.windowWidth = newValue.w;
+	            scrWidth = scope.windowWidth-6;
+				width = (scrWidth / scope.projects.length);
+				console.log(width);
+				element[0].style.float = "left";
+				if(width >= 250){
+					element[0].style.width = width+"px";
+				}else{
+					maxCol = Math.round(scrWidth / 250);
+					width = scrWidth / maxCol;
+					element[0].style.width = width+"px";
+					
+					if(attrs.projectColumn >= maxCol){
+						element[0].style.display = "none";
+					}
 				}
-			}
+	        }, true);
+
+	        w.bind('resize', function () {
+	            scope.$apply();
+	        });
 		}
-		
 	};
 });
 
-app.directive("projectboardcolumn", function(){
+app.directive("projectboardcolumn", function($window){
 	return {
 		restrict: "AE",
 		link: function(scope, element, attrs){
-			scrWidth = element[0].parentNode.clientWidth - 20;
-			width = scrWidth / 5;
-			element[0].style.float = "left";
-			element[0].style.width = width+"px";
-			element[0].style.padding = "3px";
+			
+			var w = angular.element($window);
+	        scope.getWindowDimensions = function () {
+	            return {
+	                'h': w.height(),
+	                'w': w.width()
+	            };
+	        };
+	        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
+	            scope.windowHeight = newValue.h;
+	            scope.windowWidth = newValue.w;
+	            scrWidth = scope.windowWidth-6;
+				width = scrWidth / 6;
+				element[0].style.float = "left";
+				element[0].style.width = width+"px";
+				element[0].style.padding = "3px";
+	        }, true);
+
+	        w.bind('resize', function () {
+	            scope.$apply();
+	        });
+			
+			
+			
 		}
 	};
 });
