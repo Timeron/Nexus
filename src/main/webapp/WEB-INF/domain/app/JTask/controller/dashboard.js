@@ -3,9 +3,11 @@ var app = angular.module("nexus", []);
 app.service("JTaskService", function($http, $q){
 	
 	//get
+	var path = "http://timeron.ddns.net:8080/timeron-nexus/";
+//	var path = "http://localhost:8080/timeron-nexus/";
 	
 	var getAllProjects = $q.defer();
-	$http.get("http://timeron.ddns.net:8080/timeron-nexus/v1/jtask/getAllProjects").then(function(data){
+	$http.get(path+"/v1/jtask/getAllProjects").then(function(data){
 		getAllProjects.resolve(data);
 	});
 	
@@ -17,7 +19,7 @@ app.service("JTaskService", function($http, $q){
 	
 	this.addNewProject = function(newProjectName, newProjectDescription){
 		addProject = $q.defer();
-		$http.post("http://timeron.ddns.net:8080/timeron-nexus/v1/jtask/addProject", 
+		$http.post(path+"/v1/jtask/addProject", 
 				{
 					name: newProjectName, 
 					description: newProjectDescription
@@ -33,7 +35,7 @@ app.service("JTaskService", function($http, $q){
 	
 	this.addNewTask = function(tProjectId, tTaskSummary, tType, tPriority, tDescription){
 		addTask = $q.defer();
-		$http.post("http://timeron.ddns.net:8080/timeron-nexus/v1/jtask/addTask", 
+		$http.post(path+"/v1/jtask/addTask", 
 				{
 					projectId: tProjectId,
 					summary: tTaskSummary,
@@ -49,10 +51,10 @@ app.service("JTaskService", function($http, $q){
 		});
 		return addTask.promise;
 	};
-	
+
 	this.getAllProjectTasks = function(projectId){
 		allProjectTask = $q.defer();
-		$http.post("http://timeron.ddns.net:8080/timeron-nexus/v1/jtask/getProjectTasks", 
+		$http.post(path+"/v1/jtask/getProjectTasks", 
 				{
 					id: projectId
 				})
@@ -64,10 +66,10 @@ app.service("JTaskService", function($http, $q){
 		});
 		return allProjectTask.promise;
 	};
-	
+
 	this.getProjectTask = function(projectId){
 		allProjectTask = $q.defer();
-		$http.post("http://timeron.ddns.net:8080/timeron-nexus/v1/jtask/getProjectTask", 
+		$http.post(path+"/v1/jtask/getProjectTask", 
 				{
 					id: projectId
 				})
@@ -80,6 +82,8 @@ app.service("JTaskService", function($http, $q){
 		return allProjectTask.promise;
 	};
 });
+
+//Factory
 
 //Directives
 
@@ -180,6 +184,10 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 		$rootScope.projects = angular.fromJson(data.data);
 	});
 	
+	$scope.openBoard = function(){
+		setAllProjectsInScope();
+	};
+	
 	$scope.openProject = function(index){
 		$rootScope.projectId = $rootScope.projects[index].id;
 		setProjectInScope();
@@ -190,7 +198,7 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	};
 });
 
-app.controller("JTaskProjectCtr", function($rootScope, $scope, JTaskService){
+app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService){
 	$rootScope.project;
 	
 	setProjectInScope = function(){
@@ -204,8 +212,24 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, JTaskService){
 		console.log($rootScope.project);
 	};
 	
+	setAllProjectsInScope = function(){
+		var path = "http://timeron.ddns.net:8080/timeron-nexus/";
+//		var path = "http://localhost:8080/timeron-nexus/";
+		
+		$http.get(path+"/v1/jtask/getAllTasksInOneProject")
+		.success(function(data){
+			$rootScope.project = angular.fromJson(data);
+		})
+		.error(function(data){
+			return data;
+		});
+		
+	};
+	
 
 });
+
+//new modals
 
 app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskService){
 	$scope.projectId;
@@ -256,7 +280,6 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 				projectTasks.then(function(data){
 					$rootScope.project.tasks = data;
 				});
-				
 			}
 		});
 		

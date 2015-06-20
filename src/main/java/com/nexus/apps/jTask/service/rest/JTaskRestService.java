@@ -37,10 +37,13 @@ public class JTaskRestService extends RestService{
 		return result;
 	}
 
-	@RequestMapping(value = "/getAllTasks", method = RequestMethod.GET)
-	public String getTasks(){
+	@RequestMapping(value = "/getAllTasksInOneProject", method = RequestMethod.GET)
+	public String getAllTasksInOneProject(){
 		LOG.info("service: getTasks");
-		String result = gson.toJson(helper.getTaskList());
+		JProjectDTO jProjectDTO = new JProjectDTO();
+		jProjectDTO.setName("All Projects");
+		jProjectDTO.addTasks(helper.getTaskList());
+		String result = gson.toJson(jProjectDTO);
 		LOG.info("service response: getTasks -> "+result);
 		return result;
 	}

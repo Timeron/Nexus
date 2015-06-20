@@ -18,8 +18,12 @@
 		<put-attribute name="body" value="/WEB-INF/tiles/jTask/jtaskAddProject.jsp" />
 	</definition>
 	
-	<definition name="jtaskAddTask" extends="jtaskBasic">
-		<put-attribute name="body" value="/WEB-INF/tiles/jTask/jtaskAddTask.jsp" />
+<!-- 	<definition name="jtaskAddTask" extends="jtaskBasic"> -->
+<!-- 		<put-attribute name="body" value="/WEB-INF/tiles/jTask/jtaskAddTask.jsp" /> -->
+<!-- 	</definition> -->
+	
+	<definition name="jtaskProjects" extends="jtaskBasic">
+		<put-attribute name="body" value="/WEB-INF/domain/app/JTask/view/jtaskProjects.jsp" />
 	</definition>
 
 </tiles-definitions>

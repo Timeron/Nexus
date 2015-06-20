@@ -20,6 +20,8 @@ public class JProjectDTO {
 		this.description = project.getDescription();
 		this.created = project.getCreated();
 	}
+	
+	public JProjectDTO() {}
 
 	public int getId() {
 		return id;
