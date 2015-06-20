@@ -200,16 +200,19 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 
 app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService){
 	$rootScope.project;
+	$scope.wait = [];
+	$scope.toDo = [];
+	$scope.inProgress = [];
+	$scope.inReview = [];
+	$scope.done = [];
 	
 	setProjectInScope = function(){
 		angular.forEach($rootScope.projects, function(p){
 			if(p.id === $rootScope.projectId){
 				$rootScope.project = p;
-				return null;
+				splitToColumn($rootScope.project.tasks);
 			}
 		});
-		console.log("project");
-		console.log($rootScope.project);
 	};
 	
 	setAllProjectsInScope = function(){
@@ -219,12 +222,47 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		$http.get(path+"/v1/jtask/getAllTasksInOneProject")
 		.success(function(data){
 			$rootScope.project = angular.fromJson(data);
+			splitToColumn($rootScope.project.tasks);
 		})
 		.error(function(data){
 			return data;
 		});
 		
 	};
+	
+	var splitToColumn = function(tasks){
+		$scope.wait = [];
+		$scope.toDo = [];
+		$scope.inProgress = [];
+		$scope.inReview = [];
+		$scope.done = [];
+		angular.forEach(tasks, function(t){
+			switch(t.status){
+				case 0:
+					console.log(0);
+					$scope.wait.push(t);
+					break;
+				case 1:
+					console.log(1);
+					$scope.toDo.push(t);
+					break;
+				case 2:
+					console.log(2);
+					$scope.inProgress.push(t);
+					break;
+				case 3:
+					console.log(3);
+					$scope.inReview.push(t);
+					break;
+				case 4:
+					console.log(4);
+					$scope.done.push(t);
+					break;
+				default:
+					console.log(t.status);
+			}
+		});
+	}
 	
 
 });

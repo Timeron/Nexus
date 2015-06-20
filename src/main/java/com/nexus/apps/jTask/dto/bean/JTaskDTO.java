@@ -16,6 +16,7 @@ public class JTaskDTO {
 	private Integer taskTypeId;
 	private Integer priority;
 	private Integer projectId;
+	private Integer status;
 	
 	public JTaskDTO(JTask jTask) {
 		this.id = jTask.getId();
@@ -32,6 +33,9 @@ public class JTaskDTO {
 		}
 		if(jTask.getTaskType() != null){
 			this.taskTypeId = jTask.getTaskType().getId();
+		}
+		if(jTask.getStatus() != null){
+			this.status = jTask.getStatus().getId();
 		}
 	}
 	public int getId() {
@@ -94,7 +98,11 @@ public class JTaskDTO {
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
 	}
+	public Integer getStatus() {
+		return status;
+	}
+	public void setStatus(Integer status) {
+		this.status = status;
+	}
 
-	
-	
 }

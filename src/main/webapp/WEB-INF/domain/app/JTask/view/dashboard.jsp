@@ -114,16 +114,10 @@
 		<div>
 			<projectBoardColumn>
 				<div class="columnName">
-					<div class="taskCounter">({{project.tasks.length}})</div>
+					<div class="taskCounter">({{wait.length}})</div>
 					<p>Wait</p>
 				</div>
-			</projectBoardColumn>
-			<projectBoardColumn>
-				<div class="columnName">
-					<div class="taskCounter">({{project.tasks.length}})</div>
-					<p>To Do</p>
-				</div>
-				<div class="task" data-ng-repeat="task in project.tasks">
+								<div class="task" data-ng-repeat="task in wait">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -145,20 +139,102 @@
 			</projectBoardColumn>
 			<projectBoardColumn>
 				<div class="columnName">
-					<div class="taskCounter">({{project.tasks.length}})</div>
+					<div class="taskCounter">({{toDo.length}})</div>
+					<p>To Do</p>
+				</div>
+				<div class="task" data-ng-repeat="task in toDo">
+					<div class="type-{{task.taskTypeId}}"></div>
+					<div class="taskContent">
+						<table class="taksTable">
+							<tbody>
+								<tr>
+									<td class="taskIconContainer"></td>
+									<td class="taskName bold">{{task.name}}</td>
+									<td class="userIcon"></td>
+								</tr>
+								<tr>
+									<td class="priority">{{task.priority}}</td>
+									<td class="taskSummary">{{task.summary}}</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</projectBoardColumn>
+			<projectBoardColumn>
+				<div class="columnName">
+					<div class="taskCounter">({{inProgress.length}})</div>
 					<p>In progress</p>
 				</div>
-			</projectBoardColumn>
-			<projectBoardColumn>
-				<div class="columnName">
-					<div class="taskCounter">({{project.tasks.length}})</div>
-					<p>In review</p>
+				<div class="task" data-ng-repeat="task in inProgress">
+					<div class="type-{{task.taskTypeId}}"></div>
+					<div class="taskContent">
+						<table class="taksTable">
+							<tbody>
+								<tr>
+									<td class="taskIconContainer"></td>
+									<td class="taskName bold">{{task.name}}</td>
+									<td class="userIcon"></td>
+								</tr>
+								<tr>
+									<td class="priority">{{task.priority}}</td>
+									<td class="taskSummary">{{task.summary}}</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</projectBoardColumn>
 			<projectBoardColumn>
 				<div class="columnName">
-					<div class="taskCounter">({{project.tasks.length}})</div>
+					<div class="taskCounter">({{inReview.length}})</div>
+					<p>In review</p>
+				</div>
+								<div class="task" data-ng-repeat="task in inReview">
+					<div class="type-{{task.taskTypeId}}"></div>
+					<div class="taskContent">
+						<table class="taksTable">
+							<tbody>
+								<tr>
+									<td class="taskIconContainer"></td>
+									<td class="taskName bold">{{task.name}}</td>
+									<td class="userIcon"></td>
+								</tr>
+								<tr>
+									<td class="priority">{{task.priority}}</td>
+									<td class="taskSummary">{{task.summary}}</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</projectBoardColumn>
+			<projectBoardColumn>
+				<div class="columnName">
+					<div class="taskCounter">({{done.length}})</div>
 					<p>Done</p>
+				</div>
+								<div class="task" data-ng-repeat="task in done">
+					<div class="type-{{task.taskTypeId}}"></div>
+					<div class="taskContent">
+						<table class="taksTable">
+							<tbody>
+								<tr>
+									<td class="taskIconContainer"></td>
+									<td class="taskName bold">{{task.name}}</td>
+									<td class="userIcon"></td>
+								</tr>
+								<tr>
+									<td class="priority">{{task.priority}}</td>
+									<td class="taskSummary">{{task.summary}}</td>
+									<td></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
 				</div>
 			</projectBoardColumn>
 			<projectBoardColumn>
