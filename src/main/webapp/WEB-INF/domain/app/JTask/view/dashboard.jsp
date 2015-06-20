@@ -91,7 +91,6 @@
 	
 <!-- 	lista projektów -->
 
-		
 		<div data-ng-repeat="project in projects">
 			<div>
 				<projectColumn index="{{$index}}" class="column" >
@@ -114,10 +113,16 @@
 		</div>
 		<div>
 			<projectBoardColumn>
-				<div class="columnName">Wait</div>
+				<div class="columnName">
+					<div class="taskCounter">({{project.tasks.length}})</div>
+					<p>Wait</p>
+				</div>
 			</projectBoardColumn>
 			<projectBoardColumn>
-				<div class="columnName">To Do</div>
+				<div class="columnName">
+					<div class="taskCounter">({{project.tasks.length}})</div>
+					<p>To Do</p>
+				</div>
 				<div class="task" data-ng-repeat="task in project.tasks">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
@@ -136,22 +141,32 @@
 							</tbody>
 						</table>
 					</div>
-<!-- 					<div class="taskContent"> -->
-<!-- 						<div class="userIcon"></div> -->
-<!-- 						<div class="taskIconContainer"> -->
-<!-- 							<div class="icon-{{task.taskTypeId}}"></div> -->
-<!-- 							<div class="priority">{{task.priority}}</div> -->
-<!-- 						</div> -->
-<!-- 						<div class="taskName bold">{{task.name}}</div> -->
-<!-- 						<div>{{task.summary}}</div> -->
-						
-<!-- 					</div> -->
 				</div>
 			</projectBoardColumn>
-			<projectBoardColumn><div class="columnName">In progress</div></projectBoardColumn>
-			<projectBoardColumn><div class="columnName">In review</div></projectBoardColumn>
-			<projectBoardColumn><div class="columnName">Done</div></projectBoardColumn>
-			<projectBoardColumn><div class="columnName">Details</div></projectBoardColumn>
+			<projectBoardColumn>
+				<div class="columnName">
+					<div class="taskCounter">({{project.tasks.length}})</div>
+					<p>In progress</p>
+				</div>
+			</projectBoardColumn>
+			<projectBoardColumn>
+				<div class="columnName">
+					<div class="taskCounter">({{project.tasks.length}})</div>
+					<p>In review</p>
+				</div>
+			</projectBoardColumn>
+			<projectBoardColumn>
+				<div class="columnName">
+					<div class="taskCounter">({{project.tasks.length}})</div>
+					<p>Done</p>
+				</div>
+			</projectBoardColumn>
+			<projectBoardColumn>
+				<div class="columnName">
+					<div class="taskCounter">(id of task)</div>
+					<p>Details</p>
+				</div>
+			</projectBoardColumn>
 		</div>
 	</div>
 
