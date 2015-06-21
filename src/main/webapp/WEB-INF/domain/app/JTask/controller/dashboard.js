@@ -206,6 +206,8 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	$scope.inReview = [];
 	$scope.done = [];
 	
+	$scope.taskDetails;
+	
 	setProjectInScope = function(){
 		angular.forEach($rootScope.projects, function(p){
 			if(p.id === $rootScope.projectId){
@@ -228,6 +230,11 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 			return data;
 		});
 		
+	};
+	
+	$scope.getTaskDetails = function(task){
+		$scope.taskDetails = task;
+		console.log(task);
 	};
 	
 	var splitToColumn = function(tasks){
@@ -262,9 +269,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 					console.log(t.status);
 			}
 		});
-	}
-	
-
+	};
 });
 
 //new modals

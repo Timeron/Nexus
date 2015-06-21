@@ -1,3 +1,5 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
 <div data-ng-app="nexus">
 
 	<!-- Modal -->
@@ -89,7 +91,7 @@
 		</div>
 	</div>	
 	
-<!-- 	lista projekt�w -->
+<!-- 	lista projektów -->
 
 		<div data-ng-repeat="project in projects">
 			<div>
@@ -101,7 +103,7 @@
 		</div>
 	</div>
 	
-<!-- 	tablica projekt�w -->
+<!-- 	tablica projektów -->
 	<div id="project" class="view" data-ng-controller = "JTaskProjectCtr">
 		<div class="projectHeader">
 			<div class="projectName">
@@ -117,7 +119,7 @@
 					<div class="taskCounter">({{wait.length}})</div>
 					<p>Wait</p>
 				</div>
-								<div class="task" data-ng-repeat="task in wait">
+				<div class="task" data-ng-repeat="task in wait" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -142,7 +144,7 @@
 					<div class="taskCounter">({{toDo.length}})</div>
 					<p>To Do</p>
 				</div>
-				<div class="task" data-ng-repeat="task in toDo">
+				<div class="task" data-ng-repeat="task in toDo" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -167,7 +169,7 @@
 					<div class="taskCounter">({{inProgress.length}})</div>
 					<p>In progress</p>
 				</div>
-				<div class="task" data-ng-repeat="task in inProgress">
+				<div class="task" data-ng-repeat="task in inProgress" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -192,7 +194,7 @@
 					<div class="taskCounter">({{inReview.length}})</div>
 					<p>In review</p>
 				</div>
-								<div class="task" data-ng-repeat="task in inReview">
+				<div class="task" data-ng-repeat="task in inReview" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -217,7 +219,7 @@
 					<div class="taskCounter">({{done.length}})</div>
 					<p>Done</p>
 				</div>
-								<div class="task" data-ng-repeat="task in done">
+				<div class="task" data-ng-repeat="task in done" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -239,8 +241,18 @@
 			</projectBoardColumn>
 			<projectBoardColumn>
 				<div class="columnName">
-					<div class="taskCounter">(id of task)</div>
+					<div class="taskCounter">(id: {{taskDetails.name}})</div>
 					<p>Details</p>
+				</div>
+				<div id="taskDetails">
+					<div class="taskDetailsName">{{taskDetails.name}}</div>
+					<div class="taskDetailsPriority">Piorytet: {{taskDetails.priority}}</div>
+					<div class="taskDetailsSummary">Opis: <p>{{taskDetails.summary}}</p></div>
+					<div class="taskDetailsDescription">Szczegóły: <p>{{taskDetails.description}}</p></div>
+					<div class="taskDetailsDates">
+						<div class="taskDetailsCreated">Dodany: {{taskDetails.created}}</div>
+						<div class="taskDetailsUpdated">Zmieniony: {{taskDetails.updated}}</div>
+					</div>
 				</div>
 			</projectBoardColumn>
 		</div>
