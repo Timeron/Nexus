@@ -97,6 +97,8 @@ public class JTaskRestService extends RestService{
 	public String updateTask(@RequestBody String json){
 		LOG.info("service: updateTask <- "+json);
 		ServiceResult result = new ServiceResult();
+		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
+		result = helper.updateTask(jTaskDTO);
 		//do zrobienia
 		LOG.info("service response: updateTask -> "+gson.toJson(result));
 		return gson.toJson(result);

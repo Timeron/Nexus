@@ -108,8 +108,8 @@ div span .icon {
 }
 
 .userIcon{
-	width: 30px;
-	height: 30px;
+	width: 35px;
+	height: 35px;
 }
 
 .taskIconContainer {
@@ -130,12 +130,20 @@ div span .icon {
 
 .taskSummary {
 	padding-left: 10px;
+	height: 43px;
+	overflow: hidden;
 }
 
 .taksTable {
 	width: 100%;
 }
 
+.btnTaskDirestion {
+	float: right;
+/* 	position: fixed; */
+/*     bottom: 15px; */
+/*     right: 16px; */
+}
 
 
 /* Modals */

@@ -132,5 +132,14 @@ public class JTaskRestServiceHelper {
 	private String buildTaskName(String prefix, int id){
 		return prefix+"-"+id;
 	}
+
+	public ServiceResult updateTask(JTaskDTO jTaskDTO) {
+		LOG.info("ServiceHelper coled: updateTask");
+		JTask jTask = jTaskDAO.getById(jTaskDTO.getId());
+		jTask.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
+		jTask.setUpdated(new Date());
+		jTaskDAO.update(jTask);
+		return null;
+	}
 	
 }

@@ -81,6 +81,18 @@ app.service("JTaskService", function($http, $q){
 		});
 		return allProjectTask.promise;
 	};
+	
+	this.updateTask = function(task){
+		addProject = $q.defer();
+		$http.post(path+"/v1/jtask/updateTask", task)
+		.success(function(data){
+			return addProject.resolve(data);
+		})
+		.error(function(data){
+			return data;
+		});
+		return addProject.promise;
+	};
 });
 
 //Factory
@@ -237,6 +249,78 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		console.log(task);
 	};
 	
+	$scope.taskDirestionPreviousNext = function (task, direction){
+		switch(task.status){
+			case 1 : 
+				index = $scope.wait.indexOf(task);
+				if(index != -1) {
+					$scope.wait.splice(index, 1);
+				}
+				if(direction === 'next'){
+					task.status += 1;
+					$scope.toDo.push(task);
+				}
+				break;
+			case 2 :
+				index = $scope.toDo.indexOf(task);
+				if(index != -1) {
+					$scope.toDo.splice(index, 1);
+				}
+				if(direction === 'next'){
+					task.status += 1;
+					$scope.inProgress.push(task);
+				}else{
+					task.status -= 1;
+					$scope.wait.push(task);
+				}
+				break;
+			case 3 :
+				index = $scope.inProgress.indexOf(task);
+				if(index != -1) {
+					$scope.inProgress.splice(index, 1);
+				}
+				if(direction === 'next'){
+					task.status += 1;
+					$scope.inReview.push(task);
+				}else{
+					task.status -= 1;
+					$scope.toDo.push(task);
+				}
+				break;
+			case 4 :
+				index = $scope.inReview.indexOf(task);
+				if(index != -1) {
+					$scope.inReview.splice(index, 1);
+				}
+				if(direction === 'next'){
+					task.status += 1;
+					$scope.done.push(task);
+				}else{
+					task.status -= 1;
+					$scope.inProgress.push(task);
+				}
+				break;
+			case 5 :
+				index = $scope.done.indexOf(task);
+				if(index != -1) {
+					$scope.done.splice(index, 1);
+				}
+				if(direction === 'previous'){
+					task.status -= 1;
+					$scope.inReview.push(task);
+				}
+				break;
+			default : 
+				break;
+		}
+		JTaskService.updateTask(task);
+	};
+	
+	$scope.taskDirestionNext = function(task){
+		task.status += 1;
+		console.log("taskDirestionNext");
+	};
+	
 	var splitToColumn = function(tasks){
 		$scope.wait = [];
 		$scope.toDo = [];
@@ -245,23 +329,23 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		$scope.done = [];
 		angular.forEach(tasks, function(t){
 			switch(t.status){
-				case 0:
+				case 1:
 					console.log(0);
 					$scope.wait.push(t);
 					break;
-				case 1:
+				case 2:
 					console.log(1);
 					$scope.toDo.push(t);
 					break;
-				case 2:
+				case 3:
 					console.log(2);
 					$scope.inProgress.push(t);
 					break;
-				case 3:
+				case 4:
 					console.log(3);
 					$scope.inReview.push(t);
 					break;
-				case 4:
+				case 5:
 					console.log(4);
 					$scope.done.push(t);
 					break;

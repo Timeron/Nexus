@@ -131,11 +131,14 @@
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
-									<td class="taskSummary">{{task.summary}}</td>
+									<td><div class="taskSummary">{{task.summary}}</div></td>
 									<td></td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="btn-group btnTaskDirestion">
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+						</div>
 					</div>
 				</div>
 			</projectBoardColumn>
@@ -147,7 +150,7 @@
 				<div class="task" data-ng-repeat="task in toDo" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
-						<table class="taksTable">
+						<table class="taksTable" >
 							<tbody>
 								<tr>
 									<td class="taskIconContainer"></td>
@@ -156,11 +159,15 @@
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
-									<td class="taskSummary">{{task.summary}}</td>
+									<td><div class="taskSummary">{{task.summary}}</div></td>
 									<td></td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="btn-group btnTaskDirestion">
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+						</div>
 					</div>
 				</div>
 			</projectBoardColumn>
@@ -181,11 +188,15 @@
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
-									<td class="taskSummary">{{task.summary}}</td>
+									<td><div class="taskSummary">{{task.summary}}</div></td>
 									<td></td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="btn-group btnTaskDirestion">
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+						</div>
 					</div>
 				</div>
 			</projectBoardColumn>
@@ -206,11 +217,15 @@
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
-									<td class="taskSummary">{{task.summary}}</td>
+									<td><div class="taskSummary">{{task.summary}}</div></td>
 									<td></td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="btn-group btnTaskDirestion">
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+						</div>
 					</div>
 				</div>
 			</projectBoardColumn>
@@ -231,11 +246,14 @@
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
-									<td class="taskSummary">{{task.summary}}</td>
+									<td><div class="taskSummary">{{task.summary}}</div></td>
 									<td></td>
 								</tr>
 							</tbody>
 						</table>
+						<div class="btn-group btnTaskDirestion">
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
+						</div>
 					</div>
 				</div>
 			</projectBoardColumn>
