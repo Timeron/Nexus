@@ -224,7 +224,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		angular.forEach($rootScope.projects, function(p){
 			if(p.id === $rootScope.projectId){
 				$rootScope.project = p;
-				splitToColumn($rootScope.project.tasks);
+				$rootScope.splitToColumn($rootScope.project.tasks);
 			}
 		});
 	};
@@ -236,7 +236,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		$http.get(path+"/v1/jtask/getAllTasksInOneProject")
 		.success(function(data){
 			$rootScope.project = angular.fromJson(data);
-			splitToColumn($rootScope.project.tasks);
+			$rootScope.splitToColumn($rootScope.project.tasks);
 		})
 		.error(function(data){
 			return data;
@@ -321,7 +321,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		console.log("taskDirestionNext");
 	};
 	
-	var splitToColumn = function(tasks){
+	$rootScope.splitToColumn = function(tasks){
 		$scope.wait = [];
 		$scope.toDo = [];
 		$scope.inProgress = [];
@@ -406,6 +406,7 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 				projectTasks = JTaskService.getAllProjectTasks($rootScope.projectId);
 				projectTasks.then(function(data){
 					$rootScope.project.tasks = data;
+					$rootScope.splitToColumn($rootScope.project.tasks);
 				});
 			}
 		});

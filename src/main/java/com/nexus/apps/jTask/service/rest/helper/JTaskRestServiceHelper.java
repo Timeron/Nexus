@@ -74,20 +74,19 @@ public class JTaskRestServiceHelper {
 	
 	public ServiceResult addNewTask(JTaskDTO jTaskDTO, ServiceResult result) {
 		LOG.info("ServiceHelper coled: addNewTask");
-		int nextId = jTaskDAO.getLastId()+1;
+		JProject project = jProjectDAO.getById(jTaskDTO.getProjectId());
+		String nextIdName = getNextName(jTaskDAO.getLastName(project), project.getPrefix());
 		JTask jTask = new JTask();
-		jTask.setId(nextId);
 		jTask.setCreated(new Date());
 		jTask.setUpdated(new Date());
 		jTask.setPriority(jTaskDTO.getPriority());
 		jTask.setDescription(jTaskDTO.getDescription());
-		jTask.setName(getProjectPrefix(jTaskDTO.getProjectId()));
-		jTask.setProject(jProjectDAO.getById(jTaskDTO.getProjectId()));
-		jTask.setStatus(jStatusDAO.getById(1));
+		jTask.setProject(project);
+		jTask.setStatus(jStatusDAO.getById(2));
 		jTask.setSummary(jTaskDTO.getSummary());
 		jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
 		jTask.setUser(null);
-		jTask.setName(buildTaskName(getProjectPrefix(jTaskDTO.getProjectId()), nextId));
+		jTask.setName(nextIdName);
 		
 		if(jTaskDTO.getMainTaskId() != null){
 			jTask.setMainTask(jTaskDAO.getById(jTaskDTO.getMainTaskId()));
@@ -128,10 +127,6 @@ public class JTaskRestServiceHelper {
 	public String getProjectPrefix(int id){
 		return jProjectDAO.getById(id).getPrefix();
 	}
-	
-	private String buildTaskName(String prefix, int id){
-		return prefix+"-"+id;
-	}
 
 	public ServiceResult updateTask(JTaskDTO jTaskDTO) {
 		LOG.info("ServiceHelper coled: updateTask");
@@ -140,6 +135,18 @@ public class JTaskRestServiceHelper {
 		jTask.setUpdated(new Date());
 		jTaskDAO.update(jTask);
 		return null;
+	}
+	
+	public String getNextName(String name, String prefix) {
+		if(name != ""){
+			String[] nameArray = name.split("-");
+			int id = Integer.parseInt(nameArray[1]);
+			id++;
+			name = prefix+"-"+id;
+			return name;
+		}else{
+			return prefix+"-1";
+		}
 	}
 	
 }
