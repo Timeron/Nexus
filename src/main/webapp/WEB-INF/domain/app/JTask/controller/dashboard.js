@@ -3,8 +3,8 @@ var app = angular.module("nexus", []);
 app.service("JTaskService", function($http, $q){
 	
 	//get
-	var path = "http://timeron.ddns.net:8080/timeron-nexus/";
-//	var path = "http://localhost:8080/timeron-nexus/";
+//	var path = "http://timeron.ddns.net:8080/timeron-nexus/";
+	var path = "http://localhost:8080/timeron-nexus/";
 	
 	var getAllProjects = $q.defer();
 	$http.get(path+"/v1/jtask/getAllProjects").then(function(data){
@@ -230,8 +230,8 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	};
 	
 	setAllProjectsInScope = function(){
-		var path = "http://timeron.ddns.net:8080/timeron-nexus/";
-//		var path = "http://localhost:8080/timeron-nexus/";
+//		var path = "http://timeron.ddns.net:8080/timeron-nexus/";
+		var path = "http://localhost:8080/timeron-nexus/";
 		
 		$http.get(path+"/v1/jtask/getAllTasksInOneProject")
 		.success(function(data){
@@ -412,4 +412,29 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 		});
 		
 	};
+	
+	
+});
+
+app.controller("TaskController", function($rootScope, $scope, JTaskService){
+	$scope.task;
+	
+	$rootScope.setTaskInNewWindow = function(task){
+		$scope.task = task;
+		switch(task.taskTypeId){
+		case 1 : console.log("11");
+			$scope.task.taskType = "TASK";
+			break;
+		case 2 : console.log("22");
+			$scope.task.taskType = "BUG";
+			break;
+		case 3 : console.log("33");
+			$scope.task.taskType = "IMPROVMENT";
+			break;
+		default :
+			break;
+		}
+	};
+	
+	
 });

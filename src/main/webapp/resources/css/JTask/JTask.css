@@ -24,6 +24,10 @@ div span .icon {
 	width: 100px;
 }
 
+.clickable {
+	cursor:pointer;
+}
+
 .projectColumnName{
 	float: left;
 	width: 80%;
@@ -214,4 +218,64 @@ div span .icon {
 .taskDetailsCreated, .taskDetailsUpdated{
 	padding: 5px 0px 0px 5px;
 	text-align: right;
+}
+
+/* taskMainWindow */
+#taskMainWindow .taskDetailsTaskTypeId {
+	font-size: 20px;
+	font-weight: bold;
+	margin: 5px 0px 0px 5px;
+}
+
+#taskMainWindow .taskDetailsName {
+	float: right;
+	width: 50%;
+	font-size: 24px;
+	font-weight: bold;
+	text-align: right;
+	margin: 10px 50px 0px 0px;
+}
+#taskMainWindow .taskDetailsPriority {
+	font-weight: bold;
+	margin: 5px 0px 0px 5px;
+}
+#taskMainWindow .taskDetailsSummary {
+	margin: 75px 50px 0px 50px;
+}
+#taskMainWindow .taskDetailsSummary p {
+	font-size: 16px;
+	border-top: 1px solid #ccc;
+	font-weight: bold;
+	width: 100%;
+	margin: 10px 5px 0px 5px;
+}
+#taskMainWindow .taskDetailsDescription {
+	margin: 25px 50px 0px 50px;
+}
+#taskMainWindow .taskDetailsDescription p {
+	border-top: 1px solid #ccc;
+	width: 100%;
+	margin: 10px 5px 0px 5px;
+}
+#taskMainWindow .taskDetailsDates {
+	font-size: 12px;
+	margin: 60px 50px 0px 50px;
+	border-top: 1px solid #ccc;
+}
+#taskMainWindow .taskDetailsCreated,#taskMainWindow .taskDetailsUpdated{
+	padding: 5px 0px 0px 5px;
+	text-align: right;
+}
+
+/*
+	Modals
+*/
+
+#taskDetailsModal .modal-dialog{
+	width: 95%;
+}
+
+#taskMainWindowContent{
+	width: 75%;
+	border-right: 1px solid #ccc;
 }
