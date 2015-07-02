@@ -11,8 +11,10 @@ import org.springframework.stereotype.Component;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.common.service.ServiceResult;
+import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
+import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JStatusDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
@@ -32,6 +34,8 @@ public class JTaskRestServiceHelper {
 	JStatusDAO jStatusDAO;
 	@Autowired
 	JTaskTypeDAO jTaskTypeDAO;
+	@Autowired
+	JHistoryDAO jHistoryDAO;
 	
 	public JTaskRestServiceHelper(){}
 	
@@ -130,10 +134,19 @@ public class JTaskRestServiceHelper {
 
 	public ServiceResult updateTask(JTaskDTO jTaskDTO) {
 		LOG.info("ServiceHelper coled: updateTask");
+		Date now = new Date();
 		JTask jTask = jTaskDAO.getById(jTaskDTO.getId());
 		jTask.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
-		jTask.setUpdated(new Date());
+		jTask.setUpdated(now);
 		jTaskDAO.update(jTask);
+		JHistory history = new JHistory();
+		history.setCreated(now);
+		history.setTask(jTask);
+		history.setMessage(jTaskDTO.getUpdateMessage());
+		if(jTaskDTO.getUpdateMessageStatus() != null){
+			history.setStatus(jStatusDAO.getById(jTaskDTO.getUpdateMessageStatus()));
+		}
+		jHistoryDAO.save(history);
 		return null;
 	}
 	

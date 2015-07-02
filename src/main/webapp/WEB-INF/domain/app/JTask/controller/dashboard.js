@@ -313,6 +313,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 			default : 
 				break;
 		}
+		task.updateMessageStatus = task.status;
 		JTaskService.updateTask(task);
 	};
 	
