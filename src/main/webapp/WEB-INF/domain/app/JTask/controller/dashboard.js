@@ -93,6 +93,18 @@ app.service("JTaskService", function($http, $q){
 		});
 		return addProject.promise;
 	};
+	
+	this.getHistory = function(task){
+		historyPromise = $q.defer();
+		$http.post(path+"/v1/jtask/historyTask", task)
+		.success(function(data){
+			return historyPromise.resolve(data);
+		})
+		.error(function(data){
+			return data;
+		});
+		return historyPromise.promise;
+	};
 });
 
 //Factory
@@ -419,6 +431,7 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 
 app.controller("TaskController", function($rootScope, $scope, JTaskService){
 	$scope.task;
+	$scope.histories;
 	
 	$rootScope.setTaskInNewWindow = function(task){
 		$scope.task = task;
@@ -437,5 +450,20 @@ app.controller("TaskController", function($rootScope, $scope, JTaskService){
 		}
 	};
 	
+	$scope.getHistory = function(task){
+		
+		JTaskService.getHistory(task).then(function(data){
+			console.log(data);
+			 $scope.histories = data;
+		});
+	};
+	
+	$scope.isStatusChange = function(history){
+		console.log(history);
+		if(history.hasOwnProperty("status")){
+			return true;
+		}
+		return false;
+	};
 	
 });

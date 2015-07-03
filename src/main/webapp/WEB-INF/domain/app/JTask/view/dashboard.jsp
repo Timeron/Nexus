@@ -103,19 +103,34 @@
 								<div class="taskDetailsCreated">Dodany: {{task.created}}</div>
 								<div class="taskDetailsUpdated">Zmieniony: {{task.updated}}</div>
 							</div>
+						
+							<div id="taskWindowDetails">
+								<div class="btn-group">
+									<button type="button" class="btn btn-primary btn-xs" data-ng-click="getHistory(task)">Aktywność</button>
+	<!-- 								<button type="button" class="btn btn-primary btn-xs">Notatki</button> -->
+	<!-- 								<button type="button" class="btn btn-primary btn-xs">Załączniki</button> -->
+								</div>
+								<div class="taskHistory">
+									<div class="detailsName">Aktywność</div>
+									<div class="historyEvent" data-ng-repeat="history in histories">
+										<div data-ng-if="isStatusChange(history)">
+											<div class="border-bottom">
+												<div class="historyEventName">Zmiana statusu</div>
+												<div class="historyEventDate">{{history.created}}</div>
+											</div>
+											<div class="historyEventContent">status: {{history.status}}</div>
+										</div>
+										
+									</div>
+	<!-- 							<div class="taskNotes">Notatki</div> -->
+	<!-- 							<div class="taskHAttachment">Załączniki</div> -->
+								</div>
+							</div>
+						
 						</div>
 						<div id="taskMainWindowStatistics">
 						</div>
-<!-- 						<div id=""> -->
-<!-- 							<div class="btn-group"> -->
-<!-- 								<button type="button" class="btn btn-primary btn-xs">Aktywność</button> -->
-<!-- 								<button type="button" class="btn btn-primary btn-xs">Notatki</button> -->
-<!-- 								<button type="button" class="btn btn-primary btn-xs">Załączniki</button> -->
-<!-- 							</div> -->
-<!-- 							<div class="taskHistory">Aktywność</div> -->
-<!-- 							<div class="taskNotes">Notatki</div> -->
-<!-- 							<div class="taskHAttachment">Załączniki</div> -->
-<!-- 						</div> -->
+						
 					</div>
 				</div>
 				<div class="modal-footer">

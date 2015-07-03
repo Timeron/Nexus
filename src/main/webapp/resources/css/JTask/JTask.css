@@ -267,6 +267,38 @@ div span .icon {
 	text-align: right;
 }
 
+#taskMainWindow .detailsName{
+	font-size: 16px;
+	font-weight: bold;
+	width: 100%;
+}
+
+/************************* taskWindowDetails */
+#taskWindowDetails{
+	margin: 50px 50px 30px 50px;
+}
+.taskHistory{
+	margin-top: 25px;
+}
+.historyEvent {
+	margin: 15px 0px 0px 0px;
+}
+.historyEventContent{
+	margin: 20px 0px 10px 50px;
+}
+.historyEventName{
+	font-weight: bold;
+	width: 40%;
+}
+.historyEventDate {
+	font-size: 11px;
+	float: right;
+	text-align: right;
+	width: 25%;
+}
+
+
+
 /*
 	Modals
 */
@@ -278,4 +310,14 @@ div span .icon {
 #taskMainWindowContent{
 	width: 75%;
 	border-right: 1px solid #ccc;
+}
+
+
+/* *******************************************
+	common 
+*/
+
+.border-bottom {
+	border-bottom: solid 1px #ccc;
+
 }

@@ -8,6 +8,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.common.service.ServiceResult;
@@ -150,6 +151,23 @@ public class JTaskRestServiceHelper {
 		return null;
 	}
 	
+
+
+	public List<JHistoryDTO> getTaskHistory(int taskId) {
+		List<JHistoryDTO> jHistoriesDTO;
+		jHistoriesDTO = transformToJHistoryDTO(jHistoryDAO.getAllFromTaskId(jTaskDAO.getById(taskId)));
+		
+		return jHistoriesDTO;
+	}
+
+	private List<JHistoryDTO> transformToJHistoryDTO(List<JHistory> histories) {
+		List<JHistoryDTO> dtos = new ArrayList<JHistoryDTO>();
+		for(JHistory history : histories){
+			dtos.add(new JHistoryDTO(history));
+		}
+		return dtos;
+	}
+	
 	public String getNextName(String name, String prefix) {
 		if(name != ""){
 			String[] nameArray = name.split("-");
@@ -161,5 +179,4 @@ public class JTaskRestServiceHelper {
 			return prefix+"-1";
 		}
 	}
-	
 }

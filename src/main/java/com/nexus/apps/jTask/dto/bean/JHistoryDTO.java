@@ -8,10 +8,12 @@ public class JHistoryDTO {
 
 	private int id;
 	private Date created;
+	private String status;
 	
 	public JHistoryDTO(JHistory jHistory) {
 		this.id = jHistory.getId();
 		this.created = jHistory.getCreated();
+		this.status = jHistory.getStatus().getDescription();
 	}
 	
 	public int getId() {
@@ -25,6 +27,14 @@ public class JHistoryDTO {
 	}
 	public void setCreated(Date created) {
 		this.created = created;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 	

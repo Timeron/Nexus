@@ -92,7 +92,7 @@ public class JTaskRestService extends RestService{
 		LOG.info("service response: addTask -> "+gson.toJson(result));
 		return gson.toJson(result);
 	}
-	//do zrobienia
+
 	@RequestMapping(value = "/updateTask", method = RequestMethod.POST)
 	public String updateTask(@RequestBody String json){
 		LOG.info("service: updateTask <- "+json);
@@ -102,6 +102,12 @@ public class JTaskRestService extends RestService{
 
 		LOG.info("service response: updateTask -> "+gson.toJson(result));
 		return gson.toJson(result);
+	}
+	
+	@RequestMapping(value = "/historyTask", method = RequestMethod.POST)
+	public String historyTask(@RequestBody String json){
+		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
+		return gson.toJson(helper.getTaskHistory(jTaskDTO.getId()));
 	}
 	
 }
