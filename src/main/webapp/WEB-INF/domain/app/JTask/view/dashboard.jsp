@@ -92,11 +92,12 @@
 				<div class="modal-body">
 					<div id=taskMainWindow>
 						<div class="taskDetailsName" data-ng-click="setTaskInNewWindow(taskDetails)">{{task.name}}</div>
+						<div class="taskDetailsTaskTypeId">{{task.taskType}}</div>
+						<div class="taskDetailsPriority">Piorytet: {{task.priority}}</div>
 						<div id="taskMainWindowContent">
 							<div class="btn-group">
 							</div>
-							<div class="taskDetailsTaskTypeId">{{task.taskType}}</div>
-							<div class="taskDetailsPriority">Piorytet: {{task.priority}}</div>
+							
 							<div class="taskDetailsSummary">Opis: <p>{{task.summary}}</p></div>
 							<div class="taskDetailsDescription">Szczegóły: <p>{{task.description}}</p></div>
 							<div class="taskDetailsDates">

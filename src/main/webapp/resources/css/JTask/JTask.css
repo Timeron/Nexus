@@ -309,6 +309,8 @@ div span .icon {
 
 #taskMainWindowContent{
 	width: 75%;
+	height: 600px;
+	overflow-y: scroll;
 	border-right: 1px solid #ccc;
 }
 
