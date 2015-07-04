@@ -1,4 +1,12 @@
-var app = angular.module("nexus", []);
+var app = angular.module("nexus", ['ngResource']);
+
+app.factory("Post", function($resource) {
+	return $resource("v1/historyTask", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
 
 app.service("JTaskService", function($http, $q){
 	
@@ -7,7 +15,7 @@ app.service("JTaskService", function($http, $q){
 	var path = "http://localhost:8080/timeron-nexus/";
 	
 	var getAllProjects = $q.defer();
-	$http.get(path+"/v1/jtask/getAllProjects").then(function(data){
+	$http.get(path+"/jtask/v1/getAllProjects").then(function(data){
 		getAllProjects.resolve(data);
 	});
 	
@@ -19,7 +27,7 @@ app.service("JTaskService", function($http, $q){
 	
 	this.addNewProject = function(newProjectName, newProjectDescription){
 		addProject = $q.defer();
-		$http.post(path+"/v1/jtask/addProject", 
+		$http.post(path+"/jtask/v1/addProject", 
 				{
 					name: newProjectName, 
 					description: newProjectDescription
@@ -35,7 +43,7 @@ app.service("JTaskService", function($http, $q){
 	
 	this.addNewTask = function(tProjectId, tTaskSummary, tType, tPriority, tDescription){
 		addTask = $q.defer();
-		$http.post(path+"/v1/jtask/addTask", 
+		$http.post(path+"/jtask/v1/addTask", 
 				{
 					projectId: tProjectId,
 					summary: tTaskSummary,
@@ -54,7 +62,7 @@ app.service("JTaskService", function($http, $q){
 
 	this.getAllProjectTasks = function(projectId){
 		allProjectTask = $q.defer();
-		$http.post(path+"/v1/jtask/getProjectTasks", 
+		$http.post(path+"/jtask/v1/getProjectTasks", 
 				{
 					id: projectId
 				})
@@ -69,7 +77,7 @@ app.service("JTaskService", function($http, $q){
 
 	this.getProjectTask = function(projectId){
 		allProjectTask = $q.defer();
-		$http.post(path+"/v1/jtask/getProjectTask", 
+		$http.post(path+"/jtask/v1/getProjectTask", 
 				{
 					id: projectId
 				})
@@ -84,7 +92,7 @@ app.service("JTaskService", function($http, $q){
 	
 	this.updateTask = function(task){
 		addProject = $q.defer();
-		$http.post(path+"/v1/jtask/updateTask", task)
+		$http.post(path+"/jtask/v1/updateTask", task)
 		.success(function(data){
 			return addProject.resolve(data);
 		})
@@ -96,7 +104,7 @@ app.service("JTaskService", function($http, $q){
 	
 	this.getHistory = function(task){
 		historyPromise = $q.defer();
-		$http.post(path+"/v1/jtask/historyTask", task)
+		$http.post(path+"/jtask/v1/historyTask", task)
 		.success(function(data){
 			return historyPromise.resolve(data);
 		})
@@ -128,7 +136,6 @@ app.directive("projectcolumn", function($window){
 	            scope.windowWidth = newValue.w;
 	            scrWidth = scope.windowWidth-6;
 				width = (scrWidth / scope.projects.length);
-				console.log(width);
 				element[0].style.float = "left";
 				if(width >= 250){
 					element[0].style.width = width+"px";
@@ -218,7 +225,7 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	};
 	
 	$scope.extendProject = function(index){
-		console.log("extend "+index);
+
 	};
 });
 
@@ -245,7 +252,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 //		var path = "http://timeron.ddns.net:8080/timeron-nexus/";
 		var path = "http://localhost:8080/timeron-nexus/";
 		
-		$http.get(path+"/v1/jtask/getAllTasksInOneProject")
+		$http.get(path+"/jtask/v1/getAllTasksInOneProject")
 		.success(function(data){
 			$rootScope.project = angular.fromJson(data);
 			$rootScope.splitToColumn($rootScope.project.tasks);
@@ -258,7 +265,6 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	
 	$scope.getTaskDetails = function(task){
 		$scope.taskDetails = task;
-		console.log(task);
 	};
 	
 	$scope.taskDirestionPreviousNext = function (task, direction){
@@ -331,7 +337,6 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	
 	$scope.taskDirestionNext = function(task){
 		task.status += 1;
-		console.log("taskDirestionNext");
 	};
 	
 	$rootScope.splitToColumn = function(tasks){
@@ -343,27 +348,22 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		angular.forEach(tasks, function(t){
 			switch(t.status){
 				case 1:
-					console.log(0);
 					$scope.wait.push(t);
 					break;
 				case 2:
-					console.log(1);
 					$scope.toDo.push(t);
 					break;
 				case 3:
-					console.log(2);
 					$scope.inProgress.push(t);
 					break;
 				case 4:
-					console.log(3);
 					$scope.inReview.push(t);
 					break;
 				case 5:
-					console.log(4);
 					$scope.done.push(t);
 					break;
 				default:
-					console.log(t.status);
+					break;
 			}
 		});
 	};
@@ -429,20 +429,20 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	
 });
 
-app.controller("TaskController", function($rootScope, $scope, JTaskService){
+app.controller("TaskController", function($rootScope, $scope, JTaskService, Post){
 	$scope.task;
 	$scope.histories;
 	
 	$rootScope.setTaskInNewWindow = function(task){
 		$scope.task = task;
 		switch(task.taskTypeId){
-		case 1 : console.log("11");
+		case 1 : 
 			$scope.task.taskType = "TASK";
 			break;
-		case 2 : console.log("22");
+		case 2 : 
 			$scope.task.taskType = "BUG";
 			break;
-		case 3 : console.log("33");
+		case 3 : 
 			$scope.task.taskType = "IMPROVMENT";
 			break;
 		default :
@@ -451,15 +451,12 @@ app.controller("TaskController", function($rootScope, $scope, JTaskService){
 	};
 	
 	$scope.getHistory = function(task){
-		
-		JTaskService.getHistory(task).then(function(data){
-			console.log(data);
-			 $scope.histories = data;
+		Post.query({ id: task.id }, function(data) {
+			$scope.histories = data;
 		});
 	};
 	
 	$scope.isStatusChange = function(history){
-		console.log(history);
 		if(history.hasOwnProperty("status")){
 			return true;
 		}

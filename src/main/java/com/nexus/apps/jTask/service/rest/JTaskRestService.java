@@ -1,5 +1,7 @@
 package com.nexus.apps.jTask.service.rest;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,7 @@ import com.nexus.common.service.RestService;
 import com.nexus.common.service.ServiceResult;
 
 @RestController
-@RequestMapping("/v1/jtask")
+@RequestMapping("/jtask/v1")
 public class JTaskRestService extends RestService{
 	
 	static Logger LOG = Logger.getLogger(JTaskRestService.class);
@@ -46,6 +48,14 @@ public class JTaskRestService extends RestService{
 		String result = gson.toJson(jProjectDTO);
 		LOG.info("service response: getTasks -> "+result);
 		return result;
+	}
+	
+	@RequestMapping(value = "/historyTask", method = RequestMethod.GET)
+	public String historyTask(HttpServletRequest request){
+		LOG.info("haha!!!");
+		int taskId = Integer.parseInt(request.getParameter("id"));
+		LOG.info("haha!!!"+gson.toJson(helper.getTaskHistory(taskId)));
+		return gson.toJson(helper.getTaskHistory(taskId));
 	}
 	
 	/**
