@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<div data-ng-app="nexus">
 
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
@@ -79,90 +78,20 @@
 			</div>
 		</div>
 	</div>
-
-	<div class="modal fade" id="taskDetailsModal" tabindex="-1" role="dialog" aria-labelledby="taskDetailsModalLabel" aria-hidden="true" data-ng-controller="TaskController">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Task {{task.name}}</h4>
-				</div>
-				<div class="modal-body">
-					<div id=taskMainWindow>
-						<div class="taskDetailsName" data-ng-click="setTaskInNewWindow(taskDetails)">{{task.name}}</div>
-						<div class="taskDetailsTaskTypeId">{{task.taskType}}</div>
-						<div class="taskDetailsPriority">Piorytet: {{task.priority}}</div>
-						<div id="taskMainWindowContent">
-							<div class="btn-group">
-							</div>
-							
-							<div class="taskDetailsSummary">Opis: <p>{{task.summary}}</p></div>
-							<div class="taskDetailsDescription">Szczegóły: <p>{{task.description}}</p></div>
-							<div class="taskDetailsDates">
-								<div class="taskDetailsCreated">Dodany: {{task.created}}</div>
-								<div class="taskDetailsUpdated">Zmieniony: {{task.updated}}</div>
-							</div>
-						
-							<div id="taskWindowDetails">
-								<div class="btn-group">
-									<button type="button" class="btn btn-primary btn-xs" data-ng-click="getHistory(task)">Aktywność</button>
-	<!-- 								<button type="button" class="btn btn-primary btn-xs">Notatki</button> -->
-	<!-- 								<button type="button" class="btn btn-primary btn-xs">Załączniki</button> -->
-								</div>
-								<div class="taskHistory">
-									<div class="detailsName">Aktywność</div>
-									<div class="historyEvent" data-ng-repeat="history in histories">
-										<div data-ng-if="isStatusChange(history)">
-											<div class="border-bottom">
-												<div class="historyEventName">Zmiana statusu</div>
-												<div class="historyEventDate">{{history.created}}</div>
-											</div>
-											<div class="historyEventContent">status: {{history.status}}</div>
-										</div>
-										
-									</div>
-	<!-- 							<div class="taskNotes">Notatki</div> -->
-	<!-- 							<div class="taskHAttachment">Załączniki</div> -->
-								</div>
-							</div>
-						
-						</div>
-						<div id="taskMainWindowStatistics">
-						</div>
-						
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-ng-click="addProject()" data-dismiss="modal">Save changes</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	
-	<div id="dashboard" class="view" data-ng-controller = "JTaskBoardCtr">	
-<!-- 	menu -->
-	<div class="bs-example">
-		<div class="btn-group">
-			<a class="btn btn-primary btn-ms" role="button" data-ng-click="openBoard()">Tablica</a> 
-			<a class="btn btn-primary btn-ms" role="button" data-toggle="modal" data-target="#myModal">Nowy Projekt</a> 
-			<a class="btn btn-primary btn-ms" role="button" href="/timeron-nexus/jtask/projects">Szukaj Projektu</a>
-		</div>
-	</div>	
+<div id="dashboard" class="view" >	
 	
 <!-- 	lista projektów -->
-
-		<div data-ng-repeat="project in projects">
-			<div>
-				<projectColumn index="{{$index}}" class="column" >
-					<div class="projectColumnName btn btn-success" data-ng-click="openProject($index)">{{project.name}}</div>
-					<div class="projectColumnExtend btn btn-success" data-ng-click="extendProject($index)" ><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span></div>
-				</projectColumn>
-			</div>
+<div data-ng-controller = "JTaskBoardCtr" >
+	<div data-ng-repeat="project in projects">
+		<div>
+			<projectColumn index="{{$index}}" class="column" >
+				<div class="projectColumnName btn btn-success" data-ng-click="openProject($index)">{{project.name}}</div>
+				<div class="projectColumnExtend btn btn-success" data-ng-click="extendProject($index)" ><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span></div>
+			</projectColumn>
 		</div>
 	</div>
+</div>
 	
 <!-- 	tablica projektów -->
 	<div id="project" class="view" data-ng-controller = "JTaskProjectCtr">
@@ -324,7 +253,9 @@
 					<p>Details</p>
 				</div>
 				<div id="taskDetails">
-					<div class="taskDetailsName clickable" role="button" data-toggle="modal" data-target="#taskDetailsModal" data-ng-click="setTaskInNewWindow(taskDetails)">{{taskDetails.name}}</div>
+<!-- 					<div class="taskDetailsName clickable" role="button" data-toggle="modal" data-target="#taskDetailsModal" data-ng-click="setTaskInNewWindow(taskDetails)">{{taskDetails.name}}</div> -->
+<!-- 					<div class="taskDetailsName clickable" role="button" data-toggle="modal" data-target="#taskDetailsModal" data-ng-click="setTaskInNewWindow(taskDetails)" >{{taskDetails.name}}</div> -->
+					<a class="taskDetailsName clickable" data-ng-click="setTaskInNewWindow(taskDetails)" >{{taskDetails.name}}</a>
 					<div class="taskDetailsPriority">Piorytet: {{taskDetails.priority}}</div>
 					<div class="taskDetailsSummary">Opis: <p>{{taskDetails.summary}}</p></div>
 					<div class="taskDetailsDescription">Szczegóły: <p>{{taskDetails.description}}</p></div>
@@ -336,5 +267,4 @@
 			</projectBoardColumn>
 		</div>
 	</div>
-
 </div>

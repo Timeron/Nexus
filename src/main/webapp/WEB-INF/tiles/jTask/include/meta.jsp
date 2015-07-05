@@ -15,8 +15,10 @@
 <script src="<c:url value="/resources/bootstrap/datapicker/bootstrap-datetimepicker.min.js" />" ></script>
 <script src="<c:url value="/resources/js/angular/angular.min.js" />"></script>
 <script src="<c:url value="/resources/js/angular/angular-resource.js" />"></script>
+<script src="<c:url value="/resources/js/angular/angular-route.js" />"></script>
 
-<script src="<c:url value="/domain/app/common/service/restService.js" />"></script>
+<script src="<c:url value="/domain/app/JTask/common/config/config.js" />"></script>
+<script src="<c:url value="/domain/app/JTask/common/service/restService.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/dashboard.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/jtaskProjects.js" />"></script>
 

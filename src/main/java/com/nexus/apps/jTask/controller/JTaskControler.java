@@ -51,4 +51,13 @@ public class JTaskControler {
 		return "jtaskProjects";
 	}
 	
+	@RequestMapping(value = "/dashboard", method = RequestMethod.GET)
+	public String dashboard(Model model){
+		return "JTaskDashboard";
+	}
+	
+	@RequestMapping(value = "/task", method = RequestMethod.GET)
+	public String task(Model model){
+		return "JTaskTask";
+	}
 }

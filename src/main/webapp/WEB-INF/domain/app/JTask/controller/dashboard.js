@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config']);
 
 app.factory("Post", function($resource) {
 	return $resource("v1/historyTask", 
@@ -205,7 +205,7 @@ app.directive("inline", function(){
 //Controller
 //*************************
 
-app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskService){
+app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskService, $location){
 	$rootScope.projects = [];
 	$scope.messages = [];
 	$scope.errorMessages = [];
@@ -216,7 +216,11 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	});
 	
 	$scope.openBoard = function(){
-		setAllProjectsInScope();
+		console.log($rootScope.projects);
+		
+		$rootScope.setAllProjectsInScope();
+		$location.path('/');
+		console.log($rootScope.projects);
 	};
 	
 	$scope.openProject = function(index){
@@ -227,9 +231,11 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	$scope.extendProject = function(index){
 
 	};
+	
+
 });
 
-app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService){
+app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService, $location){
 	$rootScope.project;
 	$scope.wait = [];
 	$scope.toDo = [];
@@ -248,7 +254,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		});
 	};
 	
-	setAllProjectsInScope = function(){
+	$rootScope.setAllProjectsInScope = function(){
 //		var path = "http://timeron.ddns.net:8080/timeron-nexus/";
 		var path = "http://localhost:8080/timeron-nexus/";
 		
@@ -367,6 +373,26 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 			}
 		});
 	};
+	
+	$scope.setTaskInNewWindow = function(task){
+		$scope.task = task;
+		switch(task.taskTypeId){
+		case 1 : 
+			$scope.task.taskType = "TASK";
+			break;
+		case 2 : 
+			$scope.task.taskType = "BUG";
+			break;
+		case 3 : 
+			$scope.task.taskType = "IMPROVMENT";
+			break;
+		default :
+			break;
+		}
+	
+		$rootScope.taskDetails = task;
+		$location.path('/task/');
+	};
 });
 
 //new modals
@@ -430,25 +456,10 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 });
 
 app.controller("TaskController", function($rootScope, $scope, JTaskService, Post){
-	$scope.task;
+	$scope.task = $rootScope.taskDetails;
 	$scope.histories;
 	
-	$rootScope.setTaskInNewWindow = function(task){
-		$scope.task = task;
-		switch(task.taskTypeId){
-		case 1 : 
-			$scope.task.taskType = "TASK";
-			break;
-		case 2 : 
-			$scope.task.taskType = "BUG";
-			break;
-		case 3 : 
-			$scope.task.taskType = "IMPROVMENT";
-			break;
-		default :
-			break;
-		}
-	};
+
 	
 	$scope.getHistory = function(task){
 		Post.query({ id: task.id }, function(data) {

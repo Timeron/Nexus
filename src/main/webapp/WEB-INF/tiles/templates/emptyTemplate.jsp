@@ -5,16 +5,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<head>
-<tiles:getAsString name="title" />
-<tiles:insertAttribute name="meta" />
-</head>
-<body>
-	<div id="body">
-		<tiles:insertAttribute name="body" />
-	</div>
-	<div id="footer">
-		<tiles:insertAttribute name="footer" />
-	</div>
-</body>
-</html>
+<div id="body">
+	<tiles:insertAttribute name="body" />
+</div>
