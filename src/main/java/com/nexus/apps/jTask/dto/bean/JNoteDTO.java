@@ -8,13 +8,14 @@ public class JNoteDTO {
 
 	private int id;
 	private String name;
-	private String contant;
+	private String content;
 	private Date created;
+	private int taskId;
 	
 	public JNoteDTO(JNote jNote) {
 		this.id = jNote.getId();
 		this.name = jNote.getName();
-		this.contant = jNote.getContant();
+		this.content = jNote.getContent();
 		this.created = jNote.getCreated();
 	}
 	
@@ -30,19 +31,24 @@ public class JNoteDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public String getContant() {
-		return contant;
-	}
-	public void setContant(String contant) {
-		this.contant = contant;
-	}
 	public Date getCreated() {
 		return created;
 	}
 	public void setCreated(Date created) {
 		this.created = created;
 	}
-	
-		
-	
+	public String getContent() {
+		return content;
+	}
+	public void setContent(String content) {
+		this.content = content;
+	}
+
+	public int getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(int taskId) {
+		this.taskId = taskId;
+	}
 }

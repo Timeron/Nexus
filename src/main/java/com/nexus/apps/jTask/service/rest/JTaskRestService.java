@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
@@ -52,10 +53,17 @@ public class JTaskRestService extends RestService{
 	
 	@RequestMapping(value = "/historyTask", method = RequestMethod.GET)
 	public String historyTask(HttpServletRequest request){
-		LOG.info("haha!!!");
 		int taskId = Integer.parseInt(request.getParameter("id"));
-		LOG.info("haha!!!"+gson.toJson(helper.getTaskHistory(taskId)));
+		LOG.info("service response: historyTask -> "+gson.toJson(helper.getTaskHistory(taskId)));
 		return gson.toJson(helper.getTaskHistory(taskId));
+	}
+	
+	@RequestMapping(value = "/notesTask", method = RequestMethod.GET)
+	public String notesTask(HttpServletRequest request){
+		int taskId = Integer.parseInt(request.getParameter("id"));
+		String response = gson.toJson(helper.getTaskNotes(taskId));
+		LOG.info("service response: notesTask -> "+ response);
+		return response;
 	}
 	
 	/**
@@ -118,6 +126,14 @@ public class JTaskRestService extends RestService{
 	public String historyTask(@RequestBody String json){
 		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
 		return gson.toJson(helper.getTaskHistory(jTaskDTO.getId()));
-	}
+	}	
 	
+	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
+	public String newNote(@RequestBody String json){
+		LOG.info("service: newNote <- "+json);
+		ServiceResult result = new ServiceResult();
+		JNoteDTO jNoteDTO = gson.fromJson(json, JNoteDTO.class);
+		result = helper.saveNote(jNoteDTO, result);
+		return gson.toJson(result);
+	}
 }

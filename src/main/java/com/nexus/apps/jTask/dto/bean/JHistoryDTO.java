@@ -9,11 +9,17 @@ public class JHistoryDTO {
 	private int id;
 	private Date created;
 	private String status;
+	private String note;
 	
 	public JHistoryDTO(JHistory jHistory) {
 		this.id = jHistory.getId();
 		this.created = jHistory.getCreated();
-		this.status = jHistory.getStatus().getDescription();
+		if(jHistory.getStatus() != null){
+			this.status = jHistory.getStatus().getDescription();
+		}
+		if(jHistory.getNote() != null){
+			this.note = jHistory.getNote().getContent();
+		}
 	}
 	
 	public int getId() {

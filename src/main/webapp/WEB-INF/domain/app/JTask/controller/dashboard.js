@@ -1,9 +1,23 @@
 var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config']);
 
-app.factory("Post", function($resource) {
+app.factory("Histories", function($resource) {
 	return $resource("v1/historyTask", 
 			{}, 
 			{query: { method: "GET", isArray: true }
+	});
+});
+
+app.factory("Notes", function($resource) {
+	return $resource("v1/notesTask", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
+app.factory("AddNote", function($resource){
+	return $resource("v1/addNote", 
+			{}, 
+			{query: { method: "POST", isArray: false }
 	});
 });
 
@@ -216,11 +230,8 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	});
 	
 	$scope.openBoard = function(){
-		console.log($rootScope.projects);
-		
 		$rootScope.setAllProjectsInScope();
 		$location.path('/');
-		console.log($rootScope.projects);
 	};
 	
 	$scope.openProject = function(index){
@@ -455,14 +466,14 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	
 });
 
-app.controller("TaskController", function($rootScope, $scope, JTaskService, Post){
+app.controller("TaskController", function($rootScope, $scope, JTaskService, Histories, Notes, AddNote){
 	$scope.task = $rootScope.taskDetails;
 	$scope.histories;
-	
-
+	$scope.notes;
+	$scope.newNote;
 	
 	$scope.getHistory = function(task){
-		Post.query({ id: task.id }, function(data) {
+		Histories.query({ id: task.id }, function(data) {
 			$scope.histories = data;
 		});
 	};
@@ -473,5 +484,33 @@ app.controller("TaskController", function($rootScope, $scope, JTaskService, Post
 		}
 		return false;
 	};
+	
+	$scope.isNote = function(history){
+		if(history.hasOwnProperty("note")){
+			return true;
+		}
+		return false;
+	};
+	
+	$scope.addNote = function(){
+		AddNote.query(
+				{
+					content: $scope.newNote,
+					taskId: $rootScope.taskDetails.id
+				 }, function(data){
+			
+		});
+	};
+	
+	$scope.getNotes = function(task){
+		Notes.query({ id: task.id }, function(data) {
+			$scope.notes = data;
+			console.log($scope.notes);
+		});
+	};
+	
+	
+	
+
 	
 });

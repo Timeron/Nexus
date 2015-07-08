@@ -290,14 +290,16 @@ div span .icon {
 	font-weight: bold;
 	width: 40%;
 }
-.historyEventDate {
+.eventDate {
 	font-size: 11px;
 	float: right;
 	text-align: right;
 	width: 25%;
 }
 
-
+.topMenu {
+	margin: 25px 0px 0px 0px;
+}
 
 /*
 	Modals

@@ -8,14 +8,18 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonElement;
 import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
+import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
+import com.timeron.NexusDatabaseLibrary.Entity.JNote;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
+import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JStatusDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
@@ -37,6 +41,8 @@ public class JTaskRestServiceHelper {
 	JTaskTypeDAO jTaskTypeDAO;
 	@Autowired
 	JHistoryDAO jHistoryDAO;
+	@Autowired
+	JNoteDAO jNoteDAO;
 	
 	public JTaskRestServiceHelper(){}
 	
@@ -159,13 +165,37 @@ public class JTaskRestServiceHelper {
 		
 		return jHistoriesDTO;
 	}
-
+	
 	private List<JHistoryDTO> transformToJHistoryDTO(List<JHistory> histories) {
 		List<JHistoryDTO> dtos = new ArrayList<JHistoryDTO>();
 		for(JHistory history : histories){
 			dtos.add(new JHistoryDTO(history));
 		}
 		return dtos;
+	}
+	
+	public List<JNoteDTO> getTaskNotes(int taskId) {
+		List<JNoteDTO> jNoteDTOs;
+		jNoteDTOs = transformToJNoteDTO(jNoteDAO.getAllFromTaskId(jTaskDAO.getById(taskId)));
+		return jNoteDTOs;
+	}
+
+	private List<JNoteDTO> transformToJNoteDTO(List<JNote> notes) {
+		List<JNoteDTO> dtos = new ArrayList<JNoteDTO>();
+		for(JNote note : notes){
+			dtos.add(new JNoteDTO(note));
+		}
+		return dtos;
+	}
+	
+	public ServiceResult saveNote(JNoteDTO jNoteDTO, ServiceResult result) {
+		JNote entity = new JNote();
+		entity.setCreated(new Date());
+		entity.setTask(jTaskDAO.getById(jNoteDTO.getTaskId()));
+		entity.setContent(jNoteDTO.getContent());
+		entity.setHistory(buildHistory(entity, jNoteDTO.getTaskId()));
+		result.setSuccess(jNoteDAO.save(entity));
+		return result;
 	}
 	
 	public String getNextName(String name, String prefix) {
@@ -179,4 +209,14 @@ public class JTaskRestServiceHelper {
 			return prefix+"-1";
 		}
 	}
+
+	private JHistory buildHistory(JNote entity, int taskId){
+		JHistory history = new JHistory();
+		history.setCreated(new Date());
+		history.setNote(entity);
+		history.setTask(jTaskDAO.getById(taskId));
+		return history;
+	} 
+
+
 }
