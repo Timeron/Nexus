@@ -63,12 +63,12 @@
 						<button type="button" class="btn btn-primary btn-xs" data-ng-click="getNotes(task)">Notatki</button>
 						<!-- 								<button type="button" class="btn btn-primary btn-xs">Załączniki</button> -->
 					</div>
-					<div class="taskHistory">
+					<div class="taskWindowDetailsList" data-ng-hide="hideHistory">
 						<div class="detailsName">Aktywność</div>
-						<div class="historyEvent" data-ng-repeat="history in histories">
+						<div class="taskWindowDetailsEvent" data-ng-repeat="history in histories">
 							<div data-ng-if="isStatusChange(history)">
 								<div class="border-bottom">
-									<div class="historyEventName">Zmiana statusu</div>
+									<div class="taskWindowDetailsEventName">Zmiana statusu</div>
 									<div class="eventDate">{{history.created}}</div>
 								</div>
 								<div class="historyEventContent">status:
@@ -76,7 +76,7 @@
 							</div>
 							<div data-ng-if="isNote(history)">
 								<div class="border-bottom">
-									<div class="historyEventName">Nowa notatka</div>
+									<div class="taskWindowDetailsEventName">Nowa notatka</div>
 									<div class="eventDate">{{history.created}}</div>
 								</div>
 								<div class="historyEventContent">notatka: {{history.note}}
@@ -86,11 +86,11 @@
 						
 						<!-- 							<div class="taskHAttachment">Załączniki</div> -->
 					</div>
-					<div class="taskNotes">
+					<div class="taskWindowDetailsList" data-ng-hide="hideNotes">
 						<div class="detailsName">Notatki</div>
-						<div class="noteElement" data-ng-repeat="note in notes">
+						<div class="taskWindowDetailsElement" data-ng-repeat="note in notes">
 							<div class="border-bottom">
-								<div class="historyEventName">Notatka</div>
+								<div class="taskWindowDetailsEventName">Notatka</div>
 								<div class="eventDate">{{note.created}}</div>
 							</div>
 							<div class="historyEventContent">notatka: {{note.content}}

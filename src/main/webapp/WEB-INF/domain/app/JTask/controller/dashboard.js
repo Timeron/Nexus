@@ -471,8 +471,12 @@ app.controller("TaskController", function($rootScope, $scope, JTaskService, Hist
 	$scope.histories;
 	$scope.notes;
 	$scope.newNote;
+	$scope.hideNotes = true;
+	$scope.hideHistory = true;
 	
 	$scope.getHistory = function(task){
+		$scope.hideNotes = true;
+		$scope.hideHistory = false;
 		Histories.query({ id: task.id }, function(data) {
 			$scope.histories = data;
 		});
@@ -503,6 +507,8 @@ app.controller("TaskController", function($rootScope, $scope, JTaskService, Hist
 	};
 	
 	$scope.getNotes = function(task){
+		$scope.hideNotes = false;
+		$scope.hideHistory = true;
 		Notes.query({ id: task.id }, function(data) {
 			$scope.notes = data;
 			console.log($scope.notes);
