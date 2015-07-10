@@ -12,6 +12,7 @@ public class JProjectDTO {
 	private String name;
 	private String description;
 	private Date created;
+	private String prefix;
 	private List<JTaskDTO> tasks = new ArrayList<JTaskDTO>();
 	
 	public JProjectDTO(JProject project) {
@@ -19,6 +20,7 @@ public class JProjectDTO {
 		this.name = project.getName();
 		this.description = project.getDescription();
 		this.created = project.getCreated();
+		this.prefix = project.getPrefix();
 	}
 	
 	public JProjectDTO() {}
@@ -71,11 +73,20 @@ public class JProjectDTO {
 		this.tasks.add(task);
 	}
 
+	public String getPrefix() {
+		return prefix;
+	}
+
+	public void setPrefix(String prefix) {
+		this.prefix = prefix;
+	}
+
 	public void setjProject(JProject jProject) {
 		id = jProject.getId();
 		name = jProject.getName();
 		description = jProject.getDescription();
-		created = jProject.getCreated();	
+		created = jProject.getCreated();
+		prefix = jProject.getPrefix();
 	}
 	
 	

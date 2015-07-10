@@ -69,6 +69,7 @@ public class JTaskRestServiceHelper {
 			JProject jProject = new JProject();
 			jProject.setDescription(jProjectDTO.getDescription());
 			jProject.setName(jProjectDTO.getName());
+			jProject.setPrefix(jProjectDTO.getPrefix());
 			jProject.setCreated(new Date());
 			jProjectDAO.save(jProject);
 			result.setSuccess(true);

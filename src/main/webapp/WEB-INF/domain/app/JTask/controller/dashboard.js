@@ -39,12 +39,13 @@ app.service("JTaskService", function($http, $q){
 	
 	//post
 	
-	this.addNewProject = function(newProjectName, newProjectDescription){
+	this.addNewProject = function(newProjectName, newProjectDescription, newPrefix){
 		addProject = $q.defer();
 		$http.post(path+"/jtask/v1/addProject", 
 				{
 					name: newProjectName, 
-					description: newProjectDescription
+					description: newProjectDescription,
+					prefix: newPrefix
 				})
 		.success(function(data){
 			return addProject.resolve(data);
@@ -409,12 +410,16 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 //new modals
 
 app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskService){
-	$scope.projectId;
-	$scope.projectName;
+//	$scope.projectId;
+//	$scope.projectName;
+	$scope.newProjectName;
+	$scope.newProjectDescription;
+	$scope.newProjectPrefix;
+	
 	$rootScope.projects = [];
 	
 	$scope.addProject = function() {
-		var addNewProjectPromise = JTaskService.addNewProject($scope.newProjectName, $scope.newProjectDescription);
+		var addNewProjectPromise = JTaskService.addNewProject($scope.newProjectName, $scope.newProjectDescription, $scope.newProjectPrefix);
 		addNewProjectPromise.then(function(data){
 			if(data.success == true){
 				$scope.messages = data.messages;

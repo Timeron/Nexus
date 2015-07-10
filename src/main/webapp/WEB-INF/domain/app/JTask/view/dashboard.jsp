@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 
 	<!-- Modal -->
-	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+	<div class="modal fade" id="addNewProjectModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="JTaskNewProjectCtr">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -10,15 +10,24 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title" id="myModalLabel">Nowy Projekt</h4>
 				</div>
 				<div class="modal-body">
 					<div id="newProject" class="modalTest" >
-						<div>
-							<input type="text" data-ng-model="newProjectName">
-							{{newProjectName}} <input type="text" data-ng-model="newProjectDescription">
-							{{newProjectDescription}}
-						</div>
+						<table>
+							<tr>
+								<td class="formName">Nazwa Projektu</td>
+								<td><input type="text" data-ng-model="newProjectName"></td>
+							</tr>
+							<tr>
+								<td class="formName">Opis</td>
+								<td><input type="text" data-ng-model="newProjectDescription"></td>
+							</tr>
+							<tr>
+								<td class="formName">Prefix dla zadań</td>
+								<td><input type="text" data-ng-model="newProjectPrefix"></td>
+							</tr>
+						</table>
 					</div>
 				</div>
 				<div class="modal-footer">

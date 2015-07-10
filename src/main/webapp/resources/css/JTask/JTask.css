@@ -10,7 +10,7 @@ html {
 }
 
 body {
-	padding-right: 3px;
+	padding-right: 3px !important;
 	padding-left: 3px;
 }
 
@@ -306,13 +306,13 @@ div span .icon {
 	Modals
 */
 
-.modal-dialog{
-	width: 95%;
-}
-
 #taskMainWindowContent{
 	width: 75%;
 	border-right: 1px solid #ccc;
+}
+
+.formName{
+	padding: 5px 20px 5px 10px;
 }
 
 
