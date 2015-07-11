@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search']);
 
 app.factory("Histories", function($resource) {
 	return $resource("v1/historyTask", 
@@ -243,6 +243,10 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	$scope.extendProject = function(index){
 
 	};
+	
+	$scope.openProjectSearch = function(){
+		$location.path('/projectSearch');
+	}
 	
 
 });

@@ -60,4 +60,9 @@ public class JTaskControler {
 	public String task(Model model){
 		return "JTaskTask";
 	}
+	
+	@RequestMapping(value = "/projectSearch", method = RequestMethod.GET)
+	public String projectSearch(Model model){
+		return "JTaskProjectSearch";
+	}
 }

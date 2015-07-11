@@ -7,6 +7,9 @@ appConf.config(function($routeProvider){
 		.when('/task/', {
 			templateUrl: 'task'
 		})
+		.when('/projectSearch/', {
+			templateUrl: 'projectSearch'
+		})
 		.otherwise({
 			template: 'dupa'
 		});

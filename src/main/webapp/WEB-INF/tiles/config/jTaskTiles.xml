@@ -23,5 +23,9 @@
 	<definition name="JTaskTask" extends="jtaskBasicEmpty">
 		<put-attribute name="body" value="/WEB-INF/domain/app/JTask/view/task.jsp" />
 	</definition>
+	
+	<definition name="JTaskProjectSearch" extends="jtaskBasicEmpty">
+		<put-attribute name="body" value="/WEB-INF/domain/app/JTask/view/projectSearch.jsp" />
+	</definition>
 
 </tiles-definitions>
