@@ -220,10 +220,10 @@ app.directive("inline", function(){
 //Controller
 //*************************
 
-app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskService, $location){
+app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JTaskService, $location){
 	$rootScope.projects = [];
-	$scope.messages = [];
-	$scope.errorMessages = [];
+//	$scope.messages = [];
+//	$scope.errorMessages = [];
 	
 	var projectPromise = JTaskService.getProjects();
 	projectPromise.then(function(data){
@@ -235,9 +235,10 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 		$location.path('/');
 	};
 	
-	$scope.openProject = function(index){
-		$rootScope.projectId = $rootScope.projects[index].id;
-		setProjectInScope();
+	$scope.openProject = function(project){
+		$rootScope.project = project;
+		$rootScope.setProjectInScope();
+		$location.path('/');
 	};
 	
 	$scope.extendProject = function(index){
@@ -246,13 +247,12 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $element, JTaskServ
 	
 	$scope.openProjectSearch = function(){
 		$location.path('/projectSearch');
-	}
+	};
 	
 
 });
 
 app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService, $location){
-	$rootScope.project;
 	$scope.wait = [];
 	$scope.toDo = [];
 	$scope.inProgress = [];
@@ -261,13 +261,8 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	
 	$scope.taskDetails;
 	
-	setProjectInScope = function(){
-		angular.forEach($rootScope.projects, function(p){
-			if(p.id === $rootScope.projectId){
-				$rootScope.project = p;
-				$rootScope.splitToColumn($rootScope.project.tasks);
-			}
-		});
+	$rootScope.setProjectInScope = function(){
+		$rootScope.splitToColumn($rootScope.project.tasks);
 	};
 	
 	$rootScope.setAllProjectsInScope = function(){
@@ -367,6 +362,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		$scope.inProgress = [];
 		$scope.inReview = [];
 		$scope.done = [];
+
 		angular.forEach(tasks, function(t){
 			switch(t.status){
 				case 1:
@@ -520,7 +516,6 @@ app.controller("TaskController", function($rootScope, $scope, JTaskService, Hist
 		$scope.hideHistory = true;
 		Notes.query({ id: task.id }, function(data) {
 			$scope.notes = data;
-			console.log($scope.notes);
 		});
 	};
 	

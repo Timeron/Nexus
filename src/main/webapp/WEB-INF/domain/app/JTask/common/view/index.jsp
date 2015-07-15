@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 	
-<div data-ng-app="nexus" >
+<div data-ng-app="nexus" data-ng-controller = "JTaskProjectCtr">
 	<div data-ng-controller = "JTaskBoardCtr">
 <!-- 	menu -->
 	<div class="bs-example" >

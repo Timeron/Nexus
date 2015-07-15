@@ -95,7 +95,7 @@
 	<div data-ng-repeat="project in projects">
 		<div>
 			<projectColumn index="{{$index}}" class="column" >
-				<div class="projectColumnName btn btn-success" data-ng-click="openProject($index)">{{project.name}}</div>
+				<div class="projectColumnName btn btn-success" data-ng-click="openProject(project)">{{project.name}}</div>
 				<div class="projectColumnExtend btn btn-success" data-ng-click="extendProject($index)" ><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span></div>
 			</projectColumn>
 		</div>
@@ -103,10 +103,11 @@
 </div>
 	
 <!-- 	tablica projektów -->
-	<div id="project" class="view" data-ng-controller = "JTaskProjectCtr">
+	<div id="project" class="view">
 		<div class="projectHeader">
 			<div class="projectName">
 				{{project.name}}
+<!-- 				{{project.name}} -->
 			</div>
 			<div class="headerMenu">
 				<div class="addTask btn btn-primary btn-xs" data-toggle="modal" data-target="#newTaskModal">Add Task <span class="glyphicon glyphicon-plus" aria-hidden="true"></div>

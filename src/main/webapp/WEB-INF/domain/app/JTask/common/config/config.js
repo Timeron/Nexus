@@ -11,6 +11,6 @@ appConf.config(function($routeProvider){
 			templateUrl: 'projectSearch'
 		})
 		.otherwise({
-			template: 'dupa'
+			template: 'Niepoprawny url'
 		});
 });

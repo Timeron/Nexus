@@ -3,6 +3,6 @@
 	
 <div data-ng-controller="JTaskSearchTaskCtrl" class="view">
 	<div data-ng-repeat="project in projects" >
-		<div projectSearchPresentation class="projectSearchPresentation">{{project.name}}</div>
+		<div projectSearchPresentation class="projectSearchPresentation"></div>
 	</div>
 </div>
