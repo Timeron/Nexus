@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp']);
 
 app.factory("Histories", function($resource) {
 	return $resource("v1/historyTask", 

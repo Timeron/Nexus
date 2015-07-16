@@ -9,6 +9,7 @@
 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="openBoard()">Tablica</a> 
 			<a class="btn btn-primary btn-ms" role="button" data-toggle="modal" data-target="#addNewProjectModal">Nowy Projekt</a> 
 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="openProjectSearch()">Szukaj Projektu</a>
+			<a class="btn btn-primary btn-ms" role="button" data-toggle="modal" data-target="#helpModal">Pomoc</a>
 		</div>
 	</div>	
 	

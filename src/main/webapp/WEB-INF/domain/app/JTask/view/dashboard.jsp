@@ -2,6 +2,35 @@
 	pageEncoding="UTF-8"%>
 
 	<!-- Modal -->
+	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="HelpCrtl">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Pomoc</h4>
+				</div>
+				<div class="modal-body">
+					<div id="about" class="modalTest" >
+						<div class="bold font-l border-bottom">Informacje o aplikacji</div>
+						<div class="paragraph-l">
+							<div class="appName font-l bold">{{appName}}</div>
+							<div class="appVarsion">Wersja: <span class="bold">{{appVarsion}}</span></div>
+							<div class="space-top-l paragraph-l"><p class="border-bottom">O wersji:</p><p>{{comment}}</p></div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-primary" data-ng-click="addProject()" data-dismiss="modal">Save changes</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
 	<div class="modal fade" id="addNewProjectModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="JTaskNewProjectCtr">
 		<div class="modal-dialog">

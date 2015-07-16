@@ -161,10 +161,6 @@ div span .icon {
 	
 } 
 
-.bold {
-	font-weight: bold;
-}
-
 .formContainer td{
 	height: 33px;
 	padding: 0px 15px 0px 5px;
@@ -320,7 +316,42 @@ div span .icon {
 	common 
 */
 
+.paragraph-m {
+	margin: 5px 0px 10px 10px;
+}
+
+.paragraph-l {
+	margin: 10px 0px 15px 20px;
+}
+
+.paragraph-xl {
+	margin: 15px 0px 20px 30px;
+}
+
+.space-top-s {
+	margin-top: 5px;
+}
+
+.space-top-m {
+	margin-top: 10px;
+}
+
+.space-top-l {
+	margin-top: 15px;
+}
+
+.bold {
+	font-weight: bold;
+}
+
 .border-bottom {
 	border-bottom: solid 1px #ccc;
 
 }
+
+.font-l {
+	font-size: 16px;
+}
+
+
+

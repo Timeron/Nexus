@@ -66,6 +66,14 @@ public class JTaskRestService extends RestService{
 		return response;
 	}
 	
+	@RequestMapping(value = "/appVersion", method = RequestMethod.GET)
+	public String appVersion(HttpServletRequest request){
+		String appName = request.getParameter("name");
+		String response = gson.toJson(helper.getAppVersion(appName));
+		LOG.info("service response: appVersion -> "+ response);
+		return response;
+	}
+	
 	/**
 	 * POSTs
 	 *

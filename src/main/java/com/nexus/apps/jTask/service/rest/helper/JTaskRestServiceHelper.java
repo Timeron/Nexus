@@ -8,22 +8,24 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonElement;
 import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
+import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
 import com.timeron.NexusDatabaseLibrary.Entity.JNote;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
+import com.timeron.NexusDatabaseLibrary.Entity.NexusVersion;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JStatusDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskTypeDAO;
+import com.timeron.NexusDatabaseLibrary.dao.NexusVersionDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 
 @Component
@@ -43,6 +45,8 @@ public class JTaskRestServiceHelper {
 	JHistoryDAO jHistoryDAO;
 	@Autowired
 	JNoteDAO jNoteDAO;
+	@Autowired
+	NexusVersionDAO nexusVersionDAO;
 	
 	public JTaskRestServiceHelper(){}
 	
@@ -217,6 +221,18 @@ public class JTaskRestServiceHelper {
 		history.setNote(entity);
 		history.setTask(jTaskDAO.getById(taskId));
 		return history;
+	}
+
+	public NexusVersionDTO getAppVersion(String appName) {
+		NexusVersion nexusVersion = nexusVersionDAO.getByName(appName);
+		NexusVersionDTO nexusVersionsDTO = new NexusVersionDTO();
+		if(nexusVersion != null){
+			nexusVersionsDTO.setApp(nexusVersion.getApp());
+			nexusVersionsDTO.setComment(nexusVersion.getComment());
+			nexusVersionsDTO.setId(nexusVersion.getId());
+			nexusVersionsDTO.setVersion(nexusVersion.getVersion());
+		}
+		return nexusVersionsDTO;
 	} 
 
 

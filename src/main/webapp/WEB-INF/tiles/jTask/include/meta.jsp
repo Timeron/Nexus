@@ -19,6 +19,7 @@
 
 <script src="<c:url value="/domain/app/JTask/common/config/config.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/common/service/restService.js" />"></script>
+<script src="<c:url value="/domain/app/JTask/common/controller/help.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/dashboard.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/jtaskProjects.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/jtaskSearchProject.js" />"></script>
