@@ -148,8 +148,8 @@
 					<div class="taskCounter">({{wait.length}})</div>
 					<p>Wait</p>
 				</div>
-				<div class="task" data-ng-repeat="task in wait" data-ng-click="getTaskDetails(task)">
-					<div class="type-{{task.taskTypeId}}"></div>
+				<div taskSelection marked="{{task.marked}}" class="task" data-ng-repeat="task in wait" data-ng-click="getTaskDetails(task)">
+					<div class="type-{{task.taskTypeId}} "></div>
 					<div class="taskContent">
 						<table class="taksTable">
 							<tbody>
@@ -176,7 +176,7 @@
 					<div class="taskCounter">({{toDo.length}})</div>
 					<p>To Do</p>
 				</div>
-				<div class="task" data-ng-repeat="task in toDo" data-ng-click="getTaskDetails(task)">
+				<div taskSelection marked="{{task.marked}}" class="task" data-ng-repeat="task in toDo" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable" >
@@ -205,7 +205,7 @@
 					<div class="taskCounter">({{inProgress.length}})</div>
 					<p>In progress</p>
 				</div>
-				<div class="task" data-ng-repeat="task in inProgress" data-ng-click="getTaskDetails(task)">
+				<div taskSelection marked="{{task.marked}}" class="task" data-ng-repeat="task in inProgress" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -234,7 +234,7 @@
 					<div class="taskCounter">({{inReview.length}})</div>
 					<p>In review</p>
 				</div>
-				<div class="task" data-ng-repeat="task in inReview" data-ng-click="getTaskDetails(task)">
+				<div taskSelection marked="{{task.marked}}" class="task" data-ng-repeat="task in inReview" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">
@@ -263,7 +263,7 @@
 					<div class="taskCounter">({{done.length}})</div>
 					<p>Done</p>
 				</div>
-				<div class="task" data-ng-repeat="task in done" data-ng-click="getTaskDetails(task)">
+				<div taskSelection marked="{{task.marked}}" class="task" data-ng-repeat="task in done" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
 					<div class="taskContent">
 						<table class="taksTable">

@@ -216,6 +216,34 @@ app.directive("inline", function(){
 	};
 });
 
+app.directive("taskselection", function($rootScope){
+	return {
+		restrict: "EA",
+		scope: { marked: '@'},
+		link: function(scope, element, attrs){
+			element.bind('mouseover', function(){
+				if(attrs.marked !== 'true'){
+					element[0].style.backgroundColor = "#E0FFE0";
+				}
+			});
+			element.bind('mouseout', function(){
+				if(attrs.marked !== 'true'){
+					element[0].style.backgroundColor = "#FFF";
+				}
+			});
+		},
+		controller: function($scope, $element, $attrs){
+			$attrs.$observe('marked', function(e) {
+				if(e==='true'){
+					$element[0].style.backgroundColor = "#AAFFAA";
+				}else{
+					$element[0].style.backgroundColor = "#FFF";
+				}
+			});
+		}
+	};
+}),
+
 //*************************
 //Controller
 //*************************
@@ -281,7 +309,42 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	};
 	
 	$scope.getTaskDetails = function(task){
-		$scope.taskDetails = task;
+		$rootScope.taskDetails = task;
+		angular.forEach($scope.inProgress, function(t){
+			if(t.id === task.id){
+				t.marked = true;
+			}else{
+				t.marked = false;
+			}
+		});
+		angular.forEach($scope.inReview, function(t){
+			if(t.id === task.id){
+				t.marked = true;
+			}else{
+				t.marked = false;
+			}
+		});
+		angular.forEach($scope.wait, function(t){
+			if(t.id === task.id){
+				t.marked = true;
+			}else{
+				t.marked = false;
+			}
+		});
+		angular.forEach($scope.toDo, function(t){
+			if(t.id === task.id){
+				t.marked = true;
+			}else{
+				t.marked = false;
+			}
+		});
+		angular.forEach($scope.done, function(t){
+			if(t.id === task.id){
+				t.marked = true;
+			}else{
+				t.marked = false;
+			}
+		});
 	};
 	
 	$scope.taskDirestionPreviousNext = function (task, direction){
