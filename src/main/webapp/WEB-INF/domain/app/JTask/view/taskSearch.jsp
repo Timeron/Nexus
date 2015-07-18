@@ -10,10 +10,12 @@
 <!--     		</select> -->
 </div>
 <div class="box border-bottom padding-l space-top-xxl"><div class='boxWidth10'>Id Taska</div><div class='boxWidth75'>Opis</div><div class='boxWidth10'>status</div></div>
-<div data-ng-repeat="task in tasks | filter: search | filter : searchStatus"  >
-	<div class="box padding-l" taskInLine data-ng-click="setTaskInNewWindow(task)">
-		<div class='boxWidth10'>{{task.name}}</div>
-		<div class='boxWidth75'>{{task.summary}}</div>
-		<div class='boxWidth10'>{{task.statusDescription}}</div>
+<div class="taskSearchResults">
+	<div data-ng-repeat="task in tasks | filter: search | filter : searchStatus"  >
+		<div class=" box padding-l" taskInLine data-ng-click="setTaskInNewWindow(task)">
+			<div class='boxWidth10'>{{task.name}}</div>
+			<div class='boxWidth75'>{{task.summary}}</div>
+			<div class='boxWidth10'>{{task.statusDescription}}</div>
+		</div>
 	</div>
 </div>
