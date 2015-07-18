@@ -23,3 +23,21 @@ dir.directive("projectsearchpresentation", function(){
 		}
 	};
 });
+
+dir.directive("taskinline", function(){
+	return {
+		restrict: "AE",
+		link : function(scope, element, attrs){
+			element.bind('mouseover', function(){
+				if(attrs.marked !== 'true'){
+					element[0].style.backgroundColor = "#E0FFE0";
+				}
+			});
+			element.bind('mouseout', function(){
+				if(attrs.marked !== 'true'){
+					element[0].style.backgroundColor = "#FFF";
+				}
+			});
+		}
+	};
+});

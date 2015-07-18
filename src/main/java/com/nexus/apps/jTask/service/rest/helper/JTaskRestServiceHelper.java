@@ -117,8 +117,13 @@ public class JTaskRestServiceHelper {
 
 	public List<JTaskDTO> getProjectTasksList(JProjectDTO jProjectDTO) {
 		LOG.info("ServiceHelper coled: getProjectTasksList");
+		return getProjectTasksList(jProjectDTO.getId());
+	}
+	
+	public List<JTaskDTO> getProjectTasksList(int id) {
+		LOG.info("ServiceHelper coled: getProjectTasksList");
 		List<JTaskDTO> jTasksDTO = new ArrayList<JTaskDTO>();
-		JProject jProject = jProjectDAO.getById(jProjectDTO.getId());
+		JProject jProject = jProjectDAO.getById(id);
 		for(JTask jTask : jTaskDAO.getByProject(jProject)){
 			jTasksDTO.add(new JTaskDTO(jTask));
 		}

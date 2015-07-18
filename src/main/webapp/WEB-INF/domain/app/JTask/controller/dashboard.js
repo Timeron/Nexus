@@ -250,8 +250,7 @@ app.directive("taskselection", function($rootScope){
 
 app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JTaskService, $location){
 	$rootScope.projects = [];
-//	$scope.messages = [];
-//	$scope.errorMessages = [];
+	$rootScope.projectId;
 	
 	var projectPromise = JTaskService.getProjects();
 	projectPromise.then(function(data){
@@ -259,14 +258,18 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 	});
 	
 	$scope.openBoard = function(){
-		$rootScope.setAllProjectsInScope();
 		$location.path('/');
+		$rootScope.projectId = 0;
+		$rootScope.setAllProjectsInScope();
+		
 	};
 	
 	$scope.openProject = function(project){
+		$location.path('/');
+		$rootScope.projectId = project.id;
 		$rootScope.project = project;
 		$rootScope.setProjectInScope();
-		$location.path('/');
+		
 	};
 	
 	$scope.extendProject = function(index){
@@ -467,6 +470,10 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	
 		$rootScope.taskDetails = task;
 		$location.path('/task/');
+	};
+	
+	$scope.searchTask = function(){
+		$location.path('/taskSearch/');
 	};
 });
 

@@ -74,6 +74,14 @@ public class JTaskRestService extends RestService{
 		return response;
 	}
 	
+	@RequestMapping(value = "/allProjectTask", method = RequestMethod.GET)
+	public String allProjectTask(HttpServletRequest request){
+		int id = Integer.parseInt(request.getParameter("id"));
+		String response = gson.toJson(helper.getProjectTasksList(id));
+		LOG.info("service response: getAllProjectTasks -> "+ response);
+		return response;
+	}
+	
 	/**
 	 * POSTs
 	 *

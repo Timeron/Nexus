@@ -136,10 +136,10 @@
 		<div class="projectHeader">
 			<div class="projectName">
 				{{project.name}}
-<!-- 				{{project.name}} -->
 			</div>
-			<div class="headerMenu">
+			<div class="headerMenu btn-group-vertical" data-ng-show="projectId">
 				<div class="addTask btn btn-primary btn-xs" data-toggle="modal" data-target="#newTaskModal">Add Task <span class="glyphicon glyphicon-plus" aria-hidden="true"></div>
+				<div class="addTask btn btn-primary btn-xs" data-ng-click="searchTask()">Szukaj Tasków <span class="glyphicon glyphicon-search" aria-hidden="true"></div>
 			</div>
 		</div>
 		<div>

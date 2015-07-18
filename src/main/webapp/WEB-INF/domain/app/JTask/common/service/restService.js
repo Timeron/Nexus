@@ -7,4 +7,11 @@ app.factory("Version", function($resource) {
 	});
 });
 
+app.factory("AllProjectTask", function($resource) {
+	return $resource("v1/allProjectTask", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
 

@@ -17,6 +17,7 @@ public class JTaskDTO {
 	private Integer priority;
 	private Integer projectId;
 	private Integer status;
+	private String statusDescription;
 	private String updateMessage;
 	private Integer updateMessageStatus;
 	
@@ -29,6 +30,7 @@ public class JTaskDTO {
 		this.priority = jTask.getPriority();
 		this.updated = jTask.getUpdated();
 		this.projectId = jTask.getProject().getId();
+		this.statusDescription = jTask.getStatus().getDescription();
 		
 		if(jTask.getMainTask() != null){
 			this.mainTaskId = jTask.getMainTask().getId();
@@ -117,6 +119,12 @@ public class JTaskDTO {
 	}
 	public void setUpdateMessageStatus(Integer updateMessageStatus) {
 		this.updateMessageStatus = updateMessageStatus;
+	}
+	public String getStatusDescription() {
+		return statusDescription;
+	}
+	public void setStatusDescription(String statusDescription) {
+		this.statusDescription = statusDescription;
 	}
 
 }
