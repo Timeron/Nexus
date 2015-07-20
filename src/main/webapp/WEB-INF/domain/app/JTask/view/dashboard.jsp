@@ -166,7 +166,7 @@
 							</tbody>
 						</table>
 						<div class="btn-group btnTaskDirestion">
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></div>
 						</div>
 					</div>
 				</div>
@@ -194,8 +194,8 @@
 							</tbody>
 						</table>
 						<div class="btn-group btnTaskDirestion">
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></div>
 						</div>
 					</div>
 				</div>
@@ -223,8 +223,8 @@
 							</tbody>
 						</table>
 						<div class="btn-group btnTaskDirestion">
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></div>
 						</div>
 					</div>
 				</div>
@@ -252,8 +252,8 @@
 							</tbody>
 						</table>
 						<div class="btn-group btnTaskDirestion">
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')">></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'next')"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true"></div>
 						</div>
 					</div>
 				</div>
@@ -281,7 +281,8 @@
 							</tbody>
 						</table>
 						<div class="btn-group btnTaskDirestion">
-							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><</div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskDirestionPreviousNext(task, 'previous')"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></div>
+							<div class="btn btn-default btn-xs" data-ng-click="taskClose(task)"><span class="glyphicon glyphicon-remove" aria-hidden="true"></div>
 						</div>
 					</div>
 				</div>

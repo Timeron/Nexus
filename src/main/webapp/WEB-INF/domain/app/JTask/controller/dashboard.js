@@ -418,6 +418,14 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		JTaskService.updateTask(task);
 	};
 	
+	$scope.taskClose = function(task){
+		index = $scope.done.indexOf(task);
+		$scope.done.splice(index, 1);
+		task.status += 1;
+		task.updateMessageStatus = task.status;
+		JTaskService.updateTask(task);
+	};
+	
 	$scope.taskDirestionNext = function(task){
 		task.status += 1;
 	};
