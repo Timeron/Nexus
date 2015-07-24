@@ -21,6 +21,26 @@ app.factory("AddNote", function($resource){
 	});
 });
 
+app.factory("TaskService", function($resource){
+	return {
+		getTask : function(){
+			return $resource("v1/getTask", 
+					{}, 
+					{query: { method: "POST", isArray: false }
+			});
+		}
+	};
+});
+
+app.factory("GetTask", function($resource){
+	return $resource("v1/getTask", 
+			{}, 
+			{
+				query: { method: "POST", isArray: false }
+			}
+		);
+});
+
 
 app.service("JTaskService", function($http, $q){
 	
@@ -106,15 +126,15 @@ app.service("JTaskService", function($http, $q){
 	};
 	
 	this.updateTask = function(task){
-		addProject = $q.defer();
+		update = $q.defer();
 		$http.post(path+"/jtask/v1/updateTask", task)
 		.success(function(data){
-			return addProject.resolve(data);
+			return update.resolve(data);
 		})
 		.error(function(data){
 			return data;
 		});
-		return addProject.promise;
+		return update.promise;
 	};
 	
 	this.getHistory = function(task){
@@ -128,6 +148,8 @@ app.service("JTaskService", function($http, $q){
 		});
 		return historyPromise.promise;
 	};
+	
+	
 });
 
 //Factory
@@ -418,10 +440,10 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		JTaskService.updateTask(task);
 	};
 	
-	$scope.taskClose = function(task){
+	$rootScope.taskClose = function(task){
 		index = $scope.done.indexOf(task);
 		$scope.done.splice(index, 1);
-		task.status += 1;
+		task.status = 6;
 		task.updateMessageStatus = task.status;
 		JTaskService.updateTask(task);
 	};
@@ -549,13 +571,23 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	
 });
 
-app.controller("TaskController", function($rootScope, $scope, JTaskService, Histories, Notes, AddNote){
-	$scope.task = $rootScope.taskDetails;
+app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask){
+	$scope.task;
 	$scope.histories;
 	$scope.notes;
 	$scope.newNote;
 	$scope.hideNotes = true;
 	$scope.hideHistory = true;
+	$scope.test;
+	
+	var getTask = function(){
+		var task = GetTask.query({id: $rootScope.taskDetails.id}, function(data){
+			return data.object;
+//			 $scope.task = data.object;
+		});
+		return task;
+	};
+	$scope.task = getTask();
 	
 	$scope.getHistory = function(task){
 		$scope.hideNotes = true;
@@ -597,6 +629,18 @@ app.controller("TaskController", function($rootScope, $scope, JTaskService, Hist
 		});
 	};
 	
+	$scope.taskCloseFromTaskWindow = function(task){
+
+		task.status = 6;
+		task.updateMessageStatus = task.status;
+		
+		$scope.test = JTaskService.updateTask(task);
+		$scope.test.then(function(data){
+			$scope.task = data.object;
+		});
+		
+		
+	};
 	
 	
 

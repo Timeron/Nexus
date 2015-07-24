@@ -149,7 +149,7 @@ public class JTaskRestServiceHelper {
 		return jProjectDAO.getById(id).getPrefix();
 	}
 
-	public ServiceResult updateTask(JTaskDTO jTaskDTO) {
+	public ServiceResult updateTask(JTaskDTO jTaskDTO, ServiceResult serviceResult) {
 		LOG.info("ServiceHelper coled: updateTask");
 		Date now = new Date();
 		JTask jTask = jTaskDAO.getById(jTaskDTO.getId());
@@ -164,7 +164,9 @@ public class JTaskRestServiceHelper {
 			history.setStatus(jStatusDAO.getById(jTaskDTO.getUpdateMessageStatus()));
 		}
 		jHistoryDAO.save(history);
-		return null;
+		JTaskDTO dto = new JTaskDTO(jTaskDAO.getById(jTask.getId()));
+		serviceResult.setObject(dto);
+		return serviceResult;
 	}
 	
 

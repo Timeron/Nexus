@@ -99,8 +99,8 @@ public class JTaskRestService extends RestService{
 	@RequestMapping(value = "/getTask", method = RequestMethod.POST)
 	public String getTask(@RequestBody String json){
 		LOG.info("service: getTask <- "+json);
-		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
-		String result = gson.toJson(helper.getTask(jTaskDTO.getId()));
+		JTaskDTO task = gson.fromJson(json, JTaskDTO.class);
+		String result = gson.toJson(helper.getTask(task.getId()));
 		LOG.info("service response: getTask -> "+result);
 		return result;
 	}
@@ -132,7 +132,7 @@ public class JTaskRestService extends RestService{
 		LOG.info("service: updateTask <- "+json);
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
-		result = helper.updateTask(jTaskDTO);
+		result = helper.updateTask(jTaskDTO, result);
 
 		LOG.info("service response: updateTask -> "+gson.toJson(result));
 		return gson.toJson(result);
