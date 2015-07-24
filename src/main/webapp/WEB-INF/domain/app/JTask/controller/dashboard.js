@@ -629,20 +629,41 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 		});
 	};
 	
-	$scope.taskCloseFromTaskWindow = function(task){
-
-		task.status = 6;
+	var updateStatus = function(task, insex){
+		task.status = insex;
 		task.updateMessageStatus = task.status;
 		
 		$scope.test = JTaskService.updateTask(task);
 		$scope.test.then(function(data){
 			$scope.task = data.object;
 		});
-		
-		
 	};
 	
+	$scope.taskCloseFromTaskWindow = function(task){
+		updateStatus(task, 6);
+	};
 	
+	$scope.taskOpenFromTaskWindow = function(task){
+		updateStatus(task, 2);
+	};
+	
+
+	
+	$scope.buttonClose = function(){
+		if($scope.task.status === 6){
+			return true;
+		}else{
+			return false;
+		}
+	};
+	
+	$scope.buttonOpen = function(){
+		if($scope.task.status === 6){
+			return false;
+		}else{
+			return true;
+		}
+	}
 
 	
 });

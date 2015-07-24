@@ -41,7 +41,8 @@
 			<div class="taskDetailsPriority">Status: {{task.statusDescription}}</div>
 			<div id="taskMainWindowContent">
 				<div class="btn-group topMenu">
-					<button type="button" class="btn btn-primary btn-xs" data-ng-click="taskCloseFromTaskWindow(task)">Zamknij</button>
+					<button type="button" class="btn btn-primary btn-xs" data-ng-click="taskCloseFromTaskWindow(task)" data-ng-disabled="buttonClose()">Zamknij</button>
+					<button type="button" class="btn btn-primary btn-xs" data-ng-click="taskOpenFromTaskWindow(task)" data-ng-disabled="buttonOpen()">Otwórz</button>
 				</div>
 				<div class="btn-group topMenu">
 					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalNewNote">Notatka</button>
