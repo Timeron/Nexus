@@ -6,7 +6,8 @@
 <!-- 	menu -->
 	<div class="bs-example" >
 		<div class="btn-group">
-			<a class="btn btn-primary btn-ms" role="button" data-ng-click="openBoard()">Tablica</a> 
+			<a class="btn btn-primary btn-ms" role="button" data-ng-click="openPreviouseProject()">Tablica</a> 
+			<a class="btn btn-primary btn-ms" role="button" data-ng-click="openBoard()">Wszystkie projekty</a>
 			<a class="btn btn-primary btn-ms" role="button" data-toggle="modal" data-target="#addNewProjectModal">Nowy Projekt</a> 
 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="openProjectSearch()">Szukaj Projektu</a>
 			<a class="btn btn-primary btn-ms" role="button" data-toggle="modal" data-target="#helpModal">Pomoc</a>

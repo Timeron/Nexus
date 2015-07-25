@@ -294,7 +294,11 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 		$rootScope.projectId = project.id;
 		$rootScope.project = project;
 		$rootScope.setProjectInScope();
-		
+	};
+	
+	$scope.openPreviouseProject = function(){
+		$location.path('/');
+		$rootScope.setProjectInScope();
 	};
 	
 	$scope.extendProject = function(index){
