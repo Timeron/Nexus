@@ -104,6 +104,14 @@ public class JTaskRestServiceHelper {
 		jTask.setUser(null);
 		jTask.setName(nextIdName);
 		
+		if(jTaskDTO.getEndDateLong() != 0){
+			jTask.setEndDate(new Date(jTaskDTO.getEndDateLong()));	
+		}
+		if(jTaskDTO.getWorkExpected() != 0){
+			jTask.setWorkExpected(jTaskDTO.getWorkExpected());
+		}
+		
+		
 		if(jTaskDTO.getMainTaskId() != null){
 			jTask.setMainTask(jTaskDAO.getById(jTaskDTO.getMainTaskId()));
 		}

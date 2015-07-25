@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker']);
 
 app.factory("Histories", function($resource) {
 	return $resource("v1/historyTask", 
@@ -76,7 +76,7 @@ app.service("JTaskService", function($http, $q){
 		return addProject.promise;
 	};
 	
-	this.addNewTask = function(tProjectId, tTaskSummary, tType, tPriority, tDescription){
+	this.addNewTask = function(tProjectId, tTaskSummary, tType, tPriority, tDescription, tDate, tWorkExpected){
 		addTask = $q.defer();
 		$http.post(path+"/jtask/v1/addTask", 
 				{
@@ -84,7 +84,9 @@ app.service("JTaskService", function($http, $q){
 					summary: tTaskSummary,
 					taskTypeId: tType,
 					priority: tPriority,
-					description: tDescription
+					description: tDescription,
+					endDateLong: tDate,
+					workExpected: tWorkExpected
 				})
 		.success(function(data){
 			return addTask.resolve(data);
@@ -273,6 +275,7 @@ app.directive("taskselection", function($rootScope){
 app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JTaskService, $location){
 	$rootScope.projects = [];
 	$rootScope.projectId;
+	$scope.timers = false;
 	
 	var projectPromise = JTaskService.getProjects();
 	projectPromise.then(function(data){
@@ -300,6 +303,55 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 	
 	$scope.openProjectSearch = function(){
 		$location.path('/projectSearch');
+	};
+	
+	$rootScope.polishDate = function(tempDate){
+		if(tempDate === undefined){
+			return " - ";
+		}
+		var months = [
+				{id: 0, name: "Styczeń", days: 31},
+             	{id: 1, name: "Luty", days: 29}, 
+             	{id: 2, name: "Marzec", days: 31}, 
+             	{id: 3, name: "Kwiecień", days: 30}, 
+             	{id: 4, name: "Maj", days: 31}, 
+             	{id: 5, name: "Czerwiec", days: 30}, 
+             	{id: 6, name: "Lipiec", days: 31}, 
+             	{id: 7, name: "Sierpień", days: 31},
+             	{id: 8, name: "Wrzesień", days: 30},
+             	{id: 9, name: "Padźiernik", days: 31},
+             	{id: 10, name: "Listopad", days: 30},
+             	{id: 11, name: "Grudzień", days: 31}
+		];
+		var date = new Date(tempDate);
+		return date.getDate()+" "+months[date.getMonth()].name+ " " +date.getFullYear();
+	};
+	
+	$scope.chasTermins = function(){
+		if($rootScope.taskDetails === undefined){
+			return false;
+		}else{
+			if(($rootScope.taskDetails.endDate === new Date(0) || $rootScope.taskDetails.endDate === undefined) && $rootScope.taskDetails.workExpected === 0){
+				return false;
+			}else{
+				return true;
+			}
+		}
+	};
+	
+	$scope.msToDaysandHours = function(tempTime){
+		if(tempTime === 0){
+			return " - ";
+		}
+		var hours = tempTime / (1000*60*60);
+		var days = Math.round(hours/24);
+		hours = hours%24;
+		if(days === 1){
+			return days+" dzień "+hours+"h";
+		}else{
+			return days+" dni "+hours+"h";
+		}
+		
 	};
 	
 
@@ -553,9 +605,14 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	$scope.newType;
 	$scope.newPriority;
 	$scope.newDescription;
+	$scope.workExpectedDay = 0;
+	$scope.workExpected = 0;
+	$scope.date = 0;
+	$scope.time = 0;
 	
 	$scope.saveTask = function(){
-		$scope.addTaskPromise = JTaskService.addNewTask($rootScope.projectId, $scope.newSummary, $scope.newType.id, $scope.newPriority.id, $scope.newDescription);
+		$scope.date = $scope.date + $scope.time;
+		$scope.addTaskPromise = JTaskService.addNewTask($rootScope.projectId, $scope.newSummary, $scope.newType.id, $scope.newPriority.id, $scope.newDescription, $scope.date, $scope.workExpected);
 		$scope.addTaskPromise.then(function(status){
 			if(status.success == true){
 				projectTasks = JTaskService.getAllProjectTasks($rootScope.projectId);
@@ -583,7 +640,6 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 	var getTask = function(){
 		var task = GetTask.query({id: $rootScope.taskDetails.id}, function(data){
 			return data.object;
-//			 $scope.task = data.object;
 		});
 		return task;
 	};

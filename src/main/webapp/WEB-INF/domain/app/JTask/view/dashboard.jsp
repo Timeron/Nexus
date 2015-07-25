@@ -76,13 +76,13 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Add new task</h4>
+					<h4 class="modal-title" id="myModalLabel">Nowy Task</h4>
 				</div>
 				<div class="modal-body">
 					<table class="formContainer">
 						<tbody>
 							<tr>
-								<td class="bold">Summary: </td>
+								<td class="bold">Nazwa: </td>
 								<td><input type="text" data-ng-model="newSummary"></td>
 							</tr>
 							<tr>
@@ -94,7 +94,7 @@
 								</td>
 							</tr>
 							<tr>
-								<td>Priority: </td>
+								<td>Priorytet: </td>
 								<td>
 									<select ng-model="newPriority" ng-options="priority.id for priority in priorities">
       									<option value=""></option>
@@ -103,8 +103,26 @@
 							</tr>
 							<tr class="separator"><td colspan="2"><hr></td></tr>
 							<tr>
-								<td>Description: </td>
+								<td>Opis: </td>
 								<td><textarea cols="40" rows="5" data-ng-model="newDescription"></textarea></td>
+							</tr>
+							<tr class="separator"><td colspan="2"><hr></td></tr>
+							<tr>
+								<td>Terminy </td>
+								<td><input type="checkbox" data-ng-model="timers"></td>
+							</tr>
+							<tr>
+								<td>Ostateczny termin: </td>
+								<td>
+									<div class="font-m space-top-m">Dzień:</div><datepicker offset="0" range="20" model="date" disable="{{timers}}"></datepicker><!--YYYY-MM-DD hh:mm:ss.s -->
+									<div class="font-m space-top-m">Godzina:</div><timepicker model="time"></timepicker>
+								</td>
+							</tr>
+							<tr>
+								<td  style="height: 100px">Przewidywany czas pracy: </td>
+								<td>
+ 									<postponedpicker model="workExpected"></postponedpicker><!--YYYY-MM-DD hh:mm:ss.s -->
+								</td>
 							</tr>
 						</tbody>
 					</table>
@@ -297,8 +315,15 @@
 <!-- 					<div class="taskDetailsName clickable" role="button" data-toggle="modal" data-target="#taskDetailsModal" data-ng-click="setTaskInNewWindow(taskDetails)" >{{taskDetails.name}}</div> -->
 					<a class="taskDetailsName clickable" data-ng-click="setTaskInNewWindow(taskDetails)" >{{taskDetails.name}}</a>
 					<div class="taskDetailsPriority">Piorytet: {{taskDetails.priority}}</div>
+					
 					<div class="taskDetailsSummary">Opis: <p>{{taskDetails.summary}}</p></div>
 					<div class="taskDetailsDescription">Szczegóły: <p>{{taskDetails.description}}</p></div>
+					<div class="taskDetailsSummary border-bottom" data-ng-if="chasTermins()">
+						<div class="space-top-xxl border-bottom">Terminy:</div> 
+						<div class="paragraph-m font-m">Zakończenie: {{polishDate(taskDetails.endDate)}}</div>
+						<div class="paragraph-m font-m">Przewidywany czes: {{msToDaysandHours(taskDetails.workExpected)}}</div>
+						
+					</div>
 					<div class="taskDetailsDates">
 						<div class="taskDetailsCreated">Dodany: {{taskDetails.created}}</div>
 						<div class="taskDetailsUpdated">Zmieniony: {{taskDetails.updated}}</div>

@@ -32,7 +32,7 @@
 	<div class="modal-header">
 		<h4 class="modal-title" id="myModalLabel">Task {{task.name}}</h4>
 	</div>
-	<div class="modal-body">
+	<div id="taskWindow" class="modal-body">
 		<div id=taskMainWindow>
 			<div class="taskDetailsName"
 				data-ng-click="setTaskInNewWindow(taskDetails)">{{task.name}}</div>
@@ -106,16 +106,23 @@
 				</div>
 
 			</div>
-			<div id="taskMainWindowStatistics"></div>
+<!-- 			<div id="taskMainWindowStatistics">???</div> -->
 
 		</div>
+		<div id="taskRightBar">
+			<div class="content">
+				<div class="border-bottom">Terminy:</div>
+				<div class="paragraph-m font-m">Zakończenie: {{polishDate(taskDetails.endDate)}}</div>
+				<div class="paragraph-m font-m">Przewidywany czes: {{msToDaysandHours(taskDetails.workExpected)}}</div>
+			</div>
+		</div>
 	</div>
-	<div class="modal-footer">
-		<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		<button type="button" class="btn btn-primary"
-			data-ng-click="addProject()" data-dismiss="modal">Save
-			changes</button>
-	</div>
+	
+<!-- 	<div class="modal-footer"> -->
+<!-- 		<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button> -->
+<!-- 		<button type="button" class="btn btn-primary" -->
+<!-- 			data-ng-click="addProject()" data-dismiss="modal">Zapisz</button> -->
+<!-- 	</div> -->
 </div>
 <!-- 	</div> -->
 <!-- </div> -->

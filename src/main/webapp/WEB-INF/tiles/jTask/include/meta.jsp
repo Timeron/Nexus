@@ -25,6 +25,7 @@
 <script src="<c:url value="/domain/app/JTask/controller/jtaskSearchProject.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/taskSearch.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/directive/jtaskSearchDirective.js" />"></script>
+<script src="<c:url value="/domain/app/JTask/directive/datepicker.js" />"></script>
 
 
 <link rel="stylesheet" href="<c:url value="/resources/css/JTask/JTask.css" />" />
@@ -33,4 +34,5 @@
 <link rel="stylesheet" href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/bootstrap/css/bootstrap-theme.min.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/bootstrap/datapicker/bootstrap-datetimepicker.min.css" />" />
+
 

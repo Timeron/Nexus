@@ -152,6 +152,13 @@ div span .icon {
 
 /* Modals */
 
+#newTaskModal .modal-dialog{
+	width: 650px;
+}
+
+#newTaskModal .modal-dialog .modal-content {
+	width: 600px;
+}
 
 .headerMenu {
 	float: right;
@@ -298,19 +305,22 @@ div span .icon {
 	margin: 25px 0px 0px 0px;
 }
 
-/* TaskSearch */
-
-.taskSearchResults {
+#taskWindow{
+	float: left;
 	width: 100%;
-	height: 600px;
-	overflow-y: scroll;
 }
 
-/*
-	Modals
-*/
+#taskRightBar{
+	float: right;
+	width: 25%;
+}
+
+#taskRightBar .content{
+	margin: 132px 25px 25px 25px;
+}
 
 #taskMainWindowContent{
+	float: left;
 	width: 75%;
 	border-right: 1px solid #ccc;
 }
@@ -319,6 +329,13 @@ div span .icon {
 	padding: 5px 20px 5px 10px;
 }
 
+/* TaskSearch */
+
+.taskSearchResults {
+	width: 100%;
+	height: 600px;
+	overflow-y: scroll;
+}
 
 
 /* *******************************************
@@ -382,7 +399,11 @@ div span .icon {
 }
 
 .space-top-xxl {
-	margin-top: 25px;
+	margin-top: 30px;
+}
+
+.space-top-xxxl {
+	margin-top: 50px;
 }
 
 .bold {
@@ -391,12 +412,14 @@ div span .icon {
 
 .border-bottom {
 	border-bottom: solid 1px #ccc;
-
 }
 
+.font-m {
+	font-size: 12px;
+}
 .font-l {
 	font-size: 16px;
 }
-
+.input-mini { width: 60px; } .input-small { width: 90px; } .input-medium { width: 150px; } .input-large { width: 210px; } .input-xlarge { width: 270px; } .input-xxlarge { width: 530px; }
 
 

@@ -10,6 +10,9 @@ public class JTaskDTO {
 	private String name;
 	private String summary;
 	private String description;
+	private Date endDate;
+	private long endDateLong = 0;
+	private long workExpected = 0;
 	private Date created;
 	private Date updated;
 	private Integer mainTaskId;
@@ -31,7 +34,7 @@ public class JTaskDTO {
 		this.updated = jTask.getUpdated();
 		this.projectId = jTask.getProject().getId();
 		this.statusDescription = jTask.getStatus().getDescription();
-		
+
 		if(jTask.getMainTask() != null){
 			this.mainTaskId = jTask.getMainTask().getId();
 		}
@@ -40,6 +43,16 @@ public class JTaskDTO {
 		}
 		if(jTask.getStatus() != null){
 			this.status = jTask.getStatus().getId();
+		}
+		if(jTask.getEndDate() != null){
+			this.endDate = jTask.getEndDate();
+		}
+		if(jTask.getEndDate() != null){
+			this.endDate = jTask.getEndDate();
+			this.endDateLong = jTask.getEndDate().getTime();
+		}
+		if(jTask.getWorkExpected() != 0){
+			this.workExpected = jTask.getWorkExpected();
 		}
 	}
 	public int getId() {
@@ -126,5 +139,25 @@ public class JTaskDTO {
 	public void setStatusDescription(String statusDescription) {
 		this.statusDescription = statusDescription;
 	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public long getEndDateLong() {
+		return endDateLong;
+	}
+	public void setEndDateLong(long endDateLong) {
+		this.endDateLong = endDateLong;
+		this.endDate = new Date(endDateLong);
+	}
+	public long getWorkExpected() {
+		return workExpected;
+	}
+	public void setWorkExpected(long workExpected) {
+		this.workExpected = workExpected;
+	}
 
+	
 }

@@ -120,7 +120,6 @@ public class JTaskRestService extends RestService{
 	public String addTask(@RequestBody String json){
 		LOG.info("service: addTask <- "+json);
 		ServiceResult result = new ServiceResult();
-		LOG.info("json "+json);
 		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
 		result = helper.addNewTask(jTaskDTO, result);
 		LOG.info("service response: addTask -> "+gson.toJson(result));
