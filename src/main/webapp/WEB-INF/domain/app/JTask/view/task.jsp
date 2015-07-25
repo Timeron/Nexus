@@ -75,7 +75,7 @@
 							<div data-ng-if="isStatusChange(history)">
 								<div class="border-bottom">
 									<div class="taskWindowDetailsEventName">Zmiana statusu</div>
-									<div class="eventDate">{{history.created}}</div>
+									<div class="eventDate">{{polishDate(history.created)}}</div>
 								</div>
 								<div class="historyEventContent">status:
 									{{history.status}}</div>
@@ -83,7 +83,7 @@
 							<div data-ng-if="isNote(history)">
 								<div class="border-bottom">
 									<div class="taskWindowDetailsEventName">Nowa notatka</div>
-									<div class="eventDate">{{history.created}}</div>
+									<div class="eventDate">{{polishDate(history.created)}}</div>
 								</div>
 								<div class="historyEventContent">notatka: {{history.note}}
 								</div>
@@ -97,7 +97,7 @@
 						<div class="taskWindowDetailsElement" data-ng-repeat="note in notes">
 							<div class="border-bottom">
 								<div class="taskWindowDetailsEventName">Notatka</div>
-								<div class="eventDate">{{note.created}}</div>
+								<div class="eventDate">{{polishDate(note.created)}}</div>
 							</div>
 							<div class="historyEventContent">notatka: {{note.content}}
 							</div>
