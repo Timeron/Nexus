@@ -241,27 +241,46 @@ app.directive("inline", function(){
 });
 
 app.directive("taskselection", function($rootScope){
+	
 	return {
 		restrict: "EA",
 		scope: { marked: '@'},
 		link: function(scope, element, attrs){
-			element.bind('mouseover', function(){
-				if(attrs.marked !== 'true'){
-					element[0].style.backgroundColor = "#E0FFE0";
-				}
-			});
-			element.bind('mouseout', function(){
-				if(attrs.marked !== 'true'){
-					element[0].style.backgroundColor = "#FFF";
-				}
-			});
+			scope.now = new Date();
+			scope.endDateDate = new Date(attrs.enddate);
+			scope.workExpectedDate = attrs.workexpected;
+			
+			if(scope.endDateDate.getTime()-scope.workExpectedDate < scope.now.getTime()){
+				element[0].style.backgroundColor = "#F00";
+			}else if(scope.endDateDate.getTime()-(2*scope.workExpectedDate) < scope.now.getTime()){
+				element[0].style.backgroundColor = "#FA0";
+			}else{
+				element.bind('mouseover', function(){
+					if(attrs.marked !== 'true'){
+						element[0].style.backgroundColor = "#E0FFE0";
+					}
+				});
+				element.bind('mouseout', function(){
+					if(attrs.marked !== 'true'){
+						element[0].style.backgroundColor = "#FFF";
+					}
+				});
+			}
+			
 		},
 		controller: function($scope, $element, $attrs){
+			
 			$attrs.$observe('marked', function(e) {
-				if(e==='true'){
-					$element[0].style.backgroundColor = "#AAFFAA";
+				if($scope.endDateDate.getTime()-$scope.workExpectedDate < $scope.now.getTime()){
+					$element[0].style.backgroundColor = "#F00";
+				}else if($scope.endDateDate.getTime()-(2*$scope.workExpectedDate) < $scope.now.getTime()){
+					$element[0].style.backgroundColor = "#FA0";
 				}else{
-					$element[0].style.backgroundColor = "#FFF";
+					if(e==='true'){
+						$element[0].style.backgroundColor = "#AAFFAA";
+					}else{
+						$element[0].style.backgroundColor = "#FFF";
+					}
 				}
 			});
 		}
