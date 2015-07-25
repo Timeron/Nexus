@@ -28,6 +28,9 @@ dir.directive("taskinline", function(){
 	return {
 		restrict: "AE",
 		link : function(scope, element, attrs){
+			if((attrs.index % 2) > 0){
+				element[0].style.backgroundColor = "#F5F5F5";
+			};
 			element.bind('mouseover', function(){
 				if(attrs.marked !== 'true'){
 					element[0].style.backgroundColor = "#E0FFE0";
@@ -35,9 +38,13 @@ dir.directive("taskinline", function(){
 			});
 			element.bind('mouseout', function(){
 				if(attrs.marked !== 'true'){
-					element[0].style.backgroundColor = "#FFF";
+					if((attrs.index % 2) > 0){
+						element[0].style.backgroundColor = "#F5F5F5";
+					}else{
+						element[0].style.backgroundColor = "#FFF";
+					}
 				}
 			});
-		}
+		},
 	};
 });
