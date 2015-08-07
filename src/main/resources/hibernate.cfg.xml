@@ -5,22 +5,22 @@
 
   <persistence-unit name="TestPU">
 
-    <mapping-file>/test_orm.xml</mapping-file>
+<!--     <mapping-file>/test_orm.xml</mapping-file> -->
 
     <!-- Add list of fully qualified entity classes here -->
     	<class>com.timeron.NexusDatabaseLibrary.Entity.Fuel</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JHistory</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JNote</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JProject</class>
+		<class>com.timeron.NexusDatabaseLibrary.Entity.JRelease</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JStatus</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JTask</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JTaskType</class>
-		<class>com.timeron.NexusDatabaseLibrary.Entity.JRelease</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusApplications</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusConfig</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusPerson</class>
-		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusRole</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusUser</class>
+		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusUserRole</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusVersion</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.ObservedLinksPackage</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.ObservedObject</class>

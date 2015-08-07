@@ -23,7 +23,6 @@ public class JTaskControler {
 
 	@RequestMapping(value = "", method = RequestMethod.GET)
 	public String mainSite(Model model){
-		
 		return "jtaskMainSite";
 	}
 	
