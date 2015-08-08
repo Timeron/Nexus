@@ -21,7 +21,7 @@ import com.nexus.common.service.RestService;
 import com.nexus.common.service.ServiceResult;
 
 @RestController
-@RequestMapping("/jtask/v1")
+@RequestMapping("/v1/jt")
 public class JTaskRestService extends RestService{
 	
 	static Logger LOG = Logger.getLogger(JTaskRestService.class);
@@ -101,6 +101,15 @@ public class JTaskRestService extends RestService{
 		LOG.info("service: getTask <- "+json);
 		JTaskDTO task = gson.fromJson(json, JTaskDTO.class);
 		String result = gson.toJson(helper.getTask(task.getId()));
+		LOG.info("service response: getTask -> "+result);
+		return result;
+	}
+	
+	@RequestMapping(value = "/getTask", method = RequestMethod.GET)
+	public String getTaskGet(){
+		LOG.info("service: getTask <- ");
+//		JTaskDTO task = gson.fromJson(json, JTaskDTO.class);
+		String result = null; //gson.toJson(helper.getTask(task.getId()));
 		LOG.info("service response: getTask -> "+result);
 		return result;
 	}

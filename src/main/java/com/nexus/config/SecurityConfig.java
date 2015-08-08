@@ -34,15 +34,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.access("hasRole('ROLE_ADMIN')").and().formLogin()
 				.failureUrl("/login?error")//		.loginPage("/login")
 				.usernameParameter("username").passwordParameter("password")
-				.and().logout().logoutSuccessUrl("/login?logout").and().csrf()
-				.and().exceptionHandling().accessDeniedPage("/403");
+				.and().logout().logoutSuccessUrl("/login?logout")
+				.and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
 
 		http.authorizeRequests().antMatchers("/wallet/**")
 				.access("hasRole('ROLE_WALLET')").and().formLogin()
 				.failureUrl("/login?error")//		.loginPage("/login")
 				.usernameParameter("username").passwordParameter("password")
-				.and().logout().logoutSuccessUrl("/login?logout").and().csrf()
-				.and().exceptionHandling().accessDeniedPage("//403");
+				.and().logout().logoutSuccessUrl("/login?logout")//and().csrf().disable()
+				.and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
 
 	}
 
