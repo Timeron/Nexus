@@ -23,6 +23,7 @@ public class JTaskDTO {
 	private String statusDescription;
 	private String updateMessage;
 	private Integer updateMessageStatus;
+	private NexusPersonDTO user;
 	
 	public JTaskDTO(JTask jTask) {
 		this.id = jTask.getId();
@@ -53,6 +54,9 @@ public class JTaskDTO {
 		}
 		if(jTask.getWorkExpected() != 0){
 			this.workExpected = jTask.getWorkExpected();
+		}
+		if(jTask.getUser() != null){
+			this.user = new NexusPersonDTO(jTask.getUser());
 		}
 	}
 	public int getId() {
@@ -157,6 +161,12 @@ public class JTaskDTO {
 	}
 	public void setWorkExpected(long workExpected) {
 		this.workExpected = workExpected;
+	}
+	public NexusPersonDTO getUser() {
+		return user;
+	}
+	public void setUser(NexusPersonDTO user) {
+		this.user = user;
 	}
 
 	

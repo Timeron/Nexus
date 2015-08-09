@@ -114,6 +114,7 @@ div span .icon {
 .userIcon{
 	width: 35px;
 	height: 35px;
+	float: right;
 }
 
 .taskIconContainer {

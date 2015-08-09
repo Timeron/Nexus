@@ -1,5 +1,7 @@
 package com.nexus.apps.jTask.service.rest;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
@@ -117,11 +119,11 @@ public class JTaskRestService extends RestService{
 	}
 	
 	@RequestMapping(value = "/addTask", method = RequestMethod.POST)
-	public String addTask(@RequestBody String json){
+	public String addTask(@RequestBody String json, Principal principal){
 		LOG.info("service: addTask <- "+json);
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
-		result = helper.addNewTask(jTaskDTO, result);
+		result = helper.addNewTask(jTaskDTO, result, principal);
 		LOG.info("service response: addTask -> "+gson.toJson(result));
 		return gson.toJson(result);
 	}

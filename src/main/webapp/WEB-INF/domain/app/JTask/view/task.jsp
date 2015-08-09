@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 	<!-- Modal -->
 	<div class="modal fade" id="modalNewNote" tabindex="-1" role="dialog"
@@ -107,6 +108,7 @@
 			<div class="taskDetailsTaskTypeId">{{taskDetails.taskType}}</div>
 			<div class="taskDetailsPriority">Piorytet: {{taskDetails.priority}}</div>
 			<div class="taskDetailsPriority">Status: {{taskDetails.statusDescription}}</div>
+			
 			<div id="taskMainWindowContent">
 				<div class="btn-group topMenu">
 					<button type="button" class="btn btn-primary btn-xs" data-ng-click="taskCloseFromTaskWindow(task)" data-ng-disabled="buttonClose()">Zamknij</button>
@@ -188,6 +190,7 @@
 		</div>
 		<div id="taskRightBar">
 			<div class="content">
+				<div class=""><p class='border-bottom'>Przypisany do:</p><p class="bold paragraph-m">{{taskDetails.user.firstName}} {{taskDetails.user.lastName}} <img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></p></div>
 				<div class="border-bottom">Terminy:</div>
 				<div class="paragraph-m font-m">Zakończenie: {{polishDate(taskDetails.endDate)}}</div>
 				<div class="paragraph-m font-m">Przewidywany czes: {{msToDaysandHours(taskDetails.workExpected)}}</div>

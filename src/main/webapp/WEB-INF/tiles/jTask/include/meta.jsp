@@ -27,6 +27,7 @@
 <script src="<c:url value="/domain/app/JTask/controller/jtaskEditTask.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/directive/jtaskSearchDirective.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/directive/datepicker.js" />"></script>
+<script src="<c:url value="/domain/app/JTask/directive/image.js" />"></script>
 
 
 <link rel="stylesheet" href="<c:url value="/resources/css/JTask/JTask.css" />" />

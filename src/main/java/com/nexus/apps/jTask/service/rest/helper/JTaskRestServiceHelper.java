@@ -1,5 +1,6 @@
 package com.nexus.apps.jTask.service.rest.helper;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -26,6 +27,7 @@ import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JStatusDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskTypeDAO;
+import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusVersionDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 
@@ -46,6 +48,8 @@ public class JTaskRestServiceHelper {
 	JHistoryDAO jHistoryDAO;
 	@Autowired
 	JNoteDAO jNoteDAO;
+	@Autowired
+	NexusPersonDAO nexusPersonDAO; 
 	@Autowired
 	NexusVersionDAO nexusVersionDAO;
 	
@@ -89,7 +93,7 @@ public class JTaskRestServiceHelper {
 		return result;
 	}
 	
-	public ServiceResult addNewTask(JTaskDTO jTaskDTO, ServiceResult result) {
+	public ServiceResult addNewTask(JTaskDTO jTaskDTO, ServiceResult result, Principal principal) {
 		LOG.info("ServiceHelper coled: addNewTask");
 		JProject project = jProjectDAO.getById(jTaskDTO.getProjectId());
 		String nextIdName = getNextName(jTaskDAO.getLastName(project), project.getPrefix());
@@ -99,10 +103,10 @@ public class JTaskRestServiceHelper {
 		jTask.setPriority(jTaskDTO.getPriority());
 		jTask.setDescription(jTaskDTO.getDescription());
 		jTask.setProject(project);
-		jTask.setStatus(jStatusDAO.getById(2));
+		jTask.setStatus(jStatusDAO.getById(2)); //2 jest domyślne dla nowych tasków
 		jTask.setSummary(jTaskDTO.getSummary());
 		jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
-		jTask.setUser(null);
+		jTask.setUser(nexusPersonDAO.getByNick(principal.getName()));
 		jTask.setName(nextIdName);
 		
 		if(jTaskDTO.getEndDateLong() != 0){

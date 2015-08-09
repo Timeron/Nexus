@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 	<!-- Modal -->
 	<div class="modal fade" id="helpModal" tabindex="-1" role="dialog"
@@ -174,7 +175,7 @@
 								<tr>
 									<td class="taskIconContainer"></td>
 									<td class="taskName bold">{{task.name}}</td>
-									<td class="userIcon"></td>
+									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
@@ -202,7 +203,7 @@
 								<tr>
 									<td class="taskIconContainer"></td>
 									<td class="taskName bold">{{task.name}}</td>
-									<td class="userIcon"></td>
+									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
@@ -231,7 +232,7 @@
 								<tr>
 									<td class="taskIconContainer"></td>
 									<td class="taskName bold">{{task.name}}</td>
-									<td class="userIcon"></td>
+									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
@@ -260,7 +261,7 @@
 								<tr>
 									<td class="taskIconContainer"></td>
 									<td class="taskName bold">{{task.name}}</td>
-									<td class="userIcon"></td>
+									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
@@ -289,7 +290,7 @@
 								<tr>
 									<td class="taskIconContainer"></td>
 									<td class="taskName bold">{{task.name}}</td>
-									<td class="userIcon"></td>
+									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
 								<tr>
 									<td class="priority">{{task.priority}}</td>
