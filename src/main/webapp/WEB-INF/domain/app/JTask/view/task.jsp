@@ -30,6 +30,29 @@
 	</div>
 	
 	<!-- Modal -->
+	<div class="modal fade" id="modalAssign" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="TaskChangeUserController">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Przypisz do osoby</h4>
+				</div>
+				<div class="modal-body">
+					<div mark-user-line data-ng-repeat="user in users">
+						<div class="border-bottom"> <span mp-image="{{user.nickLogo}}" /> {{user.firstName}} {{user.lastName}}</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal -->
 	<div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="EditTaskCtrl"> 
 		<div class="modal-dialog">
@@ -115,8 +138,9 @@
 					<button type="button" class="btn btn-primary btn-xs" data-ng-click="taskOpenFromTaskWindow(task)" data-ng-disabled="buttonOpen()">Otwórz</button>
 				</div>
 				<div class="btn-group topMenu">
-					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalNewNote">Notatka</button>
 					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editTaskModal">Edytuj</button>
+					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalNewNote">Notatka</button>
+					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalAssign">Przypisz do osoby</button>
 				</div>
 				
 
@@ -190,7 +214,13 @@
 		</div>
 		<div id="taskRightBar">
 			<div class="content">
-				<div class=""><p class='border-bottom'>Przypisany do:</p><p class="bold paragraph-m">{{taskDetails.user.firstName}} {{taskDetails.user.lastName}} <img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></p></div>
+				<div class="">
+					<p class='border-bottom'>Przypisany do:</p>
+					<p class="bold paragraph-m">
+						{{taskDetails.user.firstName}} {{taskDetails.user.lastName}} 
+						<span mp-image='{{taskDetails.user.nickLogo}}' title="{{taskDetails.user.firstName}} {{taskDetails.user.lastName}}"></span>
+					</p>
+				</div>
 				<div class="border-bottom">Terminy:</div>
 				<div class="paragraph-m font-m">Zakończenie: {{polishDate(taskDetails.endDate)}}</div>
 				<div class="paragraph-m font-m">Przewidywany czes: {{msToDaysandHours(taskDetails.workExpected)}}</div>

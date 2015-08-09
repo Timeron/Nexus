@@ -9,10 +9,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
+import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
@@ -20,6 +22,7 @@ import com.timeron.NexusDatabaseLibrary.Entity.JNote;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.Entity.JTaskType;
+import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusVersion;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
@@ -326,7 +329,40 @@ public class JTaskRestServiceHelper {
 			nexusVersionsDTO.setVersion(nexusVersion.getVersion());
 		}
 		return nexusVersionsDTO;
+	}
+
+	public List<NexusPersonDTO> getAllUsers() {
+		List<NexusPersonDTO> nexusPersonDAOs = new ArrayList<NexusPersonDTO>();
+		for(NexusPerson person : nexusPersonDAO.getAll()){
+			nexusPersonDAOs.add(new NexusPersonDTO(person));
+		}
+		return nexusPersonDAOs;
 	} 
 
-
+	public ServiceResult assignTaskToUser(AssignUserTaskDTO dto, ServiceResult result){
+		Date now = new Date();
+		JTask jTask = jTaskDAO.getById(dto.getTaskId());
+		NexusPerson nexusPerson = nexusPersonDAO.getById(dto.getUserId());
+		jTask.setUser(nexusPerson);
+		jTask.setUpdated(now);
+		jTaskDAO.update(jTask);
+		
+		JHistory history = new JHistory();
+		history.setCreated(now);
+		history.setTask(jTask);
+		String str = "";
+		if(nexusPerson.getFirstName()!=null){
+			str += nexusPerson.getFirstName()+" ";
+		}
+		if(nexusPerson.getLastName()!=null){
+			str += nexusPerson.getLastName();
+		}
+		if(str.length() <= 0){
+			str = nexusPerson.getNick();
+		}
+		history.setMessage("Zadanie zostało przypisane do: "+str);
+		jHistoryDAO.save(history);
+		
+		return result;
+	}
 }

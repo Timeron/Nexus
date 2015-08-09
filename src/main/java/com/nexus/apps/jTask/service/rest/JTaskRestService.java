@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
@@ -81,6 +82,13 @@ public class JTaskRestService extends RestService{
 		int id = Integer.parseInt(request.getParameter("id"));
 		String response = gson.toJson(helper.getProjectTasksList(id));
 		LOG.info("service response: getAllProjectTasks -> "+ response);
+		return response;
+	}
+	
+	@RequestMapping(value = "/allUsers", method = RequestMethod.GET)
+	public String allUsers(HttpServletRequest request){
+		String response = gson.toJson(helper.getAllUsers());
+		LOG.info("service response: allUsers -> "+ response);
 		return response;
 	}
 	
@@ -151,6 +159,15 @@ public class JTaskRestService extends RestService{
 		ServiceResult result = new ServiceResult();
 		JNoteDTO jNoteDTO = gson.fromJson(json, JNoteDTO.class);
 		result = helper.saveNote(jNoteDTO, result);
+		return gson.toJson(result);
+	}
+	
+	@RequestMapping(value = "/assignTaskToUser", method = RequestMethod.POST)
+	public String assignTaskToUser(@RequestBody String json){
+		LOG.info("service: assignTaskToUser <- "+json);
+		ServiceResult result = new ServiceResult();
+		AssignUserTaskDTO dto = gson.fromJson(json, AssignUserTaskDTO.class);
+		result = helper.assignTaskToUser(dto, result);
 		return gson.toJson(result);
 	}
 }

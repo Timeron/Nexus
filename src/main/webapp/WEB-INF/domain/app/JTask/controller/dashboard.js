@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl']);
 
 app.factory("Histories", function($resource) {
 	return $resource("/timeron-nexus/v1/jt/historyTask", 
@@ -377,6 +377,8 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 		
 	};
 	
+	
+	
 
 });
 
@@ -655,7 +657,7 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	};
 });
 
-app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask){
+app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask, Users){
 	$scope.task;
 	$scope.histories;
 	$scope.notes;
@@ -663,6 +665,7 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 	$scope.hideNotes = true;
 	$scope.hideHistory = true;
 	$scope.test;
+	$scope.users = [];
 	
 	var getTask = function(){
 		var task = GetTask.query({id: $rootScope.taskDetails.id}, function(data){
@@ -671,6 +674,7 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 		return task;
 	};
 	$scope.task = getTask();
+	
 	
 	$scope.getHistory = function(task){
 		$scope.hideNotes = true;

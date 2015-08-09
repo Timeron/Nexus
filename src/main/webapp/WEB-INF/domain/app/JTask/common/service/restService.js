@@ -20,3 +20,17 @@ app.factory("UpdateTask", function($resource){
 			{query: { method: "POST", isArray: false }	
 	});
 });
+
+app.factory("Users", function($resource) {
+	return $resource("/timeron-nexus/v1/jt/allUsers", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
+app.factory("AssignTaskToUser", function($resource){
+	return $resource("/timeron-nexus/v1/jt/assignTaskToUser", 
+			{}, 
+			{query: { method: "POST", isArray: false }
+	});
+});
