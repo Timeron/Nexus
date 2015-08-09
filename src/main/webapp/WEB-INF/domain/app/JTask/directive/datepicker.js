@@ -36,10 +36,19 @@ datepicker.directive("datepicker", function(){
             for (var i = 1; i <= months[currentMonth].days; i++){
             	scope.days.push(i);
             }
-            scope.year = currentYear;
-            scope.month = months[currentMonth];
-            scope.day = currentDay;
-            scope[attrs.model] = new Date(currentYear, months[currentMonth].id, currentDay, 0, 0, 0, 0).getTime();
+            if(attrs.init !== ""){ //jeśli nie jest ustawiona data to pomijamy
+	            if(attrs.init !== undefined){
+					var init = new Date(attrs.init);
+					scope.year = init.getFullYear();
+					scope.month = months[init.getMonth()];
+					scope.day = init.getDate();
+				}else{
+					scope.year = currentYear;
+		            scope.month = months[currentMonth];
+		            scope.day = currentDay;
+				}
+	            scope[attrs.model] = new Date(scope.year, scope.month.id, scope.day, 0, 0, 0, 0).getTime();
+            }
             scope.datepicker = attrs.model;
 		},
 		controller: function($scope, $element, $attrs){
@@ -59,8 +68,8 @@ datepicker.directive("datepicker", function(){
 });
 
 datepicker.directive("timepicker", function(){
-	var currentHour = new Date().getHours();
-	var currentMinute = new Date().getMinutes();
+	var currentHour = 0;
+	var currentMinute = 0;
 	return {
 		restrict: "E",
 		template: 	'<div class="form-inline">'+
@@ -76,12 +85,21 @@ datepicker.directive("timepicker", function(){
 			for(var i = 0; i<60; i++){
 				scope.minutes.push(i);
 			}
-			scope.hour = currentHour;
-			scope.minute = currentMinute;
+			
+			if(attrs.init !== undefined && attrs.init !== ""){
+				var init = new Date(attrs.init);
+				scope.hour = init.getHours();
+				scope.minute = init.getMinutes();
+			}else{
+				scope.hour = currentHour;
+				scope.minute = currentMinute;
+			}
+			
 			scope.timepicker = attrs.model;
-			scope[attrs.model] = ((currentHour*60) + currentMinute)*60*1000;
+			scope[attrs.model] = ((scope.hour*60) + scope.minute)*60*1000;
 		},
 		controller: function($scope){
+			$scope[$scope.timepicker] = 0;
 			$scope.timepickerChange = function(){
 				$scope[$scope.timepicker] = (($scope.hour*60) + $scope.minute)*60*1000;
 			};
@@ -93,8 +111,8 @@ datepicker.directive("postponedpicker", function(){
 	return {
 		restrict: "E",
 		template: 	'<div class="form-inline">'+
-					'<div>Dni: <select class="form-control input-sm" data-ng-change="postponedpickerChange()" ng-model="postponedDay" ng-options="d for d in postponedDays" ng-disabled="datepickerDisabled"></select> '+
-					'Godzin: <select class="form-control input-sm" data-ng-change="postponedpickerChange()" ng-model="postponedHours" ng-options="h for h in hours" ng-disabled="datepickerDisabled"></select></div>'+
+					'<div>Dni: <select class="form-control input-sm" data-ng-change="postponedpickerChange()" ng-model="postponedDay" ng-options="d for d in postponedDays" ng-disabled="datepickerDisabled"><option value=""></option></select> '+
+					'Godzin: <select class="form-control input-sm" data-ng-change="postponedpickerChange()" ng-model="postponedHours" ng-options="h for h in hours" ng-disabled="datepickerDisabled"><option value=""></option></select></div>'+
 					'</div>',
 		link: function(scope, element, attrs){
 			scope.hours = [];
@@ -105,8 +123,10 @@ datepicker.directive("postponedpicker", function(){
 			for(var i = 0; i<100; i++){
 				scope.postponedDays.push(i);
 			}
-			scope.postponedDay = 0;
-			scope.postponedHours = 0;
+			var day = Math.floor(attrs.init / 86400000);
+			var hours = (attrs.init % 86400000)/(1000*60*60);
+			scope.postponedDay = day;
+			scope.postponedHours = hours;
 			scope.postponedpicker = attrs.model;
 		},
 		controller: function($scope){

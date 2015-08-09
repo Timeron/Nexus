@@ -27,18 +27,86 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal fade" id="editTaskModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="EditTaskCtrl"> 
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Nowy Task</h4>
+				</div>
+				<div class="modal-body">
+					<table class="formContainer">
+						<tbody>
+							<tr>
+								<td class="bold">Nazwa: </td>
+								<td><input type="text" data-ng-model="newSummary"></td>
+							</tr>
+							<tr>
+								<td class="bold">Type: </td>
+								<td>
+									<select ng-init="newType = taskTypes[newTypeId-1]" ng-model="newType" ng-options="taskType.name for taskType in taskTypes">
+      									<option value=""></option>
+    								</select>
+								</td>
+							</tr>
+							<tr>
+								<td>Priorytet: </td>
+								<td>
+									<select ng-init="newPriority = priorities[newPriority-1]" ng-model="newPriority" ng-options="priority.id for priority in priorities">
+      									<option value=""></option>
+    								</select>
+								</td>
+							</tr>
+							<tr class="separator"><td colspan="2"><hr></td></tr>
+							<tr>
+								<td>Opis: </td>
+								<td><textarea cols="40" rows="5" data-ng-model="newDescription"></textarea></td>
+							</tr>
+							<tr class="separator"><td colspan="2"><hr></td></tr>
+							<tr>
+								<td>Terminy </td>
+								<td><input type="checkbox" data-ng-model="timers"></td>
+							</tr>
+							<tr>
+								<td>Ostateczny termin: </td>
+								<td>
+									<div class="font-m space-top-m">Dzień:</div><datepicker init="{{newDate}}" offset="0" range="20" model="date" disable="{{timers}}"></datepicker><!--YYYY-MM-DD hh:mm:ss.s -->
+									<div class="font-m space-top-m">Godzina:</div><timepicker init="{{newDate}}" model="time"></timepicker>
+								</td>
+							</tr>
+							<tr>
+								<td  style="height: 100px">Przewidywany czas pracy: </td>
+								<td>
+ 									<postponedpicker init={{workExpected}} model="workExpected"></postponedpicker><!--YYYY-MM-DD hh:mm:ss.s -->
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+					<button type="button" class="btn btn-primary" data-ng-click="updateTask()" data-dismiss="modal">Zapisz</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 <div data-ng-controller="TaskController">
 	<div class="modal-header">
-		<h4 class="modal-title" id="myModalLabel">Task {{task.name}}</h4>
+		<h4 class="modal-title" id="myModalLabel">Task {{taskDetails.name}}</h4>
 	</div>
 	<div id="taskWindow" class="modal-body">
 		<div id=taskMainWindow>
 			<div class="taskDetailsName"
-				data-ng-click="setTaskInNewWindow(taskDetails)">{{task.name}}</div>
-			<div class="taskDetailsTaskTypeId">{{task.taskType}}</div>
-			<div class="taskDetailsPriority">Piorytet: {{task.priority}}</div>
-			<div class="taskDetailsPriority">Status: {{task.statusDescription}}</div>
+				data-ng-click="setTaskInNewWindow(taskDetails)">{{taskDetails.name}}</div>
+			<div class="taskDetailsTaskTypeId">{{taskDetails.taskType}}</div>
+			<div class="taskDetailsPriority">Piorytet: {{taskDetails.priority}}</div>
+			<div class="taskDetailsPriority">Status: {{taskDetails.statusDescription}}</div>
 			<div id="taskMainWindowContent">
 				<div class="btn-group topMenu">
 					<button type="button" class="btn btn-primary btn-xs" data-ng-click="taskCloseFromTaskWindow(task)" data-ng-disabled="buttonClose()">Zamknij</button>
@@ -46,20 +114,21 @@
 				</div>
 				<div class="btn-group topMenu">
 					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#modalNewNote">Notatka</button>
+					<button type="button" class="btn btn-primary btn-xs" data-toggle="modal" data-target="#editTaskModal">Edytuj</button>
 				</div>
 				
 
 				<div class="taskDetailsSummary">
 					Opis:
-					<p>{{task.summary}}</p>
+					<p>{{taskDetails.summary}}</p>
 				</div>
 				<div class="taskDetailsDescription">
 					Szczegóły:
-					<p>{{task.description}}</p>
+					<p>{{taskDetails.description}}</p>
 				</div>
 				<div class="taskDetailsDates">
-					<div class="taskDetailsCreated">Dodany: {{task.created}}</div>
-					<div class="taskDetailsUpdated">Zmieniony: {{task.updated}}</div>
+					<div class="taskDetailsCreated">Dodany: {{taskDetails.created}}</div>
+					<div class="taskDetailsUpdated">Zmieniony: {{taskDetails.updated}}</div>
 				</div>
 
 				<div id="taskWindowDetails">
@@ -86,6 +155,14 @@
 									<div class="eventDate">{{polishDate(history.created)}}</div>
 								</div>
 								<div class="historyEventContent">notatka: {{history.note}}
+								</div>
+							</div>
+							<div data-ng-if="isUpdate(history)">
+								<div class="border-bottom">
+									<div class="taskWindowDetailsEventName">Edycja</div>
+									<div class="eventDate">{{polishDate(history.created)}}</div>
+								</div>
+								<div class="historyEventContent">{{history.message}}
 								</div>
 							</div>
 						</div>

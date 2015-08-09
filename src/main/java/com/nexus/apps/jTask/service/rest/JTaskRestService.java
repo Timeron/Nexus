@@ -105,15 +105,6 @@ public class JTaskRestService extends RestService{
 		return result;
 	}
 	
-	@RequestMapping(value = "/getTask", method = RequestMethod.GET)
-	public String getTaskGet(){
-		LOG.info("service: getTask <- ");
-//		JTaskDTO task = gson.fromJson(json, JTaskDTO.class);
-		String result = null; //gson.toJson(helper.getTask(task.getId()));
-		LOG.info("service response: getTask -> "+result);
-		return result;
-	}
-	
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public String addProject(@RequestBody String json){

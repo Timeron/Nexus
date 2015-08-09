@@ -347,7 +347,7 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
              	{id: 11, name: "Grudzień", days: 31}
 		];
 		var date = new Date(tempDate);
-		return date.getDate()+" "+months[date.getMonth()].name+ " " +date.getFullYear();
+		return date.getDate()+" "+months[date.getMonth()].name+ " " +date.getFullYear()+" "+date.getHours()+":"+date.getMinutes();
 	};
 	
 	$scope.chasTermins = function(){
@@ -367,7 +367,7 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 			return " - ";
 		}
 		var hours = tempTime / (1000*60*60);
-		var days = Math.round(hours/24);
+		var days = Math.floor(hours/24);
 		hours = hours%24;
 		if(days === 1){
 			return days+" dzień "+hours+"h";
@@ -634,7 +634,13 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	$scope.time = 0;
 	
 	$scope.saveTask = function(){
-		$scope.date = $scope.date + $scope.time;
+		if($scope.timers){
+			$scope.date = $scope.date + $scope.time;
+		}else{
+			$scope.date = 0;
+			$scope.workExpected = 0;
+		}
+		
 		$scope.addTaskPromise = JTaskService.addNewTask($rootScope.projectId, $scope.newSummary, $scope.newType.id, $scope.newPriority.id, $scope.newDescription, $scope.date, $scope.workExpected);
 		$scope.addTaskPromise.then(function(status){
 			if(status.success == true){
@@ -688,6 +694,13 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 		return false;
 	};
 	
+	$scope.isUpdate = function(history){
+		if(history.hasOwnProperty("message")){
+			return true;
+		}
+		return false;
+	}
+	
 	$scope.addNote = function(){
 		AddNote.query(
 				{
@@ -710,8 +723,8 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 		task.status = insex;
 		task.updateMessageStatus = task.status;
 		
-		$scope.test = JTaskService.updateTask(task);
-		$scope.test.then(function(data){
+		$scope.update = JTaskService.updateTask(task);
+		$scope.update.then(function(data){
 			$scope.task = data.object;
 		});
 	};
@@ -740,7 +753,7 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 		}else{
 			return true;
 		}
-	}
+	};
 
 	
 });

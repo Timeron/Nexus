@@ -18,6 +18,7 @@ import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
 import com.timeron.NexusDatabaseLibrary.Entity.JNote;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
+import com.timeron.NexusDatabaseLibrary.Entity.JTaskType;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusVersion;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
@@ -159,19 +160,92 @@ public class JTaskRestServiceHelper {
 
 	public ServiceResult updateTask(JTaskDTO jTaskDTO, ServiceResult serviceResult) {
 		LOG.info("ServiceHelper coled: updateTask");
+		boolean updated = false;
 		Date now = new Date();
 		JTask jTask = jTaskDAO.getById(jTaskDTO.getId());
-		jTask.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
-		jTask.setUpdated(now);
-		jTaskDAO.update(jTask);
-		JHistory history = new JHistory();
-		history.setCreated(now);
-		history.setTask(jTask);
-		history.setMessage(jTaskDTO.getUpdateMessage());
-		if(jTaskDTO.getUpdateMessageStatus() != null){
-			history.setStatus(jStatusDAO.getById(jTaskDTO.getUpdateMessageStatus()));
+		if(jTaskDTO.getEndDateLong() != 0){
+			jTaskDTO.setEndDate(new Date(jTaskDTO.getEndDateLong()));
 		}
-		jHistoryDAO.save(history);
+		
+		if(jTaskDTO.getStatus()!=null && jTask.getStatus().getId()!=jTaskDTO.getStatus()){
+			jTask.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
+			updated = true;
+			JHistory history = new JHistory();
+			history.setCreated(now);
+			history.setTask(jTask);
+			history.setMessage(jTaskDTO.getUpdateMessage());
+			if(jTaskDTO.getUpdateMessageStatus() != null){
+				history.setMessage(jTaskDTO.getUpdateMessage());
+				history.setStatus(jStatusDAO.getById(jTaskDTO.getUpdateMessageStatus()));
+			}else{
+				history.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
+			}
+			jHistoryDAO.save(history);
+		}
+		if(!jTask.getDescription().equals(jTaskDTO.getDescription())){
+			updated = true;
+			JHistory history = new JHistory();
+			history.setCreated(now);
+			history.setTask(jTask);
+			history.setMessage("Zmieniono szczegóły: "+jTask.getDescription()+" -> "+jTaskDTO.getDescription());
+			jHistoryDAO.save(history);
+			jTask.setDescription(jTaskDTO.getDescription());
+		}
+		if(!jTask.getSummary().equals(jTaskDTO.getSummary())){
+			updated = true;
+			JHistory history = new JHistory();
+			history.setCreated(now);
+			history.setTask(jTask);
+			history.setMessage("Zmieniono opis: "+jTask.getSummary()+" -> "+jTaskDTO.getSummary());
+			jHistoryDAO.save(history);
+			jTask.setSummary(jTaskDTO.getSummary());
+		}
+		if(jTaskDTO.getEndDate()!=null && jTask.getEndDate().getTime() != jTaskDTO.getEndDate().getTime()){
+			updated = true;
+			JHistory history = new JHistory();
+			history.setCreated(now);
+			history.setTask(jTask);
+			history.setMessage("Zmieniono date zakończenia: "+jTask.getEndDate()+" -> "+jTaskDTO.getEndDate());
+			jHistoryDAO.save(history);
+			jTask.setEndDate(jTaskDTO.getEndDate());
+		}
+		if(jTask.getWorkExpected()!=jTaskDTO.getWorkExpected()){
+			updated = true;
+			JHistory history = new JHistory();
+			history.setCreated(now);
+			history.setTask(jTask);
+			history.setMessage("Zmieniono przewidywany czas na wykonanie zadania: "+jTask.getWorkExpected()+" -> "+jTaskDTO.getWorkExpected());
+			jHistoryDAO.save(history);
+			jTask.setWorkExpected(jTaskDTO.getWorkExpected());
+		}
+		if(jTaskDTO.getName()!=null && jTask.getName()!=jTaskDTO.getName()){
+			LOG.info("!!!!!!!!!");
+		}
+		if(jTask.getPriority()!=jTaskDTO.getPriority()){
+			updated = true;
+			JHistory history = new JHistory();
+			history.setCreated(now);
+			history.setTask(jTask);
+			history.setMessage("Zmieniono piorytet: "+jTask.getPriority()+" -> "+jTaskDTO.getPriority());
+			jHistoryDAO.save(history);
+			jTask.setPriority(jTaskDTO.getPriority());
+		}
+		if(jTask.getTaskType().getId()!=jTaskDTO.getTaskTypeId()){
+			updated = true;
+			JHistory history = new JHistory();
+			history.setCreated(now);
+			history.setTask(jTask);
+			JTaskType jTaskType = jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId());
+			history.setMessage("Zmieniono piorytet: "+jTask.getTaskType().getDescription()+" -> "+jTaskType.getDescription());
+			jHistoryDAO.save(history);
+			jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
+		}
+		
+		if(updated){
+			jTask.setUpdated(now);
+			jTaskDAO.update(jTask);
+		}
+		
 		JTaskDTO dto = new JTaskDTO(jTaskDAO.getById(jTask.getId()));
 		serviceResult.setObject(dto);
 		return serviceResult;

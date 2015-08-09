@@ -13,3 +13,10 @@ app.factory("AllProjectTask", function($resource) {
 			{query: { method: "GET", isArray: true }
 	});
 });
+
+app.factory("UpdateTask", function($resource){
+	return $resource("/timeron-nexus/v1/jt/updateTask", 
+			{},
+			{query: { method: "POST", isArray: false }	
+	});
+});

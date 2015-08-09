@@ -10,6 +10,7 @@ public class JHistoryDTO {
 	private Date created;
 	private String status;
 	private String note;
+	private String message;
 	
 	public JHistoryDTO(JHistory jHistory) {
 		this.id = jHistory.getId();
@@ -20,6 +21,7 @@ public class JHistoryDTO {
 		if(jHistory.getNote() != null){
 			this.note = jHistory.getNote().getContent();
 		}
+		this.message = jHistory.getMessage();
 	}
 	
 	public int getId() {
@@ -41,6 +43,14 @@ public class JHistoryDTO {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	
 	
