@@ -222,7 +222,7 @@
 			<projectBoardColumn>
 				<div class="columnName">
 					<div class="taskCounter">({{inProgress.length}})</div>
-					<p>In progress</p>
+					<p>In progress</p> 
 				</div>
 				<div taskSelection endDate="{{task.endDate}}" workExpected="{{task.workExpected}}" marked="{{task.marked}}" class="task" data-ng-repeat="task in inProgress" data-ng-click="getTaskDetails(task)">
 					<div class="type-{{task.taskTypeId}}"></div>
@@ -230,7 +230,7 @@
 						<table class="taksTable">
 							<tbody>
 								<tr>
-									<td class="taskIconContainer"></td>
+									<td class="taskIconContainer{{task.taskTypeId}}"></td>
 									<td class="taskName bold">{{task.name}}</td>
 									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>

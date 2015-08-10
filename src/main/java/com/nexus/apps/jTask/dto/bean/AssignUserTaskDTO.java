@@ -17,6 +17,4 @@ public class AssignUserTaskDTO {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
-	
 }

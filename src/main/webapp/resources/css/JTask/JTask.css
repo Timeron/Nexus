@@ -117,8 +117,18 @@ div span .icon {
 	float: right;
 }
 
-.taskIconContainer {
-	background: url("../../image/jTask/bug.png") no-repeat center;
+.taskIconContainer1 {
+	background: url("../../image/jTask/task20.png") no-repeat center;
+	width: 25px;
+	height:25px;
+}
+.taskIconContainer2 {
+	background: url("../../image/jTask/bug20.png") no-repeat center;
+	width: 25px;
+	height:25px;
+}
+.taskIconContainer3 {
+	background: url("../../image/jTask/improvment20.png") no-repeat center;
 	width: 25px;
 	height:25px;
 }
