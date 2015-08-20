@@ -7,7 +7,13 @@
 		<put-attribute name="logInHeader" value="/WEB-INF/tiles/index/logInHeader.jsp" />
 		<put-attribute name="footer" value="/WEB-INF/tiles/index/footer.jsp" />
 		<put-attribute name="menu" value="/WEB-INF/tiles/wallet/include/menu.jsp" />
+		<put-attribute name="menu" value="/WEB-INF/tiles/wallet/include/meta.jsp" />
 		<put-attribute name="chart" value="" />
+	</definition>
+	
+	<definition name="wallet" extends="walletBase">
+		<put-attribute name="title" value="Wallet" />
+		<put-attribute name="body" value="/WEB-INF/domain/app/Wallet/common/view/index.jsp"/>
 	</definition>
 	
 	<definition name="walletMainSite" extends="walletBase">

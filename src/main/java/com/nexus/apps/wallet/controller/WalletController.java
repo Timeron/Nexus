@@ -49,30 +49,35 @@ public class WalletController {
 	private WalletTypeDAO walletTypeDAO;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String walletMainSite(ModelMap model){
-		WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
-		List<Float> recordsValue = new ArrayList<Float>();
-		int maxRows = 10;
-		
-		List<WalletRecord> walletRecounds = walletRecordDAO.getAll("date", Direction.ASC);
-		List<WalletRecord> walletLimitedRecounds = walletRecordDAO.getAll("date", Direction.DESC, maxRows);
-		
-		walletMainSiteForm.setAccounts(walletAccountDAO.getAll());
-		walletMainSiteForm.setRecords(walletLimitedRecounds);
-		
-		for(WalletRecord walletRecord : walletMainSiteForm.getRecords() ){
-			recordsValue.add(walletRecord.getValue());
-		}
-		
-		walletMainSiteForm.setRecordsValue(recordsValue);
-		walletMainSiteForm.setSum(sumRecordValue(walletRecounds));
-		Chart chart = createSingleLineChart(walletRecounds);
-		walletMainSiteForm.setChart(transformToJSON(chart));
-		
-		model.addAttribute("form", walletMainSiteForm);
-
-		return "walletMainSite";
+	public String walletMainSite(){
+		return "wallet";
 	}
+	
+//	@RequestMapping(value = "/", method = RequestMethod.GET)
+//	public String walletMainSite(ModelMap model){
+//		WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();
+//		List<Float> recordsValue = new ArrayList<Float>();
+//		int maxRows = 10;
+//		
+//		List<WalletRecord> walletRecounds = walletRecordDAO.getAll("date", Direction.ASC);
+//		List<WalletRecord> walletLimitedRecounds = walletRecordDAO.getAll("date", Direction.DESC, maxRows);
+//		
+//		walletMainSiteForm.setAccounts(walletAccountDAO.getAll());
+//		walletMainSiteForm.setRecords(walletLimitedRecounds);
+//		
+//		for(WalletRecord walletRecord : walletMainSiteForm.getRecords() ){
+//			recordsValue.add(walletRecord.getValue());
+//		}
+//		
+//		walletMainSiteForm.setRecordsValue(recordsValue);
+//		walletMainSiteForm.setSum(sumRecordValue(walletRecounds));
+//		Chart chart = createSingleLineChart(walletRecounds);
+//		walletMainSiteForm.setChart(transformToJSON(chart));
+//		
+//		model.addAttribute("form", walletMainSiteForm);
+//
+//		return "walletMainSite";
+//	}
 	
 	@RequestMapping(value = "/addAccount")
 	public String walletAddAccount(ModelMap model){
