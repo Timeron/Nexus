@@ -41,7 +41,7 @@
 	
 	
 	<!-- Modal -->
-	<div class="modal" id="addAccountModal" tabindex="-1" role="dialog"
+	<div class="modal" id="addRecordModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel" aria-hidden="true">
 		<div class="modal-dialog">
 			<div class="modal-content">
@@ -49,11 +49,15 @@
 					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Nowa Operacja</h4>
+					<h4 class="modal-title" id="myModalLabel">{{newRecordCurrentDescription}}</h4>
 				</div>
 				<div class="modal-body">
 					<div id="newProject" class="modalTest" >
 						<table>
+							<tr>
+								<td></td>
+								<td><button type="button" class="btn btn-default" model="income" data-ng-click="changeTransfer()">{{newRecordCurrentButtonDescription}}</button></td>
+							</tr>
 							<tr>
 								<td class="formName">Kwota</td>
 								<td><input type="text" data-ng-model="amount"></td>
@@ -62,12 +66,36 @@
 								<td class="formName">Opis</td>
 								<td><input type="text" data-ng-model="newAccountDescription"></td>
 							</tr>
+							<tr data-ng-if="!transfer">
+								<td class="formName">Typ</td>
+								<td>
+									<select data-ng-model="$parent.type" ng-options="type.name for type in types">
+      									<option value=""></option>
+    								</select>
+    							</td>
+							</tr>
+							<tr data-ng-if="transfer">
+								<td class="formName">Na konto</td>
+								<td>
+									<select data-ng-model="$parent.account" ng-options="account.name for account in accounts">
+      									<option value=""></option>
+    								</select>
+    							</td>
+							</tr>
+							<tr>
+								<td><div class="font-m space-top-m">Dzień:</div><datepicker start="2010" offset="1" range="2030" model="operationDate"></datepicker></td>
+								<td><div class="font-m space-top-m">Godzina:</div><timepicker now="true" model="operationTime"></timepicker></td>
+							</tr>
+							<tr data-ng-if="!transfer">
+								<td></td>
+								<td><button type="button" class="btn btn-default" model="income" data-ng-click="changeIncome()">{{incomeCurrentDescription}}</button></td>
+							</tr>
 						</table>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-					<button type="button" class="btn btn-primary" data-ng-click="addAccount()" data-dismiss="modal">Zapisz</button>
+					<button type="button" class="btn btn-primary" data-ng-click="newRecord()" data-dismiss="modal">Zapisz</button>
 				</div>
 			</div>
 		</div>

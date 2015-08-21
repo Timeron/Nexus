@@ -1,17 +1,18 @@
 package com.nexus.apps.wallet.service.dto;
 
-import java.util.Date;
 
 public class RecordDTO {
 	
 	private Integer id;
-	private float value;
-	private String description;
-	private boolean income;
-	private boolean transfer;
-	private Date date;
-	private Date updated;
-	private RecordTypeDTO recordTypeDTO;
+	private float value = 0;
+	private String description = "";
+	private Boolean income = false;
+	private boolean transfer = false;
+	private long date = 0;
+	private long updated = 0;
+	private int recordTypeId = 0;
+	private int accountId = 0;
+	private int destynationAccountId = 0;
 	
 	public Integer getId() {
 		return id;
@@ -31,10 +32,10 @@ public class RecordDTO {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public boolean isIncome() {
+	public Boolean isIncome() {
 		return income;
 	}
-	public void setIncome(boolean income) {
+	public void setIncome(Boolean income) {
 		this.income = income;
 	}
 	public boolean isTransfer() {
@@ -43,23 +44,35 @@ public class RecordDTO {
 	public void setTransfer(boolean transfer) {
 		this.transfer = transfer;
 	}
-	public Date getDate() {
+	public long getDate() {
 		return date;
 	}
-	public void setDate(Date date) {
+	public void setDate(long date) {
 		this.date = date;
 	}
-	public Date getUpdated() {
+	public long getUpdated() {
 		return updated;
 	}
-	public void setUpdated(Date updated) {
+	public void setUpdated(long updated) {
 		this.updated = updated;
 	}
-	public RecordTypeDTO getRecordTypeDTO() {
-		return recordTypeDTO;
+	public int getRecordTypeId() {
+		return recordTypeId;
 	}
-	public void setRecordTypeDTO(RecordTypeDTO recordTypeDTO) {
-		this.recordTypeDTO = recordTypeDTO;
+	public void setRecordTypeId(int recordTypeId) {
+		this.recordTypeId = recordTypeId;
+	}
+	public int getAccountId() {
+		return accountId;
+	}
+	public void setAccountId(int accountId) {
+		this.accountId = accountId;
+	}
+	public int getDestynationAccountId() {
+		return destynationAccountId;
+	}
+	public void setDestynationAccountId(int destynationAccountId) {
+		this.destynationAccountId = destynationAccountId;
 	}
 	
 	
