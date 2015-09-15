@@ -77,4 +77,10 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 			$scope.newRecordCurrentButtonDescription = "Operacja";
 		} 
 	};
+	
+	
+});
+
+app.controller("AddRecordCtrl", function(){
+	
 });
