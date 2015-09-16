@@ -87,7 +87,7 @@ datepicker.directive("datepicker", function(){
 					$scope.datepickerDisabled = "";
 				}
 			});
-			
+			$scope.$watch();
 		}
 	};
 });

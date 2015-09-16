@@ -42,7 +42,7 @@
 	
 	<!-- Modal -->
 	<div class="modal" id="addRecordModal" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true">
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="AddRecordCtrl">
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">
@@ -50,21 +50,18 @@
 						<span aria-hidden="true">&times;</span>
 					</button>
 					<h4 class="modal-title" id="myModalLabel">{{newRecordCurrentDescription}}</h4>
+					<button type="button" class="btn btn-default toRight" model="income" data-ng-click="changeTransfer()">{{newRecordCurrentButtonDescription}}</button>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" style="width:100%; float:left">
 					<div id="newProject" class="modalTest" >
-						<table>
+						<table class="tableForm">
 							<tr>
-								<td></td>
-								<td><button type="button" class="btn btn-default" model="income" data-ng-click="changeTransfer()">{{newRecordCurrentButtonDescription}}</button></td>
-							</tr>
-							<tr>
-								<td class="formName">Kwota</td>
+								<td class="formName" style="width:25%">Kwota</td>
 								<td><input type="text" data-ng-model="amount"></td>
 							</tr>
 							<tr>
 								<td class="formName">Opis</td>
-								<td><input type="text" data-ng-model="newAccountDescription"></td>
+								<td><textarea cols="50" rows="4" data-ng-model="newAccountDescription" ></textarea></td>
 							</tr>
 							<tr data-ng-if="!transfer">
 								<td class="formName">Typ</td>
@@ -82,13 +79,16 @@
     								</select>
     							</td>
 							</tr>
-							<tr>
-								<td><div class="font-m space-top-m">Dzień:</div><datepicker start="2010" offset="1" range="2030" model="operationDate"></datepicker></td>
-								<td><div class="font-m space-top-m">Godzina:</div><timepicker now="true" model="operationTime"></timepicker></td>
-							</tr>
 							<tr data-ng-if="!transfer">
 								<td></td>
 								<td><button type="button" class="btn btn-default" model="income" data-ng-click="changeIncome()">{{incomeCurrentDescription}}</button></td>
+							</tr>
+						</table>
+						<table style="width:100%">
+							<tr>
+								<td style="width:22%"></td>
+								<td><div class="font-m space-top-m">Dzień:</div><datepicker start="2010" offset="1" range="2030" model="operationDate"></datepicker>
+								<div class="font-m space-top-m">Godzina:</div><timepicker now="true" model="operationTime"></timepicker></td>
 							</tr>
 						</table>
 					</div>
