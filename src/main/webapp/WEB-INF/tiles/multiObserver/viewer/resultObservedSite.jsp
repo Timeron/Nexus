@@ -11,7 +11,7 @@
 			<tr>
 				<td>${observedSites.id}</td>
 				<td><a
-					href="/timeron-nexus/multiobserver/viewer/editObservedSite?id=${observedSites.id}">${observedSites.articleName}</a></td>
+					href="/nexus/multiobserver/viewer/editObservedSite?id=${observedSites.id}">${observedSites.articleName}</a></td>
 				<td>${observedSites.url}</td>
 				<td>${observedSites.approvedProductKay}</td>
 			</tr>

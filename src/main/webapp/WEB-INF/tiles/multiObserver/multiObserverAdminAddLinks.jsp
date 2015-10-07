@@ -44,7 +44,7 @@
 	<div class="container">
 		<!-- Example row of columns -->
 		<div class="row">
-			<form role="form" action="/timeron-nexus/multiobserver/admin/linkadded" method="get">
+			<form role="form" action="/nexus/multiobserver/admin/linkadded" method="get">
 				<div class="form-group">
 					<label for="exampleInputEmail1">Nowy link</label> <input
 						type="text" class="form-control" id="exampleInputEmail1"

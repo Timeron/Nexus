@@ -8,7 +8,7 @@ app.directive("mpImage", function(){
 		link: function(scope, element, attrs){
 			scope.title = attrs.title;
 			attrs.$observe('mpImage', function(e) {
-				scope.image = "/timeron-nexus/resources/image/avatar/"+e+"35.png";
+				scope.image = "/nexus/resources/image/avatar/"+e+"35.png";
 			});
 		}
 	

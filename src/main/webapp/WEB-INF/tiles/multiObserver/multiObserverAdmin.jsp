@@ -23,7 +23,7 @@
 					w poszukiwaniu produktów.</p>
 				<p>
 					<a class="btn btn-default"
-						href="/timeron-nexus/multiobserver/admin/addLinks" role="button">View
+						href="/nexus/multiobserver/admin/addLinks" role="button">View
 						details &raquo;</a>
 				</p>
 			</div>

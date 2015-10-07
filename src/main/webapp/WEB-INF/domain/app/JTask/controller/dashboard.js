@@ -1,21 +1,21 @@
 var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl']);
 
 app.factory("Histories", function($resource) {
-	return $resource("/timeron-nexus/v1/jt/historyTask", 
+	return $resource("/nexus/v1/jt/historyTask", 
 			{}, 
 			{query: { method: "GET", isArray: true }
 	});
 });
 
 app.factory("Notes", function($resource) {
-	return $resource("/timeron-nexus/v1/jt/notesTask", 
+	return $resource("/nexus/v1/jt/notesTask", 
 			{}, 
 			{query: { method: "GET", isArray: true }
 	});
 });
 
 app.factory("AddNote", function($resource){
-	return $resource("/timeron-nexus/v1/jt/addNote", 
+	return $resource("/nexus/v1/jt/addNote", 
 			{}, 
 			{query: { method: "POST", isArray: false }
 	});
@@ -24,7 +24,7 @@ app.factory("AddNote", function($resource){
 app.factory("TaskService", function($resource){
 	return {
 		getTask : function(){
-			return $resource("/timeron-nexus/v1/jt/getTask", 
+			return $resource("/nexus/v1/jt/getTask", 
 					{}, 
 					{query: { method: "POST", isArray: false }
 			});
@@ -33,7 +33,7 @@ app.factory("TaskService", function($resource){
 });
 
 app.factory("GetTask", function($resource){
-	return $resource("/timeron-nexus/v1/jt/getTask", 
+	return $resource("/nexus/v1/jt/getTask", 
 			{}, 
 			{
 				query: { method: "POST", isArray: false }
@@ -45,8 +45,8 @@ app.factory("GetTask", function($resource){
 app.service("JTaskService", function($http, $q){
 	
 	//get
-//	var path = "http://timeron.ddns.net:8080/timeron-nexus/";
-	var path = "http://localhost:8080/timeron-nexus/v1/jt";
+	var path = "http://localhost:8080/nexus/v1/jt";
+//	var path = "http://timeron.ddns.net:8080/nexus/v1/jt";
 	
 	var getAllProjects = $q.defer();
 	$http.get(path+"/getAllProjects").then(function(data){
@@ -396,8 +396,8 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	};
 	
 	$rootScope.setAllProjectsInScope = function(){
-//		var path = "http://timeron.ddns.net:8080/timeron-nexus/";
-		var path = "http://localhost:8080/timeron-nexus/v1/jt";
+		var path = "http://localhost:8080/nexus/v1/jt";
+//		var path = "http://timeron.ddns.net:8080/nexus/v1/jt";
 		
 		$http.get(path+"/getAllTasksInOneProject")
 		.success(function(data){

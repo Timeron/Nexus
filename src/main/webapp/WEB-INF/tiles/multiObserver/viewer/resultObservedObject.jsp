@@ -10,7 +10,7 @@
 			<tr>
 				<td>${observedObject.id}</td>
 				<td><a
-					href="/timeron-nexus/multiobserver/viewer/editObservedObject?id=${observedObject.id}">${observedObject.name}</a></td>
+					href="/nexus/multiobserver/viewer/editObservedObject?id=${observedObject.id}">${observedObject.name}</a></td>
 				<td>${observedObject.productKay}</td>
 			</tr>
 		</c:forEach>
