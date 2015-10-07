@@ -107,6 +107,7 @@
 <!-- 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="addOperation()">Dodaj wpis</a>  -->
 <!-- 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="addOperation()">Dodaj nowy typ</a>  -->
 		</div>
+		<div>mobile: {{mobile}}</div>
 	</div>	
 	
 	<div data-ng-view></div>

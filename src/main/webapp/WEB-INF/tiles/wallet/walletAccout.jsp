@@ -53,7 +53,7 @@
 				<c:forEach items="${form.accounts}" var="account">
 					<div class="btn-group">
 						<a class="btn btn-primary btn-ms" role="button"
-							href="/timeron-nexus/wallet/walletAccout?id=${account.id}">${account.name}</a>
+							href="/nexus/wallet/walletAccout?id=${account.id}">${account.name}</a>
 					</div>
 				</c:forEach>
 			</c:when>
@@ -69,7 +69,7 @@
 		<div class="btn-group">
 			<h1>
 				<a class="btn btn-primary btn-ms" role="button"
-					href="/timeron-nexus/wallet/addRecord?id=${form.walletAccount.id}">+</a>
+					href="/nexus/wallet/addRecord?id=${form.walletAccount.id}">+</a>
 			</h1>
 		</div>
 	</div>

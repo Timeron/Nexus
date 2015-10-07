@@ -51,7 +51,7 @@
 				<c:forEach items="${form.accounts}" var="account">
 					<div class="btn-group">
 						<a class="btn btn-primary btn-ms" role="button"
-							href="/timeron-nexus/wallet/walletAccout?id=${account.id}">${account.name}</a>
+							href="/nexus/wallet/walletAccout?id=${account.id}">${account.name}</a>
 					</div>
 				</c:forEach>
 			</c:when>
@@ -102,12 +102,12 @@
 					<td>${record.sourceWalletAccount.name}</td>
 					<td>${record.destinationWalletAccount.name}</td>
 					<td><a id="transferButton" class="btn btn-primary"
-						href="/timeron-nexus/wallet/walletEditRecord?id=${record.id}">
+						href="/nexus/wallet/walletEditRecord?id=${record.id}">
 							<span class="glyphicon glyphicon-edit" aria-hidden="true">
 						</span>
 					</a></td>
 					<td><a id="transferButton" class="btn btn-danger"
-						href="/timeron-nexus/wallet/walletRemoveRecord?id=${record.id}">
+						href="/nexus/wallet/walletRemoveRecord?id=${record.id}">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true">
 						</span>
 					</a></td>

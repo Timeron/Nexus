@@ -53,6 +53,11 @@ public class WalletController {
 		return "wallet";
 	}
 	
+	@RequestMapping(value = "/mobile", method = RequestMethod.GET)
+	public String walletMainMobileSite(){
+		return "walletMobile";
+	}
+	
 //	@RequestMapping(value = "/", method = RequestMethod.GET)
 //	public String walletMainSite(ModelMap model){
 //		WalletMainSiteForm walletMainSiteForm = new WalletMainSiteForm();

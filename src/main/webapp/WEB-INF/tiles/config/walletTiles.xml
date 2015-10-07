@@ -72,4 +72,13 @@
 		<put-attribute name="body" value="/WEB-INF/tiles/wallet/walletEditType.jsp"/>
 	</definition>
 	
+	<!-- Base -->
+	<definition name="walletMobileBase" template="/WEB-INF/tiles/templates/walletMobileTemplate.jsp">
+		<put-attribute name="meta" value="/WEB-INF/tiles/wallet/include/metaMobile.jsp" />
+	</definition>
+	
+	<definition name="walletMobile" extends="walletMobileBase">
+		<put-attribute name="body" value="/WEB-INF/domain/app/Wallet/common/view/indexMobile.jsp"/>
+	</definition>
+	
 </tiles-definitions>

@@ -85,7 +85,12 @@ public class WalletRestServiceHelper {
 	public ServiceResult addNewRecord(RecordDTO recordDTO) {
 		ServiceResult result = new ServiceResult();
 		WalletRecord walletRecord = new WalletRecord();
-		walletRecord.setDate(new Date(recordDTO.getDate()));
+		if(recordDTO.getDate() != 0){
+			walletRecord.setDate(new Date(recordDTO.getDate()));
+		}else{
+			walletRecord.setDate(new Date());
+		}
+		
 		walletRecord.setDescription(recordDTO.getDescription());
 		walletRecord.setValue(recordDTO.getValue());
 		if(recordDTO.getAccountId() != 0){

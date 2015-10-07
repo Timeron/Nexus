@@ -25,11 +25,11 @@
 					<td>${record.icon}</td>
 					<td>${record.color}</td>
 					<td>
-						<a id="transferButton" class="btn btn-primary" href="/timeron-nexus/wallet/walletEditType?id=${record.id}">
+						<a id="transferButton" class="btn btn-primary" href="/nexus/wallet/walletEditType?id=${record.id}">
 							<span class="glyphicon glyphicon-edit" aria-hidden="true">
 							</span>
 						</a>
-						<a id="transferButton" class="btn btn-danger" href="/timeron-nexus/wallet/walletRemoveType?id=${record.id}">
+						<a id="transferButton" class="btn btn-danger" href="/nexus/wallet/walletRemoveType?id=${record.id}">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true">
 							</span>
 						</a>
@@ -47,11 +47,11 @@
 								<td>${children.icon}</td>
 								<td>${children.color}</td>
 								<td>
-						<a id="transferButton" class="btn btn-primary" href="/timeron-nexus/wallet/walletEditType?id=${children.id}">
+						<a id="transferButton" class="btn btn-primary" href="/nexus/wallet/walletEditType?id=${children.id}">
 							<span class="glyphicon glyphicon-edit" aria-hidden="true">
 							</span>
 						</a>
-						<a id="transferButton" class="btn btn-danger" href="/timeron-nexus/wallet/walletRemoveType?id=${children.id}">
+						<a id="transferButton" class="btn btn-danger" href="/nexus/wallet/walletRemoveType?id=${children.id}">
 							<span class="glyphicon glyphicon-trash" aria-hidden="true">
 							</span>
 						</a>

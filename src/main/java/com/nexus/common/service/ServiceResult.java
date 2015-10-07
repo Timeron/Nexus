@@ -5,7 +5,7 @@ import java.util.List;
 
 public class ServiceResult {
 	
-	private boolean success;
+	private Boolean success;
 	private List<String> messages = new ArrayList<String>();
 	private Object object;
 	
