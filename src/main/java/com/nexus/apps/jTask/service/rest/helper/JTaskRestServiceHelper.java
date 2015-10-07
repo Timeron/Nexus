@@ -16,6 +16,7 @@ import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
+import com.nexus.common.service.ResultMessages;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
 import com.timeron.NexusDatabaseLibrary.Entity.JNote;
@@ -109,7 +110,12 @@ public class JTaskRestServiceHelper {
 		jTask.setStatus(jStatusDAO.getById(2)); //2 jest domyślne dla nowych tasków
 		jTask.setSummary(jTaskDTO.getSummary());
 		jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
-		jTask.setUser(nexusPersonDAO.getByNick(principal.getName()));
+		if(principal.getName() != null){
+			jTask.setUser(nexusPersonDAO.getByNick(principal.getName()));
+		}else{
+			result.setSuccess(false);
+			result.addMessage(ResultMessages.PERSON_NOT_DETECTED);
+		}
 		jTask.setName(nextIdName);
 		
 		if(jTaskDTO.getEndDateLong() != 0){
@@ -123,10 +129,14 @@ public class JTaskRestServiceHelper {
 		if(jTaskDTO.getMainTaskId() != null){
 			jTask.setMainTask(jTaskDAO.getById(jTaskDTO.getMainTaskId()));
 		}
-		boolean save = jTaskDAO.save(jTask);
-		result.setSuccess(save);
-		if(!save){
-			result.addMessage("Wystąpił błąd: Task nie dodany!");
+		if(!result.isSuccess()){
+			return result;
+		}else{
+			boolean save = jTaskDAO.save(jTask);
+			if(!save){
+				result.addMessage("Wystąpił błąd: Task nie dodany!");
+			}
+			result.setSuccess(save);
 		}
 		return result;
 	}
