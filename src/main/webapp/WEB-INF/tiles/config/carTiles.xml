@@ -36,8 +36,17 @@
 	</definition>
 	
 	<definition name="carReport" extends="carBase">
-		<put-attribute name="title" value="Car" />
 		<put-attribute name="body" value="/WEB-INF/tiles/car/carReport.jsp" />
+	</definition>
+	
+	<!-- Mobile Base -->
+	<definition name="carBaseMobile" template="/WEB-INF/tiles/templates/carMobileTemplate.jsp">
+		<put-attribute name="meta" value="/WEB-INF/domain/app/Car/view/metaMobile.jsp" />
+	</definition>
+	
+	<definition name="carAddRecordMobile" extends="carBaseMobile">
+		<put-attribute name="title" value="Car" />
+		<put-attribute name="body" value="/WEB-INF/domain/app/Car/view/carMobile.jsp" />
 	</definition>
 	
 </tiles-definitions>

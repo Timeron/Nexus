@@ -28,10 +28,10 @@
 					<td>${record.date}</td>
 
 					<td><a id="transferButton" class="btn btn-primary"
-						href="/timeron-nexus/car/carEditRecord?id=${record.id}"> <span
+						href="/nexus/car/carEditRecord?id=${record.id}"> <span
 							class="glyphicon glyphicon-edit" aria-hidden="true"> </span>
 					</a> <a id="transferButton" class="btn btn-danger"
-						href="/timeron-nexus/car/carRemoveRecord?id=${record.id}"> <span
+						href="/nexus/car/carRemoveRecord?id=${record.id}"> <span
 							class="glyphicon glyphicon-trash" aria-hidden="true"> </span>
 					</a></td>
 				</tr>

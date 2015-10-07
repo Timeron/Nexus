@@ -1,0 +1,269 @@
+body,html {
+	height: 100%;
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}
+
+#body {
+	display: block;
+	height: 100vh;
+	background: #ff6c00;
+}
+
+#scene {
+	color: #FFF;
+}
+
+.glyphicon {
+	font-size: 4vh;
+	color: #FFF;
+}
+
+/* ################## */
+/* menu top */
+/* ################## */
+#topMenu, #topMenuDate{
+	height: 8vh;
+	background-color: #232323;
+}
+
+#close, #closeDate, #ok, #okDate {
+	height: 100%;
+	width: 25%;
+	position: relative;
+	cursor: pointer;
+}
+
+#close div, #closeDate div, #ok div, #closeDate div {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
+}
+
+#close, #closeDate {
+	float: left;
+}
+
+#ok, #okDate {
+	float: right;
+}
+
+/* ################## */
+/* date */
+/* ################## */
+#date {
+	height: 12vh;
+	width: 100%;
+	padding: 2vh 10vw 2vh 0;
+	font-size: 5vh;
+	background-color: #ff6c00;
+	float: right;
+	text-align: right;
+}
+
+.date span {
+	margin-left: 15vw;
+}
+
+/* ################## */
+/* mainValue */
+/* ################## */
+#mainValue {
+	height: 15vh;
+	width: 100%;
+	background-color: #ff6c00;
+	float: left;
+}
+
+#mainValue .value {
+	padding-right: 10vw;
+	font-size: 10vh;
+	text-align: right;
+	width: 80vw;
+	height: 100%;
+	float: left;
+}
+
+#mainValue .unit {
+	padding-top: 2vh;
+	padding-right: 10vw;
+	font-size: 7vh;
+	text-align: left;
+	width: 20vw;
+	height: 100%;
+	float: left;
+}
+
+/* ################## */
+/* secondValue */
+/* ################## */
+#secondValue {
+	height: 12vh;
+	width: 100%;
+	background-color: #ff6c00;
+	float: left;
+}
+
+#secondValue .value {
+	padding-right: 10vw;
+	font-size: 7vh;
+	text-align: right;
+	width: 80vw;
+	height: 100%;
+	float: left;
+}
+
+#secondValue .unit {
+	padding-top: 2vh;
+	padding-right: 10vw;
+	font-size: 5vh;
+	text-align: left;
+	width: 20vw;
+	height: 100%;
+	float: left;
+}
+
+/* ################## */
+/* list */
+/* ################## */
+#list {
+	width: 100vw;
+	height: 48vh;
+	color: #FFF;	
+	float: left;
+}
+
+#list .header {
+	text-align: center;
+	font-size: 3vh; width : 100%;
+	height: 5vh;
+	background-color: #4d4d4d;
+	width: 100%;
+}
+#list .rows{
+	width: 100vw;
+	height: 100%;
+	overflow-y: scroll;
+}
+#list .listRow {
+	padding-top: 3vh;
+	height: 10vh;
+	font-size: 3vh;
+	background: linear-gradient(#ff5500, #ff6c00);
+}
+
+.listRow .distance, .listRow .oil, .listRow .date {
+	float: left;
+	text-align: right;
+}
+
+.listRow .distance{
+	width: 30vw;
+}
+
+.listRow .oil{
+	padding-right: 5vw;
+	width: 30vw;
+}
+
+.listRow .date{
+	width: 38vw;
+}
+
+/* ################## */
+/* keybord */
+/* ################## */
+#calculator {
+	display: block;
+	position: absolute;
+	top: 52vh;
+	height: 48vh;
+	width: 100%;
+}
+
+#numbers {
+	display: block;
+	width: 85%;
+	height: 100%;
+	/* 	background-color: black; */
+}
+
+#operators {
+	display: block;
+	width: 15%;
+	height: 100%;
+	float: right;
+}
+
+.calculatorButton {
+	height: 25%;
+	display: block;
+	background-color: #efeff5;
+	font-size: 6vh;
+	float: left;
+	width: 33.3333%;
+	position: relative;
+}
+
+.calculatorButton p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
+}
+
+.calculatorButtonOperator {
+	display: block;
+	background-color: #c9c9c9;
+	font-weight: bold;
+	font-size: 6vh;
+	float: left;
+	height: 20%;
+	width: 100%;
+	position: relative;
+}
+
+.calculatorButtonOperator p {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin-right: -50%;
+	transform: translate(-50%, -50%)
+}
+
+/* ################## */
+/* datepicker */
+/* ################## */
+
+#getDate{
+	width: 100vw;
+	height: 100vh;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #FFF;
+}
+
+.datepickermobile .input-xl{
+	width: 90%;
+	margin: 5vh 5vw 0 5vw;
+	height: 12vh;
+	font-size: 10vh;
+}
+.timepicker .input{
+	width: 25%;
+	height: 12vh;
+	font-size: 10vh;
+	margin: 5vh 0 0 5vw;
+}
+.timepicker{
+	height: 12vh;
+	font-size: 10vh;
+}

@@ -146,6 +146,11 @@ public class CarController {
 		return "carReport";
 	}
 	
+	@RequestMapping("/mobile")
+	public String addRecordMobile(ModelMap model){
+		return "carAddRecordMobile";
+	}
+	
 	private float lastFuel(List<Fuel> records) {
 		
 		int currentRecord = records.size()-1;
