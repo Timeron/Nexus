@@ -129,14 +129,14 @@ public class JTaskRestServiceHelper {
 		if(jTaskDTO.getMainTaskId() != null){
 			jTask.setMainTask(jTaskDAO.getById(jTaskDTO.getMainTaskId()));
 		}
-		if(!result.isSuccess()){
-			return result;
-		}else{
+		if(result.isSuccess() == null || result.isSuccess()){
 			boolean save = jTaskDAO.save(jTask);
 			if(!save){
 				result.addMessage("Wystąpił błąd: Task nie dodany!");
 			}
 			result.setSuccess(save);
+		}else{
+			return result;
 		}
 		return result;
 	}

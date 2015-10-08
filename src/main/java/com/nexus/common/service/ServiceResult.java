@@ -9,7 +9,7 @@ public class ServiceResult {
 	private List<String> messages = new ArrayList<String>();
 	private Object object;
 	
-	public boolean isSuccess() {
+	public Boolean isSuccess() {
 		return success;
 	}
 	public void setSuccess(boolean success) {
