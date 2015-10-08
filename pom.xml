@@ -2,7 +2,7 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>nexus</groupId>
-	<artifactId>timeron-nexus</artifactId> <!-- Wartość ta bedzie poźniej w podstawie linku (localhost:8080/timeron-nexus) -->
+	<artifactId>nexus</artifactId> <!-- Wartość ta bedzie poźniej w podstawie linku (localhost:8080/timeron-nexus) -->
 	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Nexus Maven Webapp</name>
