@@ -173,7 +173,7 @@
 						<table class="taksTable">
 							<tbody>
 								<tr>
-									<td class="taskIconContainer"></td>
+									<td class="taskIconContainer{{task.taskTypeId}}"></td>
 									<td class="taskName bold">{{task.name}}</td>
 									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
@@ -201,7 +201,7 @@
 						<table class="taksTable" >
 							<tbody>
 								<tr>
-									<td class="taskIconContainer"></td>
+									<td class="taskIconContainer{{task.taskTypeId}}"></td>
 									<td class="taskName bold">{{task.name}}</td>
 									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
@@ -259,7 +259,7 @@
 						<table class="taksTable">
 							<tbody>
 								<tr>
-									<td class="taskIconContainer"></td>
+									<td class="taskIconContainer{{task.taskTypeId}}"></td>
 									<td class="taskName bold">{{task.name}}</td>
 									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
@@ -288,7 +288,7 @@
 						<table class="taksTable">
 							<tbody>
 								<tr>
-									<td class="taskIconContainer"></td>
+									<td class="taskIconContainer{{task.taskTypeId}}"></td>
 									<td class="taskName bold">{{task.name}}</td>
 									<td width="35"><img src='<c:url value="/resources/image/avatar/{{task.user.nickLogo}}35.png" />' title="{{task.user.firstName}} {{task.user.lastName}}"></td>
 								</tr>
