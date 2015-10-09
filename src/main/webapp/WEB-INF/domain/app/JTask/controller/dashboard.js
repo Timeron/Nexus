@@ -1,156 +1,7 @@
 var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl']);
 
-app.factory("Histories", function($resource) {
-	return $resource("/nexus/v1/jt/historyTask", 
-			{}, 
-			{query: { method: "GET", isArray: true }
-	});
-});
-
-app.factory("Notes", function($resource) {
-	return $resource("/nexus/v1/jt/notesTask", 
-			{}, 
-			{query: { method: "GET", isArray: true }
-	});
-});
-
-app.factory("AddNote", function($resource){
-	return $resource("/nexus/v1/jt/addNote", 
-			{}, 
-			{query: { method: "POST", isArray: false }
-	});
-});
-
-app.factory("TaskService", function($resource){
-	return {
-		getTask : function(){
-			return $resource("/nexus/v1/jt/getTask", 
-					{}, 
-					{query: { method: "POST", isArray: false }
-			});
-		}
-	};
-});
-
-app.factory("GetTask", function($resource){
-	return $resource("/nexus/v1/jt/getTask", 
-			{}, 
-			{
-				query: { method: "POST", isArray: false }
-			}
-		);
-});
-
 
 app.service("JTaskService", function($http, $q){
-	
-	//get
-	var path = "http://localhost:8080/nexus/v1/jt";
-//	var path = "http://timeron.ddns.net:8080/nexus/v1/jt";
-	
-	var getAllProjects = $q.defer();
-	$http.get(path+"/getAllProjects").then(function(data){
-		getAllProjects.resolve(data);
-	});
-	
-	this.getProjects = function(){
-		return getAllProjects.promise;
-	};
-	
-	//post
-	
-	this.addNewProject = function(newProjectName, newProjectDescription, newPrefix){
-		addProject = $q.defer();
-		$http.post(path+"/addProject", 
-				{
-					name: newProjectName, 
-					description: newProjectDescription,
-					prefix: newPrefix
-				})
-		.success(function(data){
-			return addProject.resolve(data);
-		})
-		.error(function(data){
-			return data;
-		});
-		return addProject.promise;
-	};
-	
-	this.addNewTask = function(tProjectId, tTaskSummary, tType, tPriority, tDescription, tDate, tWorkExpected){
-		addTask = $q.defer();
-		$http.post(path+"/addTask", 
-				{
-					projectId: tProjectId,
-					summary: tTaskSummary,
-					taskTypeId: tType,
-					priority: tPriority,
-					description: tDescription,
-					endDateLong: tDate,
-					workExpected: tWorkExpected
-				})
-		.success(function(data){
-			return addTask.resolve(data);
-		})
-		.error(function(data){
-			return data;
-		});
-		return addTask.promise;
-	};
-
-	this.getAllProjectTasks = function(projectId){
-		allProjectTask = $q.defer();
-		$http.post(path+"/getProjectTasks", 
-				{
-					id: projectId
-				})
-		.success(function(data){
-			return allProjectTask.resolve(data);
-		})
-		.error(function(data){
-			return data;
-		});
-		return allProjectTask.promise;
-	};
-
-	this.getProjectTask = function(projectId){
-		allProjectTask = $q.defer();
-		$http.post(path+"/getProjectTask", 
-				{
-					id: projectId
-				})
-		.success(function(data){
-			return allProjectTask.resolve(data);
-		})
-		.error(function(data){
-			return data;
-		});
-		return allProjectTask.promise;
-	};
-	
-	this.updateTask = function(task){
-		update = $q.defer();
-		$http.post(path+"/updateTask", task)
-		.success(function(data){
-			return update.resolve(data);
-		})
-		.error(function(data){
-			return data;
-		});
-		return update.promise;
-	};
-	
-	this.getHistory = function(task){
-		historyPromise = $q.defer();
-		$http.post(path+"/historyTask", task)
-		.success(function(data){
-			return historyPromise.resolve(data);
-		})
-		.error(function(data){
-			return data;
-		});
-		return historyPromise.promise;
-	};
-	
 	
 });
 
@@ -291,14 +142,13 @@ app.directive("taskselection", function($rootScope){
 //Controller
 //*************************
 
-app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JTaskService, $location){
+app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JTaskService, GetAllProjects, $location){
 	$rootScope.projects = [];
 	$rootScope.projectId;
 	$scope.timers = false;
 	
-	var projectPromise = JTaskService.getProjects();
-	projectPromise.then(function(data){
-		$rootScope.projects = angular.fromJson(data.data);
+	GetAllProjects.query({}, function(data){
+		$rootScope.projects = data;
 	});
 	
 	$scope.openBoard = function(){
@@ -374,15 +224,10 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 		}else{
 			return days+" dni "+hours+"h";
 		}
-		
 	};
-	
-	
-	
-
 });
 
-app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService, $location){
+app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService, UpdateTask, GetAllTasksInOneProject, $location){
 	$scope.wait = [];
 	$scope.toDo = [];
 	$scope.inProgress = [];
@@ -395,17 +240,10 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		$rootScope.splitToColumn($rootScope.project.tasks);
 	};
 	
-	$rootScope.setAllProjectsInScope = function(){
-		var path = "http://localhost:8080/nexus/v1/jt";
-//		var path = "http://timeron.ddns.net:8080/nexus/v1/jt";
-		
-		$http.get(path+"/getAllTasksInOneProject")
-		.success(function(data){
+	$rootScope.setAllProjectsInScope = function(){		
+		GetAllTasksInOneProject.query({}, function(data){
 			$rootScope.project = angular.fromJson(data);
 			$rootScope.splitToColumn($rootScope.project.tasks);
-		})
-		.error(function(data){
-			return data;
 		});
 		
 	};
@@ -514,7 +352,9 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 				break;
 		}
 		task.updateMessageStatus = task.status;
-		JTaskService.updateTask(task);
+		UpdateTask.query(task, function(data){
+			console.log(data);
+		});
 	};
 	
 	$rootScope.taskClose = function(task){
@@ -522,7 +362,9 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 		$scope.done.splice(index, 1);
 		task.status = 6;
 		task.updateMessageStatus = task.status;
-		JTaskService.updateTask(task);
+		UpdateTask.query(task, function(data){
+			console.log(data);
+		});
 	};
 	
 	$scope.taskDirestionNext = function(task){
@@ -586,7 +428,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 
 //new modals
 
-app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskService){
+app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskService, AddNewProject){
 //	$scope.projectId;
 //	$scope.projectName;
 	$scope.newProjectName;
@@ -596,14 +438,16 @@ app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskSe
 	$rootScope.projects = [];
 	
 	$scope.addProject = function() {
-		var addNewProjectPromise = JTaskService.addNewProject($scope.newProjectName, $scope.newProjectDescription, $scope.newProjectPrefix);
-		addNewProjectPromise.then(function(data){
+		AddNewProject.query({
+			name: $scope.newProjectName, 
+			description: $scope.newProjectDescription,
+			prefix: $scope.newProjectPrefix
+		}, function(data){
 			if(data.success == true){
 				$scope.messages = data.messages;
 				$rootScope.projects.push(data.object);
 			}
-		});
-		
+		});		
 	};
 });
 
@@ -643,11 +487,17 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 			$scope.workExpected = 0;
 		}
 		
-		$scope.addTaskPromise = JTaskService.addNewTask($rootScope.projectId, $scope.newSummary, $scope.newType.id, $scope.newPriority.id, $scope.newDescription, $scope.date, $scope.workExpected);
-		$scope.addTaskPromise.then(function(status){
+		AddNewTask.query({
+			projectId: $rootScope.projectId,
+			summary: $scope.newSummary,
+			taskTypeId: $scope.newType.id,
+			priority: $scope.newPriority.id,
+			description: $scope.newDescription,
+			endDateLong: $scope.date,
+			workExpected: $scope.workExpected
+		}, function(date){
 			if(status.success == true){
-				projectTasks = JTaskService.getAllProjectTasks($rootScope.projectId);
-				projectTasks.then(function(data){
+				projectTasks = GetAllProjectTasks.query({}, function(data){
 					$rootScope.project.tasks = data;
 					$rootScope.splitToColumn($rootScope.project.tasks);
 				});
@@ -657,7 +507,7 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	};
 });
 
-app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask, Users){
+app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask, Users, UpdateTask){
 	$scope.task;
 	$scope.histories;
 	$scope.notes;
@@ -723,13 +573,13 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 		});
 	};
 	
-	var updateStatus = function(task, insex){
-		task.status = insex;
+	var updateStatus = function(task, index){
+		task.status = index;
 		task.updateMessageStatus = task.status;
 		
-		$scope.update = JTaskService.updateTask(task);
-		$scope.update.then(function(data){
+		UpdateTask.query(task, function(data){
 			$scope.task = data.object;
+			console.log(data);
 		});
 	};
 	

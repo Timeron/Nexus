@@ -7,6 +7,13 @@ app.factory("Version", function($resource) {
 	});
 });
 
+app.factory("GetAllTasksInOneProject", function($resource) {
+	return $resource("/nexus/v1/jt/getAllTasksInOneProject", 
+			{}, 
+			{query: { method: "GET", isArray: false }
+	});
+});
+
 app.factory("AllProjectTask", function($resource) {
 	return $resource("/nexus/v1/jt/allProjectTask", 
 			{}, 
@@ -33,4 +40,75 @@ app.factory("AssignTaskToUser", function($resource){
 			{}, 
 			{query: { method: "POST", isArray: false }
 	});
+});
+
+app.factory("UpdateTask", function($resource){
+	return $resource("/nexus/v1/jt/updateTask", 
+			{}, 
+			{query: { method: "POST", isArray: false }
+	});
+});
+
+app.factory("Histories", function($resource) {
+	return $resource("/nexus/v1/jt/historyTask", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
+app.factory("Notes", function($resource) {
+	return $resource("/nexus/v1/jt/notesTask", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
+app.factory("GetAllProjectTasks", function($resource) {
+	return $resource("/nexus/v1/jt/getProjectTasks", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
+app.factory("GetAllProjects", function($resource) {
+	return $resource("/nexus/v1/jt/getAllProjects", 
+			{}, 
+			{query: { method: "GET", isArray: true }
+	});
+});
+
+app.factory("AddNote", function($resource){
+	return $resource("/nexus/v1/jt/addNote", 
+			{}, 
+			{query: { method: "POST", isArray: false }
+	});
+});
+
+app.factory("TaskService", function($resource){
+	return {
+		getTask : function(){
+			return $resource("/nexus/v1/jt/getTask", 
+					{}, 
+					{query: { method: "POST", isArray: false }
+			});
+		}
+	};
+});
+
+app.factory("GetTask", function($resource){
+	return $resource("/nexus/v1/jt/getTask", 
+			{}, 
+			{
+				query: { method: "POST", isArray: false }
+			}
+		);
+});
+
+app.factory("AddNewProject", function($resource){
+	return $resource("/nexus/v1/jt/addProject", 
+			{}, 
+			{
+				query: { method: "POST", isArray: false }
+			}
+		);
 });
