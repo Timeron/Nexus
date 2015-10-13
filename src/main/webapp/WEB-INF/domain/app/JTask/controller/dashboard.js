@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl', 'CommonJTaskDirective']);
 
 
 app.service("JTaskService", function($http, $q){
@@ -227,7 +227,7 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 	};
 });
 
-app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService, UpdateTask, GetAllTasksInOneProject, $location){
+app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService, UpdateTask, GetAllTasksInOneProject, AllProjectTasks, $location){
 	$scope.wait = [];
 	$scope.toDo = [];
 	$scope.inProgress = [];
@@ -237,7 +237,10 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 	$scope.taskDetails;
 	
 	$rootScope.setProjectInScope = function(){
-		$rootScope.splitToColumn($rootScope.project.tasks);
+		$rootScope.project.tasks = AllProjectTasks.query({id: $rootScope.project.id}, function(){
+			$rootScope.splitToColumn($rootScope.project.tasks);
+		});
+		
 	};
 	
 	$rootScope.setAllProjectsInScope = function(){		
@@ -507,7 +510,7 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	};
 });
 
-app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask, Users, UpdateTask){
+app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask, Users, AllProjectTasks, UpdateTask, SetMainTask){
 	$scope.task;
 	$scope.histories;
 	$scope.notes;
@@ -553,7 +556,7 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 			return true;
 		}
 		return false;
-	}
+	};
 	
 	$scope.addNote = function(){
 		AddNote.query(
@@ -608,6 +611,34 @@ app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, 
 			return true;
 		}
 	};
-
+	
+	$scope.addMainTask = function(id){
+		console.log("Id: "+id);
+		SetMainTask.query({
+			taskId: $scope.task.id,
+			mainTaskId: id
+		}, function(data){
+			$scope.taskDetails = data.object;
+		});
+	};
+	
+	$scope.setTaskInNewWindow = function(taskId){
+		GetTask.query({id: taskId}, function(data){
+			$rootScope.taskDetails = data;
+			switch($rootScope.taskDetails.taskTypeId){
+			case 1 : 
+				$scope.task.taskType = "TASK";
+				break;
+			case 2 : 
+				$scope.task.taskType = "BUG";
+				break;
+			case 3 : 
+				$scope.task.taskType = "IMPROVMENT";
+				break;
+			default :
+				break;
+			}
+		});
+	};
 	
 });

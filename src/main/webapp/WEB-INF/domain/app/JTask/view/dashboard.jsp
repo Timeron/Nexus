@@ -315,6 +315,7 @@
 <!-- 					<div class="taskDetailsName clickable" role="button" data-toggle="modal" data-target="#taskDetailsModal" data-ng-click="setTaskInNewWindow(taskDetails)">{{taskDetails.name}}</div> -->
 <!-- 					<div class="taskDetailsName clickable" role="button" data-toggle="modal" data-target="#taskDetailsModal" data-ng-click="setTaskInNewWindow(taskDetails)" >{{taskDetails.name}}</div> -->
 					<a class="taskDetailsName clickable" data-ng-click="setTaskInNewWindow(taskDetails)" >{{taskDetails.name}}</a>
+					<p class="taskDetailsMainTaskName" >{{taskDetails.mainTaskName}}</p>
 					<div class="taskDetailsPriority">Piorytet: {{taskDetails.priority}}</div>
 					
 					<div class="taskDetailsSummary">Opis: <p>{{taskDetails.summary}}</p></div>

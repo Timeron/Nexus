@@ -9,4 +9,5 @@ public class MessageResources {
 	public static final String RECORD_ADD_ERROR = "Operacja nie zostało dodana";
 	public static final String RECORD_ADD_NO_ACCOUNT = "Brakuje danych o koncie";
 	
+	public static final String OPERATION_SUCCESS = "Operacja powiodła się";
 }

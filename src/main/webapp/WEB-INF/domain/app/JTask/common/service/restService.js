@@ -14,8 +14,8 @@ app.factory("GetAllTasksInOneProject", function($resource) {
 	});
 });
 
-app.factory("AllProjectTask", function($resource) {
-	return $resource("/nexus/v1/jt/allProjectTask", 
+app.factory("AllProjectTasks", function($resource) {
+	return $resource("/nexus/v1/jt/allProjectTasks", 
 			{}, 
 			{query: { method: "GET", isArray: true }
 	});
@@ -112,3 +112,12 @@ app.factory("AddNewProject", function($resource){
 			}
 		);
 });
+
+app.factory("SetMainTask", function($resource){
+	return $resource("/nexus/v1/jt/setMainTask", 
+			{}, 
+			{
+				query: { method: "POST", isArray: false }
+			}
+		);
+})

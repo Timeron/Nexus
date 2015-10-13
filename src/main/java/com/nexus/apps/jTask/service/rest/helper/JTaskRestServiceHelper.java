@@ -14,8 +14,10 @@ import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
+import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
+import com.nexus.apps.wallet.constant.MessageResources;
 import com.nexus.common.service.ResultMessages;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
@@ -132,7 +134,7 @@ public class JTaskRestServiceHelper {
 		if(result.isSuccess() == null || result.isSuccess()){
 			boolean save = jTaskDAO.save(jTask);
 			if(!save){
-				result.addMessage("Wystąpił błąd: Task nie dodany!");
+				result.addMessage(ResultMessages.TASK_NOT_ADDED);
 			}
 			result.setSuccess(save);
 		}else{
@@ -159,7 +161,7 @@ public class JTaskRestServiceHelper {
 	public List<JTaskDTO> getTaskList() {
 		LOG.info("ServiceHelper coled: getTaskList");
 		List<JTaskDTO> jTasksDTO = new ArrayList<JTaskDTO>();
-		for(JTask jTask : jTaskDAO.getAll()){
+		for(JTask jTask : jTaskDAO.getAll("priority", Direction.ASC)){
 			jTasksDTO.add(new JTaskDTO(jTask));
 		}
 		return jTasksDTO;
@@ -236,6 +238,7 @@ public class JTaskRestServiceHelper {
 			jTask.setWorkExpected(jTaskDTO.getWorkExpected());
 		}
 		if(jTaskDTO.getName()!=null && jTask.getName()!=jTaskDTO.getName()){
+			//TODO
 			LOG.info("!!!!!!!!!");
 		}
 		if(jTask.getPriority()!=jTaskDTO.getPriority()){
@@ -373,6 +376,20 @@ public class JTaskRestServiceHelper {
 		history.setMessage("Zadanie zostało przypisane do: "+str);
 		jHistoryDAO.save(history);
 		
+		return result;
+	}
+
+	public ServiceResult setMainTask(MainTaskDTO dto, ServiceResult result) {
+		JTask task = jTaskDAO.getById(dto.getTaskId());
+		JTask mainTask = jTaskDAO.getById(dto.getMainTaskId());
+		
+		task.setMainTask(mainTask);
+		
+		jTaskDAO.update(task);
+		task = jTaskDAO.getById(dto.getTaskId());
+		
+		result.addMessage(MessageResources.OPERATION_SUCCESS);
+		result.setObject(new JTaskDTO(task));
 		return result;
 	}
 }

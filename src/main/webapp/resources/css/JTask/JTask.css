@@ -193,13 +193,19 @@ div span .icon {
 	border: 1px solid #ccc;
 	background-color: #FFF;
 }
-.taskDetailsName {
+.taskDetailsName, .taskDetailsMainTaskName{
 	float: right;
 	width: 50%;
-	font-size: 20px;
-	font-weight: bold;
 	text-align: right;
 	margin: 5px 10px 0px 0px;
+	font-weight: bold;
+}
+.taskDetailsMainTaskName{
+	font-size: 12px;
+}
+.taskDetailsName{
+	font-size: 20px;
+	
 }
 .taskDetailsPriority {
 	font-size: 12px;

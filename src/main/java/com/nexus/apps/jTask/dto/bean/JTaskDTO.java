@@ -16,6 +16,7 @@ public class JTaskDTO {
 	private Date created;
 	private Date updated;
 	private Integer mainTaskId;
+	private String mainTaskName;
 	private Integer taskTypeId;
 	private Integer priority;
 	private Integer projectId;
@@ -38,6 +39,7 @@ public class JTaskDTO {
 
 		if(jTask.getMainTask() != null){
 			this.mainTaskId = jTask.getMainTask().getId();
+			this.setMainTaskName(jTask.getMainTask().getName());
 		}
 		if(jTask.getTaskType() != null){
 			this.taskTypeId = jTask.getTaskType().getId();
@@ -58,6 +60,7 @@ public class JTaskDTO {
 		if(jTask.getUser() != null){
 			this.user = new NexusPersonDTO(jTask.getUser());
 		}
+			
 	}
 	public int getId() {
 		return id;
@@ -167,6 +170,12 @@ public class JTaskDTO {
 	}
 	public void setUser(NexusPersonDTO user) {
 		this.user = user;
+	}
+	public String getMainTaskName() {
+		return mainTaskName;
+	}
+	public void setMainTaskName(String mainTaskName) {
+		this.mainTaskName = mainTaskName;
 	}
 
 	

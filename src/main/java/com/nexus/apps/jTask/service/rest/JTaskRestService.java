@@ -19,6 +19,7 @@ import com.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
+import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
 import com.nexus.common.service.RestService;
 import com.nexus.common.service.ServiceResult;
@@ -77,7 +78,7 @@ public class JTaskRestService extends RestService{
 		return response;
 	}
 	
-	@RequestMapping(value = "/allProjectTask", method = RequestMethod.GET)
+	@RequestMapping(value = "/allProjectTasks", method = RequestMethod.GET)
 	public String allProjectTask(HttpServletRequest request){
 		int id = Integer.parseInt(request.getParameter("id"));
 		String response = gson.toJson(helper.getProjectTasksList(id));
@@ -168,6 +169,15 @@ public class JTaskRestService extends RestService{
 		ServiceResult result = new ServiceResult();
 		AssignUserTaskDTO dto = gson.fromJson(json, AssignUserTaskDTO.class);
 		result = helper.assignTaskToUser(dto, result);
+		return gson.toJson(result);
+	}
+	
+	@RequestMapping(value = "/setMainTask", method = RequestMethod.POST)
+	public String setMainTask(@RequestBody String json){
+		LOG.info("service: setMainTask <- "+json);
+		ServiceResult result = new ServiceResult();
+		MainTaskDTO dto = gson.fromJson(json, MainTaskDTO.class);
+		result = helper.setMainTask(dto, result);
 		return gson.toJson(result);
 	}
 }
