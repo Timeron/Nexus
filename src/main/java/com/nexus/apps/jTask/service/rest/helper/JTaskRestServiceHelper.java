@@ -239,7 +239,6 @@ public class JTaskRestServiceHelper {
 		}
 		if(jTaskDTO.getName()!=null && jTask.getName()!=jTaskDTO.getName()){
 			//TODO
-			LOG.info("!!!!!!!!!");
 		}
 		if(jTask.getPriority()!=jTaskDTO.getPriority()){
 			updated = true;

@@ -4,10 +4,17 @@
 <!-- gwarant polskich znaków -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<html>
 <head>
-<tiles:getAsString name="title" />
 <tiles:insertAttribute name="meta" />
+<div class="navbar-inverse nexus">
+	<div class="title">
+		<tiles:insertAttribute name="title" />
+	</div>
+	<a href="/nexus/">
+		<div>NEXUS</div>
+	</a>
+</div>
 </head>
 <body>
 	<div id="body">

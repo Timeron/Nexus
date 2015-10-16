@@ -5,8 +5,15 @@
 	pageEncoding="UTF-8"%>
 <html lang="pl">
 <head>
-<tiles:getAsString name="title" />
 <tiles:insertAttribute name="meta" />
+<div class="navbar-inverse nexus">
+	<div class="title">
+		<tiles:insertAttribute name="title" />
+	</div>
+	<a href="/nexus/">
+		<div>NEXUS</div>
+	</a>
+</div>
 </head>
 <body>
 	<div id="header">

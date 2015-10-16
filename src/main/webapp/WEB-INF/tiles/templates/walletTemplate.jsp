@@ -5,10 +5,17 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-
+<html>
 <head>
-<tiles:getAsString name="title" />
 <tiles:insertAttribute name="meta" />
+<div class="navbar-inverse nexus">
+	<div class="title">
+		<tiles:insertAttribute name="title" />
+	</div>
+	<a href="/nexus/">
+		<div>NEXUS</div>
+	</a>
+</div>
 </head>
 <body>
 	<div id="body">

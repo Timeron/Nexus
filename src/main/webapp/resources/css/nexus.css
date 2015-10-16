@@ -1,0 +1,17 @@
+.nexus{
+	float:right;
+	width: 100%;
+	background-color: #000;
+	text-align: right;
+	padding: 5px 25px 5px 0;
+	font-weight: bold;
+}
+.title{
+	float:left;
+	width: 25%;
+	text-align: left;
+	color: #FFF;
+	font-weight: bold;
+	font-size: 20px;
+	padding: 5px 25px 5px 25px;;
+}

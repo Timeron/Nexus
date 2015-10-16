@@ -18,6 +18,8 @@
 <script src="<c:url value="/resources/bootstrap/datapicker/moment.min.js" />" ></script>
 <script src="<c:url value="/resources/bootstrap/datapicker/bootstrap-datetimepicker.min.js" />" ></script>
 
+<link rel="stylesheet" href="<c:url value="/resources/css/nexus.css" />" />
+
 <script src="http://d3js.org/d3.v3.js" charset="utf-8"></script>
 <%-- <script src="<c:url value="/resources/chart/Chart.min.js" />"></script> --%>
 

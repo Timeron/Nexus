@@ -7,9 +7,16 @@
 <html lang="en">
 
 <head>
-<tiles:getAsString name="title" />
 <tiles:insertAttribute name="meta" />
 <link rel="stylesheet" href="<c:url value="/resources/css/alert.css" />" />
+<div class="navbar-inverse nexus">
+	<div class="title">
+		<tiles:insertAttribute name="title" />
+	</div>
+	<a href="/nexus/">
+		<div>NEXUS</div>
+	</a>
+</div>
 </head>
 <body>
 	<!-- 	<div id="topHeader"> -->
