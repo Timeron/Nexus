@@ -1,4 +1,7 @@
 @CHARSET "UTF-8";
+.clickable {
+	cursor:pointer;
+}
 .box {
 	width: 100%;
 	float: left;

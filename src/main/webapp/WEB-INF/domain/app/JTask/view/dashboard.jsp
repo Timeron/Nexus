@@ -24,8 +24,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-ng-click="addProject()" data-dismiss="modal">Save changes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+					<button type="button" class="btn btn-primary" data-ng-click="addProject()" data-dismiss="modal">Zapisz</button>
 				</div>
 			</div>
 		</div>
@@ -61,8 +61,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-ng-click="addProject()" data-dismiss="modal">Save changes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+					<button type="button" class="btn btn-primary" data-ng-click="addProject()" data-dismiss="modal">Zapisz</button>
 				</div>
 			</div>
 		</div>
@@ -129,8 +129,8 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<button type="button" class="btn btn-primary" data-ng-click="saveTask()" data-dismiss="modal">Save changes</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+					<button type="button" class="btn btn-primary" data-ng-click="saveTask()" data-dismiss="modal">Zapisz</button>
 				</div>
 			</div>
 		</div>
@@ -140,12 +140,24 @@
 	
 <!-- 	lista projektów -->
 <div data-ng-controller = "JTaskBoardCtr" >
-	<div data-ng-repeat="project in projects">
-		<div>
-			<projectColumn index="{{$index}}" class="column" >
-				<div class="projectColumnName btn btn-success" data-ng-click="openProject(project)">{{project.name}}</div>
-				<div class="projectColumnExtend btn btn-success" data-ng-click="extendProject($index)" ><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span></div>
-			</projectColumn>
+	<div curtain hide="{{!curtain}}" class="projectsCurtain">
+		<div data-ng-repeat="project in projects">
+			<div>
+				<projectColumn index="{{$index}}" class="column" >
+					<div class="projectColumnName btn btn-success" data-ng-click="openProject(project)">{{project.name}}</div>
+					<div class="projectColumnExtend btn btn-success" data-ng-click="extendProject($index)" ><span class="glyphicon glyphicon-circle-arrow-down" aria-hidden="true"></span></div>
+				</projectColumn>
+			</div>
+		</div>
+	</div>
+	<div class="curtainButton clickable" data-ng-click="projectsCurtain()">
+		<div ng-switch on="curtain">
+			<div ng-switch-when="false">
+				<span class="glyphicon glyphicon-chevron-down"></span>
+			</div>
+			<div ng-switch-when="true">
+				<span class="glyphicon glyphicon-chevron-up"></span>
+			</div>
 		</div>
 	</div>
 </div>

@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl', 'CommonJTaskDirective', 'NexusConnection']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl', 'CommonJTaskDirective', 'CurtainDir', 'NexusConnection']);
 
 
 app.service("JTaskService", function($http, $q){
@@ -146,6 +146,7 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 	$rootScope.projects = [];
 	$rootScope.projectId;
 	$scope.timers = false;
+	$scope.curtain = false;
 	
 	GetAllProjects.query({}, function(data){
 		$rootScope.projects = data;
@@ -224,6 +225,11 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 		}else{
 			return days+" dni "+hours+"h";
 		}
+	};
+	
+	$scope.projectsCurtain = function(){
+		$scope.curtain = !$scope.curtain;
+		console.log($scope.curtain);
 	};
 });
 
