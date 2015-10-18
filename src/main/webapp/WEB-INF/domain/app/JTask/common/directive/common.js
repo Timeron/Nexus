@@ -14,4 +14,19 @@ var dir = angular.module('CommonJTaskDirective', [])
 			
 		}
 	};
+})
+
+.directive("removeFromView", function(){
+	return {
+		restrict: "AE",
+		controller: function($scope, $element, $attrs){
+			$attrs.$observe('hide', function(e) {
+				if(e === "false"){
+					$element[0].hidden = true;
+				}else{
+					$element[0].hidden = false;
+				}
+			});
+		}
+	};
 });

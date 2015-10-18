@@ -120,4 +120,13 @@ app.factory("SetMainTask", function($resource){
 				query: { method: "POST", isArray: false }
 			}
 		);
-})
+});
+
+app.factory("CheckConnection", function($resource){
+	return $resource("/nexus/v1/checkConnection", 
+			{}, 
+			{
+				query: { method: "GET", isArray: false }
+			}
+		);
+});
