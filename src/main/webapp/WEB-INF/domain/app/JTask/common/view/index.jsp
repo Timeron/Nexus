@@ -10,7 +10,7 @@
 		</div>
 		<!-- 	menu -->
 		<div class="bs-example">
-			<div class="btn-group">
+			<div class="btn-group btn-group-justified">
 				<a class="btn btn-primary btn-ms" role="button"
 					data-ng-click="openPreviouseProject()">Tablica</a> <a
 					class="btn btn-primary btn-ms" role="button"
