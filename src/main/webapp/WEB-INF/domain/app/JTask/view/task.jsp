@@ -24,10 +24,9 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
 					<button type="button" class="btn btn-primary"
-						data-ng-click="addNote()" data-dismiss="modal">Save
-						changes</button>
+						data-ng-click="addNote()" data-dismiss="modal">Zapisz</button>
 				</div>
 			</div>
 		</div>
