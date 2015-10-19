@@ -39,9 +39,10 @@ public class JTaskRestService extends NexusRestService{
 	@RequestMapping(value = "/getAllProjects", method = RequestMethod.GET)
 	public String getAllProjects(){
 		LOG.info("service: getAllProjects");
-		String result = gson.toJson(helper.getProjectList());
-		LOG.info("service response: getAllProjects -> "+result);
-		return result;
+		String response = gson.toJson(helper.getProjectList());
+		response = prepareForHtml(response);
+		LOG.info("service response: getAllProjects -> "+response);
+		return response;
 	}
 
 	@RequestMapping(value = "/getAllTasksInOneProject", method = RequestMethod.GET)
@@ -50,45 +51,57 @@ public class JTaskRestService extends NexusRestService{
 		JProjectDTO jProjectDTO = new JProjectDTO();
 		jProjectDTO.setName("All Projects");
 		jProjectDTO.addTasks(helper.getTaskList());
-		String result = gson.toJson(jProjectDTO);
-		LOG.info("service response: getTasks -> "+result);
-		return result;
+		String response = gson.toJson(jProjectDTO);
+		response = prepareForHtml(response);
+		LOG.info("service response: getTasks -> "+response);
+		return response;
 	}
 	
 	@RequestMapping(value = "/historyTask", method = RequestMethod.GET)
 	public String historyTask(HttpServletRequest request){
+		LOG.info("service: historyTask <- "+request.getParameter("id"));
 		int taskId = Integer.parseInt(request.getParameter("id"));
-		LOG.info("service response: historyTask -> "+gson.toJson(helper.getTaskHistory(taskId)));
-		return gson.toJson(helper.getTaskHistory(taskId));
+		String response = gson.toJson(helper.getTaskHistory(taskId));
+//		response = prepareForHtml(response);
+		LOG.info("service response: historyTask -> "+response);
+		return response;
 	}
 	
 	@RequestMapping(value = "/notesTask", method = RequestMethod.GET)
 	public String notesTask(HttpServletRequest request){
+		LOG.info("service: notesTask <- "+request.getParameter("id"));
 		int taskId = Integer.parseInt(request.getParameter("id"));
 		String response = gson.toJson(helper.getTaskNotes(taskId));
+		response = prepareForHtml(response);
 		LOG.info("service response: notesTask -> "+ response);
 		return response;
 	}
 	
 	@RequestMapping(value = "/appVersion", method = RequestMethod.GET)
 	public String appVersion(HttpServletRequest request){
+		LOG.info("service: appVersion <- "+request.getParameter("name"));
 		String appName = request.getParameter("name");
 		String response = gson.toJson(helper.getAppVersion(appName));
+		response = prepareForHtml(response);
 		LOG.info("service response: appVersion -> "+ response);
 		return response;
 	}
 	
 	@RequestMapping(value = "/allProjectTasks", method = RequestMethod.GET)
 	public String allProjectTask(HttpServletRequest request){
+		LOG.info("service response: allProjectTasks <- "+request.getParameter("id"));
 		int id = Integer.parseInt(request.getParameter("id"));
 		String response = gson.toJson(helper.getProjectTasksList(id));
-		LOG.info("service response: getAllProjectTasks -> "+ response);
+		response = prepareForHtml(response);
+		LOG.info("service response: allProjectTasks -> "+ response);
 		return response;
 	}
 	
 	@RequestMapping(value = "/allUsers", method = RequestMethod.GET)
 	public String allUsers(HttpServletRequest request){
+		LOG.info("service response: allUsers");
 		String response = gson.toJson(helper.getAllUsers());
+		response = prepareForHtml(response);
 		LOG.info("service response: allUsers -> "+ response);
 		return response;
 	}
@@ -102,28 +115,33 @@ public class JTaskRestService extends NexusRestService{
 	public String getAllProjectTasks(@RequestBody String json){
 		LOG.info("service: getAllProjectTasks <- "+json);
 		JProjectDTO jProjectDTO = gson.fromJson(json, JProjectDTO.class);
-		String result = gson.toJson(helper.getProjectTasksList(jProjectDTO));
-		LOG.info("service response: getAllProjectTasks -> "+result);
-		return result;
+		String response = gson.toJson(helper.getProjectTasksList(jProjectDTO));
+		response = prepareForHtml(response);
+		LOG.info("service response: getAllProjectTasks -> "+response);
+		return response;
 	}
 	
 	@RequestMapping(value = "/getTask", method = RequestMethod.POST)
 	public String getTask(@RequestBody String json){
 		LOG.info("service: getTask <- "+json);
 		JTaskDTO task = gson.fromJson(json, JTaskDTO.class);
-		String result = gson.toJson(helper.getTask(task.getId()));
-		LOG.info("service response: getTask -> "+result);
-		return result;
+		String response = gson.toJson(helper.getTask(task.getId()));
+		response = prepareForHtml(response);
+		LOG.info("service response: getTask -> "+response);
+		return response;
 	}
 	
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
 	public String addProject(@RequestBody String json){
+		//TODO refaktor
 		LOG.info("service: addProject <- "+json);
 		ServiceResult result = new ServiceResult();
 		JProjectDTO jProjectDTO = gson.fromJson(json, JProjectDTO.class);
 		result = helper.addNewProject(jProjectDTO, result);
-		LOG.info("service response: addProject -> "+gson.toJson(result));
+		String response = gson.toJson(result);
+		response = prepareForHtml(response);
+		LOG.info("service response: addProject -> "+response);
 		return gson.toJson(result);
 	}
 	
@@ -133,8 +151,10 @@ public class JTaskRestService extends NexusRestService{
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
 		result = helper.addNewTask(jTaskDTO, result, principal);
-		LOG.info("service response: addTask -> "+gson.toJson(result));
-		return gson.toJson(result);
+		String response = gson.toJson(result);
+		response = prepareForHtml(response);
+		LOG.info("service response: addTask -> "+response);
+		return response;
 	}
 
 	@RequestMapping(value = "/updateTask", method = RequestMethod.POST)
@@ -143,16 +163,20 @@ public class JTaskRestService extends NexusRestService{
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
 		result = helper.updateTask(jTaskDTO, result);
-
-		LOG.info("service response: updateTask -> "+gson.toJson(result));
-		return gson.toJson(result);
+		String response = prepareForHtml(gson.toJson(result));
+		LOG.info("service response: updateTask -> "+response);
+		return response;
 	}
 	
-	@RequestMapping(value = "/historyTask", method = RequestMethod.POST)
-	public String historyTask(@RequestBody String json){
-		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
-		return gson.toJson(helper.getTaskHistory(jTaskDTO.getId()));
-	}	
+//	@RequestMapping(value = "/historyTask", method = RequestMethod.POST)
+//	public String historyTask(@RequestBody String json){
+//		LOG.info("service: historyTask <- "+json);
+//		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
+//		String response = gson.toJson(helper.getTaskHistory(jTaskDTO.getId()));
+//		response = prepareForHtml(response);
+//		LOG.info("service response: historyTask -> "+response);
+//		return response;
+//	}	
 	
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
 	public String newNote(@RequestBody String json){
@@ -160,7 +184,9 @@ public class JTaskRestService extends NexusRestService{
 		ServiceResult result = new ServiceResult();
 		JNoteDTO jNoteDTO = gson.fromJson(json, JNoteDTO.class);
 		result = helper.saveNote(jNoteDTO, result);
-		return gson.toJson(result);
+		String response = prepareForHtml(gson.toJson(result));
+		LOG.info("service response: newNote -> "+response);
+		return response;
 	}
 	
 	@RequestMapping(value = "/assignTaskToUser", method = RequestMethod.POST)
@@ -169,7 +195,9 @@ public class JTaskRestService extends NexusRestService{
 		ServiceResult result = new ServiceResult();
 		AssignUserTaskDTO dto = gson.fromJson(json, AssignUserTaskDTO.class);
 		result = helper.assignTaskToUser(dto, result);
-		return gson.toJson(result);
+		String response = prepareForHtml(gson.toJson(result));
+		LOG.info("service response: assignTaskToUser -> "+response);
+		return response;
 	}
 	
 	@RequestMapping(value = "/setMainTask", method = RequestMethod.POST)
@@ -178,6 +206,14 @@ public class JTaskRestService extends NexusRestService{
 		ServiceResult result = new ServiceResult();
 		MainTaskDTO dto = gson.fromJson(json, MainTaskDTO.class);
 		result = helper.setMainTask(dto, result);
-		return gson.toJson(result);
+		String response = prepareForHtml(gson.toJson(result));
+		LOG.info("service response: setMainTask -> "+response);
+		return response;
+	}
+	
+	private String prepareForHtml(String response) {
+		System.out.println(response.indexOf("\\n"));
+		String result = response.replace("\\n", "<br />");
+		return result;
 	}
 }

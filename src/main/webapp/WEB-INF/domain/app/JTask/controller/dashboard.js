@@ -1,10 +1,10 @@
 var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl', 'CommonJTaskDirective', 'CurtainDir', 'NexusConnection']);
-
-
-app.service("JTaskService", function($http, $q){
-	
-});
-
+//Filter
+app.filter('trusted', ['$sce', function($sce){
+    return function(text) {
+        return $sce.trustAsHtml(text);
+    };
+}]);
 //Factory
 
 //Directives
@@ -142,7 +142,7 @@ app.directive("taskselection", function($rootScope){
 //Controller
 //*************************
 
-app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JTaskService, GetAllProjects, $location){
+app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, GetAllProjects, $location){
 	$rootScope.projects = [];
 	$rootScope.projectId;
 	$scope.timers = false;
@@ -233,7 +233,7 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, JT
 	};
 });
 
-app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskService, UpdateTask, GetAllTasksInOneProject, AllProjectTasks, $location){
+app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, UpdateTask, GetAllTasksInOneProject, AllProjectTasks, $location){
 	$scope.wait = [];
 	$scope.toDo = [];
 	$scope.inProgress = [];
@@ -437,7 +437,7 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, JTaskServi
 
 //new modals
 
-app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskService, AddNewProject){
+app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, AddNewProject){
 //	$scope.projectId;
 //	$scope.projectName;
 	$scope.newProjectName;
@@ -461,7 +461,7 @@ app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, JTaskSe
 });
 
 
-app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
+app.controller("JTaskNewTaskCtr", function($rootScope, $scope, AddNewTask){
 	$scope.priorities = [
 	                     {id:1},
 	                     {id:2},
@@ -516,7 +516,7 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, JTaskService){
 	};
 });
 
-app.controller("TaskController", function($rootScope, $scope, $q, JTaskService, Histories, Notes, AddNote, GetTask, Users, AllProjectTasks, UpdateTask, SetMainTask){
+app.controller("TaskController", function($rootScope, $scope, $q, Histories, Notes, AddNote, GetTask, Users, AllProjectTasks, UpdateTask, SetMainTask){
 	$scope.task;
 	$scope.histories;
 	$scope.notes;

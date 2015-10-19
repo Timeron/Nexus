@@ -331,7 +331,7 @@
 					<div class="taskDetailsPriority">Piorytet: {{taskDetails.priority}}</div>
 					
 					<div class="taskDetailsSummary">Opis: <p>{{taskDetails.summary}}</p></div>
-					<div class="taskDetailsDescription">Szczegóły: <p>{{taskDetails.description}}</p></div>
+					<div class="taskDetailsDescription">Szczegóły: <p ng-bind-html="taskDetails.description | trusted"></p></div>
 					<div class="taskDetailsSummary border-bottom" data-ng-if="chasTermins()">
 						<div class="space-top-xxl border-bottom">Terminy:</div> 
 						<div class="paragraph-m font-m">Zakończenie: {{polishDate(taskDetails.endDate)}}</div>

@@ -211,7 +211,7 @@
 				</div>
 				<div class="taskDetailsDescription">
 					Szczegóły:
-					<p>{{taskDetails.description}}</p>
+					<p ng-bind-html="taskDetails.description | trusted"></p>
 				</div>
 				<div class="taskDetailsDates">
 					<div class="taskDetailsCreated">Dodany:
@@ -266,7 +266,7 @@
 								<div class="taskWindowDetailsEventName">Notatka</div>
 								<div class="eventDate">{{polishDate(note.created)}}</div>
 							</div>
-							<div class="historyEventContent">notatka: {{note.content}}
+							<div class="historyEventContent" ng-bind-html="note.content | trusted">
 							</div>
 						</div>
 					</div>

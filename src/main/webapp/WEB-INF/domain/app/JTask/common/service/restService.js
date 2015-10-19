@@ -21,6 +21,13 @@ app.factory("AllProjectTasks", function($resource) {
 	});
 });
 
+app.factory("AddNewTask", function($resource){
+	return $resource("/nexus/v1/jt/addTask", 
+			{},
+			{query: { method: "POST", isArray: false }	
+	});
+});
+
 app.factory("UpdateTask", function($resource){
 	return $resource("/nexus/v1/jt/updateTask", 
 			{},
@@ -37,13 +44,6 @@ app.factory("Users", function($resource) {
 
 app.factory("AssignTaskToUser", function($resource){
 	return $resource("/nexus/v1/jt/assignTaskToUser", 
-			{}, 
-			{query: { method: "POST", isArray: false }
-	});
-});
-
-app.factory("UpdateTask", function($resource){
-	return $resource("/nexus/v1/jt/updateTask", 
 			{}, 
 			{query: { method: "POST", isArray: false }
 	});
