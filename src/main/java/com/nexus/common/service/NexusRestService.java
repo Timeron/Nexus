@@ -26,9 +26,12 @@ public class NexusRestService {
 	
 	@RequestMapping(value = "/checkConnection", method = RequestMethod.GET)
 	public String checkConnection(Principal principal){
-		LOG.info("service: checkConnection " + principal.getName());
-		String response = gson.toJson(helper.checkConnection());
-		LOG.info("service response: checkConnection -> "+response);
+		String response = "NUF";
+		if(principal != null){
+			LOG.info("service: checkConnection " + principal.getName());
+			response = gson.toJson(helper.checkConnection());
+			LOG.info("service response: checkConnection -> "+response);
+		}
 		return response;
 	}
 	
