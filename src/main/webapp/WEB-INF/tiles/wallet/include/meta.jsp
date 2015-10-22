@@ -17,9 +17,12 @@
 <script src="<c:url value="/resources/js/angular/angular-resource.js" />"></script>
 <script src="<c:url value="/resources/js/angular/angular-route.js" />"></script>
 
+<script src="<c:url value="/domain/app/Wallet/controller/walletCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/controller/walletMenuCtrl.js" />"></script>
+<script src="<c:url value="/domain/app/Wallet/controller/walletMainCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/directive/datepicker.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/service/walletService.js" />"></script>
+
 
 <link rel="stylesheet" href="<c:url value="/resources/css/wallet/wallet.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/timeron.css" />" />

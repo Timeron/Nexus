@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.nexus.apps.wallet.constant.MessageResources;
+import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
 import com.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
@@ -138,6 +139,32 @@ public class WalletRestServiceHelper {
 			accountDTOs.add(accountDTO);
 		}
 		return accountDTOs;
+	}
+
+	public ServiceResult getAllAccountsAndRecords(Principal principal) {
+		ServiceResult result = new ServiceResult();
+		List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
+		for(WalletAccount account : walletAccountDAO.getByUser(nexusPersonDAO.getByNick(principal.getName()))){
+			AccountDTO accountDTO = new AccountDTO(account);
+			List<RecordDTO> recordDTOs = new ArrayList<RecordDTO>();
+			RecordDTO recordDTO;
+			float sum = (float) 0;
+			for(WalletRecord record : walletRecordDAO.getRecordsFromAccount(account)){
+				recordDTO = new RecordDTO(record);
+				recordDTOs.add(recordDTO);
+				if(record.isIncome()){
+					sum += record.getValue();
+				}else{
+					sum -= record.getValue();
+				}
+			}
+			accountDTO.setRecords(recordDTOs);
+			accountDTOs.add(accountDTO);
+			accountDTO.setSum(sum);
+		}
+		result.setObject(accountDTOs);
+		result.setSuccess(true);
+		return result;
 	}
 
 }

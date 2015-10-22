@@ -4,8 +4,9 @@ import java.util.Date;
 import java.util.List;
 
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
+import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 
-public class AccountDTO extends NewAccountDTO{
+public class AccountDTO{
 
 	private int id;
 	private String name;
@@ -15,6 +16,18 @@ public class AccountDTO extends NewAccountDTO{
 	private NexusPersonDTO personDTO;
 	private String currency;
 	private List<RecordDTO> records;
+	private float sum;
+	
+	public AccountDTO(){}
+	
+	public AccountDTO(WalletAccount account) {
+		this.id = account.getId();
+		this.name = account.getName();
+		this.description = account.getDescription();
+		this.created = account.getTimestamp();
+		this.updated = account.getUpdated();
+		this.currency = account.getCurrency();
+	}
 	
 	public int getId() {
 		return id;
@@ -64,8 +77,11 @@ public class AccountDTO extends NewAccountDTO{
 	public void setRecords(List<RecordDTO> records) {
 		this.records = records;
 	}
-	
-	
-	
+	public float getSum() {
+		return sum;
+	}
+	public void setSum(float sum) {
+		this.sum = sum;
+	}
 	
 }

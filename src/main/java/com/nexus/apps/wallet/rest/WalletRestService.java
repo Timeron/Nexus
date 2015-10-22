@@ -42,6 +42,15 @@ public class WalletRestService {
 		return result;
 	}
 	
+	@RequestMapping(value="/getAllAccountsAndRecords", method = RequestMethod.GET)
+	public String getAllAccountsAndRecords(Principal principal){
+		LOG.info("service: getAllAccountsAndRecords");
+		String result = gson.toJson(helper.getAllAccountsAndRecords(principal));
+//		String result = gson.toJson(helper.getAllUserAccounts(principal));
+		LOG.info("service response: getAllAccountsAndRecords -> "+result);
+		return result;
+	}
+	
 //	POST
 	
 	@RequestMapping(value="/addAccount", method = RequestMethod.POST)

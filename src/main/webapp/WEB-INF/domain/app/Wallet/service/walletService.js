@@ -14,6 +14,13 @@ app.factory("AddNewRecord", function($resource){
 		);
 });
 
+app.factory("GetAllAccountsAndRecords", function($resource){
+	return $resource("/nexus/v1/wallet/getAllAccountsAndRecords", 
+			{}, 
+			{query: { method: "GET", isArray: false }}
+		);
+});
+
 app.factory("GetAllRecordTypes", function($resource){
 	return $resource("/nexus/v1/wallet/getAllRecordTypes", 
 			{}, 

@@ -1,5 +1,7 @@
 package com.nexus.apps.wallet.service.dto;
 
+import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
+
 
 public class RecordDTO {
 	
@@ -13,6 +15,22 @@ public class RecordDTO {
 	private int recordTypeId = 0;
 	private int accountId = 0;
 	private int destynationAccountId = 0;
+	
+	public RecordDTO(){}
+	
+	public RecordDTO(WalletRecord record) {
+		this.id = record.getId();
+		this.value = record.getValue();
+		this.description = record.getDescription();
+		this.income = record.isIncome();
+		this.transfer = record.isTransfer();
+		this.date = record.getDate().getTime();
+		this.updated = record.getUpdated().getTime();
+		this.recordTypeId = record.getWalletType().getId();
+		if(record.getDestinationWalletAccount() != null){
+			this.destynationAccountId = record.getDestinationWalletAccount().getId();
+		}
+	}
 	
 	public Integer getId() {
 		return id;

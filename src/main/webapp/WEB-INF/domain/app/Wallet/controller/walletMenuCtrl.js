@@ -1,4 +1,4 @@
-var app = angular.module("wallet", ['WalletService', 'DatePicker']);
+var app = angular.module("WalletMenu", []);
 
 app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAllRecordTypes, AddNewRecord, GetAllUserAccounts){
 	$rootScope.currentAccount = 16;
