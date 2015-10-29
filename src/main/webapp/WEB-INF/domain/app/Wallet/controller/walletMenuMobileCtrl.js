@@ -11,6 +11,7 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 	$scope.operationDate = 0;
 	$scope.operationTime = 0;
 	$scope.currentAccount;
+	$scope.message = "";
 	
 	$scope.targetAccountsHide = true;
 	$scope.accountsHide = true;
@@ -46,7 +47,12 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 				recordTypeId : $scope.type.id,
 				accountId : $scope.currentAccount.id
 			}, function(data) {
-				$scope.message = data;
+				if(data.success){
+					alert("Rekord dodany");
+				}else{
+					alert(data.message);
+				}
+				
 			});
 		}else{
 			AddNewRecord.query({
@@ -60,6 +66,7 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 				$scope.message = data;
 			});
 		}
+		$scope.amount = 0;
 	};
 	
 	$scope.changeIncomeTrue = function(){

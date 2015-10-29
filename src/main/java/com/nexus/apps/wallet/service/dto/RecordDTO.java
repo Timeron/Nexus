@@ -24,9 +24,15 @@ public class RecordDTO {
 		this.description = record.getDescription();
 		this.income = record.isIncome();
 		this.transfer = record.isTransfer();
-		this.date = record.getDate().getTime();
-		this.updated = record.getUpdated().getTime();
-		this.recordTypeId = record.getWalletType().getId();
+		if(record.getDate() != null){
+			this.date = record.getDate().getTime();
+		}
+		if(record.getUpdated() != null){
+			this.updated = record.getUpdated().getTime();
+		}
+		if(record.getWalletType() != null){
+			this.recordTypeId = record.getWalletType().getId();
+		}
 		if(record.getDestinationWalletAccount() != null){
 			this.destynationAccountId = record.getDestinationWalletAccount().getId();
 		}

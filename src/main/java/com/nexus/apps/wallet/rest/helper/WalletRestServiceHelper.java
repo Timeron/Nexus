@@ -1,5 +1,6 @@
 package com.nexus.apps.wallet.rest.helper;
 
+import java.math.BigDecimal;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -148,23 +149,38 @@ public class WalletRestServiceHelper {
 			AccountDTO accountDTO = new AccountDTO(account);
 			List<RecordDTO> recordDTOs = new ArrayList<RecordDTO>();
 			RecordDTO recordDTO;
-			float sum = (float) 0;
-			for(WalletRecord record : walletRecordDAO.getRecordsFromAccount(account)){
-				recordDTO = new RecordDTO(record);
+			BigDecimal sum = new BigDecimal(0);
+			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account);
+			for(WalletRecord record : records){
+				recordDTO = new RecordDTO();
 				recordDTOs.add(recordDTO);
-				if(record.isIncome()){
-					sum += record.getValue();
+				
+				if(record.isTransfer()){
+					if(record.isIncome()){
+						sum = sum.add(round(record.getValue(),2));
+					}else{
+						sum = sum.add(round(record.getValue(),2).negate());
+					}
 				}else{
-					sum -= record.getValue();
+					if(record.isIncome()){
+						sum = sum.add(round(record.getValue(),2));
+					}else{
+						sum = sum.add(round(record.getValue(),2).negate());
+					}
 				}
 			}
 			accountDTO.setRecords(recordDTOs);
 			accountDTOs.add(accountDTO);
-			accountDTO.setSum(sum);
+			accountDTO.setSum(sum.doubleValue());
 		}
 		result.setObject(accountDTOs);
 		result.setSuccess(true);
 		return result;
 	}
 
+	private BigDecimal round(float d, int decimalPlace) {
+        BigDecimal bd = new BigDecimal(Float.toString(d));
+        bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
+        return bd;
+    }
 }

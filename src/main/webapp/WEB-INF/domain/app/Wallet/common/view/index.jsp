@@ -110,6 +110,8 @@
 		<div>mobile: {{mobile}}</div>
 	</div>	
 	<div data-ng-controller="WalletMainCtrl">
+		<p>user: {{user}}</p>
+		<p>userPOST: {{userPOST}}</p>
 		<div ng-repeat="account in accounts">{{account.description}}: {{account.sum}}</div>
 	</div>
 	<div data-ng-view></div>

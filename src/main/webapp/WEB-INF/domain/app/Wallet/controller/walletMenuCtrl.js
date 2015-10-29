@@ -26,8 +26,8 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 	};
 	
 	if(window.mobilecheck()){
-//		window.location.href = "http://timeron.ddns.net:8080/nexus/wallet/mobile";
-		window.location.href = "http://localhost:8080/nexus/wallet/mobile";
+		window.location.href = "http://timeron.ddns.net:8080/nexus/wallet/mobile";
+//		window.location.href = "http://localhost:8080/nexus/wallet/mobile";
 	}
 	
 	$scope.addAccount = function(){

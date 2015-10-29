@@ -35,4 +35,14 @@ public class NexusRestService {
 		return response;
 	}
 	
+	@RequestMapping(value = "/currentUser", method = RequestMethod.GET)
+	public String currentUser(Principal principal){
+		return gson.toJson(principal);
+	}
+	
+	@RequestMapping(value = "/currentUserPOST", method = RequestMethod.POST)
+	public String currentUserPOST(Principal principal){
+		return gson.toJson(principal);
+	}
+	
 }

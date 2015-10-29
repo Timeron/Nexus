@@ -11,6 +11,7 @@
 		</div>
 	</div>
 	<div id="calculatorValue">
+		<div class="message">{{message}}</div>
 		<div id="middleMenu">
 			<div class="calendar glyphicon glyphicon-calendar" ng-click="getDate()"></div>
 			<div ng-switch on="transfer">

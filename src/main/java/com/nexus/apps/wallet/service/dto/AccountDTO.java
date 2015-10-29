@@ -16,7 +16,7 @@ public class AccountDTO{
 	private NexusPersonDTO personDTO;
 	private String currency;
 	private List<RecordDTO> records;
-	private float sum;
+	private double sum;
 	
 	public AccountDTO(){}
 	
@@ -25,7 +25,9 @@ public class AccountDTO{
 		this.name = account.getName();
 		this.description = account.getDescription();
 		this.created = account.getTimestamp();
-		this.updated = account.getUpdated();
+		if(account.getUpdated() != null){
+			this.updated = account.getUpdated();
+		}
 		this.currency = account.getCurrency();
 	}
 	
@@ -77,10 +79,10 @@ public class AccountDTO{
 	public void setRecords(List<RecordDTO> records) {
 		this.records = records;
 	}
-	public float getSum() {
+	public double getSum() {
 		return sum;
 	}
-	public void setSum(float sum) {
+	public void setSum(double sum) {
 		this.sum = sum;
 	}
 	

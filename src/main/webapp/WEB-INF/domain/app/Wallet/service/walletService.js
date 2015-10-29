@@ -34,3 +34,17 @@ app.factory("GetAllUserAccounts", function($resource){
 			{query: { method: "GET", isArray: true }}
 		);
 });
+
+app.factory("CurrentUser", function($resource){
+	return $resource("/nexus/v1/currentUser", 
+			{}, 
+			{query: { method: "GET", isArray: false }}
+		);
+});
+
+app.factory("CurrentUserPOST", function($resource){
+	return $resource("/nexus/v1/currentUserPOST", 
+			{}, 
+			{query: { method: "POST", isArray: false }}
+		);
+});
