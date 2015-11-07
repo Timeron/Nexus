@@ -2,6 +2,7 @@ var app = angular.module('WalletMain', []);
 
 app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST) {
 	$scope.accounts = [];
+	$scope.selectedAccount;
 	$scope.user = "-";
 	$scope.userPOST = "-";
 	
@@ -24,5 +25,22 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 		}
 
 	});
+	
+	$scope.selectAccount = function(account){
+		$scope.selectedAccount = account;
+	};
+	
+	$scope.setTransferAccount = function(accountId){
+
+		if(accountId !== 0){
+			angular.forEach(accounts, function(acc){
+				if(acc.id = accountId){
+					return acc.name;
+				}
+			});
+		}else{
+			return " -";
+		}
+	};
 
 });

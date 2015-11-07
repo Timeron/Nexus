@@ -11,7 +11,6 @@
 		</div>
 	</div>
 	<div id="calculatorValue">
-		<div class="message">{{message}}</div>
 		<div id="middleMenu">
 			<div class="calendar glyphicon glyphicon-calendar" ng-click="getDate()"></div>
 			<div ng-switch on="transfer">
@@ -19,7 +18,6 @@
 					<div class="income" ng-click="changeIncomeTrue()" income="{{!income}}">Przychód</div>
 					<div class="separator">|</div>
 					<div class="income" ng-click="changeIncomeFalse()" income="{{income}}">Wydatek</div>
-					
 				</div>
 			</div>
 		</div>

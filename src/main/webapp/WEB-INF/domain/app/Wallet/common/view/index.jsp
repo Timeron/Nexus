@@ -100,19 +100,43 @@
 			</div>
 		</div>
 	</div>
-	
+	<div class="topMainMenu">
 		<div class="btn-group">
 			<a class="btn btn-primary btn-ms" role="button" data-toggle="modal" data-target="#addAccountModal">Dodaj Konto</a>
 			<a class="btn btn-primary btn-ms" role="button" data-toggle="modal" data-target="#addRecordModal">Dodaj Operacje</a>
 <!-- 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="addOperation()">Dodaj wpis</a>  -->
 <!-- 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="addOperation()">Dodaj nowy typ</a>  -->
 		</div>
-		<div>mobile: {{mobile}}</div>
+	</div>
 	</div>	
-	<div data-ng-controller="WalletMainCtrl">
-		<p>user: {{user}}</p>
-		<p>userPOST: {{userPOST}}</p>
-		<div ng-repeat="account in accounts">{{account.description}}: {{account.sum}}</div>
+	<div id="presentation">
+		<div data-ng-controller="WalletMainCtrl" >
+			<aside id="leftAside">
+				<div ng-repeat="account in accounts"><div ng-click="selectAccount(account)" class="clickable accounts">{{account.description}}</div></div>
+			</aside>
+			<main id="main">
+				<section class="details"><div class="sectionName">Szczegóły:</div>
+					<div class="accountSum">Srodki na koncie: <p>{{selectedAccount.sum}} zł</p></div>
+					<div class="accountName">Konto: <p>{{selectedAccount.name}}</p></div>
+					<div class="accountDesc">Opis: <p>{{selectedAccount.description}}</p></div>
+				</section>
+				<section class="chart"><div class="sectionName">Wykresy:</div>
+				</section>
+				<section class="operations">
+					<div class="sectionName">Operacje:</div>
+					<div class="recordRowHeader bold border-bottom">
+						<div class="recordTypeIcon recordHeader">Typ</div><div class="recordTransfer recordHeader">Transfer do</div><div class="recordValue recordHeader">kwota</div><div class="recordDate recordHeader">data</div>
+					</div>
+					<div mark-line mark="#A0C0DC" nmark="#DDD" class="recordRow" ng-repeat="record in selectedAccount.records">
+						<div class="recordTypeIcon">{{record.recordTypeId}}</div>
+						<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId)}}</div>
+						<div class="recordValue" change-font-color value="#E22" valid={{!record.income}}>{{record.value}}</div>
+						<div class="recordDate">{{record.date | date:'d-MM-yyyy HH:mm' : 'UTC'}}</div>
+					</div>
+				</section>
+			</main>
+			
+		</div>
 	</div>
 	<div data-ng-view></div>
 	</div>

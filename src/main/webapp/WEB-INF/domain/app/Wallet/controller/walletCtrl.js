@@ -1,1 +1,1 @@
-var app = angular.module("wallet", ['WalletService', 'DatePicker', 'WalletMenu', 'WalletMain']);
+var app = angular.module("wallet", ['WalletService', 'DatePicker', 'WalletMenu', 'WalletMain', 'FontDir']);

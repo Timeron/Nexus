@@ -152,7 +152,7 @@ public class WalletRestServiceHelper {
 			BigDecimal sum = new BigDecimal(0);
 			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account);
 			for(WalletRecord record : records){
-				recordDTO = new RecordDTO();
+				recordDTO = new RecordDTO(record);
 				recordDTOs.add(recordDTO);
 				
 				if(record.isTransfer()){
