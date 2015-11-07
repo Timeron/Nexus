@@ -129,7 +129,7 @@
 					</div>
 					<div mark-line mark="#A0C0DC" nmark="#DDD" class="recordRow" ng-repeat="record in selectedAccount.records">
 						<div class="recordTypeIcon">{{record.recordTypeId}}</div>
-						<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId, record.income)}}</div>
+						<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId, record.sourceWalletAccountId, record.income)}}</div>
 						<div class="recordValue" change-font-color value="#E22" valid={{!record.income}}>{{record.value}}</div>
 						<div class="recordDate">{{record.date | date:'d-MM-yyyy HH:mm' : 'UTC'}}</div>
 					</div>

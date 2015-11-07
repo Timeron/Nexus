@@ -30,17 +30,20 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 		$scope.selectedAccount = account;
 	};
 	
-	$scope.setTransferAccount = function(accountId, income){
-		if(accountId != 0){
+	$scope.setTransferAccount = function(destinationAccountId, sourceAccountId, income){
+		if(destinationAccountId != 0){
 			var str = "";
 			angular.forEach($scope.accounts, function(acc){
-				if(acc.id == accountId){
-					if(income){
-						str = ">> "+acc.name;
-					}else{
+				if(income){
+					if(acc.id == sourceAccountId){
 						str = acc.name+" >>";
 					}
+				}else{
+					if(acc.id == destinationAccountId){
+						str = ">> "+acc.name;
+					}
 				}
+				
 			});
 			return str;
 		}else{

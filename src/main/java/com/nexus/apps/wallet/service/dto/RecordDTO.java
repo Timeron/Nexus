@@ -15,6 +15,7 @@ public class RecordDTO {
 	private int recordTypeId = 0;
 	private int accountId = 0;
 	private int destynationAccountId = 0;
+	private int sourceWalletAccountId = 0;
 	
 	public RecordDTO(){}
 	
@@ -35,6 +36,9 @@ public class RecordDTO {
 		}
 		if(record.getDestinationWalletAccount() != null){
 			this.destynationAccountId = record.getDestinationWalletAccount().getId();
+		}
+		if(record.getSourceWalletAccount() != null){
+			this.sourceWalletAccountId = record.getSourceWalletAccount().getId();
 		}
 	}
 	
@@ -97,6 +101,14 @@ public class RecordDTO {
 	}
 	public void setDestynationAccountId(int destynationAccountId) {
 		this.destynationAccountId = destynationAccountId;
+	}
+
+	public int getSourceWalletAccountId() {
+		return sourceWalletAccountId;
+	}
+
+	public void setSourceWalletAccountId(int sourceWalletAccountId) {
+		this.sourceWalletAccountId = sourceWalletAccountId;
 	}
 	
 	
