@@ -33,7 +33,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	$scope.setTransferAccount = function(accountId){
 
 		if(accountId !== 0){
-			angular.forEach(accounts, function(acc){
+			angular.forEach($scope.accounts, function(acc){
 				if(acc.id = accountId){
 					return acc.name;
 				}
