@@ -112,7 +112,7 @@
 	<div id="presentation">
 		<div data-ng-controller="WalletMainCtrl" >
 			<aside id="leftAside">
-				<div ng-repeat="account in accounts"><div ng-click="selectAccount(account)" class="clickable accounts">{{account.description}}</div></div>
+				<div ng-repeat="account in accounts"><div ng-click="selectAccount(account)" class="clickable accounts">{{account.name}}</div></div>
 			</aside>
 			<main id="main">
 				<section class="details"><div class="sectionName">Szczegóły:</div>
