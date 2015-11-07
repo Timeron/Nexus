@@ -125,11 +125,11 @@
 				<section class="operations">
 					<div class="sectionName">Operacje:</div>
 					<div class="recordRowHeader bold border-bottom">
-						<div class="recordTypeIcon recordHeader">Typ</div><div class="recordTransfer recordHeader">Transfer do</div><div class="recordValue recordHeader">kwota</div><div class="recordDate recordHeader">data</div>
+						<div class="recordTypeIcon recordHeader">Typ</div><div class="recordTransfer recordHeader">Transfer</div><div class="recordValue recordHeader">kwota</div><div class="recordDate recordHeader">data</div>
 					</div>
 					<div mark-line mark="#A0C0DC" nmark="#DDD" class="recordRow" ng-repeat="record in selectedAccount.records">
 						<div class="recordTypeIcon">{{record.recordTypeId}}</div>
-						<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId)}}</div>
+						<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId, record.income)}}</div>
 						<div class="recordValue" change-font-color value="#E22" valid={{!record.income}}>{{record.value}}</div>
 						<div class="recordDate">{{record.date | date:'d-MM-yyyy HH:mm' : 'UTC'}}</div>
 					</div>
