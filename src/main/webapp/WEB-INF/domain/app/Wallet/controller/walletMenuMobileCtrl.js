@@ -117,7 +117,7 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 		if(value==="C"){
 			$scope.amount = $scope.amount.toString().substring(0, $scope.amount.toString().length-1);
 		}else{
-			if($scope.amount !== ""){
+			if($scope.amount !== "" && $scope.amount.toString() !== "0"){
 				console.log("$scope.amount "+$scope.amount);
 				if(value === "=" || value === "+" || value === "-" || value === "*" || value === "/"){
 					if(value=="="){
