@@ -85,8 +85,62 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 		} 
 	};
 	
+	var calculate = function(valueStr){
+		if(valueStr.toString().indexOf("+") > -1){
+			var v = valueStr.split("+");
+			value = parseFloat(v[0])+parseFloat(v[1]);
+			console.log(value);
+			return value;
+		}
+		if(valueStr.toString().indexOf("-") > -1){
+			var v = valueStr.split("-");
+			value = parseFloat(v[0])-parseFloat(v[1]);
+			console.log(value);
+			return value;
+		}
+		if(valueStr.toString().indexOf("*") > -1){
+			var v = valueStr.split("*");
+			value = parseFloat(v[0])*parseFloat(v[1]);
+			console.log(value);
+			return value;
+		}
+		if(valueStr.toString().indexOf("/") > -1){
+			var v = valueStr.split("/");
+			value = (parseFloat(v[0])/parseFloat(v[1])).toFixed(2);
+			console.log(value);
+			return value;
+		}
+		return valueStr;
+	};
+	
 	$scope.set = function(value){
-		$scope.amount += value;
+		if(value==="C"){
+			$scope.amount = $scope.amount.toString().substring(0, $scope.amount.toString().length-1);
+		}else{
+			if($scope.amount !== ""){
+				console.log("$scope.amount "+$scope.amount);
+				if(value === "=" || value === "+" || value === "-" || value === "*" || value === "/"){
+					if(value=="="){
+						value="";
+					}
+					$scope.amount = calculate($scope.amount);
+					$scope.amount = $scope.amount.toString()+value;
+				}else{
+					$scope.amount = $scope.amount.toString() + value;
+				}
+				
+			}else{
+				$scope.amount = value;
+			}
+		}
+		
+//		console.log(value);
+//		if($scope.amounts != undefined && $scope.amounts.indexOf("+") > -1){
+//			var v = $scope.amounts.split("+");
+//			$scope.amount = v[0]+v[1];
+//		}else{
+//			$scope.amount += value;
+//		}
 	};
 	
 	$scope.getAccounts = function(){
