@@ -35,6 +35,16 @@ app.factory("GetAllUserAccounts", function($resource){
 		);
 });
 
+app.factory("GetRecordsForAccountByDayPOST", function($resource){
+	return $resource("/nexus/v1/wallet/getRecordsForAccountByDay", 
+			{}, 
+			{query: { method: "POST", isArray: true }}
+		);
+});
+
+
+
+
 app.factory("CurrentUser", function($resource){
 	return $resource("/nexus/v1/currentUser", 
 			{}, 
@@ -48,3 +58,4 @@ app.factory("CurrentUserPOST", function($resource){
 			{query: { method: "POST", isArray: false }}
 		);
 });
+

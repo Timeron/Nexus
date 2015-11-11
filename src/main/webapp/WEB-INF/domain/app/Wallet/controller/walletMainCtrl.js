@@ -1,10 +1,11 @@
 var app = angular.module('WalletMain', []);
 
-app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST) {
+app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST) {
 	$scope.accounts = [];
 	$scope.selectedAccount;
 	$scope.user = "-";
 	$scope.userPOST = "-";
+	$scope.data = [];
 	
 	CurrentUser.query({}, function(data){
 		$scope.user = data;
@@ -28,6 +29,11 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	
 	$scope.selectAccount = function(account){
 		$scope.selectedAccount = account;
+		
+		GetRecordsForAccountByDayPOST.query({id: account.id}, function(d){
+			$scope.data = d;
+			
+		});
 	};
 	
 	$scope.setTransferAccount = function(destinationAccountId, sourceAccountId, income){

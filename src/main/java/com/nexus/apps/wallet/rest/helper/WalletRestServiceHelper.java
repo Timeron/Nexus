@@ -2,9 +2,12 @@ package com.nexus.apps.wallet.rest.helper;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Component;
 import com.nexus.apps.wallet.constant.MessageResources;
 import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
+import com.nexus.apps.wallet.service.dto.KeyValueDTO;
 import com.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
 import com.nexus.apps.wallet.service.dto.RecordTypeDTO;
@@ -24,6 +28,7 @@ import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletAccountDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
+import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 
 @Component
 public class WalletRestServiceHelper {
@@ -178,9 +183,70 @@ public class WalletRestServiceHelper {
 		return result;
 	}
 
+	public List<KeyValueDTO> getRecordsForAccountByDay(AccountDTO accountDTO, Principal principal) {
+		WalletAccount account = walletAccountDAO.getById(accountDTO.getId());
+		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account, Direction.ASC);
+		return transformToDayPeriod(records);
+	}
+	
+	
 	private BigDecimal round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
         return bd;
     }
+	
+	private List<KeyValueDTO> transformToDayPeriod(List<WalletRecord> records){
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
+		
+		List<KeyValueDTO> dataValueDTOs = new ArrayList<KeyValueDTO>();
+		Calendar tempDate = Calendar.getInstance();
+		tempDate.setTimeInMillis(0);
+		BigDecimal valueBD = new BigDecimal(0);
+		Calendar currentDate = Calendar.getInstance();
+		
+		KeyValueDTO dataValueDTO = new KeyValueDTO();
+		for(WalletRecord record : records){
+			boolean multirow = false;
+			currentDate.setTime(record.getDate());
+			if(tempDate.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR) && tempDate.get(Calendar.DAY_OF_YEAR) == currentDate.get(Calendar.DAY_OF_YEAR)){
+				multirow = true;
+				if(record.isIncome()){
+					valueBD = valueBD.add(round(record.getValue(), 2));
+				}else{
+					valueBD = valueBD.add(round(record.getValue(), 2).negate());
+				}
+			}else{
+				if(tempDate.getTimeInMillis()!=0){
+					String formatted = format.format(tempDate.getTime());
+					dataValueDTO.setKey(formatted);
+					if(multirow){
+						dataValueDTO.setValue(valueBD.toString());
+					}else{
+						if(record.isIncome()){
+							valueBD = valueBD.add(round(record.getValue(), 2));
+						}else{
+							valueBD = valueBD.add(round(record.getValue(), 2).negate());
+						}
+						dataValueDTO.setValue(valueBD.toString());
+						multirow = false;
+					}
+					
+					dataValueDTOs.add(dataValueDTO);
+				}else{
+					String formatted = format.format(currentDate.getTime());
+					dataValueDTO.setKey(formatted);
+					if(record.isIncome()){
+						valueBD = valueBD.add(round(record.getValue(), 2));
+					}else{
+						valueBD = valueBD.add(round(record.getValue(), 2).negate());
+					}
+					dataValueDTO.setValue(valueBD.toString());
+				}
+				tempDate.setTimeInMillis(currentDate.getTimeInMillis());
+				dataValueDTO = new KeyValueDTO();						
+			}
+		}
+		return dataValueDTOs;
+	}
 }

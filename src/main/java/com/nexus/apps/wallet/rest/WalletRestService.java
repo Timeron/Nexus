@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.nexus.apps.wallet.rest.helper.WalletRestServiceHelper;
+import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
 
@@ -70,5 +71,18 @@ public class WalletRestService {
 		LOG.info("service response: addNewRecord -> "+result);
 		return result;
 	}
+	
+//	CHARTS
+	
+	@RequestMapping(value="/getRecordsForAccountByDay", method = RequestMethod.POST)
+	public String getRecordsForAccountByDay(@RequestBody String json, Principal principal){
+		LOG.info("service: getRecordsForAccountByDay");
+		AccountDTO accountDTO = gson.fromJson(json, AccountDTO.class);
+		String result = gson.toJson(helper.getRecordsForAccountByDay(accountDTO, principal));
+		LOG.info("service response: getRecordsForAccountByDay -> "+result);
+		return result;
+	}
+	
+	
 
 }
