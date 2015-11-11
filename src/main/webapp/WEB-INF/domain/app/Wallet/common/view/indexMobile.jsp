@@ -50,7 +50,7 @@
 			<div class="calculatorButton" ng-click="set(1)"><p>1</p></div><div class="calculatorButton" ng-click="set(2)"><p>2</p></div><div class="calculatorButton" ng-click="set(3)"><p>3</p></div>
 			<div class="calculatorButton" ng-click="set(4)"><p>4</p></div><div class="calculatorButton" ng-click="set(5)"><p>5</p></div><div class="calculatorButton" ng-click="set(6)"><p>6</p></div>
 			<div class="calculatorButton" ng-click="set(7)"><p>7</p></div><div class="calculatorButton" ng-click="set(8)"><p>8</p></div><div class="calculatorButton" ng-click="set(9)"><p>9</p></div>
-			<div class="calculatorButton" ng-click="set(',')"><p>,</p></div><div class="calculatorButton" ng-click="set(0)"><p>0</p></div><div class="calculatorButton" ng-click="set('C')"><p class="">C</p></div>
+			<div class="calculatorButton" ng-click="set('.')"><p>,</p></div><div class="calculatorButton" ng-click="set(0)"><p>0</p></div><div class="calculatorButton" ng-click="set('C')"><p class="">C</p></div>
 		</div>
 
 	</div>
