@@ -5,9 +5,14 @@ import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Map.Entry;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -17,8 +22,10 @@ import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
 import com.nexus.apps.wallet.service.dto.KeyValueDTO;
 import com.nexus.apps.wallet.service.dto.NewAccountDTO;
+import com.nexus.apps.wallet.service.dto.PieChartDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
 import com.nexus.apps.wallet.service.dto.RecordTypeDTO;
+import com.nexus.apps.wallet.service.dto.SumForAccountByType;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
@@ -92,6 +99,8 @@ public class WalletRestServiceHelper {
 	public ServiceResult addNewRecord(RecordDTO recordDTO) {
 		ServiceResult result = new ServiceResult();
 		WalletRecord walletRecord = new WalletRecord();
+		WalletRecord walletTransferRecord = new WalletRecord();
+		
 		if(recordDTO.getDate() != 0){
 			walletRecord.setDate(new Date(recordDTO.getDate()));
 		}else{
@@ -112,18 +121,32 @@ public class WalletRestServiceHelper {
 		}
 		if(recordDTO.isTransfer()){
 			walletRecord.setTransfer(true);
+			walletRecord.setIncome(false);
 			if(recordDTO.getDestynationAccountId() != 0){
 				walletRecord.setDestinationWalletAccount(walletAccountDAO.getById(recordDTO.getDestynationAccountId()));
 			}
 			if(recordDTO.getAccountId() != 0){
 				walletRecord.setSourceWalletAccount(walletRecord.getWalletAccount());
 			}
+			
+			walletTransferRecord.setDate(walletRecord.getDate());
+			walletTransferRecord.setDescription(walletRecord.getDescription());
+			walletTransferRecord.setDestinationWalletAccount(walletRecord.getDestinationWalletAccount());
+			walletTransferRecord.setIncome(true);
+			walletTransferRecord.setSourceWalletAccount(walletRecord.getSourceWalletAccount());
+			walletTransferRecord.setTransfer(true);
+			walletTransferRecord.setValue(walletRecord.getValue());
+			walletTransferRecord.setWalletAccount(walletRecord.getDestinationWalletAccount());
+			walletTransferRecord.setWalletType(walletRecord.getWalletType());			
 		}else{
 			walletRecord.setTransfer(false);
 			walletRecord.setIncome(recordDTO.isIncome());
 		}
 		try{
 			walletRecordDAO.save(walletRecord);
+			if(walletRecord.isTransfer()){
+				walletRecordDAO.save(walletTransferRecord);
+			}
 			result.setSuccess(true);
 			result.addMessage(MessageResources.RECORD_ADDED);
 		}catch(Exception ex){
@@ -196,6 +219,121 @@ public class WalletRestServiceHelper {
         return bd;
     }
 	
+	public List<PieChartDTO> getSumForAccountByType(SumForAccountByType sumForAccountByType, Principal principal) {
+		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
+		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, sumForAccountByType.getIncome());
+		return transformToPieChartByType(records);
+	}
+	
+	public List<PieChartDTO> getSumForAccountByParentType(SumForAccountByType sumForAccountByType, Principal principal) {
+		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
+		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, sumForAccountByType.getIncome());
+		return transformToPieChartByParentType(records);
+	}
+	
+	private List<PieChartDTO> transformToPieChartByParentType(List<WalletRecord> records) {
+		Map<Integer, List<RecordDTO>> recordDTOsMap = new HashMap<Integer, List<RecordDTO>>();
+		List<RecordDTO> recordDTOs;
+		PieChartDTO chartDTO;
+//		WalletType typeName;
+		Integer typeId;
+		List<PieChartDTO> chartDTOs = new ArrayList<PieChartDTO>();
+		for(WalletRecord record : records){
+			
+			chartDTO = new PieChartDTO();
+			if(record.getWalletType().getParentType() == null){
+				typeId = record.getWalletType().getId();
+				if(recordDTOsMap.containsKey(typeId)){
+					recordDTOsMap.get(typeId).add(new RecordDTO(record));
+				}else{
+					recordDTOs = new ArrayList<RecordDTO>();
+					recordDTOs.add(new RecordDTO(record));
+					recordDTOsMap.put(record.getWalletType().getId(), recordDTOs);
+				}
+			}else{
+				typeId = record.getWalletType().getParentType().getId();
+				if(recordDTOsMap.containsKey(typeId)){
+					recordDTOsMap.get(typeId).add(new RecordDTO(record));
+				}else{
+					recordDTOs = new ArrayList<RecordDTO>();
+					recordDTOs.add(new RecordDTO(record));
+					recordDTOsMap.put(record.getWalletType().getParentType().getId(), recordDTOs);
+				}
+			}
+			System.out.println(typeId);
+		}
+		
+		for(Entry<Integer, List<RecordDTO>> recordEntryList : recordDTOsMap.entrySet()){
+			Float sum = 0f;
+			chartDTO = new PieChartDTO();
+			RecordTypeDTO recordTypeDTO = new RecordTypeDTO(walletTypeDAO.getById(recordEntryList.getKey()));
+			chartDTO.setColor(recordTypeDTO.getColor());
+			chartDTO.setKey(recordTypeDTO.getName());
+			for(RecordDTO recordDTOEntry : recordEntryList.getValue()){
+				sum += recordDTOEntry.getValue();
+			}
+			chartDTO.setValue(sum.toString());
+			chartDTO.setOrder(recordTypeDTO.getId());
+			chartDTOs.add(chartDTO);
+		}
+		Collections.sort(chartDTOs, new Comparator<PieChartDTO>(){
+		    public int compare(PieChartDTO o1, PieChartDTO o2) {
+		        return o1.getOrder() - o2.getOrder();
+		    }
+		});
+		return chartDTOs;
+	}
+
+
+	private List<PieChartDTO> transformToPieChartByType(List<WalletRecord> records) {
+		List<PieChartDTO> chartDTOs = new ArrayList<PieChartDTO>();
+		PieChartDTO chartDTO = new PieChartDTO();
+		String tempType = "";
+		String tempColor = "";
+		WalletRecord tempRecord = null;
+		BigDecimal sum = new BigDecimal(0);
+		for(WalletRecord record : records){
+			
+			if(record.getWalletType().getName().equals(tempType)){
+				sum = sum.add(round(record.getValue(), 2));
+			}else{
+				if(!tempType.equals("")){
+					chartDTO.setColor(tempColor);
+					chartDTO.setKey(tempType);
+					chartDTO.setValue(sum.toString());
+					chartDTO.setOrder(setOrderByType(tempRecord));
+					chartDTOs.add(chartDTO);
+				}
+				chartDTO = new PieChartDTO();
+				tempType = record.getWalletType().getName();
+				tempColor = record.getWalletType().getColor();
+				sum = round(record.getValue(), 2);
+				tempRecord = record;
+			}
+		}
+		chartDTO.setColor(tempColor);
+		chartDTO.setKey(tempType);
+		chartDTO.setValue(sum.toString());
+		chartDTO.setOrder(setOrderByType(tempRecord));
+		chartDTOs.add(chartDTO);
+		Collections.sort(chartDTOs, new Comparator<PieChartDTO>(){
+		    public int compare(PieChartDTO o1, PieChartDTO o2) {
+		        return o1.getOrder() - o2.getOrder();
+		    }
+		});
+		return chartDTOs;
+	}
+
+	private int setOrderByType(WalletRecord record) {
+		int typeId = 0;
+		if(record.getWalletType().getParentType() != null){
+			typeId = record.getWalletType().getParentType().getId();
+		}else{
+			typeId = record.getWalletType().getId();
+		}
+		return typeId;
+	}
+
 	private List<KeyValueDTO> transformToDayPeriod(List<WalletRecord> records){
 		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
 		
@@ -249,4 +387,8 @@ public class WalletRestServiceHelper {
 		}
 		return dataValueDTOs;
 	}
+
+
+
+
 }

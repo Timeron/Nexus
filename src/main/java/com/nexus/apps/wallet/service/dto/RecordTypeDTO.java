@@ -2,6 +2,8 @@ package com.nexus.apps.wallet.service.dto;
 
 import java.util.Date;
 
+import com.timeron.NexusDatabaseLibrary.Entity.WalletType;
+
 public class RecordTypeDTO {
 
 	private int id;
@@ -12,6 +14,17 @@ public class RecordTypeDTO {
 	private Date timestamp;
 	private Date updated;
 	
+	public RecordTypeDTO() {}
+	
+	public RecordTypeDTO(WalletType walletType) {
+		id = walletType.getId();
+		name = walletType.getName();
+		defaultValue = walletType.getDefaultValue();
+		color = walletType.getColor();
+		icon = walletType.getIcon();
+		timestamp = walletType.getTimestamp();
+		updated = walletType.getUpdated();
+	}
 	public int getId() {
 		return id;
 	}

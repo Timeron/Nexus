@@ -1,0 +1,35 @@
+.svgCollapse{
+	position: relative;
+	width: 900px;
+	height: 500px;
+}
+
+.svgCollapse svg{
+	position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+.lineChart {
+	font: 10px sans-serif;
+}
+
+.axis path,.axis line {
+	fill: none;
+	stroke: #000;
+	shape-rendering: crispEdges;
+}
+
+.area {
+	fill: steelblue;
+}
+
+.tick line {
+	opacity: 0.1;
+}
+
+/* pie */
+
+.arc path {
+  stroke: #fff;
+}

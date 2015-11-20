@@ -1,11 +1,13 @@
 var app = angular.module('WalletMain', []);
 
-app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST) {
+app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType ) {
 	$scope.accounts = [];
 	$scope.selectedAccount;
 	$scope.user = "-";
 	$scope.userPOST = "-";
 	$scope.data = [];
+	$scope.pieData = [];
+	$scope.subPieData = [];
 	
 	CurrentUser.query({}, function(data){
 		$scope.user = data;
@@ -32,7 +34,14 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 		
 		GetRecordsForAccountByDayPOST.query({id: account.id}, function(d){
 			$scope.data = d;
-			
+		});
+		
+		GetSumForAccountByType.query({accountId: account.id, income: "false"}, function(d){
+			$scope.pieData = d;
+		});
+		
+		GetSumForAccountByParentType.query({accountId: account.id, income: "false"}, function(d){
+			$scope.subPieData = d;
 		});
 	};
 	

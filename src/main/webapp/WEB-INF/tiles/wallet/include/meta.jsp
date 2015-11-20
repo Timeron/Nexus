@@ -27,6 +27,7 @@
 
 
 <link rel="stylesheet" href="<c:url value="/resources/css/wallet/wallet.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/wallet/chart.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/timeron.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/nexus.css" />" />
 

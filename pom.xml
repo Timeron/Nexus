@@ -323,7 +323,8 @@
 		<dependency>
 			<groupId>com.timeron</groupId>
 			<artifactId>NexusDatabaseLibrary</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
+			<version>0.0.3-SNAPSHOT</version>
+<!-- 			<scope>import</scope> -->
 		</dependency>
 
 	</dependencies>
@@ -339,15 +340,15 @@
 				</configuration>
 			</plugin>
 			<plugin>
-		<groupId>org.apache.tomcat.maven</groupId>
-		<artifactId>tomcat7-maven-plugin</artifactId>
-		<version>2.2</version>
-		<configuration>
-			<url>http://localhost:8080/manager/text</url>
-			<server>TomcatServer</server>
-			<path>/nexus</path>
-		</configuration>
-	</plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>http://192.168.1.80:8080/manager/text</url>
+					<server>TomcatServer</server>
+					<path>/nexus</path>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>

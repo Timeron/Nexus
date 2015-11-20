@@ -15,6 +15,7 @@ import com.nexus.apps.wallet.rest.helper.WalletRestServiceHelper;
 import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
+import com.nexus.apps.wallet.service.dto.SumForAccountByType;
 
 @RestController
 @RequestMapping("/v1/wallet")
@@ -83,6 +84,23 @@ public class WalletRestService {
 		return result;
 	}
 	
+	@RequestMapping(value="/getSumForAccountByType", method = RequestMethod.POST)
+	public String getSumForAccountByType(@RequestBody String json, Principal principal){
+		LOG.info("service: getSumForAccountByType");
+		SumForAccountByType sumForAccountByType = gson.fromJson(json, SumForAccountByType.class);
+		String result = gson.toJson(helper.getSumForAccountByType(sumForAccountByType, principal));
+		LOG.info("service response: getSumForAccountByType -> "+result);
+		return result;
+	}
 	
+
+	@RequestMapping(value="/getSumForAccountByParentType", method = RequestMethod.POST)
+	public String getSumForAccountByParentType(@RequestBody String json, Principal principal){
+		LOG.info("service: getSumForAccountByParentType");
+		SumForAccountByType sumForAccountByType = gson.fromJson(json, SumForAccountByType.class);
+		String result = gson.toJson(helper.getSumForAccountByParentType(sumForAccountByType, principal));
+		LOG.info("service response: getSumForAccountByParentType -> "+result);
+		return result;
+	}
 
 }

@@ -113,7 +113,7 @@ public class WalletController {
 		
 		walletAccountForm.setWalletAccount(currentAccount);
 		List<WalletRecord> walletAllAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, Direction.ASC);
-		List<WalletRecord> walletAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, Direction.DESC, maxRows);
+		List<WalletRecord> walletAccountRecounds = walletRecordDAO.getRecordsFromAccount(currentAccount, "timestamp", Direction.DESC, maxRows);
 		walletAccountForm.setWalletRecords(markTransfer(walletAccountRecounds, currentAccount));
 		walletAccountForm.setAccounts(walletAccountDAO.getAll());
 		Chart chart = createSingleLineChart(walletAllAccountRecounds, currentAccount);

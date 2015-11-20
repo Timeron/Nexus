@@ -10,7 +10,7 @@
     class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
     
     <property name="persistenceXmlLocation" value="classpath:hibernate.cfg.xml" />
-<!--     <property name="persistenceUnitName" value="TestPU" /> -->
+    <property name="persistenceUnitName" value="TestPU" />
     <property name="dataSource" ref="dataSource" />
     
     <property name="jpaVendorAdapter">

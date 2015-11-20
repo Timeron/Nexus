@@ -149,29 +149,16 @@
 
 					<div class="sectionName">Wykresy:</div>
 					<div class="lineChart"></div>
-
-					<style>
-body {
-	font: 10px sans-serif;
-}
-
-.axis path,.axis line {
-	fill: none;
-	stroke: #000;
-	shape-rendering: crispEdges;
-}
-
-.area {
-	fill: steelblue;
-}
-
-.tick line {
-	opacity: 0.1;
-}
-</style>
+					<div class="pieChart svgCollapse"></div>
 
 					<lineChart data="{{data}}"></lineChart>
-					<!-- 					<script src="//d3js.org/d3.v3.min.js"></script> -->
+					<div class="collapse">
+						<div pieChart data="{{pieData}}" r="240"
+							ir="200" width="900" height="500"></div>
+						<div pieChart data="{{subPieData}}" r="200"
+							ir="0" width="900" height="500"></div>
+					</div>
+
 				</section>
 				<section class="operations">
 					<div class="sectionName">Operacje:</div>

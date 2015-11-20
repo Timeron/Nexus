@@ -42,6 +42,19 @@ app.factory("GetRecordsForAccountByDayPOST", function($resource){
 		);
 });
 
+app.factory("GetSumForAccountByType", function($resource){
+	return $resource("/nexus/v1/wallet/getSumForAccountByType", 
+			{}, 
+			{query: { method: "POST", isArray: true }}
+		);
+});
+
+app.factory("GetSumForAccountByParentType", function($resource){
+	return $resource("/nexus/v1/wallet/getSumForAccountByParentType", 
+			{}, 
+			{query: { method: "POST", isArray: true }}
+		);
+});
 
 
 
