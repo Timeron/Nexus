@@ -8,11 +8,12 @@ public class RecordTypeDTO {
 
 	private int id;
 	private String name;
-	private int defaultValue;
+	private boolean defaultValue = false;
 	private String color;
 	private String icon;
 	private Date timestamp;
 	private Date updated;
+	private int parentId;
 	
 	public RecordTypeDTO() {}
 	
@@ -24,6 +25,9 @@ public class RecordTypeDTO {
 		icon = walletType.getIcon();
 		timestamp = walletType.getTimestamp();
 		updated = walletType.getUpdated();
+		if(walletType.getParentType() != null){
+			parentId = walletType.getParentType().getId();
+		}
 	}
 	public int getId() {
 		return id;
@@ -37,10 +41,10 @@ public class RecordTypeDTO {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public int getDefaultValue() {
+	public boolean getDefaultValue() {
 		return defaultValue;
 	}
-	public void setDefaultValue(int defaultValue) {
+	public void setDefaultValue(boolean defaultValue) {
 		this.defaultValue = defaultValue;
 	}
 	public String getColor() {
@@ -66,6 +70,14 @@ public class RecordTypeDTO {
 	}
 	public void setUpdated(Date updated) {
 		this.updated = updated;
+	}
+
+	public int getParentId() {
+		return parentId;
+	}
+
+	public void setParentId(int parentId) {
+		this.parentId = parentId;
 	}
 	
 	

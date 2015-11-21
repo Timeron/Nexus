@@ -56,8 +56,22 @@ app.factory("GetSumForAccountByParentType", function($resource){
 		);
 });
 
+//type tab
+app.factory("AddType", function($resource){
+	return $resource("/nexus/v1/wallet/addType", 
+			{},
+			{query: {method: "POST", isArray: false}}
+		);
+});
 
+app.factory("GetTypesValidForParent", function($resource){
+	return $resource("/nexus/v1/wallet/getTypesValidForParent", 
+			{},
+			{query: {method: "GET", isArray: true}}
+		);
+});
 
+//common Nexus rests
 app.factory("CurrentUser", function($resource){
 	return $resource("/nexus/v1/currentUser", 
 			{}, 
@@ -71,4 +85,6 @@ app.factory("CurrentUserPOST", function($resource){
 			{query: { method: "POST", isArray: false }}
 		);
 });
+
+
 

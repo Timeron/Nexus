@@ -6,6 +6,57 @@
 		<!-- 	menu -->
 		<div class="menu" data-ng-controller="WalletMenuCtrl">
 
+			<div class="modal" id="addTypeModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Nowe Konto</h4>
+						</div>
+						<div class="modal-body">
+							<div id="newProject" class="modalTest">
+								<table>
+									<tr>
+										<td class="formName">Nazwa</td>
+										<td><input type="text" data-ng-model="newTypeName"></td>
+									</tr>
+									<tr>
+										<td class="formName">Wartość domyślna</td>
+										<td><input type="checkbox"
+											data-ng-model="newDefaultValue"></td>
+									</tr>
+									<tr data-ng-if="!transfer">
+										<td class="formName">Typ główny</td>
+										<td><select data-ng-model="$parent.newParentType"
+											ng-options="type.name for type in typesValidForParent">
+												<option value=""></option>
+										</select></td>
+									</tr>
+									<tr>
+										<td class="formName">Kolor</td>
+										<td><input type="text" data-ng-model="newTypeColor"></td>
+									</tr>
+									<tr>
+										<td class="formName">Ikona</td>
+										<td><input type="text" data-ng-model="newTypeIcon"></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Zamknij</button>
+							<button type="button" class="btn btn-primary"
+								data-ng-click="addType()" data-dismiss="modal">Zapisz</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
 			<!-- Modal -->
 			<div class="modal" id="addAccountModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
@@ -113,11 +164,29 @@
 			</div>
 			<div class="topMainMenu">
 				<div class="btn-group">
-					<a class="btn btn-primary btn-ms" role="button" data-toggle="modal"
-						data-target="#addAccountModal">Dodaj Konto</a> <a
-						class="btn btn-primary btn-ms" role="button" data-toggle="modal"
-						data-target="#addRecordModal">Dodaj Operacje</a>
-					<!-- 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="addOperation()">Dodaj wpis</a>  -->
+					<button class="btn btn-primary btn-ms" role="button"
+						data-toggle="modal" data-target="#addAccountModal">Dodaj
+						Konto</button>
+					<button class="btn btn-primary btn-ms" role="button"
+						data-toggle="modal" data-target="#addRecordModal">Dodaj
+						Operacje</button>
+					<button class="btn btn-primary btn-ms" role="button"
+						data-toggle="modal" data-target="#addTypeModal"
+						data-ng-click="getTypesValidForParent()">Dodaj Typ</button>
+					<div class="btn-group">
+						<button type="button" class="btn btn-primary dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							Typy <span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu">
+							<li><a role="button" data-toggle="modal"
+								data-target="#addTypeModal"
+								data-ng-click="getTypesValidForParent()">Dodaj Typ</a></li>
+							<li role="separator" class="divider"></li>
+						</ul>
+					</div>
+
+
 					<!-- 			<a class="btn btn-primary btn-ms" role="button" data-ng-click="addOperation()">Dodaj nowy typ</a>  -->
 				</div>
 			</div>
@@ -153,10 +222,10 @@
 
 					<lineChart data="{{data}}"></lineChart>
 					<div class="collapse">
-						<div pieChart data="{{pieData}}" r="240"
-							ir="200" width="900" height="500"></div>
-						<div pieChart data="{{subPieData}}" r="200"
-							ir="0" width="900" height="500"></div>
+						<div pieChart data="{{pieData}}" r="240" ir="200" width="900"
+							height="500"></div>
+						<div pieChart data="{{subPieData}}" r="200" ir="0" width="900"
+							height="500"></div>
 					</div>
 
 				</section>

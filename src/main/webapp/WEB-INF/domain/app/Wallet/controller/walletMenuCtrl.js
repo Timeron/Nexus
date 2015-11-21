@@ -1,6 +1,6 @@
 var app = angular.module("WalletMenu", []);
 
-app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAllRecordTypes, AddNewRecord, GetAllUserAccounts){
+app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAllRecordTypes, AddNewRecord, GetAllUserAccounts, AddType, GetTypesValidForParent){
 	$rootScope.currentAccount = 16;
 	$scope.incomeCurrentDescription = "Wydatek";
 	$scope.newRecordCurrentDescription = "Operacja";
@@ -18,6 +18,13 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 	$scope.account;
 	$scope.types = GetAllRecordTypes.query();
 	$scope.accounts = GetAllUserAccounts.query();
+//	new type
+	$scope.newTypeName = "";
+	$scope.newDefaultValue = 0;
+	$scope.newTypeColor = 0;
+	$scope.newTypeIcon = "";
+	$scope.newParentType;
+	$scope.typesValidForParent = [];
 	
 	window.mobilecheck = function() {
 		var check = false;
@@ -29,6 +36,12 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 		window.location.href = "http://timeron.ddns.net:8080/nexus/wallet/mobile";
 //		window.location.href = "http://localhost:8080/nexus/wallet/mobile";
 	}
+	
+	$scope.getTypesValidForParent = function(){
+		GetTypesValidForParent.query({}, function(data){
+			$scope.typesValidForParent = data;
+		});
+	};
 	
 	$scope.addAccount = function(){
 		AddAccount.query({
@@ -89,6 +102,17 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 		} 
 	};
 	
+	$scope.addType = function(){
+		AddType.query({
+			name: $scope.newTypeName,
+			defaultValue: $scope.newDefaultValue,
+			color: $scope.newTypeColor,
+			icon: $scope.newTypeIcon,
+			parentId: $scope.newParentType.id
+		}, function(data){
+			$scope.message = data;
+		});
+	};
 	
 });
 

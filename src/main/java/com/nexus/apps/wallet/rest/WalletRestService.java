@@ -15,6 +15,7 @@ import com.nexus.apps.wallet.rest.helper.WalletRestServiceHelper;
 import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
+import com.nexus.apps.wallet.service.dto.RecordTypeDTO;
 import com.nexus.apps.wallet.service.dto.SumForAccountByType;
 
 @RestController
@@ -53,6 +54,15 @@ public class WalletRestService {
 		return result;
 	}
 	
+	@RequestMapping(value="/getTypesValidForParent", method = RequestMethod.GET)
+	public String getTypeValidForParent(Principal principal){
+		LOG.info("service: getTypeValidForParent");
+		String result = gson.toJson(helper.getTypesValidForParent(principal));
+		LOG.info("service response: getTypeValidForParent -> "+result);
+		return result;
+	}
+	
+	
 //	POST
 	
 	@RequestMapping(value="/addAccount", method = RequestMethod.POST)
@@ -73,6 +83,14 @@ public class WalletRestService {
 		return result;
 	}
 	
+	@RequestMapping(value="/addType", method = RequestMethod.POST)
+	public String addType(@RequestBody String json){
+		LOG.info("service: addType <- "+json);
+		RecordTypeDTO typeDTO = gson.fromJson(json, RecordTypeDTO.class);
+		String result = gson.toJson(helper.addNewType(typeDTO));
+		LOG.info("service response: addType -> "+result);
+		return result;
+	}
 //	CHARTS
 	
 	@RequestMapping(value="/getRecordsForAccountByDay", method = RequestMethod.POST)

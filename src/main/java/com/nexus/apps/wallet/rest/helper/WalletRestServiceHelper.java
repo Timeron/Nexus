@@ -17,6 +17,7 @@ import java.util.Map.Entry;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonElement;
 import com.nexus.apps.wallet.constant.MessageResources;
 import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
@@ -386,6 +387,37 @@ public class WalletRestServiceHelper {
 			}
 		}
 		return dataValueDTOs;
+	}
+
+	public ServiceResult addNewType(RecordTypeDTO typeDTO) {
+		ServiceResult result = new ServiceResult();
+		result.setSuccess(true);
+		WalletType type = new WalletType();
+		type.setColor(typeDTO.getColor());
+		type.setDefaultValue(typeDTO.getDefaultValue());
+		type.setIcon(typeDTO.getIcon());
+		type.setName(typeDTO.getName());
+		type.setParentType(walletTypeDAO.getById(typeDTO.getParentId()));
+		type.setTimestamp(new Date());
+		type.setUpdated(new Date());
+		try{
+			walletTypeDAO.save(type);
+		}catch(Exception e){
+			result.setSuccess(false);
+			result.getMessages().add(e.getMessage());
+		}
+		return result;
+	}
+
+	public List<RecordTypeDTO> getTypesValidForParent(Principal principal) {
+		List<WalletType> walletTypes = walletTypeDAO.getAllParents();
+		List<RecordTypeDTO> recordTypeDTOs = new ArrayList<RecordTypeDTO>();
+		RecordTypeDTO typeDTO;
+		for(WalletType type : walletTypes){
+			typeDTO = new RecordTypeDTO(type);
+			recordTypeDTOs.add(typeDTO);
+		}
+		return recordTypeDTOs;
 	}
 
 
