@@ -16,6 +16,7 @@ import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
 import com.nexus.apps.wallet.service.dto.RecordTypeDTO;
+import com.nexus.apps.wallet.service.dto.RecordTypeListDTO;
 import com.nexus.apps.wallet.service.dto.SumForAccountByType;
 
 @RestController
@@ -89,6 +90,15 @@ public class WalletRestService {
 		RecordTypeDTO typeDTO = gson.fromJson(json, RecordTypeDTO.class);
 		String result = gson.toJson(helper.addNewType(typeDTO));
 		LOG.info("service response: addType -> "+result);
+		return result;
+	}
+	
+	@RequestMapping(value="/updateTypes", method = RequestMethod.POST)
+	public String updateTypes(@RequestBody String json){
+		LOG.info("service: updateTypes <- "+json);
+		RecordTypeListDTO typeListDTO = gson.fromJson(json, RecordTypeListDTO.class);
+		String result = gson.toJson(helper.updateTypes(typeListDTO));
+		LOG.info("service response: updateTypes -> "+result);
 		return result;
 	}
 //	CHARTS

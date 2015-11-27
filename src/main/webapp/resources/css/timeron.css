@@ -87,3 +87,10 @@
 .tableForm td{
 	padding-top: 10px;
 }
+.spaceBufor{
+	height: 100%;
+	width: 30px;
+}
+.center{
+	text-align: center;
+}

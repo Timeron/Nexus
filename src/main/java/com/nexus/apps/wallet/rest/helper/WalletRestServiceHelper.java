@@ -26,6 +26,7 @@ import com.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.nexus.apps.wallet.service.dto.PieChartDTO;
 import com.nexus.apps.wallet.service.dto.RecordDTO;
 import com.nexus.apps.wallet.service.dto.RecordTypeDTO;
+import com.nexus.apps.wallet.service.dto.RecordTypeListDTO;
 import com.nexus.apps.wallet.service.dto.SumForAccountByType;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
@@ -92,6 +93,9 @@ public class WalletRestServiceHelper {
 			recordTypeDTO.setName(type.getName());
 			recordTypeDTO.setTimestamp(type.getTimestamp());
 			recordTypeDTO.setUpdated(type.getUpdated());
+			if(type.getParentType() != null){
+				recordTypeDTO.setParentId(type.getParentType().getId());
+			}
 			recordTypeDTOs.add(recordTypeDTO);
 		}
 		return recordTypeDTOs;
@@ -420,7 +424,25 @@ public class WalletRestServiceHelper {
 		return recordTypeDTOs;
 	}
 
-
-
+	public List<RecordTypeDTO> updateTypes(RecordTypeListDTO typeListDTO) {
+		List<RecordTypeDTO> uTypes = new ArrayList<RecordTypeDTO>();
+		WalletType walletType;
+		for(RecordTypeDTO type : typeListDTO.getTypes()){
+			walletType = walletTypeDAO.getById(type.getId());
+			walletType.setColor(type.getColor());
+			walletType.setDefaultValue(type.getDefaultValue());
+			walletType.setIcon(type.getIcon());
+			walletType.setName(type.getName());
+//			walletType.setParentType(parentType);
+			walletType.setUpdated(new Date());
+			walletTypeDAO.update(walletType);
+		}
+		RecordTypeDTO uType;
+		for(WalletType wType : walletTypeDAO.getAll()){
+			uType = new RecordTypeDTO(wType);
+			uTypes.add(uType);
+		}
+		return uTypes;
+	}
 
 }

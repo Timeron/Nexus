@@ -3,9 +3,12 @@
 
 <div data-ng-app="wallet">
 	<div>
+
+
 		<!-- 	menu -->
 		<div class="menu" data-ng-controller="WalletMenuCtrl">
 
+			<!-- Modal -->
 			<div class="modal" id="addTypeModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
@@ -52,6 +55,63 @@
 								data-dismiss="modal">Zamknij</button>
 							<button type="button" class="btn btn-primary"
 								data-ng-click="addType()" data-dismiss="modal">Zapisz</button>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Modal -->
+			<div class="modal" id="editTypesModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog" style="width: 40%">
+					<div class="modal-content" >
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">Wybierz typ</h4>
+						</div>
+						<div class="modal-body">
+							<div id="editType" class="modalEditType">
+								<table>
+									<tr>
+										<th class="center">nazwa</th>
+										<th class="center">ikona</th>
+										<th class="center" colspan="2">kolor</th>
+										<th class="center editTypeTableRow">dochód</th>
+									</tr>
+									<tr ng-repeat="type in copyOfTypes">
+										<td><input type="text" data-ng-model="type.name" value="{{type.name}}" size="30"></td>
+										<td class="editTypeTableRow">
+											<button class="btn btn-default" ng-click="addIconToType(type.index)">
+												<span class="glyphicon {{type.icon}} spaceBufor center"></span>
+											</button>
+											<div toggle toggleTime="1000" hide="{{type.addIconToTypeHide}}" class="addIconToType" >
+												<div class="addIconToTypeMenu" >
+													<div class="buttonClose" ng-click="closeAddIconToType(type.index)"><span class="glyphicon glyphicon-remove"></span></div>
+												</div>
+												<div class="glyphiconButton" ng-click="setIconToType(type.index, glyphicon.name)" ng-repeat="glyphicon in glyphicons">
+													<span class="glyphicon {{glyphicon.name}}"></span>
+												</div>
+											</div>
+										</td>
+										<td class="editTypeTableRow">
+											<input type="text" value="{{type.color}}" data-ng-model="type.color" size="5" maxlength="7">
+										</td>
+										<td style="background-color: {{type.color}}; color: {{type.color}}" class="spaceBufor editTypeTableRow">X</td>
+										<td class="center">
+											<input data-ng-model="type.defaultValue" type="checkbox" ng-checked="{{type.defaultValue}}">
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Zamknij</button>
+							<button type="button" class="btn btn-primary"
+								data-ng-click="updateTypes(copyOfTypes)" data-dismiss="modal">Zapisz</button>
 						</div>
 					</div>
 				</div>
@@ -180,8 +240,11 @@
 						</button>
 						<ul class="dropdown-menu">
 							<li><a role="button" data-toggle="modal"
-								data-target="#addTypeModal"
-								data-ng-click="getTypesValidForParent()">Dodaj Typ</a></li>
+								data-target="#addTypeModal" data-ng-click="getTypes()">Dodaj
+									Typ</a></li>
+							<li><a role="button" data-toggle="modal"
+								data-target="#editTypesModal" data-ng-click="getCopyOfTypes()">Edytuj
+									Typ</a></li>
 							<li role="separator" class="divider"></li>
 						</ul>
 					</div>

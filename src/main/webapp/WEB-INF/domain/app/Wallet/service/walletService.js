@@ -64,6 +64,13 @@ app.factory("AddType", function($resource){
 		);
 });
 
+app.factory("UpdateTypes", function($resource){
+	return $resource("/nexus/v1/wallet/updateTypes", 
+			{}, 
+			{query: {method:"POST", isArray: true}}
+		);
+});
+
 app.factory("GetTypesValidForParent", function($resource){
 	return $resource("/nexus/v1/wallet/getTypesValidForParent", 
 			{},

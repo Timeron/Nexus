@@ -42,6 +42,43 @@ section{
 	color: #555;
 }
 
+.addIconToType{
+	position: absolute;
+	width: 470px;
+	height: 560px;
+	border: solid 4px #000;
+	background-color: #FFF;
+}
+
+.glyphiconButton{
+	width: 40px;
+	height: 40px;
+	background-color: #EEE;
+	float: left;
+	margin: 3px;
+	font-size: 20px;
+	text-aligne: center;
+	padding: 6px 0px 0px 9px;
+	border: solid 1px #DDD;
+}
+
+.addIconToTypeMenu{
+	width: 100%;
+	background-color: #EEE;
+	height: 40px;
+}
+
+.addIconToTypeMenu .buttonClose{
+	color: #FFF;
+	font-weight: bold;
+	background-color: #000;
+	font-size: 16px;
+	width: 30px;
+	height: 30px;
+	float: right;
+	padding: 4px 0px 0px 8px;;
+}
+
 /* Szczegoly */
 
 .accountName, .accountDesc{
@@ -59,7 +96,10 @@ section{
 	font-size: 20px;
 	padding: 0px 0px 0px 15px;
 }
-
+/* edit type */
+.editTypeTableRow{
+	padding: 0px 25px 0px 25px;
+}
 /* Operacje */
 
 /* .operations{ */

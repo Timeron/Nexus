@@ -23,6 +23,7 @@
 <script src="<c:url value="/domain/app/Wallet/directive/datepicker.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/directive/fontDir.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/directive/ChartsDir.js" />"></script>
+<script src="<c:url value="/domain/app/Wallet/directive/toggleDir.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/service/walletService.js" />"></script>
 
 
