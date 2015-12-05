@@ -51,6 +51,8 @@ public class WalletRestServiceHelper {
 	@Autowired
 	WalletRecordDAO walletRecordDAO;
 
+	SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
+	
 	public ServiceResult addAccount(NewAccountDTO accountDTO, Principal principal) {
 		ServiceResult result = new ServiceResult();
 		NexusPerson nexusPerson = nexusPersonDAO.getByNick(principal.getName());
@@ -214,10 +216,14 @@ public class WalletRestServiceHelper {
 	public List<KeyValueDTO> getRecordsForAccountByDay(AccountDTO accountDTO, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(accountDTO.getId());
 		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account, Direction.ASC);
-		return transformToDayPeriod(records);
+		List<KeyValueDTO> chartData = transformToDayPeriod(records);
+		KeyValueDTO toDay = new KeyValueDTO();
+		toDay.setKey(format.format(new Date()));
+		toDay.setValue(chartData.get(chartData.size()-1).getValue());
+		chartData.add(toDay);
+		return chartData;
 	}
-	
-	
+
 	private BigDecimal round(float d, int decimalPlace) {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(decimalPlace, BigDecimal.ROUND_HALF_UP);       
@@ -340,7 +346,6 @@ public class WalletRestServiceHelper {
 	}
 
 	private List<KeyValueDTO> transformToDayPeriod(List<WalletRecord> records){
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
 		
 		List<KeyValueDTO> dataValueDTOs = new ArrayList<KeyValueDTO>();
 		Calendar tempDate = Calendar.getInstance();
