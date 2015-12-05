@@ -1,6 +1,6 @@
 var app = angular.module('WalletMain', []);
 
-app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType ) {
+app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes ) {
 	$scope.accounts = [];
 	$scope.selectedAccount;
 	$scope.user = "-";
@@ -8,6 +8,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	$scope.data = [];
 	$scope.pieData = [];
 	$scope.subPieData = [];
+	$scope.types = GetAllRecordTypes.query();
 	
 	CurrentUser.query({}, function(data){
 		$scope.user = data;
@@ -65,5 +66,17 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 			return " -";
 		}
 	};
+	
+	$scope.recordTypeIcon = function(typeId){
+		var type = "";
+		angular.forEach($scope.types, function(t){
+			if(typeId === t.id){
+				type = t;
+			}
+		});
+		return type;
+	};
+	
+
 
 });

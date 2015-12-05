@@ -112,10 +112,13 @@ section{
 	padding: 10px 40px 30px 40px;
 }
 .recordTypeIcon{
+	text-align: center;
 	float: left;
-	width: 100px;
+	padding: 0px 20px 0px 20px;
+	width: 60px;
 }
 .recordTransfer{
+	text-align: center;
 	float: left;
 	width: 150px;
 	height: 100%;

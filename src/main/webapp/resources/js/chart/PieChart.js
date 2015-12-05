@@ -90,7 +90,6 @@ function SimplePieChart(div, _r, _i){
 		_value = salesData[$(this).attr("date-id")].value;
 		_data = [{id : 10, value : _value, label : "Test", color : "#999"}, {id : 9, value : _value, label : "Test", color : "#AAA"}];
 		gradPie.draw("test", _data, 210, 210, 50);
-		console.log();
 		
 //		_value = salesData[$(this).attr("date-id")].value;
 //		_data = [{id : 10, value : _value, label : "Test", color : "#999"}];

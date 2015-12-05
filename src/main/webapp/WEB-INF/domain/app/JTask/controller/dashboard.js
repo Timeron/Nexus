@@ -588,7 +588,6 @@ app.controller("TaskController", function($rootScope, $scope, $q, Histories, Not
 		
 		UpdateTask.query(task, function(data){
 			$scope.task = data.object;
-			console.log(data);
 		});
 	};
 	

@@ -179,7 +179,6 @@ app
 									var arc = d3.svg.arc().outerRadius(r).innerRadius(
 											ir);
 	
-									console.log(data);
 									data.forEach(function(d) {
 										d.value = +d.value;
 									});

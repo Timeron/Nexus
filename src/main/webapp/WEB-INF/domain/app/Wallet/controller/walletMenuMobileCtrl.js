@@ -89,7 +89,6 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 		if(valueStr.toString().indexOf("+") > -1){
 			var v = valueStr.split("+");
 			value = parseFloat(v[0])+parseFloat(v[1]);
-			console.log(value);
 			return value;
 		}
 		if(valueStr.toString().indexOf("-") > -1){

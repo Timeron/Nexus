@@ -8,7 +8,6 @@ app.directive("curtain", function(){
 		},
 		controller: function($scope, $element, $attrs){
 			$attrs.$observe('hide', function(e) {
-				console.log(e);
 				if(e === "true"){
 					$element.hide(500);
 				}else{
