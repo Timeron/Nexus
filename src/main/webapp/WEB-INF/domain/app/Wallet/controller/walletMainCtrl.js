@@ -77,6 +77,6 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 		return type;
 	};
 	
-
+	$('#Charts').tab('show');
 
 });

@@ -262,60 +262,75 @@
 					</div>
 				</aside>
 				<main id="main">
-				<section class="details">
-					<div class="sectionName">Szczegóły:</div>
-					<div class="accountSum">
-						Srodki na koncie:
-						<p>{{selectedAccount.sum}} zł</p>
+				
+					<section class="details" id="details">
+						<div class="sectionName">Szczegóły:</div>
+						<div class="accountSum">
+							Srodki na koncie:
+							<p>{{selectedAccount.sum}} zł</p>
+						</div>
+						<div class="accountName">
+							Konto:
+							<p>{{selectedAccount.name}}</p>
+						</div>
+						<div class="accountDesc">
+							Opis:
+							<p>{{selectedAccount.description}}</p>
+						</div>
+					</section>
+					
+					<ul class="nav nav-tabs" role="tablist" id="menuSectionContainer">
+		    			<li role="presentation"><a href="#Charts" aria-controls="Charts" role="tab" data-toggle="tab">Wykresy</a></li>
+		    			<li role="presentation"><a href="#Records" aria-controls="Records" role="tab" data-toggle="tab">Operacje</a></li>
+		  			</ul>
+					
+					<div class="tab-content">
+						<section role="tabpanel" class="chart tab-pane fade" id="Charts">
+							<div class="sectionContainer">
+								<div class="sectionName">Wykresy:</div>
+								<div class="lineChart"></div>
+								<div class="pieChart svgCollapse"></div>
+			
+								<lineChart data="{{data}}"></lineChart>
+								<div class="collapse">
+									<div pieChart data="{{pieData}}" r="240" ir="200" width="900"
+										height="500"></div>
+									<div pieChart data="{{subPieData}}" r="200" ir="0" width="900"
+										height="500"></div>
+								</div>
+							</div>
+						</section>
+						<section role="tabpanel" class="operations tab-pane fade" id="Records">
+							<div class="sectionContainer">
+								<div class="sectionName">Operacje:</div>
+								<div class="recordRowHeader bold border-bottom">
+									<div class="recordTypeIcon recordHeader">Typ</div>
+									<div class="recordTransfer recordHeader">Transfer</div>
+									<div class="recordValue recordHeader">kwota</div>
+									<div class="recordDate recordHeader">data</div>
+								</div>
+								<div mark-line mark="#A0C0DC" nmark="#FFF" class="recordRow"
+									ng-repeat="record in selectedAccount.records">
+									<div recordTypeIcon type="{{recordTypeIcon(record.recordTypeId)}}" class="recordTypeIcon">{{record.recordTypeId}}</div>
+									<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId,
+										record.sourceWalletAccountId, record.income)}}</div>
+									<div class="recordValue" change-font-color value="#E22"
+										valid={{!record.income}}>{{record.value}}</div>
+									<div class="recordDate">{{record.date | date:'d-MM-yyyy
+										HH:mm' : 'UTC'}}</div>
+								</div>
+							</div>
+						</section>
 					</div>
-					<div class="accountName">
-						Konto:
-						<p>{{selectedAccount.name}}</p>
-					</div>
-					<div class="accountDesc">
-						Opis:
-						<p>{{selectedAccount.description}}</p>
-					</div>
-				</section>
-				<section class="chart">
-
-					<div class="sectionName">Wykresy:</div>
-					<div class="lineChart"></div>
-					<div class="pieChart svgCollapse"></div>
-
-					<lineChart data="{{data}}"></lineChart>
-					<div class="collapse">
-						<div pieChart data="{{pieData}}" r="240" ir="200" width="900"
-							height="500"></div>
-						<div pieChart data="{{subPieData}}" r="200" ir="0" width="900"
-							height="500"></div>
-					</div>
-
-				</section>
-				<section class="operations">
-					<div class="sectionName">Operacje:</div>
-					<div class="recordRowHeader bold border-bottom">
-						<div class="recordTypeIcon recordHeader">Typ</div>
-						<div class="recordTransfer recordHeader">Transfer</div>
-						<div class="recordValue recordHeader">kwota</div>
-						<div class="recordDate recordHeader">data</div>
-					</div>
-					<div mark-line mark="#A0C0DC" nmark="#DDD" class="recordRow"
-						ng-repeat="record in selectedAccount.records">
-						<div recordTypeIcon type="{{recordTypeIcon(record.recordTypeId)}}" class="recordTypeIcon">{{record.recordTypeId}}</div>
-						<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId,
-							record.sourceWalletAccountId, record.income)}}</div>
-						<div class="recordValue" change-font-color value="#E22"
-							valid={{!record.income}}>{{record.value}}</div>
-						<div class="recordDate">{{record.date | date:'d-MM-yyyy
-							HH:mm' : 'UTC'}}</div>
-					</div>
-				</section>
 				</main>
 
 			</div>
 		</div>
 		<div data-ng-view></div>
 	</div>
+	
+	
+	<div>
+</div>
 
 </div>
