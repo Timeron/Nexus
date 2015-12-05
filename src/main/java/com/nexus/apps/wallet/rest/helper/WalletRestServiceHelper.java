@@ -185,7 +185,7 @@ public class WalletRestServiceHelper {
 			List<RecordDTO> recordDTOs = new ArrayList<RecordDTO>();
 			RecordDTO recordDTO;
 			BigDecimal sum = new BigDecimal(0);
-			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account);
+			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account, Direction.DESC);
 			for(WalletRecord record : records){
 				recordDTO = new RecordDTO(record);
 				recordDTOs.add(recordDTO);
