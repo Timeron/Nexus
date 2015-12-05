@@ -282,6 +282,7 @@
 					<ul class="nav nav-tabs" role="tablist" id="menuSectionContainer">
 		    			<li role="presentation"><a href="#Charts" aria-controls="Charts" role="tab" data-toggle="tab">Wykresy</a></li>
 		    			<li role="presentation"><a href="#Records" aria-controls="Records" role="tab" data-toggle="tab">Operacje</a></li>
+		    			<li role="presentation"><a href="#Statistics" aria-controls="Statistics" role="tab" data-toggle="tab">Statystyka</a></li>
 		  			</ul>
 					
 					<div class="tab-content">
@@ -289,9 +290,15 @@
 							<div class="sectionContainer">
 								<div class="sectionName">Wykresy:</div>
 								<div class="lineChart"></div>
-								<div class="pieChart svgCollapse"></div>
 			
 								<lineChart data="{{data}}"></lineChart>
+							</div>
+						</section>
+						<section role="tabpanel" class="chart tab-pane fade" id="Statistics">
+							<div class="sectionContainer">
+								<div class="sectionName">Statystyka:</div>
+								<div class="pieChart svgCollapse"></div>
+								
 								<div class="collapse">
 									<div pieChart data="{{pieData}}" r="240" ir="200" width="900"
 										height="500"></div>
