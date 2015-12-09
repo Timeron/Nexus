@@ -28,6 +28,13 @@ app.factory("GetAllRecordTypes", function($resource){
 		);
 });
 
+app.factory("GetSumForTypeInTypeHierarchy", function($resource){
+	return $resource("/nexus/v1/wallet/getSumForTypeInTypeHierarchy", 
+			{}, 
+			{query: { method: "POST", isArray: true }}
+		);
+});
+
 app.factory("GetAllUserAccounts", function($resource){
 	return $resource("/nexus/v1/wallet/getAllUserAccounts", 
 			{}, 

@@ -19,6 +19,9 @@ public class PieChartDTO {
 	public void setValue(String value) {
 		this.value = value;
 	}
+	public void setValue(float value) {
+		this.value = Float.toString(value);
+	}
 	public String getColor() {
 		return color;
 	}

@@ -121,6 +121,14 @@ public class WalletRestService {
 		return result;
 	}
 	
+	@RequestMapping(value="/getSumForTypeInTypeHierarchy", method = RequestMethod.POST)
+	public String getSumForTypeInTypeHierarchy(@RequestBody String json, Principal principal){
+		LOG.info("service: getSumForTypeInTypeHierarchy");
+		SumForAccountByType sumForAccountByType = gson.fromJson(json, SumForAccountByType.class);
+		String result = gson.toJson(helper.getSumForTypeInTypeHierarchy(sumForAccountByType, principal));
+		LOG.info("service response: getSumForTypeInTypeHierarchy -> "+result);
+		return result;
+	}
 
 	@RequestMapping(value="/getSumForAccountByParentType", method = RequestMethod.POST)
 	public String getSumForAccountByParentType(@RequestBody String json, Principal principal){

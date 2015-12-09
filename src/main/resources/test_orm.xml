@@ -14,4 +14,17 @@
   	<query>SELECT r FROM WalletRecord r inner join r.walletType t inner join r.walletAccount a where r.income = :income and a.id = :accountId ORDER BY t.name ASC</query>
   </named-query>
   
+<!--   nie działą poprawnie -->
+  <named-query name="GetRecordByParentType">
+  	<query>SELECT r FROM WalletRecord r WHERE r.walletType.id = :typeId</query>
+  </named-query>
+  
+  <named-query name="GetRecordByType">
+  	<query>SELECT r FROM WalletRecord r WHERE r.walletType.id = :typeId</query>
+  </named-query>
+  
+  <named-query name="GetChildren">
+  	<query>SELECT t FROM WalletType t WHERE t.parentType.id = :typeId OR t.id = :typeId</query>
+  </named-query>
+  
 </entity-mappings>
