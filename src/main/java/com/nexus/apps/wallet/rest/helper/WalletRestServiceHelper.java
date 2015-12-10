@@ -217,10 +217,12 @@ public class WalletRestServiceHelper {
 		WalletAccount account = walletAccountDAO.getById(accountDTO.getId());
 		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account, Direction.ASC);
 		List<KeyValueDTO> chartData = transformToDayPeriod(records);
-		KeyValueDTO toDay = new KeyValueDTO();
-		toDay.setKey(format.format(new Date()));
-		toDay.setValue(chartData.get(chartData.size()-1).getValue());
-		chartData.add(toDay);
+		if(chartData.size() > 0){
+			KeyValueDTO toDay = new KeyValueDTO();
+			toDay.setKey(format.format(new Date()));
+			toDay.setValue(chartData.get(chartData.size()-1).getValue());
+			chartData.add(toDay);
+		}
 		return chartData;
 	}
 
@@ -267,7 +269,7 @@ public class WalletRestServiceHelper {
 			childPieChartDTOs = new ArrayList<HierarchyPieChartDTO>();
 			for(WalletType type : walletTypes){
 				childPieChartDTO = new HierarchyPieChartDTO();
-				childPieChartDTO.setValue(sumRecords(walletRecordDAO.getByType(type.getId())));
+				childPieChartDTO.setValue(sumRecords(walletRecordDAO.getByType(type.getId(), false)));
 				childPieChartDTO.setColor(type.getColor());
 				childPieChartDTO.setKey(type.getName());
 				childPieChartDTO.setOrder(type.getId());

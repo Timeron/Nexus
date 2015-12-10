@@ -46,6 +46,8 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 //		});
 		
 		GetSumForTypeInTypeHierarchy.query({accountId: account.id, income: "false"}, function(data){
+			$scope.pieData = [];
+			$scope.subPieData = [];
 			console.log(data);
 			angular.forEach(data, function(d){
 				$scope.subPieData.push(d);

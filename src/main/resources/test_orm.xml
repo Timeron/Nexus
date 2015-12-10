@@ -27,4 +27,8 @@
   	<query>SELECT t FROM WalletType t WHERE t.parentType.id = :typeId OR t.id = :typeId</query>
   </named-query>
   
+  <named-query name="GetRecordByTypeIncome">
+  	<query>SELECT r FROM WalletRecord r WHERE r.walletType.id = :typeId and r.income = :income</query>
+  </named-query>
+  
 </entity-mappings>
