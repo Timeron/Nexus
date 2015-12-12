@@ -63,7 +63,7 @@
 			<!-- Modal -->
 			<div class="modal" id="editTypesModal" tabindex="-1" role="dialog"
 				aria-labelledby="myModalLabel" aria-hidden="true">
-				<div class="modal-dialog" style="width: 40%">
+				<div class="modal-dialog" style="width: 45%">
 					<div class="modal-content" >
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal"
@@ -79,6 +79,7 @@
 										<th class="center">nazwa</th>
 										<th class="center">ikona</th>
 										<th class="center" colspan="2">kolor</th>
+										<th class="center"></th>
 										<th class="center editTypeTableRow">dochód</th>
 									</tr>
 									<tr ng-repeat="type in copyOfTypes">
@@ -100,6 +101,7 @@
 											<input type="text" value="{{type.color}}" data-ng-model="type.color" size="5" maxlength="7">
 										</td>
 										<td style="background-color: {{type.color}}; color: {{type.color}}" class="spaceBufor editTypeTableRow">X</td>
+										<td style="background-color: {{getTypeColor(type.parentId)}}; color: {{getTypeColor(type.parentId)}}" class="spaceBuforS">X</td>
 										<td class="center">
 											<input data-ng-model="type.defaultValue" type="checkbox" ng-checked="{{type.defaultValue}}">
 										</td>
@@ -296,6 +298,7 @@
 						</section>
 						<section role="tabpanel" class="chart tab-pane fade" id="Statistics">
 							<div class="sectionContainer">
+								<div class="sectionMenu"><button class="btn btn-primary btn-sm" ng-click="getStats('false')">Wydatki</button><button  class="btn btn-primary btn-sm" ng-click="getStats('true')">Dochody</button></div>
 								<div class="sectionName">Statystyka:</div>
 								<div class="pieChart svgCollapse"></div>
 								

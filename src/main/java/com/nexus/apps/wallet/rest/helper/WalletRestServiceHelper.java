@@ -241,17 +241,17 @@ public class WalletRestServiceHelper {
 	public List<PieChartDTO> getSumForAccountByParentType(SumForAccountByType sumForAccountByType, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
 		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, sumForAccountByType.getIncome());
-		transformToHierarchyPieChartByType(records);
+		transformToHierarchyPieChartByType(records, sumForAccountByType.getIncome());
 		return transformToPieChartByParentType(records);
 	}
 	
 	public List<HierarchyPieChartDTO> getSumForTypeInTypeHierarchy(SumForAccountByType sumForAccountByType, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
 		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, sumForAccountByType.getIncome());
-		return transformToHierarchyPieChartByType(records);
+		return transformToHierarchyPieChartByType(records, sumForAccountByType.getIncome());
 	}
 	
-	private List<HierarchyPieChartDTO> transformToHierarchyPieChartByType(List<WalletRecord> records){
+	private List<HierarchyPieChartDTO> transformToHierarchyPieChartByType(List<WalletRecord> records, boolean income){
 		List<HierarchyPieChartDTO> chartDTOs = new ArrayList<HierarchyPieChartDTO>();
 		HierarchyPieChartDTO parenPieChartDTO;
 		List<HierarchyPieChartDTO> childPieChartDTOs;
@@ -269,7 +269,7 @@ public class WalletRestServiceHelper {
 			childPieChartDTOs = new ArrayList<HierarchyPieChartDTO>();
 			for(WalletType type : walletTypes){
 				childPieChartDTO = new HierarchyPieChartDTO();
-				childPieChartDTO.setValue(sumRecords(walletRecordDAO.getByType(type.getId(), false)));
+				childPieChartDTO.setValue(sumRecords(walletRecordDAO.getByType(type.getId(), income)));
 				childPieChartDTO.setColor(type.getColor());
 				childPieChartDTO.setKey(type.getName());
 				childPieChartDTO.setOrder(type.getId());

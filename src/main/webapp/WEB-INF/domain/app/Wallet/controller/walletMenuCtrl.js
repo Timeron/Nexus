@@ -405,8 +405,21 @@ app
 					$scope.setIconToType = function(index, icon) {
 						$scope.copyOfTypes[index].icon = icon;
 					};
-
+					
+					$scope.getTypeColor = function(typeId) {
+						var color = "#FFF";
+						if(typeId !== ""){
+							angular.forEach($scope.types, function(t) {
+								if (t.id === typeId) {
+									color = t.color;
+								}
+							});
+						}
+						return color;
+					};
 				});
+
+
 
 app.controller("AddRecordCtrl", function() {
 

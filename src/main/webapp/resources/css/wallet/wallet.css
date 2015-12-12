@@ -51,6 +51,9 @@ section{
 	font-weight: bold;
 	color: #555;
 }
+.sectionMenu{
+	float: right;
+}
 
 .addIconToType{
 	position: absolute;
