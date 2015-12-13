@@ -9,7 +9,8 @@ public class NexusPersonDTO {
 		private String lastName;
 		private String nick;
 		private String nickLogo;
-		private String email;
+		private String emailOffice;
+		private String emailPrv;
 		private String city;
 		private String country;
 		private String address;
@@ -17,6 +18,7 @@ public class NexusPersonDTO {
 		private String phone2;
 		private String phone3;
 		private String description;
+		private String tags;
 		
 		public NexusPersonDTO(NexusPerson nexusPerson){
 			this.id = nexusPerson.getId();
@@ -24,7 +26,8 @@ public class NexusPersonDTO {
 			this.lastName = nexusPerson.getLastName();
 			this.nick = nexusPerson.getNick();
 			this.nickLogo = nexusPerson.getNickLogo();
-			this.email = nexusPerson.getEmail();
+			this.emailOffice = nexusPerson.getEmailOffice();
+			this.emailPrv = nexusPerson.getEmailPrv();
 			this.city = nexusPerson.getCity();
 			this.country = nexusPerson.getCountry();
 			this.address = nexusPerson.getAddress();
@@ -32,6 +35,7 @@ public class NexusPersonDTO {
 			this.phone2 = nexusPerson.getPhone2();
 			this.phone3 = nexusPerson.getPhone3();
 			this.description = nexusPerson.getDescription();
+			this.tags = nexusPerson.getTags();
 		}
 		/*
 		 * Getters & setters
@@ -60,12 +64,6 @@ public class NexusPersonDTO {
 		}
 		public void setNick(String nick) {
 			this.nick = nick;
-		}
-		public String getEmail() {
-			return email;
-		}
-		public void setEmail(String email) {
-			this.email = email;
 		}
 		public String getCity() {
 			return city;
@@ -109,12 +107,28 @@ public class NexusPersonDTO {
 		public void setDescription(String description) {
 			this.description = description;
 		}
-
 		public String getNickLogo() {
 			return nickLogo;
 		}
-		
 		public void setNickLogo(String nickLogo) {
 			this.nickLogo = nickLogo;
+		}
+		public String getEmailOffice() {
+			return emailOffice;
+		}
+		public void setEmailOffice(String emailOffice) {
+			this.emailOffice = emailOffice;
+		}
+		public String getEmailPrv() {
+			return emailPrv;
+		}
+		public void setEmailPrv(String emailPrv) {
+			this.emailPrv = emailPrv;
+		}
+		public String getTags() {
+			return tags;
+		}
+		public void setTags(String tags) {
+			this.tags = tags;
 		}
 }

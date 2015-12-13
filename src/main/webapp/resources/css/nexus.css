@@ -15,3 +15,6 @@
 	font-size: 20px;
 	padding: 5px 25px 5px 25px;;
 }
+.topMainMenu{
+	background: linear-gradient(to top,#337ab7 0,#265a88 100%);
+}

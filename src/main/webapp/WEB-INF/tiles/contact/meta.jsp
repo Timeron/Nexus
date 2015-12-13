@@ -17,8 +17,12 @@
 <script src="<c:url value="/resources/js/angular/angular-resource.js" />"></script>
 <%-- <script src="<c:url value="/resources/js/angular/angular-route.js" />"></script> --%>
 
+<script src="<c:url value="/resources/js/dateValues.js" />"></script>
+
 <script src="<c:url value="/domain/app/Contact/controller/contactCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Contact/controller/contactMainCtrl.js" />"></script>
+<script src="<c:url value="/domain/app/Contact/controller/addContactCtrl.js" />"></script>
+<script src="<c:url value="/domain/app/Contact/service/service.js" />"></script>
 
 <link rel="stylesheet" href="<c:url value="/resources/css/timeron.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/nexus.css" />" />
