@@ -26,6 +26,7 @@
 
 <link rel="stylesheet" href="<c:url value="/resources/css/timeron.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/nexus.css" />" />
+<link rel="stylesheet" href="<c:url value="/resources/css/contact/contact.css" />" />
 
 <link rel="stylesheet" href="<c:url value="/resources/bootstrap/css/bootstrap.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/bootstrap/css/bootstrap-theme.min.css" />" />

@@ -141,6 +141,12 @@
 				kontakt</button>
 		</div>
 	</div>
-	<div data-ng-controller="ContactCtrl">{{test}}</div>
+	<div data-ng-controller="ContactCtrl">
+		<section>
+			<div id="rightSection">
+				<div class="clickable" ng-repeat="contact in contacts"><a>{{contact.firstName}} {{contact.lastName}} {{contact.pseudo}}</a></div>
+			</div>
+		</section>
+	</div>
 
 </div>
