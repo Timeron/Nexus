@@ -80,4 +80,15 @@ public class ContactRestServiceHelper {
 		DateTime date = new DateTime(year, month, day, 0, 0, 0, 0);
 		return date.getMillis();
 	}
+
+	public ServiceResult getContactDetails(int contactId, Principal principal) {
+		ServiceResult result = new ServiceResult();
+		try{
+			result.setObject(new NexusPersonDTO(nexusPersonDAO.getById(contactId)));
+			result.setSuccess(true);
+		}catch(Exception ex){
+			result.setSuccess(false);
+		}
+		return result;
+	}
 }

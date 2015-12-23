@@ -2,6 +2,8 @@ package com.nexus.apps.contact.rest;
 
 import java.security.Principal;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -38,4 +40,13 @@ public class ContactRestService {
 		LOG.info("service response: getContacts -> "+result);
 		return result;
 	}
+	
+	@RequestMapping(value="/getContactDetails", method = RequestMethod.GET)
+	public String getContactDetails(HttpServletRequest request, Principal principal){
+		int contactId = Integer.parseInt(request.getParameter("contactId"));
+		String result = gson.toJson(helper.getContactDetails(contactId, principal));
+		LOG.info("service response: getContactDetails -> "+result);
+		return result;
+	}
+	
 }

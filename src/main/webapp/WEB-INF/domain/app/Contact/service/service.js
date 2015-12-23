@@ -13,3 +13,10 @@ app.factory("GetContacts", function($resource){
 			{query: { method: "GET", isArray: false }}
 		);
 });
+
+app.factory("GetContactDetails", function($resource){
+	return $resource("/nexus/v1/contact/getContactDetails", 
+			{}, 
+			{query: { method: "GET", isArray: false }}
+		);
+})

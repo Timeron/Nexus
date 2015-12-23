@@ -77,6 +77,10 @@
 	border-bottom: solid 1px #ccc;
 }
 
+.border-top{
+	border-top: solid 1px #ccc;
+}
+
 .font-m {
 	font-size: 12px;
 }

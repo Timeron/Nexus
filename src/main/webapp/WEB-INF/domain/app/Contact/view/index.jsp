@@ -128,6 +128,68 @@
 			</div>
 		</div>
 	</div>
+	
+	<!-- Modal -->
+	<div class="modal" id="searchContact" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="SearchContactCtrl">
+		<div class="modal-dialog" style="width: 50%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Nowe Kontakt</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12"><input type="text"
+									class="form-control, col-md-4" data-ng-model="search" placeholder="Miasto" /></div>
+						<div ng-repeat="contact in contacts | filter:search"">
+							<div class="contactBarImageMin">AAA</div>
+							<div class="contactBarText">{{contact.firstName}} {{contact.lastName}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+					<button type="button" class="btn btn-primary"
+						data-ng-click="addContact()" data-dismiss="modal">Zapisz</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Modal -->
+	<div class="modal" id="searchContact" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="SearchContactCtrl">
+		<div class="modal-dialog" style="width: 50%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Nowe Kontakt</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="col-md-12"><input type="text"
+									class="form-control, col-md-4" data-ng-model="search" placeholder="Miasto" /></div>
+						<div ng-repeat="contact in contacts | filter:search"">
+							<div class="contactBarImageMin">AAA</div>
+							<div class="contactBarText">{{contact.firstName}} {{contact.lastName}}</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+					<button type="button" class="btn btn-primary"
+						data-ng-click="addContact()" data-dismiss="modal">Zapisz</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
 	<div class="topMainMenu">
 		<div class="btn-group">
@@ -142,11 +204,47 @@
 		</div>
 	</div>
 	<div data-ng-controller="ContactCtrl">
-		<section>
-			<div id="rightSection">
-				<div class="clickable" ng-repeat="contact in contacts"><a>{{contact.firstName}} {{contact.lastName}} {{contact.pseudo}}</a></div>
+		<section id="rightSection">
+				<div class="clickable" ng-repeat="contact in contacts">
+					<div class="row" ng-click="setContact(contact)">
+						<div class="contactBarImageMin"></div>
+						<div class="contactBarText">{{contact.firstName}} {{contact.lastName}}</div>
+					</div>
+				</div>
+		</section>
+		<section curtain id="mainSection" hide="{{contactSectionHide}}">
+			<div class="contactSection" >
+				<div class="">
+					<div class="name">{{contact.firstName}} {{contact.lastName}}</div>
+					<div class="pseudo">{{contact.nick}}</div>
+				</div>
+				<div class="addressBox">
+					<div class="border-top">
+						<div class="leftColumn">
+							<div class="adress"><div class="keyContactName">Adres:</div> <div class="valueContactName">{{contact.address}}</div></div><br/>
+							<div class="city"><div class="keyContactName">miasto:</div> <div class="valueContactName">{{contact.city}}</div></div><br/>
+							<div class="country"><div class="keyContactName">Kraj:</div> <div class="valueContactName">{{contact.country}}</div></div><br/>
+						</div>
+						<div class="centerColumn">
+							<div class="emailPrv"><div class="keyContactName">eMail prywatny:</div> <div class="valueContactName">{{contact.emailPrv}}</div></div><br/>
+							<div class="emailOffice"><div class="keyContactName">eMail:</div> <div class="valueContactName">{{contact.emailOffice}}</div></div><br/>
+							<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone1}}</div></div><br/>
+							<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone2}}</div></div><br/>
+							<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone3}}</div></div><br/>
+						</div>
+						<div class="rightColumn">
+	<!-- 						<div class="emailPrv"><div class="keyContactName">eMail prywatny:</div> <div class="valueContactName">{{contact.emailPrv}}</div></div><br/> -->
+	<!-- 						<div class="emailOffice"><div class="keyContactName">eMail:</div> <div class="valueContactName">{{contact.emailOffice}}</div></div><br/> -->
+	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone1}}</div></div><br/> -->
+	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone2}}</div></div><br/> -->
+	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone3}}</div></div><br/> -->
+						</div>
+						<div class="bottom">
+							<div class="description"><div class="keyContactName">Opis:</div><div class="valueContactName">{{contact.description}}</div></div>
+						</div>
+					</div>
+				</div>
 			</div>
 		</section>
 	</div>
-
 </div>
