@@ -14,9 +14,11 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonElement;
 import com.nexus.apps.wallet.constant.MessageResources;
 import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
@@ -28,6 +30,7 @@ import com.nexus.apps.wallet.service.dto.RecordDTO;
 import com.nexus.apps.wallet.service.dto.RecordTypeDTO;
 import com.nexus.apps.wallet.service.dto.RecordTypeListDTO;
 import com.nexus.apps.wallet.service.dto.SumForAccountByType;
+import com.nexus.apps.wallet.service.dto.TypeForStatistics;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
@@ -234,20 +237,20 @@ public class WalletRestServiceHelper {
 	
 	public List<PieChartDTO> getSumForAccountByType(SumForAccountByType sumForAccountByType, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
-		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, sumForAccountByType.getIncome());
+		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByType.getIncome());
 		return transformToPieChartByType(records);
 	}
 	
 	public List<PieChartDTO> getSumForAccountByParentType(SumForAccountByType sumForAccountByType, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
-		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, sumForAccountByType.getIncome());
+		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByType.getIncome());
 		transformToHierarchyPieChartByType(records, sumForAccountByType.getIncome());
 		return transformToPieChartByParentType(records);
 	}
 	
 	public List<HierarchyPieChartDTO> getSumForTypeInTypeHierarchy(SumForAccountByType sumForAccountByType, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
-		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, sumForAccountByType.getIncome());
+		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByType.getIncome());
 		return transformToHierarchyPieChartByType(records, sumForAccountByType.getIncome());
 	}
 	
@@ -503,6 +506,29 @@ public class WalletRestServiceHelper {
 			uTypes.add(uType);
 		}
 		return uTypes;
+	}
+
+	public List<KeyValueDTO> getSumForTypeForStatistics(TypeForStatistics typeForStatistics, Principal principal) {
+		List<KeyValueDTO> results = new ArrayList<KeyValueDTO>();
+		Integer tempMonth = null;
+		KeyValueDTO keyValueDTO;
+		WalletAccount account = walletAccountDAO.getById(typeForStatistics.getAccount());
+		WalletType type = walletTypeDAO.getById(typeForStatistics.getType());
+//		TODO records pobiera tylko pierwszy rekord
+		List<WalletRecord> recortTypeLastDate = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome());
+		DateTime tempDataTime = new DateTime(recortTypeLastDate.get(0).getDate().getTime());
+		DateTime date = new DateTime(tempDataTime.getYear(), tempDataTime.getMonthOfYear(), 1, 0, 0, 0, 0);
+		while(date.isBefore(new Date().getTime())){
+			keyValueDTO = new KeyValueDTO();
+			keyValueDTO.setKey(date.toString());
+			results.add(keyValueDTO);
+			date = date.plusMonths(1);
+		}
+		System.out.println(date);
+		for(KeyValueDTO result : results){
+			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome(), result.getKey());
+		}
+		return null;
 	}
 
 }

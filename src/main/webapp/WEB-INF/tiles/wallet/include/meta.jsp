@@ -17,6 +17,8 @@
 <script src="<c:url value="/resources/js/angular/angular-resource.js" />"></script>
 <script src="<c:url value="/resources/js/angular/angular-route.js" />"></script>
 
+<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
+
 <script src="<c:url value="/domain/app/Wallet/controller/walletCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/controller/walletMenuCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/controller/walletMainCtrl.js" />"></script>

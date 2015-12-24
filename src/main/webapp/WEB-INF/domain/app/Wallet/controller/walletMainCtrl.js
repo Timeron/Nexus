@@ -1,6 +1,6 @@
 var app = angular.module('WalletMain', []);
 
-app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy) {
+app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy, GetSumForTypeForStatistics) {
 	$scope.accounts = [];
 	$scope.selectedAccount;
 	$scope.user = "-";
@@ -10,6 +10,8 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	$scope.subPieData = [];
 	$scope.types = GetAllRecordTypes.query();
 	$scope.incomeViewFlag = "false";
+	
+	
 	
 	CurrentUser.query({}, function(data){
 		$scope.user = data;
@@ -61,6 +63,11 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 				}
 			});
 		});
+		
+		GetSumForTypeForStatistics.query({account: account.id, type:54, income: $scope.incomeViewFlag}, function(data){ //9
+			$scope.typeStatisticData = data;
+		});
+		$scope.typeStatisticData = [{key: 'A',value: '.08167'},{key: 'D',value: '.03167'},{key: 'B',value: '.04167'},{key: 'C',value: '.02167'}];
 	};
 	
 	$scope.getStats = function(income){

@@ -63,6 +63,13 @@ app.factory("GetSumForAccountByParentType", function($resource){
 		);
 });
 
+app.factory("GetSumForTypeForStatistics", function($resource){
+	return $resource("/nexus/v1/wallet/getSumForTypeForStatistics", 
+			{}, 
+			{query: { method: "POST", isArray: true }}
+		);
+});
+
 //type tab
 app.factory("AddType", function($resource){
 	return $resource("/nexus/v1/wallet/addType", 
