@@ -18,6 +18,10 @@
   	<query>SELECT r FROM WalletRecord r inner join r.walletType t inner join r.walletAccount a where t.id = :typeId and r.income = :income and a.id = :accountId ORDER BY r.date ASC</query>
   </named-query>
   
+  <named-query name="GetRecordsFromAccountWithTypeFromTo">
+  	<query>SELECT r FROM WalletRecord r inner join r.walletType t inner join r.walletAccount a where t.id = :typeId and r.income = :income and a.id = :accountId AND r.date BETWEEN :from AND :to ORDER BY r.date ASC</query>
+  </named-query>
+  
 <!--   nie działą poprawnie -->
   <named-query name="GetRecordByParentType">
   	<query>SELECT r FROM WalletRecord r WHERE r.walletType.id = :typeId</query>

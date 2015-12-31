@@ -512,6 +512,7 @@ public class WalletRestServiceHelper {
 		List<KeyValueDTO> results = new ArrayList<KeyValueDTO>();
 		Integer tempMonth = null;
 		KeyValueDTO keyValueDTO;
+		List<DateTime> dateValues = new ArrayList<DateTime>();
 		WalletAccount account = walletAccountDAO.getById(typeForStatistics.getAccount());
 		WalletType type = walletTypeDAO.getById(typeForStatistics.getType());
 //		TODO records pobiera tylko pierwszy rekord
@@ -519,16 +520,22 @@ public class WalletRestServiceHelper {
 		DateTime tempDataTime = new DateTime(recortTypeLastDate.get(0).getDate().getTime());
 		DateTime date = new DateTime(tempDataTime.getYear(), tempDataTime.getMonthOfYear(), 1, 0, 0, 0, 0);
 		while(date.isBefore(new Date().getTime())){
-			keyValueDTO = new KeyValueDTO();
-			keyValueDTO.setKey(date.toString());
-			results.add(keyValueDTO);
+			dateValues.add(date);
 			date = date.plusMonths(1);
 		}
 		System.out.println(date);
-		for(KeyValueDTO result : results){
-			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome(), result.getKey());
+		for(DateTime dateTime : dateValues){
+			keyValueDTO = new KeyValueDTO();
+			keyValueDTO.setKey(dateTime.toString());
+			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome(), dateTime, dateTime.plusMonths(1));
+			BigDecimal valueBD = new BigDecimal(0);
+			for(WalletRecord record : records){
+				valueBD = valueBD.add(round(record.getValue(),2));
+			}
+			keyValueDTO.setValue(valueBD.toString());
+			results.add(keyValueDTO);
 		}
-		return null;
+		return results;
 	}
 
 }
