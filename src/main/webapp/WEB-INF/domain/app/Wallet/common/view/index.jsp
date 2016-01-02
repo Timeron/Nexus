@@ -301,6 +301,7 @@
 								<div class="sectionMenu"><button class="btn btn-primary btn-sm" ng-click="getStats('false')">Wydatki</button><button  class="btn btn-primary btn-sm" ng-click="getStats('true')">Dochody</button></div>
 								<div class="sectionName">Statystyka:</div>
 								<div class="pieChart svgCollapse"></div>
+								<div class="sectionName">{{selectedType.name}}:</div>
 								<div class="typeStatisticChart"></div>
 								
 								<div class="collapse">

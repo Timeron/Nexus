@@ -15,6 +15,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.joda.time.DateTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -55,6 +57,7 @@ public class WalletRestServiceHelper {
 	WalletRecordDAO walletRecordDAO;
 
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
+	SimpleDateFormat formatMonth = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
 	
 	public ServiceResult addAccount(NewAccountDTO accountDTO, Principal principal) {
 		ServiceResult result = new ServiceResult();
@@ -509,33 +512,43 @@ public class WalletRestServiceHelper {
 	}
 
 	public List<KeyValueDTO> getSumForTypeForStatistics(TypeForStatistics typeForStatistics, Principal principal) {
+		
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yy, MMM");
+		
 		List<KeyValueDTO> results = new ArrayList<KeyValueDTO>();
 		Integer tempMonth = null;
 		KeyValueDTO keyValueDTO;
 		List<DateTime> dateValues = new ArrayList<DateTime>();
 		WalletAccount account = walletAccountDAO.getById(typeForStatistics.getAccount());
 		WalletType type = walletTypeDAO.getById(typeForStatistics.getType());
+		if(type == null){
+			return null;
+		}
 //		TODO records pobiera tylko pierwszy rekord
 		List<WalletRecord> recortTypeLastDate = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome());
-		DateTime tempDataTime = new DateTime(recortTypeLastDate.get(0).getDate().getTime());
-		DateTime date = new DateTime(tempDataTime.getYear(), tempDataTime.getMonthOfYear(), 1, 0, 0, 0, 0);
-		while(date.isBefore(new Date().getTime())){
-			dateValues.add(date);
-			date = date.plusMonths(1);
-		}
-		System.out.println(date);
-		for(DateTime dateTime : dateValues){
-			keyValueDTO = new KeyValueDTO();
-			keyValueDTO.setKey(dateTime.toString());
-			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome(), dateTime, dateTime.plusMonths(1));
-			BigDecimal valueBD = new BigDecimal(0);
-			for(WalletRecord record : records){
-				valueBD = valueBD.add(round(record.getValue(),2));
+		if(recortTypeLastDate.size() > 0){
+			DateTime tempDataTime = new DateTime(recortTypeLastDate.get(0).getDate().getTime());
+			DateTime date = new DateTime(tempDataTime.getYear(), tempDataTime.getMonthOfYear(), 1, 0, 0, 0, 0);
+			while(date.isBefore(new Date().getTime())){
+				dateValues.add(date);
+				date = date.plusMonths(1);
 			}
-			keyValueDTO.setValue(valueBD.toString());
-			results.add(keyValueDTO);
+			System.out.println(date);
+			for(DateTime dateTime : dateValues){
+				keyValueDTO = new KeyValueDTO();
+				keyValueDTO.setKey(fmt.print(dateTime));
+				List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome(), new Date(dateTime.getMillis()), new Date(dateTime.plusMonths(1).getMillis()));
+				BigDecimal valueBD = new BigDecimal(0);
+				for(WalletRecord record : records){
+					valueBD = valueBD.add(round(record.getValue(),2));
+				}
+				keyValueDTO.setValue(valueBD.toString());
+				results.add(keyValueDTO);
+			}
+			return results;
+		}else{
+			return null;
 		}
-		return results;
 	}
 
 }

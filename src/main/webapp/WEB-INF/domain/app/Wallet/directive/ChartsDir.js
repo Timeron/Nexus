@@ -91,41 +91,6 @@ app
 						restrict : "AE",
 						// template : "<div class='pieChart'></div>",
 						link : function(scope, element, attrs) {
-//							var r = attrs.r, ir = attrs.ir, width = attrs.width, height = attrs.height;
-//							var pie = d3.layout.pie().sort(null).value(
-//									function(d) {
-//										return d.value;
-//									});
-//
-//							// kontener svg
-//							var svg = d3.select(".pieChart").append("svg")
-//									.attr("width", width)
-//									.attr("height", height).append("g").attr(
-//											"transform",
-//											"translate(" + width / 2 + ","
-//													+ height / 2 + ")");
-//
-//							var arc = d3.svg.arc().outerRadius(r).innerRadius(
-//									ir);
-//
-//							data.forEach(function(d) {
-//								d.value = +d.value;
-//							});
-//
-//							var g = svg.selectAll(".arc").data(pie(data))
-//									.enter().append("g").attr("class", "arc");
-//
-//							g.append("path").attr("d", arc).style("fill",
-//									function(d) {
-//										return d.data.color;
-//									});
-//
-//							g.append("text").attr("transform", function(d) {
-//								return "translate(" + arc.centroid(d) + ")";
-//							}).attr("dy", ".35em").style("text-anchor",
-//									"middle").text(function(d) {
-//								return d.data.type;
-//							});
 						},
 						scope : {
 							r : "=",
@@ -134,33 +99,13 @@ app
 							height : "="
 						},
 						controller : function($scope, $element, $attrs) {
+							
+							var clicked = function(d){
+								$scope.$parent.pieCliked(d.data);
+							};
+							
 							$attrs.$observe('data', function(e) {
 								var data = $.parseJSON(e);
-								var data1 = [ {
-									key : "<5",
-									value : 2704659,
-									color : "#98abc5"
-								}, {
-									key : "5-13",
-									value : 4499890,
-									color : "#8a89a6"
-								}, {
-									key : "14-17",
-									value : 2159981,
-									color : "#7b6888"
-								}, {
-									key : "18-24",
-									value : 3853788,
-									color : "#6b486b"
-								}, {
-									key : "25-44",
-									value : 14106543,
-									color : "#00F"
-								}, {
-									key : "45-64",
-									value : 8819342,
-									color : "#d0743c"
-								}];
 //								if(data.lenght > 0){
 									var r = $attrs.r, ir = $attrs.ir, width = $attrs.width, height = $attrs.height;
 									var pie = d3.layout.pie().sort(null).value(
@@ -184,12 +129,17 @@ app
 									});
 	
 									var g = svg.selectAll(".arc").data(pie(data))
-											.enter().append("g").attr("class", "arc");
+											.enter().append("g").attr("class", "arc").on("click", clicked);
 	
 									g.append("path").attr("d", arc).style("fill",
 											function(d) {
 												return d.data.color;
 											});
+									
+//									g.append("path").attr("d", arc).style("fill",
+//											function(d) {
+//												return d.data.color;
+//											});
 	
 									g.append("text").attr("transform", function(d) {
 										return "translate(" + arc.centroid(d) + ")";
@@ -219,19 +169,14 @@ app.directive("barchart", function(){
 		},
 		controller : function($scope, $element, $attrs) {
 			$attrs.$observe('data', function(e) {
-//				var data = $.parseJSON(e);
+				var data = $.parseJSON(e);
 				console.log(e);
-				
-				
-				
-				
-				
 				
 				var margin = {top: 40, right: 20, bottom: 30, left: 40},
 			    width = 960 - margin.left - margin.right,
 			    height = 500 - margin.top - margin.bottom;
 
-			var formatPercent = d3.format(".0%");
+//			var formatPercent = d3.format(".0%");
 
 			var x = d3.scale.ordinal()
 			    .rangeRoundBands([0, width], .1);
@@ -245,8 +190,8 @@ app.directive("barchart", function(){
 
 			var yAxis = d3.svg.axis()
 			    .scale(y)
-			    .orient("left")
-			    .tickFormat(formatPercent);
+			    .orient("left");
+//			    .tickFormat(formatPercent);
 
 			var tip = d3.tip()
 			  .attr('class', 'd3-tip')
@@ -263,7 +208,7 @@ app.directive("barchart", function(){
 
 			svg.call(tip);
 
-				var data = [{key: 'A',value: '.08167'},{key: 'D',value: '.03167'},{key: 'B',value: '.04167'},{key: 'C',value: '.02167'}];
+//				var data = [{key: 'A',value: '.08167'},{key: 'D',value: '.03167'},{key: 'B',value: '.04167'},{key: 'C',value: '.02167'}];
 				
 			  x.domain(data.map(function(d) { return d.key; }));
 			  y.domain([0, d3.max(data, function(d) { return d.value; })]);
@@ -300,15 +245,6 @@ app.directive("barchart", function(){
 			  d.value = +d.value;
 			  return d;
 			}
-				
-				
-				
-				
-				
-				
-				
-				
-				
 			});
 		}
 	};

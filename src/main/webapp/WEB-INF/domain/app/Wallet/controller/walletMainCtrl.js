@@ -8,7 +8,9 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	$scope.data = [];
 	$scope.pieData = [];
 	$scope.subPieData = [];
+	$scope.typeStatisticData = [];
 	$scope.types = GetAllRecordTypes.query();
+	$scope.selectedType;
 	$scope.incomeViewFlag = "false";
 	
 	
@@ -64,10 +66,9 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 			});
 		});
 		
-		GetSumForTypeForStatistics.query({account: account.id, type:54, income: $scope.incomeViewFlag}, function(data){ //9
+		GetSumForTypeForStatistics.query({account: account.id, type:$scope.selectedType, income: $scope.incomeViewFlag}, function(data){ //9
 			$scope.typeStatisticData = data;
 		});
-		$scope.typeStatisticData = [{key: 'A',value: '.08167'},{key: 'D',value: '.03167'},{key: 'B',value: '.04167'},{key: 'C',value: '.02167'}];
 	};
 	
 	$scope.getStats = function(income){
@@ -124,10 +125,24 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 		return type;
 	};
 	
+	$scope.pieCliked = function(d){
+		if($scope.selectedType === undefined || d.order!==$scope.selectedType.id){
+			angular.forEach($scope.types, function(t){
+				if(t.id === d.order){
+					$scope.selectedType = t;
+				}
+			});
+			GetSumForTypeForStatistics.query({account: $scope.selectedAccount.id, type:$scope.selectedType.id, income: $scope.incomeViewFlag}, function(data){ //9
+				cleanCanvas(".typeStatisticChart");
+				$scope.typeStatisticData = data;
+			});
+		};
+	};
+	
 	$('#Charts').tab('show');
 
 });
 
 var cleanCanvas = function(object){
 	d3.select(object).selectAll("svg").remove();
-}
+};
