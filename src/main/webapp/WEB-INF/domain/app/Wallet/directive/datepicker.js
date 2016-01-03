@@ -127,7 +127,7 @@ datepicker.directive("datepickermobile", function(){
 			var offset = 0;
 			
 			if(attrs.start === 0 || attrs.start === undefined){
-				start = currentYear;
+				start = currentYear-3;
 			}else{
 				start = parseInt(attrs.start);
 			}
