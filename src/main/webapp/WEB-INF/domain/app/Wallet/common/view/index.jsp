@@ -301,7 +301,15 @@
 								<div class="sectionMenu"><button class="btn btn-primary btn-sm" ng-click="getStats('false')">Wydatki</button><button  class="btn btn-primary btn-sm" ng-click="getStats('true')">Dochody</button></div>
 								<div class="sectionName">Statystyka:</div>
 								<div class="pieChart svgCollapse"></div>
-								<div class="sectionName">{{selectedType.name}}:</div>
+								<div class="sectionName">{{selectedType.name}}</div>
+								<div class="col-md-12">
+								<div class="col-md-3">
+								<select class="form-control" data-ng-model="selectedTypeTemp"
+											ng-options="type.name for type in types">
+												<option value=""></option>
+										</select><button class="btn btn-sm btn-default" ng-click="loadTypeStats(selectedTypeTemp)">Załaduj</button>
+								</div>
+								</div>
 								<div class="typeStatisticChart"></div>
 								
 								<div class="collapse">

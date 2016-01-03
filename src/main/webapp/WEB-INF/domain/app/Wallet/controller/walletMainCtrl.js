@@ -11,6 +11,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	$scope.typeStatisticData = [];
 	$scope.types = GetAllRecordTypes.query();
 	$scope.selectedType;
+	$scope.selectedTypeTemp;
 	$scope.incomeViewFlag = "false";
 	
 	
@@ -130,6 +131,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 			angular.forEach($scope.types, function(t){
 				if(t.id === d.order){
 					$scope.selectedType = t;
+					$scope.selectedTypeTemp = t;
 				}
 			});
 			GetSumForTypeForStatistics.query({account: $scope.selectedAccount.id, type:$scope.selectedType.id, income: $scope.incomeViewFlag}, function(data){ //9
@@ -137,6 +139,14 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 				$scope.typeStatisticData = data;
 			});
 		};
+	};
+	
+	$scope.loadTypeStats = function(type){
+		$scope.selectedType = type;
+		GetSumForTypeForStatistics.query({account: $scope.selectedAccount.id, type:$scope.selectedType.id, income: $scope.incomeViewFlag}, function(data){ //9
+			cleanCanvas(".typeStatisticChart");
+			$scope.typeStatisticData = data;
+		});
 	};
 	
 	$('#Charts').tab('show');

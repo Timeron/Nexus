@@ -170,12 +170,13 @@ app.directive("barchart", function(){
 		controller : function($scope, $element, $attrs) {
 			$attrs.$observe('data', function(e) {
 				var data = $.parseJSON(e);
-				console.log(e);
 				
 				var margin = {top: 40, right: 20, bottom: 30, left: 40},
 			    width = 960 - margin.left - margin.right,
 			    height = 500 - margin.top - margin.bottom;
 
+				
+				
 //			var formatPercent = d3.format(".0%");
 
 			var x = d3.scale.ordinal()
@@ -211,8 +212,11 @@ app.directive("barchart", function(){
 //				var data = [{key: 'A',value: '.08167'},{key: 'D',value: '.03167'},{key: 'B',value: '.04167'},{key: 'C',value: '.02167'}];
 				
 			  x.domain(data.map(function(d) { return d.key; }));
-			  y.domain([0, d3.max(data, function(d) { return d.value; })]);
-
+			  y.domain([0, d3.max(data, function(d) { return Number(d.value); })]);
+			  
+			  console.log(data);
+			  console.log(d3.max(data, function(d) { return d.value; }));
+			  
 			  svg.append("g")
 			      .attr("class", "x axis")
 			      .attr("transform", "translate(0," + height + ")")
@@ -237,7 +241,7 @@ app.directive("barchart", function(){
 			      .attr("y", function(d) { return y(d.value); })
 			      .attr("height", function(d) { return height - y(d.value); })
 			      .on('mouseover', tip.show)
-			      .on('mouseout', tip.hide)
+			      .on('mouseout', tip.hide);
 
 
 
