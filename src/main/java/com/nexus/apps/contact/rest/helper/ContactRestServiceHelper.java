@@ -7,14 +7,11 @@ import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
-import org.mvel2.optimizers.impl.refl.nodes.ArrayLength;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonElement;
 import com.nexus.apps.contact.dto.NewContactDTO;
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
-import com.nexus.common.NexusApplicationsDTO;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;

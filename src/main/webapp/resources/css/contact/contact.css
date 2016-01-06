@@ -18,8 +18,8 @@
 /* main Section contact */
 
 #mainSection{
-	float: right;
-	width: 85vw;
+	float: left;
+	width: 83vw;
 	height: 100%;
 	padding: 60px;
 }
@@ -37,6 +37,12 @@
 
 .addressBox{
 	margin-top: 80px;
+}
+
+.body{
+	width: 100%;
+	height: 100%;
+	float: left;
 }
 
 .contactSection .leftColumn{

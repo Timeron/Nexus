@@ -203,7 +203,7 @@
 				kontakt</button>
 		</div>
 	</div>
-	<div data-ng-controller="ContactCtrl">
+	<div class="body" data-ng-controller="ContactCtrl">
 		<section id="rightSection">
 				<div class="clickable" ng-repeat="contact in contacts">
 					<div class="row" ng-click="setContact(contact)">
@@ -233,8 +233,8 @@
 							<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone3}}</div></div><br/>
 						</div>
 						<div class="rightColumn">
-	<!-- 						<div class="emailPrv"><div class="keyContactName">eMail prywatny:</div> <div class="valueContactName">{{contact.emailPrv}}</div></div><br/> -->
-	<!-- 						<div class="emailOffice"><div class="keyContactName">eMail:</div> <div class="valueContactName">{{contact.emailOffice}}</div></div><br/> -->
+							<div class="date"><div class="keyContactName">urodziny:</div> <div class="valueContactName">{{contact.birthday}}</div></div><br/>
+							<div class="date"><div class="keyContactName">imieniny:</div> <div class="valueContactName">{{contact.nameday}}</div></div><br/>
 	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone1}}</div></div><br/> -->
 	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone2}}</div></div><br/> -->
 	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone3}}</div></div><br/> -->
