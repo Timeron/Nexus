@@ -3,7 +3,7 @@ var app = angular.module("ContactMainCtrl", [ 'ContactService', 'CurtainDir' ]);
 app.controller("ContactCtrl", function($scope, $rootScope, GetContacts, GetContactDetails) {
 	$rootScope.contacts = [];
 	$rootScope.contact;
-	$scope.contactSectionHide = true;
+	$rootScope.contactSectionHide = true;
 
 	GetContacts.query({}, function(data) {
 		if (data.success) {
@@ -15,7 +15,7 @@ app.controller("ContactCtrl", function($scope, $rootScope, GetContacts, GetConta
 		GetContactDetails.query({contactId: contact.id}, function(data) {
 			if (data.success) {
 				$rootScope.contact = data.object;
-				$scope.contactSectionHide = "false";
+				$rootScope.contactSectionHide = "false";
 			}
 		});
 	};

@@ -69,6 +69,30 @@
 	margin-top: 50px;
 }
 
+.space-bottom-s {
+	margin-bottom: 5px;
+}
+
+.space-bottom-m {
+	margin-tbottomop: 10px;
+}
+
+.space-bottom-l {
+	margin-bottom: 15px;
+}
+
+.space-bottom-xl {
+	margin-bottom: 20px;
+}
+
+.space-bottom-xxl {
+	margin-bottom: 30px;
+}
+
+.space-bottom-xxxl {
+	margin-bottom: 50px;
+}
+
 .bold {
 	font-weight: bold;
 }

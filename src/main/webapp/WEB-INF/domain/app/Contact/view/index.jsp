@@ -129,36 +129,6 @@
 		</div>
 	</div>
 	
-	<!-- Modal -->
-	<div class="modal" id="searchContact" tabindex="-1" role="dialog"
-		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="SearchContactCtrl">
-		<div class="modal-dialog" style="width: 50%">
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal"
-						aria-label="Close">
-						<span aria-hidden="true">&times;</span>
-					</button>
-					<h4 class="modal-title" id="myModalLabel">Nowe Kontakt</h4>
-				</div>
-				<div class="modal-body">
-					<div class="row">
-						<div class="col-md-12"><input type="text"
-									class="form-control, col-md-4" data-ng-model="search" placeholder="Miasto" /></div>
-						<div ng-repeat="contact in contacts | filter:search"">
-							<div class="contactBarImageMin">AAA</div>
-							<div class="contactBarText">{{contact.firstName}} {{contact.lastName}}</div>
-						</div>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-					<button type="button" class="btn btn-primary"
-						data-ng-click="addContact()" data-dismiss="modal">Zapisz</button>
-				</div>
-			</div>
-		</div>
-	</div>
 	
 	<!-- Modal -->
 	<div class="modal" id="searchContact" tabindex="-1" role="dialog"
@@ -170,22 +140,21 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Nowe Kontakt</h4>
+					<h4 class="modal-title" id="myModalLabel">Wyszukiwanie kontaktu</h4>
 				</div>
 				<div class="modal-body">
 					<div class="row">
-						<div class="col-md-12"><input type="text"
-									class="form-control, col-md-4" data-ng-model="search" placeholder="Miasto" /></div>
-						<div ng-repeat="contact in contacts | filter:search"">
-							<div class="contactBarImageMin">AAA</div>
+						<div class="col-md-12 space-bottom-l"><input type="text"
+									class="form-control, col-md-4" data-ng-model="search" /></div>
+						<div class="searchContactRow clickable border-bottom" ng-repeat="contact in contacts | filter:search" ng-click="setContact(contact)" data-dismiss="modal">
+							<div class="contactBarImageMin">Image</div>
 							<div class="contactBarText">{{contact.firstName}} {{contact.lastName}}</div>
+							<div class="contactBarNickText">{{contact.nick}}</div>
 						</div>
 					</div>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
-					<button type="button" class="btn btn-primary"
-						data-ng-click="addContact()" data-dismiss="modal">Zapisz</button>
 				</div>
 			</div>
 		</div>
