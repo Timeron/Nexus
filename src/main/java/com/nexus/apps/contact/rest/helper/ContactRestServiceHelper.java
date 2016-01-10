@@ -10,7 +10,8 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.nexus.apps.contact.dto.NewContactDTO;
+import com.google.gson.JsonElement;
+import com.nexus.apps.contact.dto.ContactDTO;
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
@@ -24,7 +25,7 @@ public class ContactRestServiceHelper {
 	@Autowired
 	NexusPersonDAO nexusPersonDAO = new NexusPersonDAO();
 	
-	public ServiceResult addContact(NewContactDTO contactDTO, Principal principal) {
+	public ServiceResult addContact(ContactDTO contactDTO, Principal principal) {
 		ServiceResult result = new ServiceResult();
 		NexusPerson nexusPerson = new NexusPerson();
 		nexusPerson.setAddress(contactDTO.getAddress());
@@ -54,6 +55,42 @@ public class ContactRestServiceHelper {
 			ex.printStackTrace();
 		}
 		
+		return result;
+	}
+	
+	public ServiceResult updateContact(ContactDTO contactDTO, Principal principal) {
+		ServiceResult result = new ServiceResult();
+		NexusPerson nexusPerson = nexusPersonDAO.getById(contactDTO.getId());
+		nexusPerson.setAddress(contactDTO.getAddress());
+		if(contactDTO.getBirthdayYear() != ""){
+			nexusPerson.setBirthday(new Date(setToDate(Integer.parseInt(contactDTO.getBirthdayYear()), Integer.parseInt(contactDTO.getBirthdayMonth()), Integer.parseInt(contactDTO.getBirthdayDay()))));
+		}
+		nexusPerson.setCity(contactDTO.getCity());
+		nexusPerson.setCountry(contactDTO.getCountry());
+		nexusPerson.setCreateTimestamp(new Date());
+		nexusPerson.setDescription(contactDTO.getDescription());
+		nexusPerson.setEmailOffice(contactDTO.getEmailOffice());
+		nexusPerson.setEmailPrv(contactDTO.getEmailPrv());
+		nexusPerson.setFirstName(contactDTO.getFirstName());
+		nexusPerson.setLastName(contactDTO.getLastName());
+		if(contactDTO.getNameDayMonth() != ""){
+			nexusPerson.setNameDay(new Date(setToDate(1900, Integer.parseInt(contactDTO.getNameDayMonth()), Integer.parseInt(contactDTO.getNameDayDay()))));
+		}
+		nexusPerson.setNick(null);
+		nexusPerson.setNickLogo(null);
+		nexusPerson.setPhone1(contactDTO.getPhone1());
+		nexusPerson.setPhone2(contactDTO.getPhone2());
+		nexusPerson.setPhone3(contactDTO.getPhone3());
+		nexusPerson.setTags(contactDTO.getTags());
+		nexusPerson.setPseudo(contactDTO.getPseudo());
+		nexusPerson.setUpdateTimestamp(new Date());
+		try{
+			nexusPersonDAO.update(nexusPerson);
+			result.setSuccess(true);
+		}catch(Exception ex){
+			result.setSuccess(false);
+			ex.printStackTrace();
+		}
 		return result;
 	}
 
@@ -88,4 +125,6 @@ public class ContactRestServiceHelper {
 		}
 		return result;
 	}
+
+
 }

@@ -19,4 +19,11 @@ app.factory("GetContactDetails", function($resource){
 			{}, 
 			{query: { method: "GET", isArray: false }}
 		);
-})
+});
+
+app.factory("UpdateContact", function($resource){
+	return $resource("/nexus/v1/contact/updateContact", 
+			{}, 
+			{query: { method: "POST", isArray: false }}
+		);
+});

@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.nexus.apps.contact.dto.NewContactDTO;
+import com.nexus.apps.contact.dto.ContactDTO;
 import com.nexus.apps.contact.rest.helper.ContactRestServiceHelper;
 
 @RestController
@@ -28,9 +28,18 @@ public class ContactRestService {
 	@RequestMapping(value="/addContact", method = RequestMethod.POST)
 	public String addContact(@RequestBody String json, Principal principal){
 		LOG.info("service: addContact <- "+json);
-		NewContactDTO contactDTO = gson.fromJson(json, NewContactDTO.class);
+		ContactDTO contactDTO = gson.fromJson(json, ContactDTO.class);
 		String result = gson.toJson(helper.addContact(contactDTO, principal));
 		LOG.info("service response: addContact -> "+result);
+		return result;
+	}
+	
+	@RequestMapping(value="/updateContact", method = RequestMethod.POST)
+	public String updateContact(@RequestBody String json, Principal principal){
+		LOG.info("service: updateContact <- "+json);
+		ContactDTO contactDTO = gson.fromJson(json, ContactDTO.class);
+		String result = gson.toJson(helper.updateContact(contactDTO, principal));
+		LOG.info("service response: updateContact -> "+result);
 		return result;
 	}
 	

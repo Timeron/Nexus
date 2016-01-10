@@ -15,6 +15,7 @@ app.controller("ContactCtrl", function($scope, $rootScope, GetContacts, GetConta
 		GetContactDetails.query({contactId: contact.id}, function(data) {
 			if (data.success) {
 				$rootScope.contact = data.object;
+				$rootScope.tempContact = data.object;
 				$rootScope.contactSectionHide = "false";
 			}
 		});

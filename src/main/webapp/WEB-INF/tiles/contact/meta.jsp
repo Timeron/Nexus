@@ -23,6 +23,7 @@
 <script src="<c:url value="/domain/app/Contact/controller/contactMainCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Contact/controller/addContactCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Contact/controller/searchContactCtrl.js" />"></script>
+<script src="<c:url value="/domain/app/Contact/controller/editContactCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/Contact/directive/curtain.js" />"></script>
 <script src="<c:url value="/domain/app/Contact/service/service.js" />"></script>
 

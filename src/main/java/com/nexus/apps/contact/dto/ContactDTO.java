@@ -1,6 +1,7 @@
 package com.nexus.apps.contact.dto;
 
-public class NewContactDTO {
+public class ContactDTO {
+	private int id;
 	private String firstName = "";
 	private String lastName = "";
 	private String pseudo = "";
@@ -20,6 +21,12 @@ public class NewContactDTO {
 	private String description = "";
 	private String tags = "";
 	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getFirstName() {
 		return firstName;
 	}

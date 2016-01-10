@@ -159,6 +159,125 @@
 			</div>
 		</div>
 	</div>
+	
+	
+		<!-- Modal -->
+	<div class="modal" id="editContact" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="EditContactCtrl">
+		<div class="modal-dialog" style="width: 50%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Nowe Kontakt</h4>
+				</div>
+				temp:{{tempContact}}
+				<div class="modal-body">
+					<div class="row">
+						<div class="form-group, col-md-6">
+							<div class="form-group">
+								<label for="imie">Imie</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.firstName" />
+							</div>
+							<div class="form-group">
+								<label for="nazwisko">Nazwisko</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.lastName" />
+							</div>
+							<div class="form-group">
+								<label for="pseudo">Pseudo</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.pseudo" />
+							</div>
+						</div>
+						<div class="form-group, col-md-6">
+							<div class="form-group">
+								<label for="Email">Email Prywatny</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.emailPrv" />
+							</div>
+							<div class="form-group">
+								<label for="Email">Email Służbowy</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.emailOffice" />
+							</div>
+							<div class="form-group">
+								<label for="Telefon">Telefon</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.phone1" />
+							</div>
+							<div class="form-group">
+								<label for="Telefon">Telefon</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.phone2" />
+							</div>
+							<div class="form-group">
+								<label for="Telefon">Telefon</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.phone3" />
+							</div>
+						</div>
+						<div class="form-group, col-md-6">
+							<div class="form-group">
+								<label for="Adres">Adres</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.address" />
+							</div>
+							<div class="form-group">
+								<label for="Miasto">Miasto</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.city" />
+							</div>
+							<div class="form-group">
+								<label for="Kraj">Kraj</label> <input type="text"
+									class="form-control" data-ng-model="tempContact.country" />
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="Urodziny">Urodziny</label> <br>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="tempContact.birthdayYear" class="form-control" ng-options="year for year in years">
+								</select>
+							</div>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="tempContact.birthdayMonth" class="form-control">
+									<option ng-repeat="month in months" value="{{month.id}}">{{month.value}}</option>
+								</select>
+							</div>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="tempContact.birthdayDay" class="form-control">
+									<option ng-repeat="day in days" value="{{day.id}}">{{day.value}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group, col-md-6">
+							<label for="Imieniny">Imieniny</label><br>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="tempContact.nameDayMonth" class="form-control">
+									<option ng-repeat="month in months" value="{{month.id}}">{{month.value}}</option>
+								</select>
+							</div>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="tempContact.nameDayDay" class="form-control">
+									<option ng-repeat="day in days" value="{{day.id}}">{{day.value}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group, col-md-12">
+							<br>
+							<div class="form-group">
+								<label for="Opis">Opis</label>
+								<textarea data-ng-model="tempContact.description" class="form-control" rows="3"></textarea>
+							</div>
+							<div class="form-group">
+								<label for="Opis">Tagi</label>
+								<textarea data-ng-model="tempContact.tags" class="form-control" rows="3"></textarea>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+					<button type="button" class="btn btn-primary"
+						data-ng-click="updateContact()" data-dismiss="modal">Zapisz</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 
 	<div class="topMainMenu">
 		<div class="btn-group">
@@ -168,7 +287,7 @@
 				data-toggle="modal" data-target="#searchContact">Szukaj
 				kontaktu</button>
 			<button class="btn btn-primary btn-ms" role="button"
-				data-toggle="modal" data-target="#editContact">Edytuj
+				data-toggle="modal" data-target="#editContact" ng-click="setTempContact()">Edytuj
 				kontakt</button>
 		</div>
 	</div>
