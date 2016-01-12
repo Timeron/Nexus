@@ -1,1 +1,1 @@
-var app = angular.module("contact", ['ContactMainCtrl', 'AddContactCtrl', 'SearchContact', 'EditContactCtrl']);
+var app = angular.module("contact", ['ContactMainCtrl', 'AddContactCtrl', 'SearchContact', 'EditContactCtrl', 'AddEventCtrl']);

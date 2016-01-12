@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
 import com.nexus.apps.contact.dto.ContactDTO;
+import com.nexus.apps.contact.dto.EventDTO;
 import com.nexus.apps.contact.rest.helper.ContactRestServiceHelper;
 
 @RestController
@@ -55,6 +56,15 @@ public class ContactRestService {
 		int contactId = Integer.parseInt(request.getParameter("contactId"));
 		String result = gson.toJson(helper.getContactDetails(contactId, principal));
 		LOG.info("service response: getContactDetails -> "+result);
+		return result;
+	}
+	
+	@RequestMapping(value="/addEvent", method = RequestMethod.POST)
+	public String addEvent(@RequestBody String json, Principal principal){
+		LOG.info("service: addEvent <- "+json);
+		EventDTO eventDTO = gson.fromJson(json, EventDTO.class);
+		String result = gson.toJson(helper.addEvent(eventDTO, principal));
+		LOG.info("service response: addEvent -> "+result);
 		return result;
 	}
 	

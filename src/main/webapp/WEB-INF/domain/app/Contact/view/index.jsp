@@ -129,6 +129,67 @@
 		</div>
 	</div>
 	
+	<!-- Modal -->
+	<div class="modal" id="addEvent" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="AddEventCtrl">
+		<div class="modal-dialog" style="width: 50%">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Nowa Okazja</h4>
+				</div>
+				<div class="modal-body">
+					<div class="row">
+						<div class="form-group, col-md-6">
+							<div class="form-group">
+								<label for="imie">Nazwa</label> <input type="text"
+									class="form-control" data-ng-model="eventName"
+									placeholder="Nazwa" />
+							</div>
+							<div class="form-group">
+								<label for="Opis">Opis:</label>
+								<textarea data-ng-model="eventDescription" class="form-control" rows="3"
+									placeholder="Opis"></textarea>
+							</div>
+						</div>
+						<div class="form-group col-md-6">
+							<label for="Date">Data</label> <br>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="eventYear" class="form-control">
+									<option ng-repeat="year in years" value="{{year}}">{{year}}</option>
+								</select>
+							</div>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="eventMonth" class="form-control">
+									<option ng-repeat="month in months" value="{{month.id}}">{{month.value}}</option>
+								</select>
+							</div>
+							<div class="form-group, col-md-4">
+								<select data-ng-model="eventDay" class="form-control">
+									<option ng-repeat="day in days" value="{{day.id}}">{{day.value}}</option>
+								</select>
+							</div>
+						</div>
+						<div class="form-group col-md-12 border-top">
+							<label for="Date">Osoby powiązane z okazją</label> <br>
+							<div class="form-group, col-md-6">
+								<dropdown-multiselect pre-selected="member.roles" model="selected_items" options="roles"></dropdown-multiselect>
+							</div>
+							<pre class="form-group, col-md-6"><div ng-repeat="so in selected_objects">{{so.firstName}} {{so.lastName}} {{so.nick}}</div></pre>
+						</div>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Zamknij</button>
+					<button type="button" class="btn btn-primary"
+						data-ng-click="addEvent()" data-dismiss="modal">Zapisz</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	
 	<!-- Modal -->
 	<div class="modal" id="searchContact" tabindex="-1" role="dialog"
@@ -284,6 +345,8 @@
 			<button class="btn btn-primary btn-ms" role="button"
 				data-toggle="modal" data-target="#addContact">Nowy Kontakt</button>
 			<button class="btn btn-primary btn-ms" role="button"
+				data-toggle="modal" data-target="#addEvent">Nowa Okazja</button>
+			<button class="btn btn-primary btn-ms" role="button"
 				data-toggle="modal" data-target="#searchContact">Szukaj
 				kontaktu</button>
 			<button class="btn btn-primary btn-ms" role="button"
@@ -323,9 +386,6 @@
 						<div class="rightColumn">
 							<div class="date"><div class="keyContactName">urodziny:</div> <div class="valueContactName">{{contact.birthday}}</div></div><br/>
 							<div class="date"><div class="keyContactName">imieniny:</div> <div class="valueContactName">{{contact.nameday}}</div></div><br/>
-	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone1}}</div></div><br/> -->
-	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone2}}</div></div><br/> -->
-	<!-- 						<div class="phone"><div class="keyContactName">telefon:</div> <div class="valueContactName">{{contact.phone3}}</div></div><br/> -->
 						</div>
 						<div class="bottom">
 							<div class="description"><div class="keyContactName">Opis:</div><div class="valueContactName">{{contact.description}}</div></div>

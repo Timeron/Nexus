@@ -10,11 +10,13 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonElement;
 import com.nexus.apps.contact.dto.ContactDTO;
+import com.nexus.apps.contact.dto.EventDTO;
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.common.service.ServiceResult;
+import com.timeron.NexusDatabaseLibrary.Entity.ContactEvent;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
+import com.timeron.NexusDatabaseLibrary.dao.ContactEventDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
 
 @Component
@@ -24,6 +26,9 @@ public class ContactRestServiceHelper {
 	
 	@Autowired
 	NexusPersonDAO nexusPersonDAO = new NexusPersonDAO();
+	
+	@Autowired
+	ContactEventDAO contactEventDAO = new ContactEventDAO();
 	
 	public ServiceResult addContact(ContactDTO contactDTO, Principal principal) {
 		ServiceResult result = new ServiceResult();
@@ -111,6 +116,7 @@ public class ContactRestServiceHelper {
 	}
 
 	private long setToDate(int year, int month, int day) {
+		day += 1; //day is counted from 0
 		DateTime date = new DateTime(year, month, day, 0, 0, 0, 0);
 		return date.getMillis();
 	}
@@ -124,6 +130,23 @@ public class ContactRestServiceHelper {
 			result.setSuccess(false);
 		}
 		return result;
+	}
+
+	public ServiceResult addEvent(EventDTO eventDTO, Principal principal) {
+		List<NexusPerson> contacts = new ArrayList<NexusPerson>();
+		ContactEvent event = new ContactEvent();
+		event.setName(eventDTO.getName());
+		event.setDescription(eventDTO.getDescription());
+		event.setDate(new Date(setToDate(eventDTO.getEventYear(), eventDTO.getEventMonth(), eventDTO.getEventDay())));
+		if(eventDTO.getContacts().size() > 0){
+			for(ContactDTO contactDTO : eventDTO.getContacts()){
+				NexusPerson person = nexusPersonDAO.getById(contactDTO.getId());
+				contacts.add(person);
+			}
+		}
+		event.setContacts(contacts);
+		contactEventDAO.save(event);
+		return null;
 	}
 
 

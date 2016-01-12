@@ -5,9 +5,10 @@
 
   <persistence-unit name="TestPU">
 
-<!--     <mapping-file>/test_orm.xml</mapping-file> -->
+    <mapping-file>/test_orm.xml</mapping-file>
 
     <!-- Add list of fully qualified entity classes here -->
+    	<class>com.timeron.NexusDatabaseLibrary.Entity.ContactEvent</class>
     	<class>com.timeron.NexusDatabaseLibrary.Entity.Fuel</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JHistory</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JNote</class>

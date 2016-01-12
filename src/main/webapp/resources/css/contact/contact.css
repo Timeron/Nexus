@@ -103,3 +103,8 @@
 	height: 100%;
 	margin: 5px 15px 5px 15px;
 }
+
+/* Event */
+.multiselect{
+	width: 360px;
+}

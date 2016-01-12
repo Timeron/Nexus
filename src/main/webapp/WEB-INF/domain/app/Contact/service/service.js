@@ -27,3 +27,10 @@ app.factory("UpdateContact", function($resource){
 			{query: { method: "POST", isArray: false }}
 		);
 });
+
+app.factory("AddEvent", function($resource){
+	return $resource("/nexus/v1/contact/addEvent", 
+			{}, 
+			{query: { method: "POST", isArray: false }}
+		);
+});
