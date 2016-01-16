@@ -14,8 +14,6 @@ app.controller("EditContactCtrl", function($scope, $rootScope, UpdateContact){
 		$scope.tempContact.birthdayDay = parseInt(birthday[0]);
 		$scope.tempContact.nameDayMonth = plMonthToNumber(nameday[1]).id;
 		$scope.tempContact.nameDayDay = parseInt(nameday[0]);
-		
-		console.log($scope.tempContact.birthdayYear);
 	};
 	
 	$scope.updateContact = function(){
@@ -50,7 +48,6 @@ var getIntegerList = function(start, end){
 	for(var i=start; i<=end; i++){
 		years.push(i);
 	}
-	console.log("Done");
 	return years;
 };
 

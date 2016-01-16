@@ -1,8 +1,8 @@
 var app = angular.module('WalletMain', []);
 
-app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy, GetSumForTypeForStatistics) {
+app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy, GetSumForTypeForStatistics) {
 	$scope.accounts = [];
-	$scope.selectedAccount;
+	$rootScope.selectedAccount;
 	$scope.user = "-";
 	$scope.userPOST = "-";
 	$scope.data = [];
@@ -36,7 +36,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	});
 	
 	$scope.selectAccount = function(account){
-		$scope.selectedAccount = account;
+		$rootScope.selectedAccount = account;
 		
 		GetRecordsForAccountByDayPOST.query({id: account.id}, function(d){
 			$scope.data = d;
@@ -77,7 +77,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 		if(income !== $scope.incomeViewFlag){
 			$scope.incomeViewFlag = income;
 		
-			GetSumForTypeInTypeHierarchy.query({accountId: $scope.selectedAccount.id, income: income}, function(data){
+			GetSumForTypeInTypeHierarchy.query({accountId: $rootScope.selectedAccount.id, income: income}, function(data){
 				cleanCanvas(".pieChart");
 				$scope.pieData = [];
 				$scope.subPieData = [];
@@ -134,7 +134,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 					$scope.selectedTypeTemp = t;
 				}
 			});
-			GetSumForTypeForStatistics.query({account: $scope.selectedAccount.id, type:$scope.selectedType.id, income: $scope.incomeViewFlag}, function(data){ //9
+			GetSumForTypeForStatistics.query({account: $rootScope.selectedAccount.id, type:$scope.selectedType.id, income: $scope.incomeViewFlag}, function(data){ //9
 				cleanCanvas(".typeStatisticChart");
 				$scope.typeStatisticData = data;
 			});
@@ -143,7 +143,7 @@ app.controller('WalletMainCtrl', function($scope, GetAllAccountsAndRecords, Curr
 	
 	$scope.loadTypeStats = function(type){
 		$scope.selectedType = type;
-		GetSumForTypeForStatistics.query({account: $scope.selectedAccount.id, type:$scope.selectedType.id, income: $scope.incomeViewFlag}, function(data){ //9
+		GetSumForTypeForStatistics.query({account: $rootScope.selectedAccount.id, type:$scope.selectedType.id, income: $scope.incomeViewFlag}, function(data){ //9
 			cleanCanvas(".typeStatisticChart");
 			$scope.typeStatisticData = data;
 		});

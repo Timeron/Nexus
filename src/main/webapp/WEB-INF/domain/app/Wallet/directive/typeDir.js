@@ -6,13 +6,14 @@ app.directive("recordtypeicon", function(){
 		replace: true,
 		template: "<div data-toggle='tooltip' data-placement='right' title='{{type.name}}' class='recordTypeIcon'><span class='glyphicon {{type.icon}}'></span></div>",
 		link : function(scope, element, attrs) {
-			scope.type = angular.fromJson(attrs.type);
-			console.log(element[0].style.color);
-			element[0].style.backgroundColor = scope.type.color;
-			if(compareColor(element[0].style.backgroundColor, "rgb(80, 80, 80)") > 0){
-				element[0].style.color = '#000';
-			}else{
-				element[0].style.color = '#FFF';
+			if(attrs.type !== ""){
+				scope.type = angular.fromJson(attrs.type);
+				element[0].style.backgroundColor = scope.type.color;
+				if(compareColor(element[0].style.backgroundColor, "rgb(80, 80, 80)") > 0){
+					element[0].style.color = '#000';
+				}else{
+					element[0].style.color = '#FFF';
+				}
 			}
 		}
 	};

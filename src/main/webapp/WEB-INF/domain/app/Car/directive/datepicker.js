@@ -140,9 +140,6 @@ datepicker.directive("datepickermobile", function(){
 			}else{
 				offset = parseInt(attrs.offset);
 			}
-			console.log(start);
-			console.log(range);
-			console.log(offset);
 			
             for (var i = start; i < range+1; i += offset){
                 scope.years.push(i);

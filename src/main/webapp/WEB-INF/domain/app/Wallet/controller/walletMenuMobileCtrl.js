@@ -94,19 +94,16 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 		if(valueStr.toString().indexOf("-") > -1){
 			var v = valueStr.split("-");
 			value = parseFloat(v[0])-parseFloat(v[1]);
-			console.log(value);
 			return value;
 		}
 		if(valueStr.toString().indexOf("*") > -1){
 			var v = valueStr.split("*");
 			value = parseFloat(v[0])*parseFloat(v[1]);
-			console.log(value);
 			return value;
 		}
 		if(valueStr.toString().indexOf("/") > -1){
 			var v = valueStr.split("/");
 			value = (parseFloat(v[0])/parseFloat(v[1])).toFixed(2);
-			console.log(value);
 			return value;
 		}
 		return valueStr;
@@ -117,7 +114,6 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 			$scope.amount = $scope.amount.toString().substring(0, $scope.amount.toString().length-1);
 		}else{
 			if($scope.amount !== "" && $scope.amount.toString() !== "0"){
-				console.log("$scope.amount "+$scope.amount);
 				if(value === "=" || value === "+" || value === "-" || value === "*" || value === "/"){
 					if(value=="="){
 						value="";
@@ -133,7 +129,6 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 			}
 		}
 		
-//		console.log(value);
 //		if($scope.amounts != undefined && $scope.amounts.indexOf("+") > -1){
 //			var v = $scope.amounts.split("+");
 //			$scope.amount = v[0]+v[1];
@@ -203,12 +198,10 @@ app.controller("WalletMenuCtrl", function($scope, $rootScope, AddAccount, GetAll
 	};
 	
 	$scope.getDate = function(){
-		console.log("show");
 		$scope.dateHide = false;
 	};
 	
 	$scope.closeGetDate = function(){
-		console.log("close");
 		$scope.dateHide = true;
 	};
 	

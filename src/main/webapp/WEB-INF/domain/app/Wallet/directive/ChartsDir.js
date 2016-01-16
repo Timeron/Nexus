@@ -214,9 +214,6 @@ app.directive("barchart", function(){
 			  x.domain(data.map(function(d) { return d.key; }));
 			  y.domain([0, d3.max(data, function(d) { return Number(d.value); })]);
 			  
-			  console.log(data);
-			  console.log(d3.max(data, function(d) { return d.value; }));
-			  
 			  svg.append("g")
 			      .attr("class", "x axis")
 			      .attr("transform", "translate(0," + height + ")")

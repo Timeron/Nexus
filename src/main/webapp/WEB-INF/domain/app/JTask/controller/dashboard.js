@@ -229,7 +229,6 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, Ge
 	
 	$scope.projectsCurtain = function(){
 		$scope.curtain = !$scope.curtain;
-		console.log($scope.curtain);
 	};
 });
 
@@ -362,7 +361,6 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, UpdateTask
 		}
 		task.updateMessageStatus = task.status;
 		UpdateTask.query(task, function(data){
-			console.log(data);
 		});
 	};
 	
@@ -372,7 +370,6 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, UpdateTask
 		task.status = 6;
 		task.updateMessageStatus = task.status;
 		UpdateTask.query(task, function(data){
-			console.log(data);
 		});
 	};
 	
@@ -618,7 +615,6 @@ app.controller("TaskController", function($rootScope, $scope, $q, Histories, Not
 	};
 	
 	$scope.addMainTask = function(id){
-		console.log("Id: "+id);
 		SetMainTask.query({
 			taskId: $scope.task.id,
 			mainTaskId: id

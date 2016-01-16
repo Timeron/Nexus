@@ -6,7 +6,6 @@ app
 				function($scope, $rootScope, AddAccount, GetAllRecordTypes,
 						AddNewRecord, GetAllUserAccounts, AddType,
 						GetTypesValidForParent, UpdateTypes) {
-					$rootScope.currentAccount = 16;
 					$scope.incomeCurrentDescription = "Wydatek";
 					$scope.newRecordCurrentDescription = "Operacja";
 					$scope.newRecordCurrentButtonDescription = "Transfer";
@@ -15,14 +14,15 @@ app
 					$scope.newAccountDescription = "";
 					// new record
 					$scope.amount = 0;
-					$scope.operationDate = 0;
-					$scope.operationTime = 0;
-					$scope.income = false;
-					$scope.transfer = false;
-					$scope.type;
-					$scope.account;
+//					$scope.operationDate = 0;
+//					$scope.operationTime = 0;
+					$scope.newRecord = {};
+					$scope.newRecord.transfer = false;
+//					$scope.type = ""; //not used?
+//					$scope.recordType = "";
 					$scope.types = GetAllRecordTypes.query();
 					$scope.accounts = GetAllUserAccounts.query();
+					
 					// new type
 					$scope.newTypeName = "";
 					$scope.newDefaultValue = 0;
@@ -316,29 +316,29 @@ app
 						});
 					};
 
-					$scope.newRecord = function() {
-						if (!$scope.transfer) {
+					$scope.addRecord = function() {
+						if (!$scope.newRecord.transfer) {
 							AddNewRecord.query({
-								value : $scope.amount,
-								description : $scope.description,
-								income : $scope.income,
-								transfer : $scope.transfer,
+								value : $scope.newRecord.amount,
+								description : $scope.newRecord.description,
+								income : $scope.newRecord.income,
+								transfer : $scope.newRecord.transfer,
 								date : $scope.operationDate
 										+ $scope.operationTime,
-								recordTypeId : $scope.type.id,
-								accountId : $rootScope.currentAccount
+								recordTypeId : $scope.newRecord.type.id,
+								accountId : $rootScope.selectedAccount.id
 							}, function(data) {
 								$scope.message = data;
 							});
 						} else {
 							AddNewRecord.query({
-								value : $scope.amount,
-								description : $scope.description,
-								transfer : $scope.transfer,
+								value : $scope.newRecord.amount,
+								description : $scope.newRecord.description,
+								transfer : $scope.newRecord.transfer,
 								date : $scope.operationDate
 										+ $scope.operationTime,
-								accountId : $rootScope.currentAccount,
-								destynationAccountId : $scope.account.id
+								accountId : $rootScope.selectedAccount.id,
+								destynationAccountId : $scope.newRecord.account.id
 							}, function(data) {
 								$scope.message = data;
 							});
@@ -347,22 +347,22 @@ app
 					};
 
 					$scope.changeIncome = function() {
-						if ($scope.income) {
-							$scope.income = false;
+						if ($scope.newRecord.income) {
+							$scope.newRecord.income = false;
 							$scope.incomeCurrentDescription = "Wydatek";
 						} else {
-							$scope.income = true;
+							$scope.newRecord.income = true;
 							$scope.incomeCurrentDescription = "Dochód";
 						}
 					};
 
 					$scope.changeTransfer = function() {
-						if ($scope.transfer) {
-							$scope.transfer = false;
+						if ($scope.newRecord.transfer) {
+							$scope.newRecord.transfer = false;
 							$scope.newRecordCurrentDescription = "Operacja";
 							$scope.newRecordCurrentButtonDescription = "Transfer";
 						} else {
-							$scope.transfer = true;
+							$scope.newRecord.transfer = true;
 							$scope.newRecordCurrentDescription = "Transfer";
 							$scope.newRecordCurrentButtonDescription = "Operacja";
 						}

@@ -32,7 +32,7 @@
 										<td><input type="checkbox"
 											data-ng-model="newDefaultValue"></td>
 									</tr>
-									<tr data-ng-if="!transfer">
+									<tr data-ng-if="!newRecord.transfer">
 										<td class="formName">Typ główny</td>
 										<td><select data-ng-model="$parent.newParentType"
 											ng-options="type.name for type in typesValidForParent">
@@ -159,8 +159,7 @@
 
 			<!-- Modal -->
 			<div class="modal" id="addRecordModal" tabindex="-1" role="dialog"
-				aria-labelledby="myModalLabel" aria-hidden="true"
-				data-ng-controller="AddRecordCtrl">
+				aria-labelledby="myModalLabel" aria-hidden="true">
 				<div class="modal-dialog">
 					<div class="modal-content">
 						<div class="modal-header">
@@ -177,28 +176,28 @@
 								<table class="tableForm">
 									<tr>
 										<td class="formName" style="width: 25%">Kwota</td>
-										<td><input type="text" data-ng-model="amount"></td>
+										<td><input type="text" data-ng-model="newRecord.amount"></td>
 									</tr>
 									<tr>
 										<td class="formName">Opis</td>
 										<td><textarea cols="50" rows="4"
-												data-ng-model="newAccountDescription"></textarea></td>
+												data-ng-model="newRecord.description"></textarea></td>
 									</tr>
-									<tr data-ng-if="!transfer">
+									<tr data-ng-if="!newRecord.transfer">
 										<td class="formName">Typ</td>
-										<td><select data-ng-model="$parent.type"
+										<td><select data-ng-model="$parent.newRecord.type"
 											ng-options="type.name for type in types">
 												<option value=""></option>
 										</select></td>
 									</tr>
-									<tr data-ng-if="transfer">
+									<tr data-ng-if="newRecord.transfer">
 										<td class="formName">Na konto</td>
-										<td><select data-ng-model="$parent.account"
+										<td><select data-ng-model="$parent.newRecord.account"
 											ng-options="account.name for account in accounts">
 												<option value=""></option>
 										</select></td>
 									</tr>
-									<tr data-ng-if="!transfer">
+									<tr data-ng-if="!newRecord.transfer">
 										<td></td>
 										<td><button type="button" class="btn btn-default"
 												model="income" data-ng-click="changeIncome()">{{incomeCurrentDescription}}</button></td>
@@ -219,7 +218,7 @@
 							<button type="button" class="btn btn-default"
 								data-dismiss="modal">Zamknij</button>
 							<button type="button" class="btn btn-primary"
-								data-ng-click="newRecord()" data-dismiss="modal">Zapisz</button>
+								data-ng-click="addRecord()" data-dismiss="modal">Zapisz</button>
 						</div>
 					</div>
 				</div>
