@@ -35,7 +35,7 @@ public class ContactRestServiceHelper {
 		NexusPerson nexusPerson = new NexusPerson();
 		nexusPerson.setAddress(contactDTO.getAddress());
 		if(!contactDTO.getBirthdayYear().isEmpty() && !contactDTO.getBirthdayMonth().isEmpty() && !contactDTO.getBirthdayDay().isEmpty()){
-			nexusPerson.setBirthday(new Date(setToDate(Integer.parseInt(contactDTO.getBirthdayYear()), Integer.parseInt(contactDTO.getBirthdayMonth()), Integer.parseInt(contactDTO.getBirthdayDay()))));
+			nexusPerson.setBirthday(new Date(setToDate(Integer.parseInt(contactDTO.getBirthdayYear()), Integer.parseInt(contactDTO.getBirthdayMonth()), Integer.parseInt(contactDTO.getBirthdayDay())-1)));
 		}
 		nexusPerson.setCity(contactDTO.getCity());
 		nexusPerson.setCountry(contactDTO.getCountry());
@@ -46,7 +46,7 @@ public class ContactRestServiceHelper {
 		nexusPerson.setFirstName(contactDTO.getFirstName());
 		nexusPerson.setLastName(contactDTO.getLastName());
 		if(!contactDTO.getNameDayMonth().isEmpty() && !contactDTO.getNameDayDay().isEmpty()){
-			nexusPerson.setNameDay(new Date(setToDate(1900, Integer.parseInt(contactDTO.getNameDayMonth()), Integer.parseInt(contactDTO.getNameDayDay()))));
+			nexusPerson.setNameDay(new Date(setToDate(1900, Integer.parseInt(contactDTO.getNameDayMonth()), Integer.parseInt(contactDTO.getNameDayDay())-1)));
 		}
 		nexusPerson.setNick(null);
 		nexusPerson.setNickLogo(null);
@@ -72,7 +72,7 @@ public class ContactRestServiceHelper {
 		NexusPerson nexusPerson = nexusPersonDAO.getById(contactDTO.getId());
 		nexusPerson.setAddress(contactDTO.getAddress());
 		if(!contactDTO.getBirthdayYear().isEmpty() && !contactDTO.getBirthdayMonth().isEmpty() && !contactDTO.getBirthdayDay().isEmpty()){
-			nexusPerson.setBirthday(new Date(setToDate(Integer.parseInt(contactDTO.getBirthdayYear()), Integer.parseInt(contactDTO.getBirthdayMonth()), Integer.parseInt(contactDTO.getBirthdayDay()))));
+			nexusPerson.setBirthday(new Date(setToDate(Integer.parseInt(contactDTO.getBirthdayYear()), Integer.parseInt(contactDTO.getBirthdayMonth()), Integer.parseInt(contactDTO.getBirthdayDay())-1)));
 		}
 		nexusPerson.setCity(contactDTO.getCity());
 		nexusPerson.setCountry(contactDTO.getCountry());
@@ -83,7 +83,7 @@ public class ContactRestServiceHelper {
 		nexusPerson.setFirstName(contactDTO.getFirstName());
 		nexusPerson.setLastName(contactDTO.getLastName());
 		if(!contactDTO.getNameDayMonth().isEmpty() && !contactDTO.getNameDayDay().isEmpty()){
-			nexusPerson.setNameDay(new Date(setToDate(1900, Integer.parseInt(contactDTO.getNameDayMonth()), Integer.parseInt(contactDTO.getNameDayDay()))));
+			nexusPerson.setNameDay(new Date(setToDate(1900, Integer.parseInt(contactDTO.getNameDayMonth()), Integer.parseInt(contactDTO.getNameDayDay())-1)));
 		}
 		nexusPerson.setNick(null);
 		nexusPerson.setNickLogo(null);
