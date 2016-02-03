@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.nexus.apps.contact.dto.ContactDTO;
 import com.nexus.apps.contact.dto.EventDTO;
 import com.nexus.apps.contact.rest.helper.ContactRestServiceHelper;
@@ -22,6 +23,7 @@ public class ContactRestService {
 
 	static Logger LOG = Logger.getLogger(ContactRestService.class);
 	Gson gson = new Gson();
+	Gson gsonExpose = new GsonBuilder().excludeFieldsWithoutExposeAnnotation().create();
 	
 	@Autowired
 	ContactRestServiceHelper helper;
@@ -68,4 +70,10 @@ public class ContactRestService {
 		return result;
 	}
 	
+	@RequestMapping(value="/getOccasions", method = RequestMethod.GET)
+	public String getOccasions(Principal principal){
+		String result = gsonExpose.toJson(helper.getOccasions(principal));
+		LOG.info("service response: getOccasions -> "+result);
+		return result;
+	}
 }

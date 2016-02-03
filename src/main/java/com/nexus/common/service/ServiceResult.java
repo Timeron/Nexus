@@ -3,10 +3,14 @@ package com.nexus.common.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.Expose;
+
 public class ServiceResult {
-	
+	@Expose
 	private Boolean success;
+	@Expose
 	private List<String> messages = new ArrayList<String>();
+	@Expose
 	private Object object;
 	
 	public Boolean isSuccess() {

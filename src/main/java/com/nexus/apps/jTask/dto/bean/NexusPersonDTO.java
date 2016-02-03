@@ -3,26 +3,44 @@ package com.nexus.apps.jTask.dto.bean;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
+import com.google.gson.annotations.Expose;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 
 public class NexusPersonDTO {
 
+	@Expose
 	private Integer id;
+	@Expose
 	private String firstName;
+	@Expose
 	private String lastName;
+	@Expose
 	private String nick;
+	@Expose
 	private String nickLogo;
+	@Expose
 	private String emailOffice;
+	@Expose
 	private String emailPrv;
+	@Expose
 	private String city;
+	@Expose
 	private String country;
+	@Expose
 	private String address;
+	@Expose
 	private String phone1;
+	@Expose
 	private String phone2;
+	@Expose
 	private String phone3;
+	@Expose
 	private String description;
+	@Expose
 	private String tags;
+	@Expose
 	private String birthday;
+	@Expose
 	private String nameday;
 
 	public NexusPersonDTO(NexusPerson nexusPerson) {

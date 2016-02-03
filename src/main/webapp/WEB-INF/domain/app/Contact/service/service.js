@@ -34,3 +34,10 @@ app.factory("AddEvent", function($resource){
 			{query: { method: "POST", isArray: false }}
 		);
 });
+
+app.factory("GetOccasions", function($resource){
+	return $resource("/nexus/v1/contact/getOccasions", 
+			{}, 
+			{query: { method: "GET", isArray: false }}
+		);
+})

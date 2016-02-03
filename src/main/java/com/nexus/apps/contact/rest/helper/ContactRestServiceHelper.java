@@ -1,9 +1,12 @@
 package com.nexus.apps.contact.rest.helper;
 
 import java.security.Principal;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -12,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.nexus.apps.contact.dto.ContactDTO;
 import com.nexus.apps.contact.dto.EventDTO;
+import com.nexus.apps.contact.dto.OccasionDTO;
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.ContactEvent;
@@ -29,6 +33,9 @@ public class ContactRestServiceHelper {
 	
 	@Autowired
 	ContactEventDAO contactEventDAO = new ContactEventDAO();
+	
+	Locale localeObject=new Locale("pl");
+	SimpleDateFormat format = new SimpleDateFormat("d MMMM", localeObject);
 	
 	public ServiceResult addContact(ContactDTO contactDTO, Principal principal) {
 		ServiceResult result = new ServiceResult();
@@ -151,6 +158,71 @@ public class ContactRestServiceHelper {
 		event.setContacts(contacts);
 		contactEventDAO.save(event);
 		return null;
+	}
+
+	@SuppressWarnings("unchecked")
+	public ServiceResult getOccasions(Principal principal) {
+		List<OccasionDTO> occasionDTOs = new ArrayList<OccasionDTO>();
+		ServiceResult result = new ServiceResult();
+		List<ContactEvent> events = contactEventDAO.getAll();
+		List<NexusPerson> userEvents = nexusPersonDAO.getAllWithEvent();
+		OccasionDTO occasionDTO;
+		for(ContactEvent event : events){
+			occasionDTO = new OccasionDTO();
+			occasionDTO.setName(event.getName());
+			occasionDTO.setDescription(event.getDescription());
+			occasionDTO.setDateStr(format.format(event.getDate().getTime()));
+			occasionDTO.setDate(new DateTime(event.getDate().getTime()));
+			occasionDTO.setEvent(true);
+			for(NexusPerson person : event.getContacts()){
+				occasionDTO.addUser(person);
+			}
+			occasionDTOs.add(occasionDTO);
+		}
+		for(NexusPerson person : userEvents){
+			if(person.getBirthday() != null && person.getBirthday().getTime() != 0 ){
+				occasionDTO = new OccasionDTO();
+				occasionDTO.setName("Urodziny");
+				occasionDTO.setDescription(new DateTime().getYear() - person.getBirthdayJoda().getYear()+" urodziny");
+				occasionDTO.setDateStr(format.format(person.getBirthday().getTime()));
+				occasionDTO.setDate(new DateTime(person.getBirthday().getTime()));
+				occasionDTO.addUser(person);
+				occasionDTO.setEvent(false);
+				occasionDTOs.add(occasionDTO);
+			}
+			if(person.getNameDay() != null && person.getNameDay().getTime() != 0 ){
+				occasionDTO = new OccasionDTO();
+				occasionDTO.setName("Imieniny");
+				occasionDTO.setDescription("");
+				occasionDTO.setDateStr(format.format(person.getNameDay().getTime()));
+				occasionDTO.setDate(new DateTime(person.getNameDay().getTime()));
+				occasionDTO.addUser(person);
+				occasionDTO.setEvent(false);
+				occasionDTOs.add(occasionDTO);
+			}
+		}
+		if(occasionDTOs.size() > 0){
+			DateTime now = new DateTime();
+			List<OccasionDTO> tempBefore = new ArrayList<OccasionDTO>();
+			List<OccasionDTO> tempAfter = new ArrayList<OccasionDTO>();
+			
+			Collections.sort(occasionDTOs);
+			for(OccasionDTO occ : occasionDTOs){
+				if(occ.getDate().getDayOfYear() < now.getDayOfYear()){
+					tempBefore.add(occ);
+				}else{
+					tempAfter.add(occ);
+				}
+			}
+			tempAfter.addAll(tempBefore);
+			
+			result.setSuccess(true);
+			result.setObject(tempAfter);
+		}else{
+			result.setSuccess(false);
+		}
+		
+		return result;
 	}
 
 

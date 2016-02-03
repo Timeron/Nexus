@@ -363,7 +363,7 @@
 					</div>
 				</div>
 		</section>
-		<section curtain id="mainSection" hide="{{contactSectionHide}}">
+		<section curtain class="mainSection" hide="{{contactSectionHide}}">
 			<div class="contactSection" >
 				<div class="">
 					<div class="name">{{contact.firstName}} {{contact.lastName}}</div>
@@ -394,5 +394,25 @@
 				</div>
 			</div>
 		</section>
+		<section curtain class="mainSection" ng-controller="OccasionsCtrl">
+			<div class="sectionName border-bottom">Zbliżające się okazje</div>
+			<div ng-repeat="occasion in occasions">
+				<div class="occasion">
+					<div ng-switch on="occasion.event">
+						<div ng-switch-when="true" class="header headerYellow">{{occasion.name}}</div>
+						<div ng-switch-when="false" class="header headerBlue">{{occasion.name}}</div>
+					</div>
+					<div class="body">
+						<div class="description">{{occasion.description}}</div>
+						<div class="date border-bottom">{{occasion.dateStr}}</div>
+						<div class="contact" data-ng-repeat="user in occasion.users">
+							<div>{{user.firstName}} {{user.lastName}}</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
 	</div>
+	</div>
+	
 </div>
