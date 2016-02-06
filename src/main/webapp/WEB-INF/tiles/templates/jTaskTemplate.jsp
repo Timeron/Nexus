@@ -18,6 +18,9 @@
 </head>
 <body>
 	<div id="body">
+		<div class="messagePopup">
+			<tiles:insertAttribute name="messagePopup" />
+		</div>
 		<tiles:insertAttribute name="body" />
 	</div>
 	<div id="footer">

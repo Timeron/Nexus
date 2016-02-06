@@ -506,8 +506,11 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, AddNewTask, AllPr
 				projectTasks = AllProjectTasks.query({id: $rootScope.projectId}, function(data){
 					$rootScope.project.tasks = data;
 					$rootScope.splitToColumn($rootScope.project.tasks);
+					alert("Task dodany pomyślnie");
 				});
-			}
+			}else{
+				alert("Wystąpił błąd aplikacji. Task nie został dodany.");
+			};
 		});
 		
 	};
