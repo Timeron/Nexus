@@ -153,6 +153,14 @@ public class JTaskRestServiceHelper {
 		List<JTaskDTO> jTasksDTO = new ArrayList<JTaskDTO>();
 		JProject jProject = jProjectDAO.getById(id);
 		for(JTask jTask : jTaskDAO.getByProject(jProject)){
+			//TODO do usunięcia po naprawie danych
+			if(jTask.getIdFromName() == 0){
+				String[] nameArray = jTask.getName().split("-");
+				int id1 = Integer.parseInt(nameArray[1]);
+				jTask.setIdFromName(id1);
+				jTaskDAO.save(jTask);
+			}
+			//TODO do tego miejsca
 			jTasksDTO.add(new JTaskDTO(jTask));
 		}
 		return jTasksDTO;
@@ -311,13 +319,17 @@ public class JTaskRestServiceHelper {
 		return result;
 	}
 	
-	public String getNextName(String name, String prefix) {
-		if(name != ""){
-			String[] nameArray = name.split("-");
-			int id = Integer.parseInt(nameArray[1]);
+	public String getNextName(JTask jTask, String prefix) {
+		if(jTask != null){
+			if(jTask.getIdFromName() == 0){
+				String[] nameArray = jTask.getName().split("-");
+				int id = Integer.parseInt(nameArray[1]);
+				jTask.setIdFromName(id);
+				jTaskDAO.save(jTask);
+			}
+			int id = jTask.getIdFromName();
 			id++;
-			name = prefix+"-"+id;
-			return name;
+			return prefix+"-"+id;
 		}else{
 			return prefix+"-1";
 		}
