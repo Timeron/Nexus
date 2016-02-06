@@ -62,7 +62,7 @@ app.factory("Notes", function($resource) {
 			{query: { method: "GET", isArray: true }
 	});
 });
-
+//not needed? AllProjectTasks
 app.factory("GetAllProjectTasks", function($resource) {
 	return $resource("/nexus/v1/jt/getProjectTasks", 
 			{}, 

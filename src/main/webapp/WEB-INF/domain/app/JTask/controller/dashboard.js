@@ -458,7 +458,7 @@ app.controller("JTaskNewProjectCtr", function($rootScope, $scope, $http, AddNewP
 });
 
 
-app.controller("JTaskNewTaskCtr", function($rootScope, $scope, AddNewTask){
+app.controller("JTaskNewTaskCtr", function($rootScope, $scope, AddNewTask, AllProjectTasks){
 	$scope.priorities = [
 	                     {id:1},
 	                     {id:2},
@@ -501,9 +501,9 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, AddNewTask){
 			description: $scope.newDescription,
 			endDateLong: $scope.date,
 			workExpected: $scope.workExpected
-		}, function(date){
-			if(status.success == true){
-				projectTasks = GetAllProjectTasks.query({}, function(data){
+		}, function(d){
+			if(d.success == true){
+				projectTasks = AllProjectTasks.query({id: $rootScope.projectId}, function(data){
 					$rootScope.project.tasks = data;
 					$rootScope.splitToColumn($rootScope.project.tasks);
 				});
