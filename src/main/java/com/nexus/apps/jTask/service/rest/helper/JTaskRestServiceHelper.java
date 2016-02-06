@@ -154,12 +154,12 @@ public class JTaskRestServiceHelper {
 		JProject jProject = jProjectDAO.getById(id);
 		for(JTask jTask : jTaskDAO.getByProject(jProject)){
 			//TODO do usunięcia po naprawie danych
-			if(jTask.getIdFromName() == 0){
-				String[] nameArray = jTask.getName().split("-");
-				int id1 = Integer.parseInt(nameArray[1]);
-				jTask.setIdFromName(id1);
-				jTaskDAO.save(jTask);
-			}
+//			if(jTask.getIdFromName() == 0){
+//				String[] nameArray = jTask.getName().split("-");
+//				int id1 = Integer.parseInt(nameArray[1]);
+//				jTask.setIdFromName(id1);
+//				jTaskDAO.save(jTask);
+//			}
 			//TODO do tego miejsca
 			jTasksDTO.add(new JTaskDTO(jTask));
 		}
