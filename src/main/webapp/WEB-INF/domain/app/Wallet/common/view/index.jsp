@@ -310,7 +310,7 @@
 									<div class="legend">
 										<div class="bold border-bottom">Typy operacji</div>
 										<div ng-repeat="children in pieData">
-											<div class="legendRow clickable" data-toggle="tooltip" data-placement="top" title="{{children.value}} zł">
+											<div class="legendRow clickable" data-toggle="tooltip" data-placement="top" title="{{children.value}} zł" ng-click="pieCliked(children);">
 												<div style="background-color: {{children.color}}; color: {{children.color}}" class="legendColor">X</div>
 												<div class="legendLabel">{{children.key}}</div>
 											</div>
@@ -321,7 +321,7 @@
 										<div ng-repeat="children in subPieData">
 											<div class="legendRow clickable" data-toggle="tooltip" data-placement="top" title="{{children.value}} zł">
 												<div style="background-color: {{children.color}}; color: {{children.color}}" class="legendColor">X</div>
-												<div class="legendLabel" data-toggle="tooltip" data-placement="top" title="{{children.value}} zł">{{children.key}}</div>
+												<div class="legendLabel">{{children.key}}</div>
 											</div>
 										</div>
 									</div>
