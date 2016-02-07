@@ -151,6 +151,10 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	
 	$('#Charts').tab('show');
 
+	$scope.test = function(){
+		console.log("Dupa");
+	};
+	
 });
 
 var cleanCanvas = function(object){

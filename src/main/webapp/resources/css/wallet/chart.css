@@ -1,6 +1,12 @@
+.chartBox{
+	width: 100%;
+	float: left;
+}
+
 .svgCollapse{
+	float: left;
 	position: relative;
-	width: 900px;
+	width: 500px;
 	height: 500px;
 }
 
@@ -8,8 +14,29 @@
 	position: absolute;
     left: 0px;
     top: 0px;
+    width: 700px;
+    height: 500px;
 }
 
+.legend{
+	font-size: 12px;
+	width: 200px;
+	float: right;
+}
+.legend .legendRow{
+	width: 100%;
+	margin-top: 5px;
+}
+.legend .legendRow .legendLabel{
+	float: left;
+	width: 90%;
+	padding: 5px 0px 0px 10px;
+}
+.legend .legendRow .legendColor{
+	border: 1px solid #000;
+	float: left;
+	width: 10%;
+}
 .lineChart {
 	font: 10px sans-serif;
 }
@@ -37,6 +64,7 @@
 /* barChart */
 
 .typeStatisticChart {
+	float: left;
   font: 10px sans-serif;
 }
 

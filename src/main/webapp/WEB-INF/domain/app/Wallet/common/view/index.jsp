@@ -4,7 +4,6 @@
 <div data-ng-app="wallet">
 	<div>
 
-
 		<!-- 	menu -->
 		<div class="menu" data-ng-controller="WalletMenuCtrl">
 
@@ -299,102 +298,47 @@
 							<div class="sectionContainer">
 								<div class="sectionMenu"><button class="btn btn-primary btn-sm" ng-click="getStats('false')">Wydatki</button><button  class="btn btn-primary btn-sm" ng-click="getStats('true')">Dochody</button></div>
 								<div class="sectionName">Statystyka:</div>
-								<div class="pieChart svgCollapse"></div>
-								<div class="sectionName">{{selectedType.name}}</div>
-								<div class="col-md-12">
-								<div class="col-md-3">
-								<select class="form-control" data-ng-model="selectedTypeTemp"
-											ng-options="type.name for type in types">
+								<div class="chartBox">
+									<div class="pieChart svgCollapse"></div>
+									<div class="collapse">
+									<div pieChart data="{{subPieData}}" r="200" ir="0" width="600"
+										height="500"></div>
+									<div pieChart data="{{pieData}}" r="240" ir="200" width="600"
+										height="500"></div>
+									
+								</div>
+									<div class="legend">
+										<div class="bold border-bottom">Typy operacji</div>
+										<div ng-repeat="children in pieData">
+											<div class="legendRow clickable" data-toggle="tooltip" data-placement="top" title="{{children.value}} zł">
+												<div style="background-color: {{children.color}}; color: {{children.color}}" class="legendColor">X</div>
+												<div class="legendLabel">{{children.key}}</div>
+											</div>
+										</div>
+									</div>
+									<div class="legend">
+										<div class="bold border-bottom">Grupy typów operacji</div>
+										<div ng-repeat="children in subPieData">
+											<div class="legendRow clickable" data-toggle="tooltip" data-placement="top" title="{{children.value}} zł">
+												<div style="background-color: {{children.color}}; color: {{children.color}}" class="legendColor">X</div>
+												<div class="legendLabel" data-toggle="tooltip" data-placement="top" title="{{children.value}} zł">{{children.key}}</div>
+											</div>
+										</div>
+									</div>
+									
+								</div>
+								<div class="chartBox">
+									<div class="sectionName">{{selectedType.name}}</div>
+									<div class="col-md-12">
+										<div class="col-md-3">
+											<select class="form-control" data-ng-model="selectedTypeTemp" ng-options="type.name for type in types">
 												<option value=""></option>
-										</select><button class="btn btn-sm btn-default" ng-click="loadTypeStats(selectedTypeTemp)">Załaduj</button>
+											</select><button class="btn btn-sm btn-default" ng-click="loadTypeStats(selectedTypeTemp)">Załaduj</button>
+										</div>
+									</div>
+									<div class="typeStatisticChart"></div>
+									<div barChart data="{{typeStatisticData}}"></div>
 								</div>
-								</div>
-								<div class="typeStatisticChart"></div>
-								
-								<div class="collapse">
-									<div pieChart data="{{pieData}}" r="240" ir="200" width="900"
-										height="500"></div>
-									<div pieChart data="{{subPieData}}" r="200" ir="0" width="900"
-										height="500"></div>
-								</div>
-								
-								<div barChart data="{{typeStatisticData}}"></div>
-								
-								
-								
-								
-								
-								
-								
-								<style>
-
-/* body { */
-/*   font: 10px sans-serif; */
-/* } */
-
-/* .axis path, */
-/* .axis line { */
-/*   fill: none; */
-/*   stroke: #000; */
-/*   shape-rendering: crispEdges; */
-/* } */
-
-/* .bar { */
-/*   fill: orange; */
-/* } */
-
-/* .bar:hover { */
-/*   fill: orangered ; */
-/* } */
-
-/* .x.axis path { */
-/*   display: none; */
-/* } */
-
-/* .d3-tip { */
-/*   line-height: 1; */
-/*   font-weight: bold; */
-/*   padding: 12px; */
-/*   background: rgba(0, 0, 0, 0.8); */
-/*   color: #fff; */
-/*   border-radius: 2px; */
-/* } */
-
-/* /* Creates a small triangle extender for the tooltip */ */
-/* .d3-tip:after { */
-/*   box-sizing: border-box; */
-/*   display: inline; */
-/*   font-size: 10px; */
-/*   width: 100%; */
-/*   line-height: 1; */
-/*   color: rgba(0, 0, 0, 0.8); */
-/*   content: "\25BC"; */
-/*   position: absolute; */
-/*   text-align: center; */
-/* } */
-
-/* /* Style northward tooltips differently */ */
-/* .d3-tip.n:after { */
-/*   margin: -1px 0 0 0; */
-/*   top: 100%; */
-/*   left: 0; */
-/* } */
-<!-- </style> -->
-<body>
-<script src="http://d3js.org/d3.v3.min.js"></script>
-<script src="http://labratrevenge.com/d3-tip/javascripts/d3.tip.v0.6.3.js"></script>
-<script>
-
-
-
-</script>
-								
-								
-								
-								
-								
-								
-								
 							</div>
 						</section>
 						<section role="tabpanel" class="operations tab-pane fade" id="Records">
