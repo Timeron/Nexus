@@ -258,6 +258,7 @@ public class WalletRestServiceHelper {
 	}
 	
 	private List<HierarchyPieChartDTO> transformToHierarchyPieChartByType(List<WalletRecord> records, boolean income){
+		WalletAccount account = records.get(0).getWalletAccount();
 		List<HierarchyPieChartDTO> chartDTOs = new ArrayList<HierarchyPieChartDTO>();
 		HierarchyPieChartDTO parenPieChartDTO;
 		List<HierarchyPieChartDTO> childPieChartDTOs;
@@ -275,7 +276,7 @@ public class WalletRestServiceHelper {
 			childPieChartDTOs = new ArrayList<HierarchyPieChartDTO>();
 			for(WalletType type : walletTypes){
 				childPieChartDTO = new HierarchyPieChartDTO();
-				childPieChartDTO.setValue(sumRecords(walletRecordDAO.getByType(type.getId(), income)));
+				childPieChartDTO.setValue(sumRecords(walletRecordDAO.getRecordsFromAccountWithType(account, type, income)));
 				childPieChartDTO.setColor(type.getColor());
 				childPieChartDTO.setKey(type.getName());
 				childPieChartDTO.setOrder(type.getId());
@@ -306,12 +307,12 @@ public class WalletRestServiceHelper {
 		Map<Integer, List<RecordDTO>> recordDTOsMap = new HashMap<Integer, List<RecordDTO>>();
 		List<RecordDTO> recordDTOs;
 		PieChartDTO chartDTO;
-//		WalletType typeName;
 		Integer typeId;
 		List<PieChartDTO> chartDTOs = new ArrayList<PieChartDTO>();
 		for(WalletRecord record : records){
 			
 			chartDTO = new PieChartDTO();
+			System.out.println(record.getWalletType().getName());
 			if(record.getWalletType().getParentType() == null){
 				typeId = record.getWalletType().getId();
 				if(recordDTOsMap.containsKey(typeId)){
@@ -348,7 +349,6 @@ public class WalletRestServiceHelper {
 		}
 		Collections.sort(chartDTOs, new Comparator<PieChartDTO>(){
 		    public int compare(PieChartDTO o1, PieChartDTO o2) {
-//		        return o1.getOrder() - o2.getOrder();
 		    	return (int) (Float.parseFloat(o2.getValue()) - Float.parseFloat(o1.getValue()));
 		    }
 		});
@@ -389,7 +389,6 @@ public class WalletRestServiceHelper {
 		chartDTOs.add(chartDTO);
 		Collections.sort(chartDTOs, new Comparator<PieChartDTO>(){
 		    public int compare(PieChartDTO o1, PieChartDTO o2) {
-//		    	return o1.getOrder() - o2.getOrder();
 		        return (int) (Float.parseFloat(o1.getValue()) - Float.parseFloat(o2.getValue()));
 		    }
 		});
@@ -533,7 +532,6 @@ public class WalletRestServiceHelper {
 				dateValues.add(date);
 				date = date.plusMonths(1);
 			}
-			System.out.println(date);
 			for(DateTime dateTime : dateValues){
 				keyValueDTO = new KeyValueDTO();
 				keyValueDTO.setKey(fmt.print(dateTime));
