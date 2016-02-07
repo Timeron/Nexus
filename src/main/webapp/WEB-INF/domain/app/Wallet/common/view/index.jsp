@@ -301,9 +301,9 @@
 								<div class="chartBox">
 									<div class="pieChart svgCollapse"></div>
 									<div class="collapse">
-									<div pieChart data="{{subPieData}}" r="200" ir="0" width="600"
+									<div pieChart data="{{subPieData}}" r="130" ir="10" width="600" nameText="false"
 										height="500"></div>
-									<div pieChart data="{{pieData}}" r="240" ir="200" width="600"
+									<div pieChart data="{{pieData}}" r="240" ir="130" width="600" nameText="false"
 										height="500"></div>
 									
 								</div>

@@ -96,7 +96,8 @@ app
 							r : "=",
 							ir : "=",
 							width : "=",
-							height : "="
+							height : "=",
+							nametext : "="
 						},
 						controller : function($scope, $element, $attrs) {
 							
@@ -104,6 +105,14 @@ app
 								$scope.$parent.pieCliked(d.data);
 							};
 							
+							var tip = d3.tip()
+							  .attr('class', 'd3-tip')
+							  .html(function(d) {
+							    return "<strong>" + d.data.key + "</strong></br><strong>wartość:</strong> <span style='color:red'>" + d.value + "</span>";
+							  });
+							
+							  
+							  
 							$attrs.$observe('data', function(e) {
 								var data = $.parseJSON(e);
 //								if(data.lenght > 0){
@@ -121,11 +130,14 @@ app
 													"translate(" + width / 2 + ","
 															+ height / 2 + ")");
 	
+									svg.call(tip);
+									
 									var arc = d3.svg.arc().outerRadius(r).innerRadius(
 											ir);
-	
+									var fullValue = 0;
 									data.forEach(function(d) {
 										d.value = +d.value;
+										fullValue += d.value;
 									});
 	
 									var g = svg.selectAll(".arc").data(pie(data))
@@ -134,7 +146,8 @@ app
 									g.append("path").attr("d", arc).style("fill",
 											function(d) {
 												return d.data.color;
-											});
+											}).on('mouseover', tip.show)
+										      .on('mouseout', tip.hide);
 									
 //									g.append("path").attr("d", arc).style("fill",
 //											function(d) {
@@ -145,7 +158,17 @@ app
 										return "translate(" + arc.centroid(d) + ")";
 									}).attr("dy", ".35em").style("text-anchor",
 											"middle").text(function(d) {
-										return d.data.key;
+												if($attrs.nametext === "true"){
+													if((fullValue / d.value) > 20){
+														return "";// d.data.key;
+													}else{
+														return d.data.key;
+													};
+												}else{
+													return "";
+												}
+												
+												
 									});
 //								}
 							});
