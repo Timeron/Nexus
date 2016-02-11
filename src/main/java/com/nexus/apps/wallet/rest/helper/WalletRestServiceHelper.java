@@ -258,39 +258,44 @@ public class WalletRestServiceHelper {
 	}
 	
 	private List<HierarchyPieChartDTO> transformToHierarchyPieChartByType(List<WalletRecord> records, boolean income){
-		WalletAccount account = records.get(0).getWalletAccount();
 		List<HierarchyPieChartDTO> chartDTOs = new ArrayList<HierarchyPieChartDTO>();
 		HierarchyPieChartDTO parenPieChartDTO;
 		List<HierarchyPieChartDTO> childPieChartDTOs;
 		HierarchyPieChartDTO childPieChartDTO;
-		
-		List<PieChartDTO> tempParentList = transformToPieChartByParentType(records);
-		for(PieChartDTO tempParent : tempParentList){
-			parenPieChartDTO = new HierarchyPieChartDTO();
-			parenPieChartDTO.setColor(tempParent.getColor());
-			parenPieChartDTO.setKey(tempParent.getKey());
-			parenPieChartDTO.setOrder(tempParent.getOrder());
-			parenPieChartDTO.setValue(tempParent.getValue());
+		if(!records.isEmpty()){
+			WalletAccount account = records.get(0).getWalletAccount();
 			
-			List<WalletType> walletTypes = walletTypeDAO.getChildren(tempParent.getOrder());
-			childPieChartDTOs = new ArrayList<HierarchyPieChartDTO>();
-			for(WalletType type : walletTypes){
-				childPieChartDTO = new HierarchyPieChartDTO();
-				childPieChartDTO.setValue(sumRecords(walletRecordDAO.getRecordsFromAccountWithType(account, type, income)));
-				childPieChartDTO.setColor(type.getColor());
-				childPieChartDTO.setKey(type.getName());
-				childPieChartDTO.setOrder(type.getId());
-				childPieChartDTOs.add(childPieChartDTO);
+			List<PieChartDTO> tempParentList = transformToPieChartByParentType(records);
+			for(PieChartDTO tempParent : tempParentList){
+				parenPieChartDTO = new HierarchyPieChartDTO();
+				parenPieChartDTO.setColor(tempParent.getColor());
+				parenPieChartDTO.setKey(tempParent.getKey());
+				parenPieChartDTO.setOrder(tempParent.getOrder());
+				parenPieChartDTO.setValue(tempParent.getValue());
+				
+				List<WalletType> walletTypes = walletTypeDAO.getChildren(tempParent.getOrder());
+				childPieChartDTOs = new ArrayList<HierarchyPieChartDTO>();
+				for(WalletType type : walletTypes){
+					childPieChartDTO = new HierarchyPieChartDTO();
+					childPieChartDTO.setValue(sumRecords(walletRecordDAO.getRecordsFromAccountWithType(account, type, income)));
+					childPieChartDTO.setColor(type.getColor());
+					childPieChartDTO.setKey(type.getName());
+					childPieChartDTO.setOrder(type.getId());
+					childPieChartDTOs.add(childPieChartDTO);
+				}
+				
+				Collections.sort(childPieChartDTOs, new Comparator<HierarchyPieChartDTO>(){
+				    public int compare(HierarchyPieChartDTO o1, HierarchyPieChartDTO o2) {
+				    	return (int) (Float.parseFloat(o2.getValue()) - Float.parseFloat(o1.getValue()));
+				    }
+				});
+				parenPieChartDTO.setChildren(childPieChartDTOs);
+				chartDTOs.add(parenPieChartDTO);
 			}
-			
-			Collections.sort(childPieChartDTOs, new Comparator<HierarchyPieChartDTO>(){
-			    public int compare(HierarchyPieChartDTO o1, HierarchyPieChartDTO o2) {
-			    	return (int) (Float.parseFloat(o2.getValue()) - Float.parseFloat(o1.getValue()));
-			    }
-			});
-			parenPieChartDTO.setChildren(childPieChartDTOs);
-			chartDTOs.add(parenPieChartDTO);
+		}else{
+			chartDTOs = Collections.emptyList();
 		}
+		
 		
 		return chartDTOs;
 	}
