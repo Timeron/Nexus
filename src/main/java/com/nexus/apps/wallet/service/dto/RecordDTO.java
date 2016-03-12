@@ -4,7 +4,8 @@ import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 
 
 public class RecordDTO {
-	
+
+
 	private Integer id;
 	private float value = 0;
 	private String description = "";
@@ -111,5 +112,13 @@ public class RecordDTO {
 		this.sourceWalletAccountId = sourceWalletAccountId;
 	}
 	
-	
+	@Override
+	public String toString() {
+		return "RecordDTO [id=" + id + ", value=" + value + ", description="
+				+ description + ", income=" + income + ", transfer=" + transfer
+				+ ", date=" + date + ", updated=" + updated + ", recordTypeId="
+				+ recordTypeId + ", accountId=" + accountId
+				+ ", destynationAccountId=" + destynationAccountId
+				+ ", sourceWalletAccountId=" + sourceWalletAccountId + "]";
+	}
 }

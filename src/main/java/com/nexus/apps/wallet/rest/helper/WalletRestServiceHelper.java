@@ -14,13 +14,13 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonElement;
 import com.nexus.apps.wallet.constant.MessageResources;
 import com.nexus.apps.wallet.service.dto.AccountDTO;
 import com.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
@@ -46,6 +46,8 @@ import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 
 @Component
 public class WalletRestServiceHelper {
+	
+	static Logger LOG = Logger.getLogger(WalletRestServiceHelper.class);
 	
 	@Autowired
 	WalletAccountDAO walletAccountDAO;
@@ -317,7 +319,6 @@ public class WalletRestServiceHelper {
 		for(WalletRecord record : records){
 			
 			chartDTO = new PieChartDTO();
-			System.out.println(record.getWalletType().getName());
 			if(record.getWalletType().getParentType() == null){
 				typeId = record.getWalletType().getId();
 				if(recordDTOsMap.containsKey(typeId)){
@@ -552,6 +553,31 @@ public class WalletRestServiceHelper {
 		}else{
 			return null;
 		}
+	}
+
+	public ServiceResult updateRecord(RecordDTO recordDTO) {
+		ServiceResult result = new ServiceResult();
+		WalletRecord record = new WalletRecord();
+		record.setId(recordDTO.getId());
+		record.setValue(recordDTO.getValue());
+		record.setDescription(recordDTO.getDescription());
+		record.setIncome(recordDTO.isIncome());
+		record.setTransfer(recordDTO.isTransfer());
+		record.setDate(new Date(recordDTO.getDate()));
+		record.setUpdated(new Date());
+		record.setWalletType(walletTypeDAO.getById(recordDTO.getRecordTypeId()));
+		record.setWalletAccount(walletAccountDAO.getById(recordDTO.getAccountId()));
+		record.setDestinationWalletAccount(walletAccountDAO.getById(recordDTO.getDestynationAccountId()));
+		record.setSourceWalletAccount(walletAccountDAO.getById(recordDTO.getSourceWalletAccountId()));
+		try{
+			walletRecordDAO.update(record);
+			result.setSuccess(true);
+			LOG.info("Record has been updated");
+		}catch(Exception ex){
+			result.setSuccess(false);
+			LOG.error("Can not update Record", ex);
+		}
+		return result;
 	}
 
 }

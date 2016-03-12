@@ -13,6 +13,7 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	$scope.selectedType;
 	$scope.selectedTypeTemp;
 	$scope.incomeViewFlag = "false";
+	$rootScope.recordToEdit = {};
 	
 	
 	
@@ -149,10 +150,24 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 		});
 	};
 	
+	$scope.setToEdit = function(record){
+		$rootScope.recordToEdit = record;
+	};
+	
 	$('#Charts').tab('show');
 
 	$scope.test = function(){
 		console.log("Dupa");
+	};
+	
+	$rootScope.getTypeName = function(typeId){
+		var typeName = "";
+		angular.forEach($scope.types, function(entry){
+			if(entry.id === typeId){
+				typeName = entry.name;
+			}
+		});
+		return typeName;
 	};
 	
 });

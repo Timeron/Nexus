@@ -4,7 +4,7 @@ app
 		.controller(
 				"WalletMenuCtrl",
 				function($scope, $rootScope, AddAccount, GetAllRecordTypes,
-						AddNewRecord, GetAllUserAccounts, AddType,
+						AddNewRecord, UpdateRecord, GetAllUserAccounts, AddType,
 						GetTypesValidForParent, UpdateTypes) {
 					$scope.incomeCurrentDescription = "Wydatek";
 					$scope.newRecordCurrentDescription = "Operacja";
@@ -339,6 +339,38 @@ app
 										+ $scope.operationTime,
 								accountId : $rootScope.selectedAccount.id,
 								destynationAccountId : $scope.newRecord.account.id
+							}, function(data) {
+								$scope.message = data;
+							});
+						}
+
+					};
+					
+					$scope.editRecord = function() {
+						if (!$scope.recordToEdit.transfer) {
+							UpdateRecord.query({
+								id : $scope.recordToEdit.id,
+								value : $scope.recordToEdit.value,
+								description : $scope.recordToEdit.description,
+								income : $scope.recordToEdit.income,
+								transfer : $scope.recordToEdit.transfer,
+								date : $scope.operationDate
+										+ $scope.operationTime,
+								recordTypeId : $scope.recordToEdit.type.id,
+								accountId : $rootScope.selectedAccount.id
+							}, function(data) {
+								$scope.message = data;
+							});
+						} else {
+							UpdateRecord.query({
+								id : $scope.recordToEdit.id,
+								value : $scope.recordToEdit.value,
+								description : $scope.recordToEdit.description,
+								transfer : $scope.recordToEdit.transfer,
+								date : $scope.operationDate
+										+ $scope.operationTime,
+								accountId : $rootScope.selectedAccount.id,
+								destynationAccountId : $scope.recordToEdit.account.id
 							}, function(data) {
 								$scope.message = data;
 							});

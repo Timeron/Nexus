@@ -84,6 +84,15 @@ datepicker.directive("datepicker", function(){
 					$scope.datepickerDisabled = "";
 				}
 			});
+			$attrs.$observe('init', function(e) {
+				if(e !== undefined && e!== ""){
+					var init = new Date(parseInt(e));
+					$scope.year = init.getFullYear();
+					$scope.month = months[init.getMonth()];
+					$scope.day = init.getDate()-1; //data nie wiadomo czemu jest 1 dzień do przodu
+					$scope[$attrs.model] = new Date($scope.year, $scope.month.id, $scope.day, 0, 0, 0, 0).getTime();
+				}
+			});
 			$scope.$watch();
 		}
 	};

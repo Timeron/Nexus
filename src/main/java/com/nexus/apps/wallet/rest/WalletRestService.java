@@ -102,6 +102,15 @@ public class WalletRestService {
 		LOG.info("service response: updateTypes -> "+result);
 		return result;
 	}
+	
+	@RequestMapping(value="/updateRecord", method = RequestMethod.POST)
+	public String updateRecord(@RequestBody String json){
+		LOG.info("service: updateRecord <- "+json);
+		RecordDTO typeListDTO = gson.fromJson(json, RecordDTO.class);
+		String result = gson.toJson(helper.updateRecord(typeListDTO));
+		LOG.info("service response: updateRecord -> "+result);
+		return result;
+	}
 //	CHARTS
 	
 	@RequestMapping(value="/getRecordsForAccountByDay", method = RequestMethod.POST)

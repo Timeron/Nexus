@@ -222,6 +222,79 @@
 					</div>
 				</div>
 			</div>
+			
+			<!-- Modal -->
+			<div class="modal" id="editRecordModal" tabindex="-1" role="dialog"
+				aria-labelledby="myModalLabel" aria-hidden="true">
+				<div class="modal-dialog">
+					<div class="modal-content">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal"
+								aria-label="Close">
+								<span aria-hidden="true">&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">{{newRecordCurrentDescription}}</h4>
+<!-- 							<button type="button" class="btn btn-default toRight" -->
+<!-- 								model="income" data-ng-click="changeTransfer()">{{newRecordCurrentButtonDescription}}</button> -->
+						</div>
+						<div class="modal-body" style="width: 100%; float: left">
+							<div id="editRecord" class="modalTest">
+								<table class="tableForm">
+									<tr>
+										<td class="formName" style="width: 25%">Kwota</td>
+										<td><input type="text" data-ng-model="recordToEdit.value"></td>
+									</tr>
+									<tr>
+										<td class="formName">Opis</td>
+										<td>
+											<textarea cols="50" rows="4"
+												data-ng-model="recordToEdit.description">
+											</textarea>
+										</td>
+									</tr>
+									<tr data-ng-if="!recordToEdit.transfer">
+										<td class="formName">Typ</td>
+										<td>{{getTypeName(recordToEdit.recordTypeId)}}</br>
+											<select data-ng-model="$parent.recordToEdit.type"
+											ng-options="type.name for type in types">
+												<option value=""></option>
+											</select>
+										</td>
+									</tr>
+									<tr data-ng-if="recordToEdit.transfer">
+										<td class="formName">Na konto</td>
+										<td><select data-ng-model="$parent.recordToEdit.account"
+											ng-options="account.name for account in accounts">
+												<option value=""></option>
+										</select></td>
+									</tr>
+									<tr data-ng-if="!recordToEdit.transfer">
+										<td></td>
+										<td><button type="button" class="btn btn-default"
+												model="income" data-ng-click="changeIncome()">{{incomeCurrentDescription}}</button></td>
+									</tr>
+								</table>
+								<table style="width: 100%">
+									<tr>
+										<td style="width: 22%"></td>
+										<td><div class="font-m space-top-m">Dzień: </div> <datepicker
+												start="2010" offset="1" range="2030" model="operationDate" init="{{recordToEdit.date}}"></datepicker>
+											<div class="font-m space-top-m">Godzina:</div> <timepicker
+												now="true" model="operationTime"></timepicker></td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Zamknij</button>
+							<button type="button" class="btn btn-primary"
+								data-ng-click="editRecord()" data-dismiss="modal">Zapisz</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			
 			<div class="topMainMenu">
 				<div class="btn-group">
 					<button class="btn btn-primary btn-ms" role="button"
@@ -349,6 +422,7 @@
 									<div class="recordTransfer recordHeader">Transfer</div>
 									<div class="recordValue recordHeader">kwota</div>
 									<div class="recordDate recordHeader">data</div>
+									<div class="recordOption recordHeader"></div>
 								</div>
 								<div mark-line mark="#A0C0DC" nmark="#FFF" class="recordRow"
 									ng-repeat="record in selectedAccount.records">
@@ -359,6 +433,12 @@
 										valid={{!record.income}}>{{record.value}}</div>
 									<div class="recordDate">{{record.date | date:'d-MM-yyyy
 										HH:mm' : 'UTC'}}</div>
+									<div class="recordOption">
+										<button class="btn btn-primary btn-xs" role="button" 
+										data-toggle="modal" data-target="#editRecordModal" ng-click="setToEdit(record)">
+										<span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+										</button>
+									</div>
 								</div>
 							</div>
 						</section>
