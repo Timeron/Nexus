@@ -39,4 +39,8 @@
   	<query>SELECT r FROM WalletRecord r WHERE r.walletType.id = :typeId and r.income = :income</query>
   </named-query>
   
+  <named-query name="GetIdOrderForTypes">
+  	<query>SELECT walletType.id, count(walletType.id) FROM WalletRecord r GROUP BY walletType.id order by COUNT(walletType.id) DESC</query>
+  </named-query>
+  
 </entity-mappings>

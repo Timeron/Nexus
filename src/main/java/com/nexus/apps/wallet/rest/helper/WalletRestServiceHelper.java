@@ -43,6 +43,7 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletAccountDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
+import com.timeron.NexusDatabaseLibrary.dto.IdOrderDTO;
 
 @Component
 public class WalletRestServiceHelper {
@@ -94,6 +95,7 @@ public class WalletRestServiceHelper {
 	public List<RecordTypeDTO> getAllRecordTypes() {
 		List<RecordTypeDTO> recordTypeDTOs = new ArrayList<RecordTypeDTO>();
 		List<WalletType> walletTypes =  walletTypeDAO.getAll();
+		List<IdOrderDTO> typeOrder = walletTypeDAO.getIdOrder();
 		for(WalletType type : walletTypes){
 			RecordTypeDTO recordTypeDTO = new RecordTypeDTO();
 			recordTypeDTO.setId(type.getId());
@@ -108,7 +110,20 @@ public class WalletRestServiceHelper {
 			}
 			recordTypeDTOs.add(recordTypeDTO);
 		}
+		recordTypeDTOs = getTypeByOrder(recordTypeDTOs, typeOrder);
 		return recordTypeDTOs;
+	}
+
+	private List<RecordTypeDTO> getTypeByOrder(List<RecordTypeDTO> recordTypeDTOs, List<IdOrderDTO> typeOrder) {
+		List<RecordTypeDTO> typeByOrderDTOs = new ArrayList<RecordTypeDTO>();
+		for(IdOrderDTO entry : typeOrder){
+			for(RecordTypeDTO record : recordTypeDTOs){
+				if(entry.getId() == record.getId()){
+					typeByOrderDTOs.add(record);
+				}
+			}
+		}
+		return typeByOrderDTOs;
 	}
 
 	public ServiceResult addNewRecord(RecordDTO recordDTO) {
