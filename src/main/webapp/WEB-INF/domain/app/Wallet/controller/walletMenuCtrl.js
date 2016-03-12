@@ -375,7 +375,6 @@ app
 								$scope.message = data;
 							});
 						}
-
 					};
 
 					$scope.changeIncome = function() {
