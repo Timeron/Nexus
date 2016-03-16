@@ -182,6 +182,7 @@ public class JTaskRestServiceHelper {
 	}
 	
 	public String getProjectPrefix(int id){
+		LOG.info("ServiceHelper coled: getProjectPrefix");
 		return jProjectDAO.getById(id).getPrefix();
 	}
 
@@ -281,6 +282,7 @@ public class JTaskRestServiceHelper {
 
 
 	public List<JHistoryDTO> getTaskHistory(int taskId) {
+		LOG.info("ServiceHelper coled: getTaskHistory");
 		List<JHistoryDTO> jHistoriesDTO;
 		jHistoriesDTO = transformToJHistoryDTO(jHistoryDAO.getAllFromTaskId(jTaskDAO.getById(taskId)));
 		
@@ -296,6 +298,7 @@ public class JTaskRestServiceHelper {
 	}
 	
 	public List<JNoteDTO> getTaskNotes(int taskId) {
+		LOG.info("ServiceHelper coled: getTaskNotes");
 		List<JNoteDTO> jNoteDTOs;
 		jNoteDTOs = transformToJNoteDTO(jNoteDAO.getAllFromTaskId(jTaskDAO.getById(taskId)));
 		return jNoteDTOs;
@@ -310,6 +313,7 @@ public class JTaskRestServiceHelper {
 	}
 	
 	public ServiceResult saveNote(JNoteDTO jNoteDTO, ServiceResult result) {
+		LOG.info("ServiceHelper coled: saveNote");
 		JNote entity = new JNote();
 		entity.setCreated(new Date());
 		entity.setTask(jTaskDAO.getById(jNoteDTO.getTaskId()));
@@ -320,6 +324,7 @@ public class JTaskRestServiceHelper {
 	}
 	
 	public String getNextName(JTask jTask, String prefix) {
+		LOG.info("ServiceHelper coled: getNextName");
 		if(jTask != null){
 			if(jTask.getIdFromName() == 0){
 				String[] nameArray = jTask.getName().split("-");
@@ -344,6 +349,7 @@ public class JTaskRestServiceHelper {
 	}
 
 	public NexusVersionDTO getAppVersion(String appName) {
+		LOG.info("ServiceHelper coled: getAppVersion");
 		NexusVersion nexusVersion = nexusVersionDAO.getByName(appName);
 		NexusVersionDTO nexusVersionsDTO = new NexusVersionDTO();
 		if(nexusVersion != null){
@@ -356,6 +362,7 @@ public class JTaskRestServiceHelper {
 	}
 
 	public List<NexusPersonDTO> getAllUsers() {
+		LOG.info("ServiceHelper coled: getAllUsers");
 		List<NexusPersonDTO> nexusPersonDAOs = new ArrayList<NexusPersonDTO>();
 		for(NexusPerson person : nexusPersonDAO.getAll()){
 			nexusPersonDAOs.add(new NexusPersonDTO(person));
@@ -364,6 +371,7 @@ public class JTaskRestServiceHelper {
 	} 
 
 	public ServiceResult assignTaskToUser(AssignUserTaskDTO dto, ServiceResult result){
+		LOG.info("ServiceHelper coled: assignTaskToUser");
 		Date now = new Date();
 		JTask jTask = jTaskDAO.getById(dto.getTaskId());
 		NexusPerson nexusPerson = nexusPersonDAO.getById(dto.getUserId());
@@ -391,6 +399,7 @@ public class JTaskRestServiceHelper {
 	}
 
 	public ServiceResult setMainTask(MainTaskDTO dto, ServiceResult result) {
+		LOG.info("ServiceHelper coled: setMainTask");
 		JTask task = jTaskDAO.getById(dto.getTaskId());
 		JTask mainTask = jTaskDAO.getById(dto.getMainTaskId());
 		

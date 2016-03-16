@@ -47,13 +47,13 @@ public class JTaskRestService extends NexusRestService{
 
 	@RequestMapping(value = "/getAllTasksInOneProject", method = RequestMethod.GET)
 	public String getAllTasksInOneProject(){
-		LOG.info("service: getTasks");
+		LOG.info("service: getAllTasksInOneProject");
 		JProjectDTO jProjectDTO = new JProjectDTO();
 		jProjectDTO.setName("All Projects");
 		jProjectDTO.addTasks(helper.getTaskList());
 		String response = gson.toJson(jProjectDTO);
 		response = prepareForHtml(response);
-		LOG.info("service response: getTasks -> "+response);
+		LOG.info("service response: getAllTasksInOneProject -> "+response);
 		return response;
 	}
 	
@@ -62,7 +62,6 @@ public class JTaskRestService extends NexusRestService{
 		LOG.info("service: historyTask <- "+request.getParameter("id"));
 		int taskId = Integer.parseInt(request.getParameter("id"));
 		String response = gson.toJson(helper.getTaskHistory(taskId));
-//		response = prepareForHtml(response);
 		LOG.info("service response: historyTask -> "+response);
 		return response;
 	}
@@ -88,7 +87,7 @@ public class JTaskRestService extends NexusRestService{
 	}
 	
 	@RequestMapping(value = "/allProjectTasks", method = RequestMethod.GET)
-	public String allProjectTask(HttpServletRequest request){
+	public String allProjectTasks(HttpServletRequest request){
 		LOG.info("service response: allProjectTasks <- "+request.getParameter("id"));
 		int id = Integer.parseInt(request.getParameter("id"));
 		String response = gson.toJson(helper.getProjectTasksList(id));
@@ -166,17 +165,7 @@ public class JTaskRestService extends NexusRestService{
 		String response = prepareForHtml(gson.toJson(result));
 		LOG.info("service response: updateTask -> "+response);
 		return response;
-	}
-	
-//	@RequestMapping(value = "/historyTask", method = RequestMethod.POST)
-//	public String historyTask(@RequestBody String json){
-//		LOG.info("service: historyTask <- "+json);
-//		JTaskDTO jTaskDTO = gson.fromJson(json, JTaskDTO.class);
-//		String response = gson.toJson(helper.getTaskHistory(jTaskDTO.getId()));
-//		response = prepareForHtml(response);
-//		LOG.info("service response: historyTask -> "+response);
-//		return response;
-//	}	
+	}	
 	
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
 	public String newNote(@RequestBody String json){
@@ -212,7 +201,6 @@ public class JTaskRestService extends NexusRestService{
 	}
 	
 	private String prepareForHtml(String response) {
-		System.out.println(response.indexOf("\\n"));
 		String result = response.replace("\\n", "<br />");
 		return result;
 	}

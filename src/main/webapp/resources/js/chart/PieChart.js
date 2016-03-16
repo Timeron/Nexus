@@ -94,7 +94,6 @@ function SimplePieChart(div, _r, _i){
 //		_value = salesData[$(this).attr("date-id")].value;
 //		_data = [{id : 10, value : _value, label : "Test", color : "#999"}];
 //		alert(_value);
-//		console.log(_data[0].id);
 //		gradPie.transition("testPie", _data, 50);
 		
 	});
