@@ -189,6 +189,7 @@ public class JTaskRestServiceHelper {
 	public ServiceResult updateTask(JTaskDTO jTaskDTO, ServiceResult serviceResult) {
 		LOG.info("ServiceHelper coled: updateTask");
 		boolean updated = false;
+		serviceResult.setSuccess(true);
 		Date now = new Date();
 		JTask jTask = jTaskDAO.getById(jTaskDTO.getId());
 		if(jTaskDTO.getEndDateLong() != 0){
@@ -271,7 +272,11 @@ public class JTaskRestServiceHelper {
 		
 		if(updated){
 			jTask.setUpdated(now);
-			jTaskDAO.update(jTask);
+			try{
+				jTaskDAO.update(jTask);
+			}catch(Exception ex){
+				serviceResult.setSuccess(false);
+			}
 		}
 		
 		JTaskDTO dto = new JTaskDTO(jTaskDAO.getById(jTask.getId()));

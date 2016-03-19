@@ -12,7 +12,7 @@
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring.version>4.1.6.RELEASE</spring.version> <!-- żeby tiles działał musi być wersja 3.2.2 + -->
-		<junit.version>4.11</junit.version>
+		<junit.version>4.12</junit.version>
 		<jdk.version>1.7</jdk.version>
 		<tiles.version>3.0.4</tiles.version>
 		<hibernate.version>4.3.10.Final</hibernate.version>
@@ -135,13 +135,13 @@
 
 		<!-- Support for testing Spring applications with tools such as JUnit and 
 			TestNG This artifact is generally always defined with a 'test' scope for 
-			the integration testing framework and unit testing stubs -->
-		<!-- <dependency> -->
-		<!-- <groupId>org.springframework</groupId> -->
-		<!-- <artifactId>spring-test</artifactId> -->
-		<!-- <version>${spring.version}</version> -->
-		<!-- <scope>test</scope> -->
-		<!-- </dependency> -->
+				the integration testing framework and unit testing stubs -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${spring.version}</version>
+			<scope>test</scope>
+		</dependency>
 
 		<dependency>
 			<groupId>org.springframework</groupId>

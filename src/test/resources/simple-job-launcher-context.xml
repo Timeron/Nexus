@@ -1,0 +1,50 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xsi:schemaLocation="
+	http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+		http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+        http://www.springframework.org/schema/beans     
+        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<mvc:resources mapping="/resources/**" location="/resources/" />
+	<mvc:resources mapping="/domain/**" location="/WEB-INF/domain/" />
+	<mvc:annotation-driven />
+	
+	<import resource="classpath:test-dataSources.xml" />
+	<import resource="classpath:test-jpa.xml" />
+
+	<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+		<!--Don't add suffix or prefix like you do with .jsp files -->
+		<property name="viewClass"
+			value="org.springframework.web.servlet.view.tiles3.TilesView" />
+	</bean>
+
+	<bean id="tilesConfigurer"
+		class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>/WEB-INF/tiles/config/nexusTiles.xml</value>
+				<value>/WEB-INF/tiles/config/multiObserverTiles.xml</value>
+				<value>/WEB-INF/tiles/config/contactTiles.xml</value>
+				<value>/WEB-INF/tiles/config/jTaskTiles.xml</value>
+				<value>/WEB-INF/tiles/config/walletTiles.xml</value>
+				<value>/WEB-INF/tiles/config/carTiles.xml</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- skanowanie kontrolerów - bez tego nie działa mvc łapie też autowired 
+		dla dao -->
+	<context:component-scan base-package="com.nexus.*, com.timeron.NexusDatabaseLibrary.dao" />
+		<!-- <context:exclude-filter type="annotation" -->
+		<!-- expression="org.springframework.stereotype.Controller" /> -->
+
+
+</beans>
