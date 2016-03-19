@@ -1,15 +1,15 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<persistence xmlns="http://java.sun.com/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="1.0"
-  xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd">
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
 
+	<persistence-unit name="TestPU" transaction-type="RESOURCE_LOCAL">
 
-  <persistence-unit name="TestPU">
+		<mapping-file>orm.xml</mapping-file>
 
-    <mapping-file>orm.xml</mapping-file>
-
-    <!-- Add list of fully qualified entity classes here -->
-    	<class>com.timeron.NexusDatabaseLibrary.Entity.ContactEvent</class>
-    	<class>com.timeron.NexusDatabaseLibrary.Entity.Fuel</class>
+		<!-- Add list of fully qualified entity classes here -->
+		<class>com.timeron.NexusDatabaseLibrary.Entity.ContactEvent</class>
+		<class>com.timeron.NexusDatabaseLibrary.Entity.Fuel</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JHistory</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JNote</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JProject</class>
@@ -34,7 +34,7 @@
 		<class>com.timeron.NexusDatabaseLibrary.Entity.WalletAccount</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.WalletRecord</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.WalletType</class>
-  </persistence-unit>
+	</persistence-unit>
 
 </persistence>
 

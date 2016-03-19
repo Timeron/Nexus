@@ -135,7 +135,7 @@
 
 		<!-- Support for testing Spring applications with tools such as JUnit and 
 			TestNG This artifact is generally always defined with a 'test' scope for 
-				the integration testing framework and unit testing stubs -->
+			the integration testing framework and unit testing stubs -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>
@@ -235,6 +235,33 @@
 			<scope>test</scope>
 		</dependency>
 
+		<dependency>
+			<groupId>org.dbunit</groupId>
+			<artifactId>dbunit</artifactId>
+			<version>2.5.0</version>
+			<type>jar</type>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.github.springtestdbunit</groupId>
+			<artifactId>spring-test-dbunit</artifactId>
+			<version>1.2.1</version>
+		</dependency>
+
+		<!-- <dependency> -->
+		<!-- <groupId>com.github.springtestdbunit</groupId> -->
+		<!-- <artifactId>spring-test-dbunit</artifactId> -->
+		<!-- <version>1.2.0</version> -->
+		<!-- <scope>test</scope> -->
+		<!-- </dependency> -->
+		<dependency>
+			<groupId>org.hsqldb</groupId>
+			<artifactId>hsqldb</artifactId>
+			<version>2.0.0</version>
+			<scope>test</scope>
+		</dependency>
+
 		<!-- JSP error -->
 
 		<dependency>
@@ -324,7 +351,7 @@
 			<groupId>com.timeron</groupId>
 			<artifactId>NexusDatabaseLibrary</artifactId>
 			<version>0.0.7-SNAPSHOT</version>
-<!-- 			<scope>import</scope> -->
+			<!-- <scope>import</scope> -->
 		</dependency>
 
 	</dependencies>
