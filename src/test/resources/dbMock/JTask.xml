@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<j_task_type id="1" description="Task" />
+	<j_task_type id="2" description="Bug" />
+	<j_task_type id="3" description="Improvement" />
+
+	<j_status id="1" description="wait" />
+	<j_status id="2" description="to do" />
+	<j_status id="3" description="in progress" />
+	<j_status id="4" description="in review" />
+	<j_status id="5" description="done" />
+	<j_status id="6" description="closed" />
+
+	<nexus_person id="0" nick="timeron" />
+	<nexus_person id="1" nick="domyslny" />
+
+	<j_project id="1" created="2015-04-10 20:16:50" description="desc test 1"
+		name="Name 1" prefix="PREF1" />
+	<j_project id="2" created="2015-04-10 20:16:59" description="desc test 2"
+		name="Name 2" prefix="PREF2" />
+	<j_project id="3" created="2015-04-10 21:30:29" description="desc test 3"
+		name="Name 3" prefix="PREF3" />
+	<j_project id="4" created="2015-04-10 21:54:19" description="desc test 4"
+		name="Name 4" prefix="PREF4" />
+
+	<j_task id="1" created="2015-07-01 22:57:05" description="testowa ..."
+		name="PREF-1" summary="testowy task z wszystkimi danymi" j_project="1"
+		j_status="2" j_task_type="2" updated="2016-03-19 13:53:56"
+		workExpected="0" idFromName="1" j_user="0" />
+
+	<j_Note id="1" content="Testowa notka" created="2015-07-03 13:30:42"
+		j_task="1" />
+
+	<j_history id="1" j_status="4" j_task="1" created="2015-07-03 13:30:42" />
+	<j_history id="2" j_note="1" j_task="1" created="2015-07-03 13:30:42" />
+
+</dataset>

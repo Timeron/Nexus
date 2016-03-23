@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+	<j_status id="1" description="wait"/>
+	<j_status id="2" description="to do"/>
+	<j_status id="3" description="in progress"/>
+	<j_status id="4" description="in review"/>
+	<j_status id="5" description="done"/>
+	<j_status id="6" description="closed"/>
+</dataset>

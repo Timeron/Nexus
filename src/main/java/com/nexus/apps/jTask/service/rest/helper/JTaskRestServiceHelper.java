@@ -113,10 +113,18 @@ public class JTaskRestServiceHelper {
 		jTask.setSummary(jTaskDTO.getSummary());
 		jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
 		if(principal.getName() != null){
-			jTask.setUser(nexusPersonDAO.getByNick(principal.getName()));
+			NexusPerson person = nexusPersonDAO.getByNick(principal.getName());
+			if(person != null){
+				jTask.setUser(person);
+			}else{
+				result.setSuccess(false);
+				result.addMessage(ResultMessages.PERSON_NOT_EXIST);
+				return result;
+			}
 		}else{
 			result.setSuccess(false);
 			result.addMessage(ResultMessages.PERSON_NOT_DETECTED);
+			return result;
 		}
 		jTask.setName(nextIdName);
 		
@@ -382,9 +390,16 @@ public class JTaskRestServiceHelper {
 		NexusPerson nexusPerson = nexusPersonDAO.getById(dto.getUserId());
 		jTask.setUser(nexusPerson);
 		jTask.setUpdated(now);
-		jTaskDAO.update(jTask);
-		
 		JHistory history = new JHistory();
+		try{
+			jTaskDAO.update(jTask);
+		}catch(Exception ex){
+			result.setSuccess(false);
+			result.addMessage(ResultMessages.CANNOT_UPDATE_TASK);
+			LOG.error(ResultMessages.CANNOT_UPDATE_TASK, ex);
+			return result;
+		}
+		
 		history.setCreated(now);
 		history.setTask(jTask);
 		String str = "";
@@ -398,8 +413,17 @@ public class JTaskRestServiceHelper {
 			str = nexusPerson.getNick();
 		}
 		history.setMessage("Zadanie zostało przypisane do: "+str);
-		jHistoryDAO.save(history);
 		
+		try{
+			jHistoryDAO.save(history);
+			result.setSuccess(true);
+		}catch(Exception ex){
+			result.setSuccess(false);
+			result.addMessage(ResultMessages.CANNOT_UPDATE_TASK);
+			LOG.error(ResultMessages.CANNOT_UPDATE_TASK, ex);
+			return result;
+		}
+		result.setObject(jTaskDAO.getById(dto.getTaskId()));
 		return result;
 	}
 

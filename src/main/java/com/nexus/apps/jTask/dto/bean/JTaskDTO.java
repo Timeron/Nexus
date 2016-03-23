@@ -26,6 +26,10 @@ public class JTaskDTO {
 	private Integer updateMessageStatus;
 	private NexusPersonDTO user;
 	
+	public JTaskDTO() {
+		
+	}
+	
 	public JTaskDTO(JTask jTask) {
 		this.id = jTask.getId();
 		this.name = jTask.getName();
@@ -39,7 +43,7 @@ public class JTaskDTO {
 
 		if(jTask.getMainTask() != null){
 			this.mainTaskId = jTask.getMainTask().getId();
-			this.setMainTaskName(jTask.getMainTask().getName());
+			this.mainTaskName =jTask.getMainTask().getName();
 		}
 		if(jTask.getTaskType() != null){
 			this.taskTypeId = jTask.getTaskType().getId();
@@ -131,20 +135,11 @@ public class JTaskDTO {
 	public String getUpdateMessage() {
 		return updateMessage;
 	}
-	public void setUpdateMessage(String updateMessage) {
-		this.updateMessage = updateMessage;
-	}
 	public Integer getUpdateMessageStatus() {
 		return updateMessageStatus;
 	}
-	public void setUpdateMessageStatus(Integer updateMessageStatus) {
-		this.updateMessageStatus = updateMessageStatus;
-	}
 	public String getStatusDescription() {
 		return statusDescription;
-	}
-	public void setStatusDescription(String statusDescription) {
-		this.statusDescription = statusDescription;
 	}
 	public Date getEndDate() {
 		return endDate;
@@ -174,8 +169,19 @@ public class JTaskDTO {
 	public String getMainTaskName() {
 		return mainTaskName;
 	}
-	public void setMainTaskName(String mainTaskName) {
-		this.mainTaskName = mainTaskName;
+
+	@Override
+	public String toString() {
+		return "JTaskDTO [id=" + id + ", name=" + name + ", summary=" + summary
+				+ ", description=" + description + ", endDate=" + endDate
+				+ ", endDateLong=" + endDateLong + ", workExpected="
+				+ workExpected + ", created=" + created + ", updated="
+				+ updated + ", mainTaskId=" + mainTaskId + ", mainTaskName="
+				+ mainTaskName + ", taskTypeId=" + taskTypeId + ", priority="
+				+ priority + ", projectId=" + projectId + ", status=" + status
+				+ ", statusDescription=" + statusDescription
+				+ ", updateMessage=" + updateMessage + ", updateMessageStatus="
+				+ updateMessageStatus + ", user=" + user + "]";
 	}
 
 	
