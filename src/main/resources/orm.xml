@@ -43,4 +43,8 @@
   	<query>SELECT walletType.id, count(walletType.id) FROM WalletRecord r GROUP BY walletType.id order by COUNT(walletType.id) DESC</query>
   </named-query>
   
+  
+  <named-query name="GetUserProjectsByUser">
+  	<query>SELECT up FROM JUserProject up WHERE up.user.id = :userId</query>
+  </named-query>
 </entity-mappings>

@@ -37,9 +37,9 @@ public class JTaskRestService extends NexusRestService{
 	ObjectMapper objectMapper = new ObjectMapper();
 	
 	@RequestMapping(value = "/getAllProjects", method = RequestMethod.GET)
-	public String getAllProjects(){
+	public String getAllProjects(Principal principal){
 		LOG.info("service: getAllProjects");
-		String response = gson.toJson(helper.getProjectList());
+		String response = gson.toJson(helper.getProjectList(principal));
 		response = prepareForHtml(response);
 		LOG.info("service response: getAllProjects -> "+response);
 		return response;

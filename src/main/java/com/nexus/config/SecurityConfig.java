@@ -30,19 +30,38 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 
-		http.authorizeRequests().antMatchers("/jtask/**")
-				.access("hasRole('ROLE_ADMIN')").and().formLogin()
-				.failureUrl("/login?error")//		.loginPage("/login")
-				.usernameParameter("username").passwordParameter("password")
-				.and().logout().logoutSuccessUrl("/login?logout")
-				.and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
+//		http.authorizeRequests().antMatchers("/jtask/**")
+//				.access("hasRole('ROLE_ADMIN')")
+//				.and()
+//				.formLogin()
+//				.failureUrl("/login?error")
+//				// .loginPage("/login")
+//				.usernameParameter("username").passwordParameter("password")
+//				.and().logout().logoutSuccessUrl("/login?logout").and()
+//				.exceptionHandling().accessDeniedPage("/403").and().csrf()
+//				.disable();
 
 		http.authorizeRequests().antMatchers("/wallet/**")
-				.access("hasRole('ROLE_WALLET')").and().formLogin()
-				.failureUrl("/login?error")//		.loginPage("/login")
+				.access("hasRole('ROLE_WALLET')").and()
+				.formLogin()
+				.failureUrl("/login?error")
+				// .loginPage("/login")
 				.usernameParameter("username").passwordParameter("password")
-				.and().logout().logoutSuccessUrl("/login?logout")//and().csrf().disable()
-				.and().exceptionHandling().accessDeniedPage("/403").and().csrf().disable();
+				.and().logout().logoutSuccessUrl("/login?logout")
+				// and().csrf().disable()
+				.and().exceptionHandling().accessDeniedPage("/403").and()
+				.csrf().disable();
+
+		http.authorizeRequests().antMatchers("/jtask/**")
+				.access("hasRole('ROLE_JTASK')")
+				.and()
+				.formLogin()
+				.failureUrl("/login?error")
+				// .loginPage("/login")
+				.usernameParameter("username").passwordParameter("password")
+				.and().logout().logoutSuccessUrl("/login?logout").and()
+				.exceptionHandling().accessDeniedPage("/403").and().csrf()
+				.disable();
 
 	}
 

@@ -28,9 +28,9 @@ public class NexusRestService {
 	public String checkConnection(Principal principal){
 		String response = "NUF";
 		if(principal != null){
-			LOG.info("service: checkConnection " + principal.getName());
+//			LOG.info("service: checkConnection " + principal.getName());
 			response = gson.toJson(helper.checkConnection());
-			LOG.info("service response: checkConnection -> "+response);
+//			LOG.info("service response: checkConnection -> "+response);
 		}
 		return response;
 	}

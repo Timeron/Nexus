@@ -17,6 +17,7 @@ import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
+import com.nexus.apps.jTask.project.ProjectImpl;
 import com.nexus.apps.wallet.constant.MessageResources;
 import com.nexus.common.service.ResultMessages;
 import com.nexus.common.service.ServiceResult;
@@ -33,6 +34,7 @@ import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JStatusDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskTypeDAO;
+import com.timeron.NexusDatabaseLibrary.dao.JUserProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusVersionDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
@@ -55,26 +57,20 @@ public class JTaskRestServiceHelper {
 	@Autowired
 	JNoteDAO jNoteDAO;
 	@Autowired
+	JUserProjectDAO jUserProjectDAO;
+	@Autowired
 	NexusPersonDAO nexusPersonDAO; 
 	@Autowired
 	NexusVersionDAO nexusVersionDAO;
 	
+	@Autowired
+	ProjectImpl projectImpl;
+	
 	public JTaskRestServiceHelper(){}
 	
-	public List<JProjectDTO> getProjectList(){
+	public List<JProjectDTO> getProjectList(Principal principal){
 		LOG.info("ServiceHelper coled: getProjectList");
-		List<JProjectDTO> projectListDTO = new ArrayList<JProjectDTO>();
-		List<JProject> projects = jProjectDAO.getAll("id", Direction.ASC);
-		JProjectDTO projectDTO = null;
-		for(JProject project : projects){
-			projectDTO = new JProjectDTO(project);
-			if(!project.getTask().isEmpty() && project.getTask() != null){
-				for(JTask jTask : project.getTask()){
-					projectDTO.addTask(new JTaskDTO(jTask));
-				}
-			}
-			projectListDTO.add(projectDTO);
-		}
+		List<JProjectDTO> projectListDTO = projectImpl.getUserProjectsWithTask(nexusPersonDAO.getByNick(principal.getName()));
 		return projectListDTO;
 	}
 
