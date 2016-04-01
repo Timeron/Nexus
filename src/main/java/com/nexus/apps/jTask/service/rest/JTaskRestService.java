@@ -132,12 +132,12 @@ public class JTaskRestService extends NexusRestService{
 	
 	@RequestMapping(value = "/addProject", method = RequestMethod.POST)
 	@ResponseStatus(HttpStatus.CREATED)
-	public String addProject(@RequestBody String json){
+	public String addProject(@RequestBody String json, Principal principal){
 		//TODO refaktor
 		LOG.info("service: addProject <- "+json);
 		ServiceResult result = new ServiceResult();
 		JProjectDTO jProjectDTO = gson.fromJson(json, JProjectDTO.class);
-		result = helper.addNewProject(jProjectDTO, result);
+		result = helper.addNewProject(jProjectDTO, result, principal);
 		String response = gson.toJson(result);
 		response = prepareForHtml(response);
 		LOG.info("service response: addProject -> "+response);

@@ -26,6 +26,7 @@ import com.timeron.NexusDatabaseLibrary.Entity.JNote;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.Entity.JTaskType;
+import com.timeron.NexusDatabaseLibrary.Entity.JUserProject;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusVersion;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
@@ -74,18 +75,30 @@ public class JTaskRestServiceHelper {
 		return projectListDTO;
 	}
 
-	public ServiceResult addNewProject(JProjectDTO jProjectDTO, ServiceResult result) {
+	public ServiceResult addNewProject(JProjectDTO jProjectDTO, ServiceResult result, Principal principal) {
 		LOG.info("ServiceHelper coled: addNewProject");
 		if(jProjectDAO.getByName(jProjectDTO.getName()) == null){
+			NexusPerson user = nexusPersonDAO.getByNick(principal.getName());
+			
 			JProject jProject = new JProject();
 			jProject.setDescription(jProjectDTO.getDescription());
+			jProject.setUser(user);
 			jProject.setName(jProjectDTO.getName());
 			jProject.setPrefix(jProjectDTO.getPrefix());
 			jProject.setCreated(new Date());
 			jProjectDAO.save(jProject);
+			
+			jProject = jProjectDAO.getByName(jProjectDTO.getName());
+			
+			JUserProject userProject = new JUserProject();
+			userProject.setUser(user);
+			userProject.setProject(jProject);
+			userProject.setTimestamp(new Date());
+			jUserProjectDAO.save(userProject);
+			
 			result.setSuccess(true);
 			result.addMessage("Project added: "+jProject.getName());
-			result.setObject(new JProjectDTO(jProjectDAO.getByName(jProjectDTO.getName())));
+			result.setObject(new JProjectDTO(jProject));
 			LOG.info(result.getMessages());
 		}else{
 			result.setSuccess(false);
