@@ -28,6 +28,7 @@
 <script src="<c:url value="/domain/app/JTask/controller/taskSearch.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/jtaskEditTask.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/controller/userController.js" />"></script>
+<script src="<c:url value="/domain/app/JTask/controller/projectConfigCtrl.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/directive/jtaskSearchDirective.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/directive/datepicker.js" />"></script>
 <script src="<c:url value="/domain/app/JTask/directive/image.js" />"></script>

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
 import com.nexus.apps.contact.dto.ContactDTO;
 import com.nexus.apps.contact.dto.EventDTO;
 import com.nexus.apps.contact.dto.OccasionDTO;
-import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
+import com.nexus.common.dto.NexusPersonDTO;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.ContactEvent;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;

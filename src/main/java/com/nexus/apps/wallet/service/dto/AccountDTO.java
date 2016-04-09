@@ -3,7 +3,7 @@ package com.nexus.apps.wallet.service.dto;
 import java.util.Date;
 import java.util.List;
 
-import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
+import com.nexus.common.dto.NexusPersonDTO;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 
 public class AccountDTO{

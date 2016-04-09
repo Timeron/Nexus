@@ -32,5 +32,9 @@
 	<definition name="jTaskProjectTaskSearch" extends="jtaskBasicEmpty">
 		<put-attribute name="body" value="/WEB-INF/domain/app/JTask/view/taskSearch.jsp" />
 	</definition>
+	
+	<definition name="jTaskProjectConfig" extends="jtaskBasicEmpty">
+		<put-attribute name="body" value="/WEB-INF/domain/app/JTask/view/projectConfig.jsp" />
+	</definition>
 
 </tiles-definitions>

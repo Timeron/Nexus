@@ -2,6 +2,7 @@ package com.nexus.apps.jTask.dto.bean;
 
 import java.util.Date;
 
+import com.nexus.common.dto.NexusPersonDTO;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 
 public class JTaskDTO {

@@ -1,6 +1,8 @@
 package com.nexus.apps.jTask.service.rest;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -20,7 +22,9 @@ import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
+import com.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
 import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
+import com.nexus.common.dto.NexusPersonDTO;
 import com.nexus.common.service.NexusRestService;
 import com.nexus.common.service.ServiceResult;
 
@@ -102,6 +106,26 @@ public class JTaskRestService extends NexusRestService{
 		String response = gson.toJson(helper.getAllUsers());
 		response = prepareForHtml(response);
 		LOG.info("service response: allUsers -> "+ response);
+		return response;
+	}
+	
+	@RequestMapping(value = "/getUsersWithAccessToProject", method = RequestMethod.GET)
+	public String getUsersWithAccessToProject(HttpServletRequest request) {
+		List<NexusPersonDTO> result = new ArrayList<NexusPersonDTO>();
+		Integer projectId = Integer.parseInt(request.getParameter("projectId"));
+		LOG.info("service: getUsersWithAccessToProject <- " + projectId);
+		String response = gson.toJson(helper.getUsersWithAccessToProject(projectId));
+		LOG.info("service response: getUsersWithAccessToProject -> "+response);
+		return response;
+	}
+	
+	@RequestMapping(value = "/getUsersToManageAccessToProject", method = RequestMethod.GET)
+	public String getUsersToManageAccessToProject(HttpServletRequest request) {
+		List<NexusPersonDTO> result = new ArrayList<NexusPersonDTO>();
+		Integer projectId = Integer.parseInt(request.getParameter("projectId"));
+		LOG.info("service: getUsersToManageAccessToProject <- " + projectId);
+		String response = gson.toJson(helper.getUsersToManageAccessToProject(projectId));
+		LOG.info("service response: getUsersToManageAccessToProject -> "+response);
 		return response;
 	}
 	
@@ -197,6 +221,17 @@ public class JTaskRestService extends NexusRestService{
 		result = helper.setMainTask(dto, result);
 		String response = prepareForHtml(gson.toJson(result));
 		LOG.info("service response: setMainTask -> "+response);
+		return response;
+	}
+	
+	@RequestMapping(value = "/saveAccessToProject", method = RequestMethod.POST)
+	public String saveAccessToProject(@RequestBody String json){
+		LOG.info("service: saveAccessToProject <- "+json);
+		ServiceResult result = new ServiceResult();
+		UsersWithProjectDTO dto = gson.fromJson(json, UsersWithProjectDTO.class);
+		result = helper.saveAccessToProject(dto, result);
+		String response = prepareForHtml(gson.toJson(result));
+		LOG.info("service response: saveAccessToProject -> "+response);
 		return response;
 	}
 	

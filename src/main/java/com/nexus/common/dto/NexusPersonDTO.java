@@ -1,4 +1,4 @@
-package com.nexus.apps.jTask.dto.bean;
+package com.nexus.common.dto;
 
 import java.text.SimpleDateFormat;
 import java.util.Locale;

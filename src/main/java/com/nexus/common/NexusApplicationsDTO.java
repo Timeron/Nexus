@@ -2,7 +2,7 @@ package com.nexus.common;
 
 import java.util.Date;
 
-import com.timeron.NexusDatabaseLibrary.Entity.NexusApplications;
+import com.timeron.NexusDatabaseLibrary.Entity.NexusApplication;
 
 public class NexusApplicationsDTO {
 
@@ -13,7 +13,7 @@ public class NexusApplicationsDTO {
 	private Date updateTimestamp;
 	private Date createTimestamp;
 	
-	public NexusApplicationsDTO(NexusApplications nexusApplications) {
+	public NexusApplicationsDTO(NexusApplication nexusApplications) {
 		this.id = nexusApplications.getId();
 		this.applicationName = nexusApplications.getApplicationName();
 		this.applicationDescription = nexusApplications.getApplicationDescription();

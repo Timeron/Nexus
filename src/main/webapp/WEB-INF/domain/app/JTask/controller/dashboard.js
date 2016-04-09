@@ -430,6 +430,10 @@ app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, UpdateTask
 	$scope.searchTask = function(){
 		$location.path('/taskSearch/');
 	};
+	
+	$scope.projectConfig = function(){
+		$location.path('/projectConfig/');
+	};
 });
 
 //new modals

@@ -122,6 +122,46 @@ app.factory("SetMainTask", function($resource){
 		);
 });
 
+app.factory("GetUsersWithAccessToProject", function($resource){
+	return $resource("/nexus/v1/jt/getUsersWithAccessToProject", 
+			{}, 
+			{
+				query: { method: "GET", isArray: false }
+			}
+		);
+});
+
+app.factory("GetUsersToManageAccessToProject", function($resource){
+	return $resource("/nexus/v1/jt/getUsersToManageAccessToProject", 
+			{}, 
+			{
+				query: { method: "GET", isArray: false }
+			}
+		);
+});
+
+app.factory("SaveAccessToProject", function($resource){
+	return $resource("/nexus/v1/jt/saveAccessToProject", 
+			{}, 
+			{
+				query: { method: "POST", isArray: false }
+			}
+		);
+});
+
+//******
+//Common
+//******
+
+app.factory("GetUsersForApplication", function($resource){
+	return $resource("/nexus/v1/getUsersForApplication", 
+			{}, 
+			{
+				query: { method: "GET", isArray: false }
+			}
+		);
+});
+
 app.factory("CheckConnection", function($resource){
 	return $resource("/nexus/v1/checkConnection", 
 			{}, 

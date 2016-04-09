@@ -9,16 +9,19 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonElement;
 import com.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
-import com.nexus.apps.jTask.dto.bean.NexusPersonDTO;
 import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
+import com.nexus.apps.jTask.dto.bean.TwoListOfUsers;
+import com.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
 import com.nexus.apps.jTask.project.ProjectImpl;
 import com.nexus.apps.wallet.constant.MessageResources;
+import com.nexus.common.dto.NexusPersonDTO;
 import com.nexus.common.service.ResultMessages;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
@@ -36,7 +39,9 @@ import com.timeron.NexusDatabaseLibrary.dao.JStatusDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskTypeDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JUserProjectDAO;
+import com.timeron.NexusDatabaseLibrary.dao.NexusApplicationDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
+import com.timeron.NexusDatabaseLibrary.dao.NexusUserApplicationDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusVersionDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 
@@ -63,9 +68,15 @@ public class JTaskRestServiceHelper {
 	NexusPersonDAO nexusPersonDAO; 
 	@Autowired
 	NexusVersionDAO nexusVersionDAO;
+	@Autowired
+	NexusUserApplicationDAO nexusUserApplicationDAO;
+	@Autowired
+	NexusApplicationDAO nexusApplicationDAO;
 	
 	@Autowired
 	ProjectImpl projectImpl;
+	
+	private String APP_NAME = "JTASK";
 	
 	public JTaskRestServiceHelper(){}
 	
@@ -448,6 +459,84 @@ public class JTaskRestServiceHelper {
 		
 		result.addMessage(MessageResources.OPERATION_SUCCESS);
 		result.setObject(new JTaskDTO(task));
+		return result;
+	}
+	
+	public ServiceResult getUsersWithAccessToProject(Integer projectId) {
+		ServiceResult result = new ServiceResult();
+		result.setSuccess(true);
+		List<NexusPersonDTO> usersDTO = new ArrayList<NexusPersonDTO>();
+		try{
+			List<JUserProject> users = jUserProjectDAO.getByProject(jProjectDAO.getById(projectId));
+			for(JUserProject user : users){
+				usersDTO.add(new NexusPersonDTO(user.getUser()));
+			}
+			result.setObject(usersDTO);
+		}catch(Exception ex){
+			result.setSuccess(false);
+			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	public ServiceResult getUsersToManageAccessToProject(Integer projectId) {
+		ServiceResult result = new ServiceResult();
+		result.setSuccess(true);
+		List<NexusPersonDTO> usersWithAccessDTO = new ArrayList<NexusPersonDTO>();
+		List<NexusPersonDTO> allUsersDTO = new ArrayList<NexusPersonDTO>();
+		List<NexusPersonDTO> usersAvailableToAddDTO = new ArrayList<NexusPersonDTO>();
+		try{
+			List<JUserProject> usersWithProject = jUserProjectDAO.getByProject(jProjectDAO.getById(projectId));
+			for(JUserProject user : usersWithProject){
+				usersWithAccessDTO.add(new NexusPersonDTO(user.getUser()));
+			}
+			List<NexusPerson> users = nexusUserApplicationDAO.getUsersWithAccessToApp(nexusApplicationDAO.getByName(this.APP_NAME));
+			for(NexusPerson userEntry : users){
+				allUsersDTO.add(new NexusPersonDTO(userEntry));
+			}
+			
+			for(NexusPersonDTO entryAllUsers : allUsersDTO){
+				boolean flag = false;
+				for(NexusPersonDTO entryUser : usersWithAccessDTO){
+					if(entryAllUsers.getId() == entryUser.getId()){
+						flag = true;
+					}
+				}
+				if(!flag){
+					usersAvailableToAddDTO.add(entryAllUsers);
+				}
+			}
+			
+			TwoListOfUsers userLists = new TwoListOfUsers();
+			userLists.setUsers1(usersWithAccessDTO);
+			userLists.setUsers2(usersAvailableToAddDTO);
+			result.setObject(userLists);
+		}catch(Exception ex){
+			result.setSuccess(false);
+			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	public ServiceResult saveAccessToProject(UsersWithProjectDTO usersWithProject, ServiceResult result) {
+		JUserProject jUserProject;
+		try{
+			//will remove all users(access) from this project
+			for(JUserProject oldUsers : jUserProjectDAO.getByProject(jProjectDAO.getById(usersWithProject.getProjectId()))){
+				jUserProjectDAO.removeById(oldUsers.getId());
+			}
+			
+			for(NexusPersonDTO user : usersWithProject.getUsers()){
+				jUserProject = new JUserProject();
+				jUserProject.setProject(jProjectDAO.getById(usersWithProject.getProjectId()));
+				jUserProject.setUser(nexusPersonDAO.getById(user.getId()));
+				jUserProject.setTimestamp(new Date());
+				jUserProjectDAO.save(jUserProject);
+			}
+		}catch(Exception ex){
+			result.setSuccess(false);
+			ex.printStackTrace();
+		}
 		return result;
 	}
 }

@@ -45,6 +45,11 @@ public class JTaskControler {
 		return "jTaskProjectTaskSearch";
 	}
 	
+	@RequestMapping(value = "/projectConfig", method = RequestMethod.GET)
+	public String projectConfig(Model model){
+		return "jTaskProjectConfig";
+	}
+	
 	@RequestMapping(value = "/projects", method = RequestMethod.GET)
 	public String projects(Model model){
 		JProjectListDTO jProjectListDTO = new JProjectListDTO();
