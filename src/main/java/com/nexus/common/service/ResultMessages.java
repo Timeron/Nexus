@@ -12,4 +12,5 @@ public class ResultMessages {
 	
 	public static final String USER_CANNOT_BE_CONNECTED_TO_APPLICATION = "nie udało się połączyć usera z aplikacją.";
 	public static final String APPLICATION_CANNOT_BE_ADDED = "aplikacja nie dodana! Wystąpił błąd";
+	public static final String CANNOT_RECEIVE_USER = "Nie udało się pobrać użytkowników";
 }

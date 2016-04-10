@@ -19,12 +19,13 @@
 	</definition>
 	
 	<definition name="adminPanel" extends="nexusBase">
-		<put-attribute name="meta" value="/WEB-INF/tiles/nexus/metaAddApp/meta.jsp" />
+		<put-attribute name="meta" value="/WEB-INF/tiles/nexus/meta/metaAddApp.jsp" />
 		<put-attribute name="title" value="Nexus Admin Panel" />
 		<put-attribute name="body" value="/WEB-INF/domain/app/nexus/view/adminPanel.jsp" />
 	</definition>
 	
 	<definition name="appAdminPanel" extends="nexusBase">
+		<put-attribute name="meta" value="/WEB-INF/tiles/nexus/meta/metaAppConfig.jsp" />
 		<put-attribute name="title" value="Nexus Application Admin Panel" />
 		<put-attribute name="body" value="/WEB-INF/domain/app/nexus/view/appAdminPanel.jsp" />
 	</definition>

@@ -33,4 +33,10 @@ public class NexusRestService {
 		return response;
 	}
 	
+	@RequestMapping(value = "/getUsersToManageAccessToApplication", method = RequestMethod.POST)
+	public String getUsersToManageAccessToApplication(@RequestBody String json, Principal principal){
+		ApplicationDTO app = gson.fromJson(json, ApplicationDTO.class);
+		String response = gson.toJson(helper.getUsersToManageAccessToApplication(app, principal));
+		return response;
+	}
 }
