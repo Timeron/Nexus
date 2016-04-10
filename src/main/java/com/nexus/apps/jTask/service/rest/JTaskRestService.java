@@ -25,12 +25,12 @@ import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
 import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
 import com.nexus.common.dto.NexusPersonDTO;
-import com.nexus.common.service.NexusRestService;
+import com.nexus.common.service.NexusCommonRestService;
 import com.nexus.common.service.ServiceResult;
 
 @RestController
 @RequestMapping("/v1/jt")
-public class JTaskRestService extends NexusRestService{
+public class JTaskRestService extends NexusCommonRestService{
 	
 	static Logger LOG = Logger.getLogger(JTaskRestService.class);
 

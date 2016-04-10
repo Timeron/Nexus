@@ -9,4 +9,7 @@ public class ResultMessages {
 	public static final String NO_CONNECTION = "CONNECTION_ERROR";
 	public static final String CANNOT_UPDATE_TASK = "nie udało się uaktualnić taksa";
 	public static final String CANNOT_SAVE_HISTORY = "nie udało się zapisać historii";
+	
+	public static final String USER_CANNOT_BE_CONNECTED_TO_APPLICATION = "nie udało się połączyć usera z aplikacją.";
+	public static final String APPLICATION_CANNOT_BE_ADDED = "aplikacja nie dodana! Wystąpił błąd";
 }

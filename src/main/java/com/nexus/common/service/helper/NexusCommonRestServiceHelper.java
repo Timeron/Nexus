@@ -20,8 +20,8 @@ import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusUserApplicationDAO;
 
 @Component
-public class NexusRestServiceHelper {
-	static Logger LOG = Logger.getLogger(NexusRestServiceHelper.class);
+public class NexusCommonRestServiceHelper {
+	static Logger LOG = Logger.getLogger(NexusCommonRestServiceHelper.class);
 
 	@Autowired
 	NexusConfigDAO configDAO;

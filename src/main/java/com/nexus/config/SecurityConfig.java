@@ -63,6 +63,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.exceptionHandling().accessDeniedPage("/403").and().csrf()
 				.disable();
 
+		http.authorizeRequests().antMatchers("/adminPanel/**")
+				.access("hasRole('ROLE_ADMIN')").and()
+				.formLogin()
+				.failureUrl("/login?error")
+				// .loginPage("/login")
+				.usernameParameter("username").passwordParameter("password")
+				.and().logout().logoutSuccessUrl("/login?logout")
+				// and().csrf().disable()
+				.and().exceptionHandling().accessDeniedPage("/403").and()
+				.csrf().disable();
+
 	}
 
 	@Bean

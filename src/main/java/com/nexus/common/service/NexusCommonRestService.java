@@ -1,8 +1,6 @@
 package com.nexus.common.service;
 
 import java.security.Principal;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,17 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.nexus.common.dto.NexusPersonDTO;
-import com.nexus.common.service.helper.NexusRestServiceHelper;
+import com.nexus.common.service.helper.NexusCommonRestServiceHelper;
 
 @RestController
 @RequestMapping("/v1")
-public class NexusRestService {
+public class NexusCommonRestService {
 
-	static Logger LOG = Logger.getLogger(NexusRestService.class);
+	static Logger LOG = Logger.getLogger(NexusCommonRestService.class);
 
 	@Autowired
-	NexusRestServiceHelper helper;
+	NexusCommonRestServiceHelper helper;
 	
 	Gson gson = new Gson();
 	ObjectMapper objectMapper = new ObjectMapper();

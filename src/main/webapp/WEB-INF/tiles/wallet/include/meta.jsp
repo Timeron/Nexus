@@ -29,6 +29,7 @@
 <script src="<c:url value="/domain/app/Wallet/directive/typeDir.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/service/walletService.js" />"></script>
 
+<%-- <script src="<c:url value="/domain/timeronAngular/directive/commonDir.js" />"></script> --%>
 
 <link rel="stylesheet" href="<c:url value="/resources/css/wallet/wallet.css" />" />
 <link rel="stylesheet" href="<c:url value="/resources/css/wallet/chart.css" />" />

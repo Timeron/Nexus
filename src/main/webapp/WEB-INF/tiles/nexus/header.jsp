@@ -5,6 +5,6 @@
       <div class="container">
         <h1>NEXUS</h1>
         <p>Organizer.</p>
-        <p><a class="btn btn-primary btn-lg" role="button" href='./multiobserver/'>Learn more &raquo;</a></p>
+        <p><a class="btn btn-default" href="./adminPanel" role="button">Administracja &raquo;</a></p>
       </div>
     </div>
