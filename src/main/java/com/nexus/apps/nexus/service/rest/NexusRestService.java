@@ -11,8 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.nexus.apps.jTask.dto.bean.TwoListOfUsers;
 import com.nexus.apps.nexus.dto.ApplicationDTO;
+import com.nexus.apps.nexus.dto.ApplicationForUsersDTO;
 import com.nexus.apps.nexus.service.helper.NexusHelper;
+import com.nexus.common.dto.NexusPersonListDTO;
 
 @RestController
 @RequestMapping("/v1/nx")
@@ -37,6 +40,13 @@ public class NexusRestService {
 	public String getUsersToManageAccessToApplication(@RequestBody String json, Principal principal){
 		ApplicationDTO app = gson.fromJson(json, ApplicationDTO.class);
 		String response = gson.toJson(helper.getUsersToManageAccessToApplication(app, principal));
+		return response;
+	}
+	
+	@RequestMapping(value = "/saveAccessToApplication", method = RequestMethod.POST)
+	public String saveAccessToApplication(@RequestBody String json, Principal principal){
+		ApplicationForUsersDTO appUsers = gson.fromJson(json, ApplicationForUsersDTO.class);
+		String response = gson.toJson(helper.saveAccessToApplication(appUsers, principal));
 		return response;
 	}
 }

@@ -20,3 +20,10 @@ app.factory("GetUsersToManageAccessToApplication", function($resource){
 			{query: { method: "POST", isArray: false }
 	});
 });
+
+app.factory("SaveAccessToApplication", function($resource){
+	return $resource("/nexus/v1/nx/saveAccessToApplication", 
+			{}, 
+			{query: { method: "POST", isArray: false }
+	});
+});

@@ -5,16 +5,23 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.transaction.TransactionalException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonElement;
 import com.nexus.apps.jTask.dto.bean.TwoListOfUsers;
 import com.nexus.apps.nexus.bean.user.UserRights;
 import com.nexus.apps.nexus.dto.ApplicationDTO;
+import com.nexus.apps.nexus.dto.ApplicationForUsersDTO;
+import com.nexus.common.NexusApplicationsDTO;
 import com.nexus.common.dto.NexusPersonDTO;
+import com.nexus.common.dto.NexusPersonListDTO;
 import com.nexus.common.service.ResultMessages;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusApplication;
+import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusUserApplicationRef;
 import com.timeron.NexusDatabaseLibrary.dao.NexusApplicationDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
@@ -29,6 +36,7 @@ public class NexusHelper {
 	NexusUserApplicationDAO nexusUserApplicationDAO;
 	@Autowired
 	NexusPersonDAO nexusPersonDAO;
+	
 	@Autowired
 	UserRights userRights;
 
@@ -103,6 +111,49 @@ public class NexusHelper {
 		result.setObject(users);
 		result.setSuccess(true);
 		return result;
+	}
+
+	/**
+	 * Dodaj listę użytkowników do aplikacji
+	 * 
+	 * @param appUsers
+	 * @param principal
+	 * @return ServiceResult
+	 */
+	public ServiceResult saveAccessToApplication(ApplicationForUsersDTO appUsers, Principal principal) {
+		ServiceResult result = new ServiceResult();
+		result.setSuccess(true);
+		NexusUserApplicationRef userApp;
+		
+		try{
+			userRights.removeAccessToApplicationForAllUsers(nexusApplicationDAO.getById(appUsers.getApplication().getId()));
+		}catch(TransactionalException ex){
+			ex.printStackTrace();
+			result.setSuccess(false);
+			result.addMessage(ResultMessages.DATABASE_ISSUE);
+			return result;
+		}
+		
+		for (NexusPersonDTO user : appUsers.getUsers()) {
+			try {
+//				if(checkIfUserHasAccess(user, appUsers.getApplication())){
+					userApp = new NexusUserApplicationRef();
+					userApp.setApplication(nexusApplicationDAO.getById(appUsers.getApplication().getId()));
+					userApp.setTimestamp(new Date());
+					userApp.setUser(nexusPersonDAO.getById(user.getId()));
+					nexusUserApplicationDAO.save(userApp);
+//				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+				result.setSuccess(false);
+				result.addMessage(ResultMessages.USER_CANNOT_BE_CONNECTED_TO_APPLICATION);
+			}
+		}
+		return result;
+	}
+
+	private boolean checkIfUserHasAccess(NexusPersonDTO user, NexusApplicationsDTO application) {
+		return nexusUserApplicationDAO.checkIfUserHasApplication(user.getId(), application.getId());
 	}
 	
 	

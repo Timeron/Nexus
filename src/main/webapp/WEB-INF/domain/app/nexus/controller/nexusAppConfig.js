@@ -1,13 +1,15 @@
 var app = angular.module("NexusAppConfig", ['NexusService']);
 
-app.controller("NexusAppConfigCtrl", function($scope, GetUsersToManageAccessToApplication){
+app.controller("NexusAppConfigCtrl", function($scope, GetUsersToManageAccessToApplication, SaveAccessToApplication){
 	
 	$scope.users = [];
 	$scope.owners = [];
 	$scope.usersTemp = [];
 	$scope.ownersTemp = [];
+	$scope.application = {};
 	
 	$scope.getUsers = function(appId){
+		$scope.application.id = appId;
 		GetUsersToManageAccessToApplication.query({id: appId}, function(data){
 			$scope.users = data.object.users2;
 			$scope.owners = data.object.users1;
@@ -29,8 +31,8 @@ app.controller("NexusAppConfigCtrl", function($scope, GetUsersToManageAccessToAp
 	};
 	
 	$scope.saveAccess = function(){
-		SaveAccessToProject.query({projectId: $rootScope.project.id, users: $scope.ownersTemp}, function(data){
-			console.log(data.success);
+		SaveAccessToApplication.query({application: $scope.application, users: $scope.ownersTemp}, function(data){
+			console.log(data);
 		});
 	};
 	
