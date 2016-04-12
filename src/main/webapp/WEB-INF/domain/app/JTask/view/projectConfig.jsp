@@ -31,13 +31,13 @@
 			<div class="space"></div>
 			<div class="col-md-9" id="projectConfigAccess">
 				<div class="col-md-4">
-					<select multiple class="form-control" ng-repeat="user in usersTemp">
-						<option ng-dblclick="addAccess(user)">{{user.firstName}} {{user.lastName}} - {{user.nick}}</option>
+					<select multiple class="form-control">
+						<option ng-dblclick="addAccess(user)" ng-repeat="user in usersTemp">{{user.firstName}} {{user.lastName}} - {{user.nick}}</option>
 					</select>
 				</div>
 				<div class="col-md-4">
-					<select multiple class="form-control" ng-repeat="owner in ownersTemp">
-						<option ng-dblclick="removeAccess(owner)">{{owner.firstName}} {{owner.lastName}} - {{owner.nick}}</option>
+					<select multiple class="form-control">
+						<option ng-dblclick="removeAccess(owner)" ng-repeat="owner in ownersTemp">{{owner.firstName}} {{owner.lastName}} - {{owner.nick}}</option>
 					</select>
 				</div>
 				<div class="btn-group topMenu">
