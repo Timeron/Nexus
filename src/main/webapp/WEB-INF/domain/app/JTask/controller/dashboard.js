@@ -520,13 +520,15 @@ app.controller("JTaskNewTaskCtr", function($rootScope, $scope, AddNewTask, AllPr
 	};
 });
 
-app.controller("TaskController", function($rootScope, $scope, $q, Histories, Notes, AddNote, GetTask, Users, AllProjectTasks, UpdateTask, SetMainTask){
+app.controller("TaskController", function($rootScope, $scope, $q, Histories, Notes, AddNote, GetTask, Users, AllProjectTasks, UpdateTask, SetMainTask, GetSubTasks){
 	$scope.task;
 	$scope.histories;
 	$scope.notes;
+	$scope.subTasks;
 	$scope.newNote;
 	$scope.hideNotes = true;
 	$scope.hideHistory = true;
+	$scope.hideSubTasks = true;
 	$scope.test;
 	$scope.users = [];
 	
@@ -539,10 +541,11 @@ app.controller("TaskController", function($rootScope, $scope, $q, Histories, Not
 	$scope.task = getTask();
 	
 	
-	$scope.getHistory = function(task){
+	$scope.getHistory = function(taskId){
 		$scope.hideNotes = true;
 		$scope.hideHistory = false;
-		Histories.query({ id: task.id }, function(data) {
+		$scope.hideSubTasks = true;
+		Histories.query({ id: taskId }, function(data) {
 			$scope.histories = data;
 		});
 	};
@@ -578,11 +581,21 @@ app.controller("TaskController", function($rootScope, $scope, $q, Histories, Not
 		});
 	};
 	
-	$scope.getNotes = function(task){
+	$scope.getNotes = function(taskId){
 		$scope.hideNotes = false;
 		$scope.hideHistory = true;
-		Notes.query({ id: task.id }, function(data) {
-			$scope.notes = data;
+		$scope.hideSubTasks = true;
+		Notes.query({ id: taskId }, function(d) {
+			$scope.notes = d;
+		});
+	};
+	
+	$scope.getSubTasks = function(taskId){
+		$scope.hideNotes = true;
+		$scope.hideHistory = true;
+		$scope.hideSubTasks = false;
+		GetSubTasks.query({ id: taskId}, function(d){
+			$scope.subTasks = d.object;
 		});
 	};
 	
@@ -631,6 +644,9 @@ app.controller("TaskController", function($rootScope, $scope, $q, Histories, Not
 	};
 	
 	$scope.setTaskInNewWindow = function(taskId){
+		$scope.hideNotes = true;
+		$scope.hideHistory = true;
+		$scope.hideSubTasks = true;
 		GetTask.query({id: taskId}, function(data){
 			$rootScope.taskDetails = data;
 			switch($rootScope.taskDetails.taskTypeId){

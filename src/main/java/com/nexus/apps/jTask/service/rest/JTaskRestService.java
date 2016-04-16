@@ -80,6 +80,16 @@ public class JTaskRestService extends NexusCommonRestService{
 		return response;
 	}
 	
+	@RequestMapping(value = "/getSubTasks", method = RequestMethod.GET)
+	public String getSubTasks(HttpServletRequest request){
+		LOG.info("service: getSubTasks <- "+request.getParameter("id"));
+		int taskId = Integer.parseInt(request.getParameter("id"));
+		String response = gson.toJson(helper.getSubTasks(taskId));
+		response = prepareForHtml(response);
+		LOG.info("service response: getSubTasks -> "+ response);
+		return response;
+	}
+	
 	@RequestMapping(value = "/appVersion", method = RequestMethod.GET)
 	public String appVersion(HttpServletRequest request){
 		LOG.info("service: appVersion <- "+request.getParameter("name"));

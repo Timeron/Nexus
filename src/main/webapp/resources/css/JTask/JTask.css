@@ -336,6 +336,11 @@ div span .icon {
 	width: 25%;
 }
 
+.taskWindowDetailsSubTask{
+	font-weight: normal;
+	margin: 5px 0px 10px 0px;
+}
+
 .topMenu {
 	margin: 25px 0px 0px 0px;
 }

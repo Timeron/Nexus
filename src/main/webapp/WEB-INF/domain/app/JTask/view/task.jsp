@@ -181,6 +181,8 @@
 				{{taskDetails.priority}}</div>
 			<div class="taskDetailsPriority">Status:
 				{{taskDetails.statusDescription}}</div>
+			<div class="taskDetailsPriority">Id:
+				{{taskDetails.id}}</div>
 
 			<div id="taskMainWindowContent">
 				<div class="btn-group topMenu">
@@ -223,11 +225,14 @@
 				<div id="taskWindowDetails">
 					<div class="btn-group">
 						<button type="button" class="btn btn-primary btn-xs"
-							data-ng-click="getHistory(task)">Aktywność</button>
+							data-ng-click="getHistory(taskDetails.id)">Aktywność</button>
 						<button type="button" class="btn btn-primary btn-xs"
-							data-ng-click="getNotes(task)">Notatki</button>
+							data-ng-click="getNotes(taskDetails.id)">Notatki</button>
+						<button type="button" class="btn btn-primary btn-xs"
+							data-ng-click="getSubTasks(taskDetails.id)">Sub-Taski</button>
 						<!-- 								<button type="button" class="btn btn-primary btn-xs">Załączniki</button> -->
 					</div>
+<!--Histoy -->
 					<div class="taskWindowDetailsList" data-ng-hide="hideHistory">
 						<div class="detailsName">Aktywność</div>
 						<div class="taskWindowDetailsEvent"
@@ -256,8 +261,8 @@
 							</div>
 						</div>
 
-						<!-- 							<div class="taskHAttachment">Załączniki</div> -->
 					</div>
+<!-- Notes -->
 					<div class="taskWindowDetailsList" data-ng-hide="hideNotes">
 						<div class="detailsName">Notatki</div>
 						<div class="taskWindowDetailsElement"
@@ -270,10 +275,32 @@
 							</div>
 						</div>
 					</div>
-				</div>
+<!-- SUB TASK -->
+					<div class="taskWindowDetailsList col-md-12"
+						data-ng-hide="hideSubTasks">
+						<div class="detailsName">Sub Taski</div>
+						<div class="taskWindowDetailsElement"
+							data-ng-repeat="subTask in subTasks">
+							<div mark-line class="taskWindowDetailsSubTask col-md-12 border-bottom">
+								<div class="taskWindowDetailsEventName col-md-1"
+									ng-switch="{{subTask.status}}">
+									<div ng-switch-when="1" class="taskIconContainer1" title="TASK"></div>
+									<div ng-switch-when="2" class="taskIconContainer2" title="BUG"></div>
+									<div ng-switch-when="3" class="taskIconContainer3" title="IMPROVEMENT"></div>
+								</div>
+								<div class="col-md-2">{{subTask.name}}</div>
+								<div class="col-md-8">{{subTask.summary}}</div>
+								<div class="col-md-1">
+									<span mp-image='{{subTask.user.nickLogo}}'
+										title="{{subTask.user.firstName}} {{subTask.user.lastName}} - {{subTask.user.nick}}"></span>
+								</div>
+							</div>
+						</div>
+					</div>
 
+				</div>
 			</div>
-			<!-- 			<div id="taskMainWindowStatistics">???</div> -->
+
 
 		</div>
 		<div id="taskRightBar">

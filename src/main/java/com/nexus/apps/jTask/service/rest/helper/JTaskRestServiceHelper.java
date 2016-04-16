@@ -20,6 +20,7 @@ import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
 import com.nexus.apps.jTask.dto.bean.TwoListOfUsers;
 import com.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
 import com.nexus.apps.jTask.project.ProjectImpl;
+import com.nexus.apps.jTask.task.TaskImpl;
 import com.nexus.apps.wallet.constant.MessageResources;
 import com.nexus.common.dto.NexusPersonDTO;
 import com.nexus.common.service.ResultMessages;
@@ -75,6 +76,8 @@ public class JTaskRestServiceHelper {
 	
 	@Autowired
 	ProjectImpl projectImpl;
+	@Autowired
+	TaskImpl taskImpl;
 	
 	private String APP_NAME = "JTASK";
 	
@@ -536,6 +539,18 @@ public class JTaskRestServiceHelper {
 		}catch(Exception ex){
 			result.setSuccess(false);
 			ex.printStackTrace();
+		}
+		return result;
+	}
+
+	public ServiceResult getSubTasks(int taskId) {
+		ServiceResult result = new ServiceResult();
+		try{
+			List<JTaskDTO> subTasks = taskImpl.getSubTasks(taskId);
+			result.setObject(subTasks);
+		}catch(Exception ex){
+			ex.printStackTrace();
+			result.setSuccess(false);
 		}
 		return result;
 	}

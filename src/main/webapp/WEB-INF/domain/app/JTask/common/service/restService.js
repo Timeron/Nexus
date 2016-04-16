@@ -104,6 +104,15 @@ app.factory("GetTask", function($resource){
 		);
 });
 
+app.factory("GetSubTasks", function($resource){
+	return $resource("/nexus/v1/jt/getSubTasks", 
+			{}, 
+			{
+				query: { method: "GET", isArray: false }
+			}
+		);
+});
+
 app.factory("AddNewProject", function($resource){
 	return $resource("/nexus/v1/jt/addProject", 
 			{}, 

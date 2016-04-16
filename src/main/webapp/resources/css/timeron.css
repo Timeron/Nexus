@@ -1,6 +1,16 @@
 @CHARSET "UTF-8";
+.red{
+	background-color: red;
+}
+.blue{
+	background-color: blue;
+}
+
 .clickable {
 	cursor:pointer;
+}
+.float-left{
+	float: left;
 }
 .box {
 	width: 100%;
