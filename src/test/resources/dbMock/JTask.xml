@@ -12,8 +12,8 @@
 	<j_status id="5" description="done" />
 	<j_status id="6" description="closed" />
 
-	<nexus_person id="0" nick="timeron" />
-	<nexus_person id="1" nick="domyslny" />
+	<nexus_person id="1" nick="timeron" />
+	<nexus_person id="2" nick="domyslny" />
 
 	<j_project id="1" created="2015-04-10 20:16:50" description="desc test 1"
 		name="Name 1" prefix="PREF1" />
@@ -27,12 +27,26 @@
 	<j_task id="1" created="2015-07-01 22:57:05" description="testowa ..."
 		name="PREF-1" summary="testowy task z wszystkimi danymi" j_project="1"
 		j_status="2" j_task_type="2" updated="2016-03-19 13:53:56"
-		workExpected="0" idFromName="1" j_user="0" />
+		workExpected="0" idFromName="1" j_user="1" />
+
+	<j_task id="2" created="2015-07-01 22:57:05" description="testowa2 ..."
+		name="PREF-2" summary="testowy task 2 z wszystkimi danymi" j_project="1"
+		j_status="2" j_task_type="2" updated="2016-03-19 13:53:56"
+		workExpected="0" idFromName="1" j_user="1" />
 
 	<j_Note id="1" content="Testowa notka" created="2015-07-03 13:30:42"
 		j_task="1" />
 
 	<j_history id="1" j_status="4" j_task="1" created="2015-07-03 13:30:42" />
 	<j_history id="2" j_note="1" j_task="1" created="2015-07-03 13:30:42" />
+
+	<!-- <nexus_person id="1" first_name="Milosz" last_name="Poznanski" -->
+	<!-- nick="timeron" nickLogo="avatar" /> -->
+
+	<j_user_project_ref id="1" timestamp="2016-03-25 00:00:00"
+		j_project="1" nexus_user="1" />
+	<j_user_project_ref id="2" timestamp="2016-03-25 00:00:00"
+		j_project="2" nexus_user="1" />
+
 
 </dataset>

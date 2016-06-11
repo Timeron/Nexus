@@ -202,11 +202,11 @@ public class JTaskRestService extends NexusCommonRestService{
 	}	
 	
 	@RequestMapping(value = "/addNote", method = RequestMethod.POST)
-	public String newNote(@RequestBody String json){
+	public String newNote(@RequestBody String json, Principal principal){
 		LOG.info("service: newNote <- "+json);
 		ServiceResult result = new ServiceResult();
 		JNoteDTO jNoteDTO = gson.fromJson(json, JNoteDTO.class);
-		result = helper.saveNote(jNoteDTO, result);
+		result = helper.saveNote(jNoteDTO, principal.getName(), result);
 		String response = prepareForHtml(gson.toJson(result));
 		LOG.info("service response: newNote -> "+response);
 		return response;

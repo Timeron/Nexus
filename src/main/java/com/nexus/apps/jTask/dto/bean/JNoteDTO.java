@@ -12,6 +12,10 @@ public class JNoteDTO {
 	private Date created;
 	private int taskId;
 	
+	public JNoteDTO(){
+		
+	}
+	
 	public JNoteDTO(JNote jNote) {
 		this.id = jNote.getId();
 		this.name = jNote.getName();

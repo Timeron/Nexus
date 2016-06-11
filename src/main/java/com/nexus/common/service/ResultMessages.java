@@ -14,4 +14,6 @@ public class ResultMessages {
 	public static final String APPLICATION_CANNOT_BE_ADDED = "aplikacja nie dodana! Wystąpił błąd";
 	public static final String CANNOT_RECEIVE_USER = "Nie udało się pobrać użytkowników";
 	public static final String DATABASE_ISSUE = "Błąd bazy danych";
+	public static final String PROJECT_NOT_FOUND = "Nie znalezniono projektu";
+	public static final String TASK_CANNOT_BE_FOUND_TASK = "Task nie istnieje w bazie";
 }

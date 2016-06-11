@@ -2,6 +2,7 @@ package com.nexus.apps.jTask.service.rest.helper;
 
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonElement;
 import com.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.nexus.apps.jTask.dto.bean.JNoteDTO;
@@ -85,38 +85,52 @@ public class JTaskRestServiceHelper {
 	
 	public List<JProjectDTO> getProjectList(Principal principal){
 		LOG.info("ServiceHelper coled: getProjectList");
-		List<JProjectDTO> projectListDTO = projectImpl.getUserProjectsWithTask(nexusPersonDAO.getByNick(principal.getName()));
+		List<JProjectDTO> projectListDTO;
+		if(principal != null){
+			projectListDTO = projectImpl.getUserProjectsWithTask(nexusPersonDAO.getByNick(principal.getName()));
+		}else{
+			projectListDTO = Collections.emptyList();
+		}
 		return projectListDTO;
 	}
 
 	public ServiceResult addNewProject(JProjectDTO jProjectDTO, ServiceResult result, Principal principal) {
 		LOG.info("ServiceHelper coled: addNewProject");
 		if(jProjectDAO.getByName(jProjectDTO.getName()) == null){
-			NexusPerson user = nexusPersonDAO.getByNick(principal.getName());
-			
-			JProject jProject = new JProject();
-			jProject.setDescription(jProjectDTO.getDescription());
-			jProject.setUser(user);
-			jProject.setName(jProjectDTO.getName());
-			jProject.setPrefix(jProjectDTO.getPrefix());
-			jProject.setCreated(new Date());
-			jProjectDAO.save(jProject);
-			
-			jProject = jProjectDAO.getByName(jProjectDTO.getName());
-			
-			JUserProject userProject = new JUserProject();
-			userProject.setUser(user);
-			userProject.setProject(jProject);
-			userProject.setTimestamp(new Date());
-			jUserProjectDAO.save(userProject);
-			
-			result.setSuccess(true);
-			result.addMessage("Project added: "+jProject.getName());
-			result.setObject(new JProjectDTO(jProject));
-			LOG.info(result.getMessages());
+			if(principal != null){
+				NexusPerson user = nexusPersonDAO.getByNick(principal.getName());
+				if(user != null){
+				JProject jProject = new JProject();
+				jProject.setDescription(jProjectDTO.getDescription());
+				jProject.setUser(user);
+				jProject.setName(jProjectDTO.getName());
+				jProject.setPrefix(jProjectDTO.getPrefix());
+				jProject.setCreated(new Date());
+				jProjectDAO.save(jProject);
+				
+				jProject = jProjectDAO.getByName(jProjectDTO.getName());
+				
+				JUserProject userProject = new JUserProject();
+				userProject.setUser(user);
+				userProject.setProject(jProject);
+				userProject.setTimestamp(new Date());
+				jUserProjectDAO.save(userProject);
+				
+				result.setSuccess(true);
+				result.addMessage("Project added: "+jProject.getName());
+				result.setObject(new JProjectDTO(jProject));
+				LOG.info(result.getMessages());
+				}else{
+					result.addMessage(ResultMessages.PERSON_NOT_EXIST);
+					result.setSuccess(false);
+				}
+			}else{
+				result.addMessage(ResultMessages.PERSON_NOT_DETECTED);
+				result.setSuccess(false);
+			}
 		}else{
 			result.setSuccess(false);
-			result.addMessage("Error: Project not added");
+			result.addMessage(ResultMessages.PROJECT_NOT_FOUND);
 			LOG.warn(result.getMessages());
 		}
 		return result;
@@ -135,7 +149,7 @@ public class JTaskRestServiceHelper {
 		jTask.setStatus(jStatusDAO.getById(2)); //2 jest domyślne dla nowych tasków
 		jTask.setSummary(jTaskDTO.getSummary());
 		jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
-		if(principal.getName() != null){
+		if(principal != null){
 			NexusPerson person = nexusPersonDAO.getByNick(principal.getName());
 			if(person != null){
 				jTask.setUser(person);
@@ -208,13 +222,23 @@ public class JTaskRestServiceHelper {
 
 	public JTaskDTO getTask(int jTaskId) {
 		LOG.info("ServiceHelper coled: getTask");
-		JTaskDTO jTaskDTO = new JTaskDTO(jTaskDAO.getById(jTaskId));
-		return jTaskDTO;
+		JTask jTask = jTaskDAO.getById(jTaskId);
+		if(jTask != null){
+			JTaskDTO jTaskDTO = new JTaskDTO(jTask);
+			return jTaskDTO;
+		}else{
+			return null;
+		}
 	}
 	
 	public String getProjectPrefix(int id){
 		LOG.info("ServiceHelper coled: getProjectPrefix");
-		return jProjectDAO.getById(id).getPrefix();
+		JProject project = jProjectDAO.getById(id);
+		if(project != null){
+			return jProjectDAO.getById(id).getPrefix();
+		}else{
+			return null;
+		}
 	}
 
 	public ServiceResult updateTask(JTaskDTO jTaskDTO, ServiceResult serviceResult) {
@@ -223,95 +247,100 @@ public class JTaskRestServiceHelper {
 		serviceResult.setSuccess(true);
 		Date now = new Date();
 		JTask jTask = jTaskDAO.getById(jTaskDTO.getId());
-		if(jTaskDTO.getEndDateLong() != 0){
-			jTaskDTO.setEndDate(new Date(jTaskDTO.getEndDateLong()));
-		}
-		
-		if(jTaskDTO.getStatus()!=null && jTask.getStatus().getId()!=jTaskDTO.getStatus()){
-			jTask.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
-			updated = true;
-			JHistory history = new JHistory();
-			history.setCreated(now);
-			history.setTask(jTask);
-			history.setMessage(jTaskDTO.getUpdateMessage());
-			if(jTaskDTO.getUpdateMessageStatus() != null){
+		if(jTask != null){
+			if(jTaskDTO.getEndDateLong() != 0){
+				jTaskDTO.setEndDate(new Date(jTaskDTO.getEndDateLong()));
+			}
+			
+			if(jTaskDTO.getStatus()!=null && jTask.getStatus().getId()!=jTaskDTO.getStatus()){
+				jTask.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
+				updated = true;
+				JHistory history = new JHistory();
+				history.setCreated(now);
+				history.setTask(jTask);
 				history.setMessage(jTaskDTO.getUpdateMessage());
-				history.setStatus(jStatusDAO.getById(jTaskDTO.getUpdateMessageStatus()));
-			}else{
-				history.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
+				if(jTaskDTO.getUpdateMessageStatus() != null){
+					history.setMessage(jTaskDTO.getUpdateMessage());
+					history.setStatus(jStatusDAO.getById(jTaskDTO.getUpdateMessageStatus()));
+				}else{
+					history.setStatus(jStatusDAO.getById(jTaskDTO.getStatus()));
+				}
+				jHistoryDAO.save(history);
 			}
-			jHistoryDAO.save(history);
-		}
-		if(!jTask.getDescription().equals(jTaskDTO.getDescription())){
-			updated = true;
-			JHistory history = new JHistory();
-			history.setCreated(now);
-			history.setTask(jTask);
-			history.setMessage("Zmieniono szczegóły: "+jTask.getDescription()+" -> "+jTaskDTO.getDescription());
-			jHistoryDAO.save(history);
-			jTask.setDescription(jTaskDTO.getDescription());
-		}
-		if(!jTask.getSummary().equals(jTaskDTO.getSummary())){
-			updated = true;
-			JHistory history = new JHistory();
-			history.setCreated(now);
-			history.setTask(jTask);
-			history.setMessage("Zmieniono opis: "+jTask.getSummary()+" -> "+jTaskDTO.getSummary());
-			jHistoryDAO.save(history);
-			jTask.setSummary(jTaskDTO.getSummary());
-		}
-		if(jTaskDTO.getEndDate()!=null && jTask.getEndDate().getTime() != jTaskDTO.getEndDate().getTime()){
-			updated = true;
-			JHistory history = new JHistory();
-			history.setCreated(now);
-			history.setTask(jTask);
-			history.setMessage("Zmieniono date zakończenia: "+jTask.getEndDate()+" -> "+jTaskDTO.getEndDate());
-			jHistoryDAO.save(history);
-			jTask.setEndDate(jTaskDTO.getEndDate());
-		}
-		if(jTask.getWorkExpected()!=jTaskDTO.getWorkExpected()){
-			updated = true;
-			JHistory history = new JHistory();
-			history.setCreated(now);
-			history.setTask(jTask);
-			history.setMessage("Zmieniono przewidywany czas na wykonanie zadania: "+jTask.getWorkExpected()+" -> "+jTaskDTO.getWorkExpected());
-			jHistoryDAO.save(history);
-			jTask.setWorkExpected(jTaskDTO.getWorkExpected());
-		}
-		if(jTaskDTO.getName()!=null && jTask.getName()!=jTaskDTO.getName()){
-			//TODO
-		}
-		if(jTask.getPriority()!=jTaskDTO.getPriority()){
-			updated = true;
-			JHistory history = new JHistory();
-			history.setCreated(now);
-			history.setTask(jTask);
-			history.setMessage("Zmieniono piorytet: "+jTask.getPriority()+" -> "+jTaskDTO.getPriority());
-			jHistoryDAO.save(history);
-			jTask.setPriority(jTaskDTO.getPriority());
-		}
-		if(jTask.getTaskType().getId()!=jTaskDTO.getTaskTypeId()){
-			updated = true;
-			JHistory history = new JHistory();
-			history.setCreated(now);
-			history.setTask(jTask);
-			JTaskType jTaskType = jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId());
-			history.setMessage("Zmieniono piorytet: "+jTask.getTaskType().getDescription()+" -> "+jTaskType.getDescription());
-			jHistoryDAO.save(history);
-			jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
-		}
-		
-		if(updated){
-			jTask.setUpdated(now);
-			try{
-				jTaskDAO.update(jTask);
-			}catch(Exception ex){
-				serviceResult.setSuccess(false);
+			if(!jTask.getDescription().equals(jTaskDTO.getDescription())){
+				updated = true;
+				JHistory history = new JHistory();
+				history.setCreated(now);
+				history.setTask(jTask);
+				history.setMessage("Zmieniono szczegóły: "+jTask.getDescription()+" -> "+jTaskDTO.getDescription());
+				jHistoryDAO.save(history);
+				jTask.setDescription(jTaskDTO.getDescription());
 			}
+			if(!jTask.getSummary().equals(jTaskDTO.getSummary())){
+				updated = true;
+				JHistory history = new JHistory();
+				history.setCreated(now);
+				history.setTask(jTask);
+				history.setMessage("Zmieniono opis: "+jTask.getSummary()+" -> "+jTaskDTO.getSummary());
+				jHistoryDAO.save(history);
+				jTask.setSummary(jTaskDTO.getSummary());
+			}
+			if(jTaskDTO.getEndDate()!=null && jTask.getEndDate().getTime() != jTaskDTO.getEndDate().getTime()){
+				updated = true;
+				JHistory history = new JHistory();
+				history.setCreated(now);
+				history.setTask(jTask);
+				history.setMessage("Zmieniono date zakończenia: "+jTask.getEndDate()+" -> "+jTaskDTO.getEndDate());
+				jHistoryDAO.save(history);
+				jTask.setEndDate(jTaskDTO.getEndDate());
+			}
+			if(jTask.getWorkExpected()!=jTaskDTO.getWorkExpected()){
+				updated = true;
+				JHistory history = new JHistory();
+				history.setCreated(now);
+				history.setTask(jTask);
+				history.setMessage("Zmieniono przewidywany czas na wykonanie zadania: "+jTask.getWorkExpected()+" -> "+jTaskDTO.getWorkExpected());
+				jHistoryDAO.save(history);
+				jTask.setWorkExpected(jTaskDTO.getWorkExpected());
+			}
+			if(jTaskDTO.getName()!=null && jTask.getName()!=jTaskDTO.getName()){
+				//TODO
+			}
+			if(jTask.getPriority()!=jTaskDTO.getPriority()){
+				updated = true;
+				JHistory history = new JHistory();
+				history.setCreated(now);
+				history.setTask(jTask);
+				history.setMessage("Zmieniono piorytet: "+jTask.getPriority()+" -> "+jTaskDTO.getPriority());
+				jHistoryDAO.save(history);
+				jTask.setPriority(jTaskDTO.getPriority());
+			}
+			if(jTask.getTaskType().getId()!=jTaskDTO.getTaskTypeId()){
+				updated = true;
+				JHistory history = new JHistory();
+				history.setCreated(now);
+				history.setTask(jTask);
+				JTaskType jTaskType = jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId());
+				history.setMessage("Zmieniono piorytet: "+jTask.getTaskType().getDescription()+" -> "+jTaskType.getDescription());
+				jHistoryDAO.save(history);
+				jTask.setTaskType(jTaskTypeDAO.getById(jTaskDTO.getTaskTypeId()));
+			}
+			
+			if(updated){
+				jTask.setUpdated(now);
+				try{
+					jTaskDAO.update(jTask);
+				}catch(Exception ex){
+					serviceResult.setSuccess(false);
+				}
+			}
+			
+			JTaskDTO dto = new JTaskDTO(jTaskDAO.getById(jTask.getId()));
+			serviceResult.setObject(dto);
+		}else{
+			serviceResult.setSuccess(false);
+			serviceResult.addMessage(ResultMessages.TASK_CANNOT_BE_FOUND_TASK);
 		}
-		
-		JTaskDTO dto = new JTaskDTO(jTaskDAO.getById(jTask.getId()));
-		serviceResult.setObject(dto);
 		return serviceResult;
 	}
 	
@@ -348,14 +377,23 @@ public class JTaskRestServiceHelper {
 		return dtos;
 	}
 	
-	public ServiceResult saveNote(JNoteDTO jNoteDTO, ServiceResult result) {
+	public ServiceResult saveNote(JNoteDTO jNoteDTO, String user, ServiceResult result) {
 		LOG.info("ServiceHelper coled: saveNote");
-		JNote entity = new JNote();
-		entity.setCreated(new Date());
-		entity.setTask(jTaskDAO.getById(jNoteDTO.getTaskId()));
-		entity.setContent(jNoteDTO.getContent());
-		entity.setHistory(buildHistory(entity, jNoteDTO.getTaskId()));
-		result.setSuccess(jNoteDAO.save(entity));
+		JTask task = jTaskDAO.getById(jNoteDTO.getTaskId());
+		if(task != null){
+			JNote entity = new JNote();
+			entity.setCreated(new Date());
+			entity.setTask(task);
+			entity.setContent(jNoteDTO.getContent());
+			entity.setName(jNoteDTO.getName());
+			entity.setHistory(buildHistory(entity, jNoteDTO.getTaskId()));
+			entity.setUser(nexusPersonDAO.getByNick(user));
+			result.setSuccess(jNoteDAO.save(entity));
+			result.setSuccess(true);
+		}else{
+			result.setSuccess(false);
+			result.addMessage(ResultMessages.TASK_CANNOT_BE_FOUND_TASK);
+		}
 		return result;
 	}
 	
@@ -387,8 +425,9 @@ public class JTaskRestServiceHelper {
 	public NexusVersionDTO getAppVersion(String appName) {
 		LOG.info("ServiceHelper coled: getAppVersion");
 		NexusVersion nexusVersion = nexusVersionDAO.getByName(appName);
-		NexusVersionDTO nexusVersionsDTO = new NexusVersionDTO();
+		NexusVersionDTO nexusVersionsDTO = null;
 		if(nexusVersion != null){
+			nexusVersionsDTO = new NexusVersionDTO();
 			nexusVersionsDTO.setApp(nexusVersion.getApp());
 			nexusVersionsDTO.setComment(nexusVersion.getComment());
 			nexusVersionsDTO.setId(nexusVersion.getId());
@@ -454,14 +493,19 @@ public class JTaskRestServiceHelper {
 		LOG.info("ServiceHelper coled: setMainTask");
 		JTask task = jTaskDAO.getById(dto.getTaskId());
 		JTask mainTask = jTaskDAO.getById(dto.getMainTaskId());
-		
-		task.setMainTask(mainTask);
-		
-		jTaskDAO.update(task);
-		task = jTaskDAO.getById(dto.getTaskId());
-		
-		result.addMessage(MessageResources.OPERATION_SUCCESS);
-		result.setObject(new JTaskDTO(task));
+		if(task != null && mainTask != null){
+			task.setMainTask(mainTask);
+			
+			jTaskDAO.update(task);
+			task = jTaskDAO.getById(dto.getTaskId());
+			
+			result.setSuccess(true);
+			result.addMessage(MessageResources.OPERATION_SUCCESS);
+			result.setObject(new JTaskDTO(task));
+		}else{
+			result.setSuccess(false);
+			result.addMessage(ResultMessages.TASK_CANNOT_BE_FOUND_TASK);
+		}
 		return result;
 	}
 	

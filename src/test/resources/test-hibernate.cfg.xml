@@ -8,8 +8,8 @@
 		<mapping-file>orm.xml</mapping-file>
 
 		<!-- Add list of fully qualified entity classes here -->
-		<class>com.timeron.NexusDatabaseLibrary.Entity.ContactEvent</class>
-		<class>com.timeron.NexusDatabaseLibrary.Entity.Fuel</class>
+    	<class>com.timeron.NexusDatabaseLibrary.Entity.ContactEvent</class>
+    	<class>com.timeron.NexusDatabaseLibrary.Entity.Fuel</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JHistory</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JNote</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JProject</class>
@@ -17,7 +17,9 @@
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JStatus</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JTask</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.JTaskType</class>
-		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusApplications</class>
+		<class>com.timeron.NexusDatabaseLibrary.Entity.JUserProject</class>
+		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusApplication</class>
+		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusUserApplicationRef</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusConfig</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusPerson</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.NexusUser</class>
