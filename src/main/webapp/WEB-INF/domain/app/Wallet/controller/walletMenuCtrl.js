@@ -252,6 +252,8 @@ app
 						name : "glyphicon-grain"
 					}, {
 						name : "glyphicon-sunglasses"
+					}, {
+						name : "glyphicons-sunbath"
 					} ];
 					$scope.addIconToTypeHide = true;
 
