@@ -1,4 +1,4 @@
-package com.nexus.apps.jTask.service.rest.helper;
+package com.nexus.apps.jTask.rest.helper;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -139,7 +139,7 @@ public class JTaskRestServiceHelper {
 	public ServiceResult addNewTask(JTaskDTO jTaskDTO, ServiceResult result, Principal principal) {
 		LOG.info("ServiceHelper coled: addNewTask");
 		JProject project = jProjectDAO.getById(jTaskDTO.getProjectId());
-		String nextIdName = getNextName(jTaskDAO.getLastName(project), project.getPrefix());
+		int nextIdName = getNextName(jTaskDAO.getLastName(project), project.getPrefix());
 		JTask jTask = new JTask();
 		jTask.setCreated(new Date());
 		jTask.setUpdated(new Date());
@@ -163,7 +163,8 @@ public class JTaskRestServiceHelper {
 			result.addMessage(ResultMessages.PERSON_NOT_DETECTED);
 			return result;
 		}
-		jTask.setName(nextIdName);
+		jTask.setName(project.getPrefix()+"-"+nextIdName);
+		jTask.setIdFromName(nextIdName);
 		
 		if(jTaskDTO.getEndDateLong() != 0){
 			jTask.setEndDate(new Date(jTaskDTO.getEndDateLong()));	
@@ -397,7 +398,7 @@ public class JTaskRestServiceHelper {
 		return result;
 	}
 	
-	public String getNextName(JTask jTask, String prefix) {
+	public int getNextName(JTask jTask, String prefix) {
 		LOG.info("ServiceHelper coled: getNextName");
 		if(jTask != null){
 			if(jTask.getIdFromName() == 0){
@@ -408,9 +409,9 @@ public class JTaskRestServiceHelper {
 			}
 			int id = jTask.getIdFromName();
 			id++;
-			return prefix+"-"+id;
+			return id;
 		}else{
-			return prefix+"-1";
+			return 1;
 		}
 	}
 

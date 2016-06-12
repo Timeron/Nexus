@@ -1,4 +1,4 @@
-package com.nexus.apps.jTask.service.rest;
+package com.nexus.apps.jTask.rest;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -23,7 +23,7 @@ import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
-import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
+import com.nexus.apps.jTask.rest.helper.JTaskRestServiceHelper;
 import com.nexus.common.dto.NexusPersonDTO;
 import com.nexus.common.service.NexusCommonRestService;
 import com.nexus.common.service.ServiceResult;
