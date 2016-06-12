@@ -2,8 +2,8 @@ package com.nexus.apps.jTask.dto.bean;
 
 public class MainTaskDTO {
 
-	private int taskId;
-	private int mainTaskId;
+	private int taskId = 0;
+	private int mainTaskId = 0;
 	
 	public int getTaskId() {
 		return taskId;

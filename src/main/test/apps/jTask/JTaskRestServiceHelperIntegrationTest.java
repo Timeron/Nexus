@@ -27,7 +27,8 @@ import com.nexus.apps.jTask.dto.bean.JProjectDTO;
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
-import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
+import com.nexus.apps.jTask.rest.helper.JTaskRestServiceHelper;
+import com.nexus.apps.jTask.service.JProjectService;
 import com.nexus.common.dto.NexusPersonDTO;
 import com.nexus.common.service.ResultMessages;
 import com.nexus.common.service.ServiceResult;
@@ -58,6 +59,8 @@ public class JTaskRestServiceHelperIntegrationTest {
 	NexusVersionDAO nexusVersionDAO;
 	@Autowired
 	JTaskRestServiceHelper testClass;
+	@Autowired
+	JProjectService jProjectService;
 
 	private Principal principal = new Principal() {
 
@@ -77,7 +80,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 
 	@Test
 	public void getProjectList() {
-		System.out.println("-> TEST: getProjectList");
 		List<JProjectDTO> result = testClass.getProjectList(principal);
 		assertNotNull(result);
 		assertEquals(2, result.size());
@@ -85,7 +87,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void getProjectList_withoutUserInSession() {
-		System.out.println("-> TEST: getProjectList");
 		List<JProjectDTO> result = testClass.getProjectList(null);
 		assertNotNull(result);
 		assertEquals(0, result.size());
@@ -93,7 +94,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void getProjectList_forNotExistingUser() {
-		System.out.println("-> TEST: getProjectList");
 		List<JProjectDTO> result = testClass.getProjectList(dummyPrincipal);
 		assertNotNull(result);
 		assertEquals(0, result.size());
@@ -101,7 +101,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 
 	@Test
 	public void addNewProject() {
-		System.out.println("-> TEST: addNewProject");
 		JProjectDTO jProjectDTO = new JProjectDTO();
 		jProjectDTO.setDescription("testDescription");
 		jProjectDTO.setName("testName");
@@ -128,7 +127,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void addNewProject_withoutUserInSession() {
-		System.out.println("-> TEST: addNewProject");
 		JProjectDTO jProjectDTO = new JProjectDTO();
 		jProjectDTO.setDescription("testDescription");
 		jProjectDTO.setName("testName");
@@ -150,7 +148,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void addNewProject_forNotExistingUser() {
-		System.out.println("-> TEST: addNewProject");
 		JProjectDTO jProjectDTO = new JProjectDTO();
 		jProjectDTO.setDescription("testDescription");
 		jProjectDTO.setName("testName");
@@ -175,18 +172,19 @@ public class JTaskRestServiceHelperIntegrationTest {
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDto = createTaskDto();
 		
-		assertEquals(2, testClass.getTaskList().size());
+		assertEquals(3, testClass.getTaskList().size());
 		
 		result = testClass.addNewTask(jTaskDto, result, principal);
 		
 		assertTrue(result.isSuccess());
 		assertEquals(0, result.getMessages().size());
-		assertEquals(3, testClass.getTaskList().size());
-		JTaskDTO jTaskResult = testClass.getTaskList().get(2);
+		assertEquals(4, testClass.getTaskList().size());
+		//pobieraj zawsze ostatnio dodany task
+		JTaskDTO jTaskResult = testClass.getTaskList().get(3);
 		assertEquals("description", jTaskResult.getDescription());
-		assertEquals("PREF2-1", jTaskResult.getName());
+		assertEquals("PREF2-2", jTaskResult.getName());
 		assertNotNull(jTaskResult.getEndDateLong());
-		assertEquals(3, jTaskResult.getId());
+		assertEquals(4, jTaskResult.getId());
 		assertEquals("PREF-1", jTaskResult.getMainTaskName());
 		assertEquals("to do", jTaskResult.getStatusDescription());
 		assertNull(jTaskResult.getUpdateMessage());
@@ -201,7 +199,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 		assertNotNull(jTaskResult.getUpdated());
 		assertNull(jTaskResult.getUpdateMessageStatus());
 		assertEquals("timeron", jTaskResult.getUser().getNick());
-		
 	}
 	
 	@Test
@@ -209,13 +206,13 @@ public class JTaskRestServiceHelperIntegrationTest {
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDto = createTaskDto();
 		
-		assertEquals(2, testClass.getTaskList().size());
+		assertEquals(3, testClass.getTaskList().size());
 		
 		result = testClass.addNewTask(jTaskDto, result, null);
 		
 		assertFalse(result.isSuccess());
 		assertEquals(1, result.getMessages().size());
-		assertEquals(2, testClass.getTaskList().size());
+		assertEquals(3, testClass.getTaskList().size());
 		assertEquals(ResultMessages.PERSON_NOT_DETECTED, result.getMessages().get(0));
 	}
 	
@@ -224,13 +221,13 @@ public class JTaskRestServiceHelperIntegrationTest {
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDto = createTaskDto();
 		
-		assertEquals(2, testClass.getTaskList().size());
+		assertEquals(3, testClass.getTaskList().size());
 		
 		result = testClass.addNewTask(jTaskDto, result, dummyPrincipal);
 		
 		assertFalse(result.isSuccess());
 		assertEquals(1, result.getMessages().size());
-		assertEquals(2, testClass.getTaskList().size());
+		assertEquals(3, testClass.getTaskList().size());
 		assertEquals(ResultMessages.PERSON_NOT_EXIST, result.getMessages().get(0));
 	}
 
@@ -255,7 +252,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 
 	@Test
 	public void getProjectTasksList() {
-		System.out.println("-> TEST: getProjectTasksList");
 		List<JTaskDTO> tasks = testClass.getProjectTasksList(1);
 		
 		assertNotNull(tasks);
@@ -267,7 +263,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void getProjectTasksList_dummyProject() {
-		System.out.println("-> TEST: getProjectTasksList");
 		List<JTaskDTO> tasks = testClass.getProjectTasksList(999);
 		assertNotNull(tasks);
 		assertFalse(tasks.size() > 0 ? true : false);
@@ -275,16 +270,14 @@ public class JTaskRestServiceHelperIntegrationTest {
 
 	@Test
 	public void getTaskList() {
-		System.out.println("-> TEST: getTaskList");
 		List<JTaskDTO> tasks = testClass.getTaskList();
 		assertNotNull(tasks);
 		assertTrue(tasks.size() > 0 ? true : false);
-		assertEquals(2, tasks.size());
+		assertEquals(3, tasks.size());
 	}
 
 	@Test
 	public void getTask() {
-		System.out.println("-> TEST: getTask");
 		JTaskDTO task = testClass.getTask(1);
 		assertNotNull(task);
 		assertEquals("testowy task z wszystkimi danymi", task.getSummary());
@@ -292,28 +285,24 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void getTask_dummyTask() {
-		System.out.println("-> TEST: getTask");
 		JTaskDTO task = testClass.getTask(999);
 		assertNull(task);
 	}
 	
 	@Test
 	public void getProjectPrefix() {
-		System.out.println("-> TEST: getProjectPrefix");
 		String prefix = testClass.getProjectPrefix(1);
 		assertEquals("PREF1", prefix);
 	}
 
 	@Test
 	public void getProjectPrefix_dummyProject() {
-		System.out.println("-> TEST: getProjectPrefix");
 		String prefix = testClass.getProjectPrefix(999);
 		assertNull(prefix);
 	}
 	
 	@Test
 	public void updateTask() {
-		System.out.println("-> TEST: updateTask");
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDTO = testClass.getTask(1);
 		String desc = "Nowy desc";
@@ -329,7 +318,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void updateTask_dummyTask() {
-		System.out.println("-> TEST: updateTask");
 		ServiceResult result = new ServiceResult();
 		JTaskDTO jTaskDTO = testClass.getTask(1);
 		String desc = "Nowy desc";
@@ -374,7 +362,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void saveNote() {
-		System.out.println("-> TEST: saveNote");
 		ServiceResult result = new ServiceResult();
 		JNoteDTO note = new JNoteDTO();
 		note.setContent("content");
@@ -403,7 +390,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void saveNote_dummyTask() {
-		System.out.println("-> TEST: saveNote");
 		ServiceResult result = new ServiceResult();
 		JNoteDTO note = new JNoteDTO();
 		note.setContent("content");
@@ -423,40 +409,37 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void getNextName() {
-		String nextName = testClass.getNextName(jTaskDAO.getById(1), "PREF1");
-		assertEquals("PREF1-2", nextName);
+		int nextName = testClass.getNextName(jTaskDAO.getById(1), "PREF1");
+		assertEquals(2, nextName);
 	}
 	
 	@Test
 	public void getNextName_dummyTask() {
 		String pref = "PREF1";
-		String nextName = testClass.getNextName(jTaskDAO.getById(999), pref);
-		assertEquals(pref+"-1", nextName);
+		int nextName = testClass.getNextName(jTaskDAO.getById(999), pref);
+		assertEquals(1, nextName);
 	}
 	
 	@Test
 	public void getNextName_NoTask() {
-		String nextName = testClass.getNextName(null, "TEST");
-		assertEquals("TEST-1", nextName);
+		int nextName = testClass.getNextName(null, "TEST");
+		assertEquals(1, nextName);
 	}
 
 	@Test
 	public void getAppVersion() {
-		System.out.println("-> TEST: getAppVersion");
 		NexusVersionDTO version = testClass.getAppVersion("Nexus");
 		assertEquals("1.0.0", version.getVersion());
 	}
 	
 	@Test
 	public void getAppVersion_dummyApp() {
-		System.out.println("-> TEST: getAppVersion");
 		NexusVersionDTO version = testClass.getAppVersion("Dummy");
 		assertNull(version);
 	}
 	
 	@Test
 	public void getAllUsers() {
-		System.out.println("-> TEST: getAllUsers");
 		List<NexusPersonDTO> users = testClass.getAllUsers();
 		assertNotNull(users);
 		assertTrue(users.size() > 0 ? true : false);
@@ -465,7 +448,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void assignTaskToUser() {
-		System.out.println("-> TEST: assignTaskToUser");
 		ServiceResult result = new ServiceResult();
 		AssignUserTaskDTO assignUserTaskDTO = new AssignUserTaskDTO();
 		assignUserTaskDTO.setTaskId(1);
@@ -481,7 +463,6 @@ public class JTaskRestServiceHelperIntegrationTest {
 	
 	@Test
 	public void assignTaskToUser_noUser() {
-		System.out.println("-> TEST: assignTaskToUser");
 		ServiceResult result = new ServiceResult();
 		AssignUserTaskDTO assignUserTaskDTO = new AssignUserTaskDTO();
 		assignUserTaskDTO.setTaskId(1);
@@ -495,19 +476,71 @@ public class JTaskRestServiceHelperIntegrationTest {
 
 	@Test
 	public void setMainTask() {
-		System.out.println("-> TEST: setMainTask");
 		ServiceResult result = new ServiceResult();
 		MainTaskDTO jMainTask = new MainTaskDTO();
 		jMainTask.setMainTaskId(1);
 		jMainTask.setTaskId(2);
 		
 		assertNull(jTaskDAO.getById(2).getMainTask());
+		assertEquals(1, jProjectService.getProjectByTaskId(1).getId());
+		assertEquals(1, jProjectService.getProjectByTaskId(2).getId());
 		
 		result = testClass.setMainTask(jMainTask, result);
 		
 		assertTrue(result.isSuccess());
 		assertNotNull(jTaskDAO.getById(2).getMainTask());
 		assertEquals(new Integer(1), jTaskDAO.getById(2).getMainTask().getId());
+	}
+	
+	@Test
+	public void setMainTask_differentProjects() {
+		ServiceResult result = new ServiceResult();
+		MainTaskDTO jMainTask = new MainTaskDTO();
+		jMainTask.setMainTaskId(1);
+		jMainTask.setTaskId(3);
+		
+		assertNull(jTaskDAO.getById(2).getMainTask());
+		assertEquals(1, jProjectService.getProjectByTaskId(1).getId());
+		assertEquals(2, jProjectService.getProjectByTaskId(3).getId());
+		
+		result = testClass.setMainTask(jMainTask, result);
+		
+		assertNull(jTaskDAO.getById(2).getMainTask());
+		assertFalse(result.isSuccess());
+		assertEquals(1, result.getMessages().size());
+		assertEquals(ResultMessages.PROJECTS_ARE_DIFFERENT, result.getMessages().get(0));
+	}
+	
+	@Test
+	public void setMainTask_noMainTask() {
+		ServiceResult result = new ServiceResult();
+		MainTaskDTO jMainTask = new MainTaskDTO();
+		jMainTask.setTaskId(2);
+		
+		assertNull(jTaskDAO.getById(2).getMainTask());
+		assertEquals(1, jProjectService.getProjectByTaskId(1).getId());
+		assertEquals(1, jProjectService.getProjectByTaskId(2).getId());
+		
+		result = testClass.setMainTask(jMainTask, result);
+		
+		assertNull(jTaskDAO.getById(2).getMainTask());
+		assertFalse(result.isSuccess());
+		assertEquals(1, result.getMessages().size());
+		assertEquals(ResultMessages.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
+	}
+	
+	@Test
+	public void setMainTask_noTask() {
+		ServiceResult result = new ServiceResult();
+		MainTaskDTO jMainTask = new MainTaskDTO();
+		jMainTask.setMainTaskId(1);
+		
+		result = testClass.setMainTask(jMainTask, result);
+		
+		assertNull(jTaskDAO.getById(2).getMainTask());
+		assertFalse(result.isSuccess());
+		assertEquals(1, result.getMessages().size());
+		assertEquals(ResultMessages.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
 	}
 
 }

@@ -16,4 +16,5 @@ public class ResultMessages {
 	public static final String DATABASE_ISSUE = "Błąd bazy danych";
 	public static final String PROJECT_NOT_FOUND = "Nie znalezniono projektu";
 	public static final String TASK_CANNOT_BE_FOUND_TASK = "Task nie istnieje w bazie";
+	public static final String PROJECTS_ARE_DIFFERENT = "nie można wykonać dla różnych projektów";
 }

@@ -12,7 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
 import com.nexus.apps.jTask.dto.bean.JTaskDTO;
-import com.nexus.apps.jTask.service.rest.helper.JTaskRestServiceHelper;
+import com.nexus.apps.jTask.rest.helper.JTaskRestServiceHelper;
 import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;

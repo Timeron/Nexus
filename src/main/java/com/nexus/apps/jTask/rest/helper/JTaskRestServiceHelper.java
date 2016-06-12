@@ -495,14 +495,20 @@ public class JTaskRestServiceHelper {
 		JTask task = jTaskDAO.getById(dto.getTaskId());
 		JTask mainTask = jTaskDAO.getById(dto.getMainTaskId());
 		if(task != null && mainTask != null){
-			task.setMainTask(mainTask);
+			if(task.getProject().getId() == mainTask.getProject().getId()){
+				task.setMainTask(mainTask);
+				
+				jTaskDAO.update(task);
+				task = jTaskDAO.getById(dto.getTaskId());
+				
+				result.setSuccess(true);
+				result.addMessage(MessageResources.OPERATION_SUCCESS);
+				result.setObject(new JTaskDTO(task));
+			}else{
+				result.setSuccess(false);
+				result.addMessage(ResultMessages.PROJECTS_ARE_DIFFERENT);
+			}
 			
-			jTaskDAO.update(task);
-			task = jTaskDAO.getById(dto.getTaskId());
-			
-			result.setSuccess(true);
-			result.addMessage(MessageResources.OPERATION_SUCCESS);
-			result.setObject(new JTaskDTO(task));
 		}else{
 			result.setSuccess(false);
 			result.addMessage(ResultMessages.TASK_CANNOT_BE_FOUND_TASK);

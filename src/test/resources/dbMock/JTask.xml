@@ -32,7 +32,12 @@
 	<j_task id="2" created="2015-07-01 22:57:05" description="testowa2 ..."
 		name="PREF-2" summary="testowy task 2 z wszystkimi danymi" j_project="1"
 		j_status="2" j_task_type="2" updated="2016-03-19 13:53:56"
-		workExpected="0" idFromName="1" j_user="1" />
+		workExpected="0" idFromName="2" j_user="1" />
+		
+	<j_task id="3" created="2015-07-01 22:57:05" description="testowa3 ..."
+		name="PREF-3" summary="testowy task 3 z wszystkimi danymi" j_project="2"
+		j_status="3" j_task_type="3" updated="2016-03-19 13:53:03"
+		workExpected="3" idFromName="1" j_user="1" />
 
 	<j_Note id="1" content="Testowa notka" created="2015-07-03 13:30:42"
 		j_task="1" />
