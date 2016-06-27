@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<dataset>
+	<sh_product id="1" name="name1" size="kg" number="4" buy="1" priority="5" />
+	<sh_product id="2" name="name2" size="kg" number="4" buy="1" priority="5" />
+	<sh_product id="3" name="name3" size="kg" number="4" buy="0" priority="5" added = "2016-06-02 22:35:49" checked = "2016-06-20 22:35:49" />
+	<sh_product id="4" name="name4" size="kg" number="4" buy="0" priority="5" added = "2016-06-02 22:35:49" checked = "2016-06-25 22:35:49" />
+</dataset>
