@@ -11,13 +11,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
 
-import com.nexus.apps.jTask.dto.bean.JTaskDTO;
-import com.nexus.apps.jTask.rest.helper.JTaskRestServiceHelper;
-import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
+import com.timeron.nexus.apps.jTask.dto.bean.JTaskDTO;
+import com.timeron.nexus.apps.jTask.rest.helper.JTaskRestServiceHelper;
+import com.timeron.nexus.common.service.ServiceResult;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JTaskRestServiceHelperTest {

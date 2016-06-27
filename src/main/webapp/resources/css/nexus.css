@@ -1,3 +1,11 @@
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+html {
+	overflow-y: scroll;
+}
 .nexus{
 	float:right;
 	width: 100%;
@@ -8,7 +16,7 @@
 }
 .title{
 	float:left;
-	width: 25%;
+	width: 50%;
 	text-align: left;
 	color: #FFF;
 	font-weight: bold;

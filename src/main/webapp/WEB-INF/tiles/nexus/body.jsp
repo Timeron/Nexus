@@ -33,6 +33,12 @@
           <p><a class="btn btn-default" href="./car/" role="button">View details &raquo;</a></p>
           <p><a class="btn btn-default" href="./adminPanel/car" role="button">Administracja &raquo;</a></p>
         </div>
+        <div class="col-md-4">
+          <h2>Shop Lsit</h2>
+          <p>Lista zakupów</p>
+          <p><a class="btn btn-default" href="./shoplist/" role="button">View details &raquo;</a></p>
+<!--           <p><a class="btn btn-default" href="./adminPanel/car" role="button">Administracja &raquo;</a></p> -->
+        </div>
       </div>
 
       <hr>

@@ -29,6 +29,7 @@
 		<class>com.timeron.NexusDatabaseLibrary.Entity.ObservedObject</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.ObservedSite</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.ObservedSiteHistory</class>
+		<class>com.timeron.NexusDatabaseLibrary.Entity.Product</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.ProductCategory</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.ProposedProductKay</class>
 		<class>com.timeron.NexusDatabaseLibrary.Entity.Site</class>

@@ -1,14 +1,5 @@
 @CHARSET "UTF-8";
 
-* {
-	margin: 0px;
-	padding: 0px;
-}
-
-html {
-	overflow-y: scroll;
-}
-
 body {
 	padding-right: 3px !important;
 	padding-left: 3px;

@@ -20,18 +20,6 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
-import com.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
-import com.nexus.apps.jTask.dto.bean.JHistoryDTO;
-import com.nexus.apps.jTask.dto.bean.JNoteDTO;
-import com.nexus.apps.jTask.dto.bean.JProjectDTO;
-import com.nexus.apps.jTask.dto.bean.JTaskDTO;
-import com.nexus.apps.jTask.dto.bean.MainTaskDTO;
-import com.nexus.apps.jTask.dto.bean.NexusVersionDTO;
-import com.nexus.apps.jTask.rest.helper.JTaskRestServiceHelper;
-import com.nexus.apps.jTask.service.JProjectService;
-import com.nexus.common.dto.NexusPersonDTO;
-import com.nexus.common.service.ResultMessages;
-import com.nexus.common.service.ServiceResult;
 import com.timeron.NexusDatabaseLibrary.Entity.JNote;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
@@ -39,6 +27,18 @@ import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusVersionDAO;
+import com.timeron.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.JHistoryDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.JNoteDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.JProjectDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.JTaskDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.MainTaskDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.NexusVersionDTO;
+import com.timeron.nexus.apps.jTask.rest.helper.JTaskRestServiceHelper;
+import com.timeron.nexus.apps.jTask.service.JProjectService;
+import com.timeron.nexus.common.dto.NexusPersonDTO;
+import com.timeron.nexus.common.service.ResultMessages;
+import com.timeron.nexus.common.service.ServiceResult;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/simple-job-launcher-context.xml" })
