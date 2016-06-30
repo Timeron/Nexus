@@ -75,7 +75,7 @@ app.controller("shopListController", function($scope, GetShopList,
 			priority : product.id,
 			buy : product.buy
 		}, function(data) {
-			product = data.object;
+			$scope.products = data.object;
 		});
 	};
 
@@ -87,7 +87,7 @@ app.controller("shopListController", function($scope, GetShopList,
 			priority : $scope.newProductPriority.id,
 			buy : true
 		}, function(data) {
-			product = data.object;
+			$scope.products = data.object;
 		});
 	};
 	
