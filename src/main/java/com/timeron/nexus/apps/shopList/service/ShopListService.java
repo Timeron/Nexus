@@ -57,15 +57,7 @@ public class ShopListService {
 
 	public void updateBuyProduct(ProductDTO product) {
 		Product entity = productDAO.getById(product.getId());
-		entity.setBuy(product.isBuy());
-		if(!product.isBuy()){
-			entity.setBuy(false);
-			entity.setChecked(new Date());
-		}else{
-			entity.setBuy(true);
-			entity.setChecked(null);
-		}
-		
+		entity.setBuy(product.isBuy());		
 		productDAO.update(entity);
 		
 	}

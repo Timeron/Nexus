@@ -11,6 +11,8 @@
 			value="jdbc:hsqldb:mem:DBNAME" />
 		<property name="username" value="sa" />
 		<property name="password" value="" />
+		<property name="testOnBorrow" value="true"/>
+		<property name="validationQuery" value="SELECT 1"/>
 	</bean>
 	
   </beans>

@@ -42,11 +42,16 @@ public class ShopListServiceTest {
 	
 	@Test
 	public void getActiveProducts_shouldGetProducts() {
+		List<Product> allProducts = productDAO.getAll();
+		
+		System.out.println("!!!!"+allProducts.get(3).isBuy()+" "+allProducts.get(3).getId() );
+		shopListService.updateBuyProduct(new ProductDTO(allProducts.get(3)));
 		List<ProductDTO> products = shopListService.getActiveProducts();
 		assertEquals(3, products.size());
 		assertEquals(1, products.get(0).getId());
 		assertEquals(2, products.get(1).getId());
 		assertEquals(4, products.get(2).getId());
+		System.out.println("XXXX"+products.get(2).isBuy()+" "+products.get(2).getId());
 	}
 	
 	@Test

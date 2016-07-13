@@ -2,6 +2,8 @@ package com.timeron.nexus.apps.shopList.dto;
 
 import java.util.Date;
 
+import com.timeron.NexusDatabaseLibrary.Entity.Product;
+
 public class ProductDTO {
 
 	private int id;
@@ -39,6 +41,16 @@ public class ProductDTO {
 		this.buy = buy;
 	}
 	
+	public ProductDTO(Product product) {
+		this.id = product.getId();
+		this.name = product.getName();
+		this.size = product.getSize();
+		this.number = product.getNumber();
+		this.priority = product.getPriority();
+		this.added = new Date();
+		this.buy = product.isBuy();
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -6,7 +6,7 @@ app.controller("shopListController", function($scope, GetShopList,
 
 	$scope.products = [];
 	$scope.newProductName = "";
-	$scope.newProductNumber = "";
+	$scope.newProductNumber = 1;
 	$scope.newProductSize = "";
 	$scope.newProductPriority = "";
 	$scope.priorities = [ {
@@ -75,7 +75,13 @@ app.controller("shopListController", function($scope, GetShopList,
 			priority : product.id,
 			buy : product.buy
 		}, function(data) {
-			$scope.products = data.object;
+			if(data.success){
+				angular.forEach($scope.products, function(p){
+					if(p.id === product.id){
+						p.buy = product.buy;
+					}
+				});
+			}
 		});
 	};
 
