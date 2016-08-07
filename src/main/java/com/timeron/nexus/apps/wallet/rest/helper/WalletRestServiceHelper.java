@@ -77,8 +77,7 @@ public class WalletRestServiceHelper {
 		ServiceResult result = new ServiceResult();
 		NexusPerson nexusPerson = nexusPersonDAO.getByNick(principal.getName());
 		if(!walletAccountDAO.checkIfNameIsAvailable(accountDTO.getName(), nexusPerson)){
-			result.addMessage(ResultMessagesWallet.ACCOUNT_ADDED);
-			result.setSuccess(false);
+			result.addError(ResultMessagesWallet.ACCOUNT_ADDED);
 			return result;
 		}else{
 			Date now = new Date();
@@ -92,10 +91,8 @@ public class WalletRestServiceHelper {
 			try{
 				walletAccountDAO.save(walletAccount);
 				result.addMessage(ResultMessagesWallet.ACCOUNT_ADDED);
-				result.setSuccess(true);
 			}catch(Exception ex){
-				result.addMessage(ResultMessagesWallet.ACCOUNT_ADD_ERROR);
-				result.setSuccess(false);
+				result.addError(ResultMessagesWallet.ACCOUNT_ADD_ERROR);
 				ex.printStackTrace();
 			}
 			return result;
@@ -160,8 +157,7 @@ public class WalletRestServiceHelper {
 		if(recordDTO.getAccountId() != 0){
 			walletRecord.setWalletAccount(walletAccountDAO.getById(recordDTO.getAccountId()));
 		}else{
-			result.setSuccess(false);
-			result.addMessage(ResultMessagesWallet.RECORD_ADD_NO_ACCOUNT);
+			result.addError(ResultMessagesWallet.RECORD_ADD_NO_ACCOUNT);
 			return result;
 		}
 		if(recordDTO.getRecordTypeId() != 0){
@@ -195,12 +191,10 @@ public class WalletRestServiceHelper {
 			if(walletRecord.isTransfer()){
 				walletRecordDAO.save(walletTransferRecord);
 			}
-			result.setSuccess(true);
 			result.addMessage(ResultMessagesWallet.RECORD_ADDED);
 		}catch(Exception ex){
 			ex.printStackTrace();
-			result.setSuccess(false);
-			result.addMessage(ResultMessagesWallet.RECORD_ADD_ERROR);
+			result.addError(ResultMessagesWallet.RECORD_ADD_ERROR);
 		}
 		return result;
 	}
@@ -521,8 +515,8 @@ public class WalletRestServiceHelper {
 				walletTypeDAO.save(type);
 				result.addMessage(ResultMessagesWallet.RECORD_ADDED);
 			}catch(Exception e){
-				result.setSuccess(false);
-				result.getMessages().add(e.getMessage());
+				result.addError(ResultMessagesWallet.DATABASE_ISSUE);
+				LOG.error(e.getMessage());
 			}
 		}
 		return result;
@@ -626,7 +620,7 @@ public class WalletRestServiceHelper {
 			result.setSuccess(true);
 			LOG.info("Record has been updated");
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesWallet.DATABASE_ISSUE);
 			LOG.error("Can not update Record", ex);
 		}
 		return result;
@@ -690,7 +684,6 @@ public class WalletRestServiceHelper {
 		graphData.setProperty(colors);
 		graphData.setKayValues(keyValuesList);
 		result.setObject(graphData);
-		result.setSuccess(true);
 		result.addMessage("message");
 		
 		return result;

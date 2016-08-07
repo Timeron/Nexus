@@ -37,7 +37,6 @@ public class NexusCommonRestServiceHelper {
 		String message = ResultMessages.NO_CONNECTION;
 		NexusConfig token = configDAO.getParametr("connection.tooken");
 		if(token!=null){
-			result.setSuccess(true);
 			result.addMessage(token.getValue());
 			return result;
 		}
@@ -54,11 +53,10 @@ public class NexusCommonRestServiceHelper {
 			List<NexusPerson> users = nexusUserApplicationDAO.getUsersWithAccessToApp(nexusApplicationDAO.getByName(appName));
 			for(NexusPerson userEntry : users){
 				usersDTO.add(new NexusPersonDTO(userEntry));
-				System.out.print("!!! "+userEntry.getNick());
 			}
 			result.setObject(usersDTO);
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessages.DATABASE_ISSUE);
 			ex.printStackTrace();
 		}
 		return result;

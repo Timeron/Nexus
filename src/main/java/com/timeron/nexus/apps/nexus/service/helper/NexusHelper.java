@@ -58,8 +58,7 @@ public class NexusHelper {
 			
 			nexusApplicationDAO.save(application);
 		}catch(Exception ex){
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.APPLICATION_CANNOT_BE_ADDED);
+			result.addError(ResultMessages.APPLICATION_CANNOT_BE_ADDED);
 			ex.printStackTrace();
 		}
 		
@@ -70,8 +69,7 @@ public class NexusHelper {
 			nexusUserApplicationRef.setUser(nexusPersonDAO.getByNick(principal.getName()));
 			nexusUserApplicationDAO.save(nexusUserApplicationRef);
 		}catch(Exception ex){
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.USER_CANNOT_BE_CONNECTED_TO_APPLICATION);
+			result.addError(ResultMessages.USER_CANNOT_BE_CONNECTED_TO_APPLICATION);
 			ex.printStackTrace();
 		}
 		return null;
@@ -89,8 +87,7 @@ public class NexusHelper {
 			owners = userRights.getUsersWithAccessToApplication(nexusApplicationDAO.getById(app.getId()));
 			allUsers = userRights.getUsersWithAccessToNexus();
 		}catch(Exception ex){
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.CANNOT_RECEIVE_USER);
+			result.addError(ResultMessages.CANNOT_RECEIVE_USER);
 			ex.printStackTrace();
 		}
 		if(!allUsers.isEmpty() && allUsers != null){
@@ -129,8 +126,7 @@ public class NexusHelper {
 			userRights.removeAccessToApplicationForAllUsers(nexusApplicationDAO.getById(appUsers.getApplication().getId()));
 		}catch(TransactionalException ex){
 			ex.printStackTrace();
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.DATABASE_ISSUE);
+			result.addError(ResultMessages.DATABASE_ISSUE);
 			return result;
 		}
 		
@@ -145,8 +141,7 @@ public class NexusHelper {
 //				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				result.setSuccess(false);
-				result.addMessage(ResultMessages.USER_CANNOT_BE_CONNECTED_TO_APPLICATION);
+				result.addError(ResultMessages.USER_CANNOT_BE_CONNECTED_TO_APPLICATION);
 			}
 		}
 		return result;

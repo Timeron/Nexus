@@ -17,6 +17,7 @@ import com.timeron.NexusDatabaseLibrary.Entity.ContactEvent;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.dao.ContactEventDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
+import com.timeron.nexus.apps.contact.constant.ResultMessagesConntact;
 import com.timeron.nexus.apps.contact.dto.ContactDTO;
 import com.timeron.nexus.apps.contact.dto.EventDTO;
 import com.timeron.nexus.apps.contact.dto.OccasionDTO;
@@ -67,7 +68,7 @@ public class ContactRestServiceHelper {
 			nexusPersonDAO.save(nexusPerson);
 			result.setSuccess(true);
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesConntact.DATABASE_ISSUE);
 			ex.printStackTrace();
 		}
 		
@@ -104,7 +105,7 @@ public class ContactRestServiceHelper {
 			nexusPersonDAO.update(nexusPerson);
 			result.setSuccess(true);
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesConntact.DATABASE_ISSUE);
 			ex.printStackTrace();
 		}
 		return result;
@@ -121,7 +122,8 @@ public class ContactRestServiceHelper {
 			result.setObject(nexusPersonDTOs);
 			result.setSuccess(true);
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesConntact.DATABASE_ISSUE);
+			ex.printStackTrace();
 		}
 		return result;
 	}
@@ -138,7 +140,8 @@ public class ContactRestServiceHelper {
 			result.setObject(new NexusPersonDTO(nexusPersonDAO.getById(contactId)));
 			result.setSuccess(true);
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesConntact.DATABASE_ISSUE);
+			ex.printStackTrace();
 		}
 		return result;
 	}
@@ -219,7 +222,7 @@ public class ContactRestServiceHelper {
 			result.setSuccess(true);
 			result.setObject(tempAfter);
 		}else{
-			result.setSuccess(false);
+			result.addError(ResultMessagesConntact.NO_OCCASION_TO_SHOW);
 		}
 		
 		return result;

@@ -30,6 +30,7 @@ import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusUserApplicationDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusVersionDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
+import com.timeron.nexus.apps.jTask.constant.ResultMessagesJTask;
 import com.timeron.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JNoteDTO;
@@ -116,21 +117,17 @@ public class JTaskRestServiceHelper {
 				userProject.setTimestamp(new Date());
 				jUserProjectDAO.save(userProject);
 				
-				result.setSuccess(true);
 				result.addMessage("Project added: "+jProject.getName());
 				result.setObject(new JProjectDTO(jProject));
 				LOG.info(result.getMessages());
 				}else{
-					result.addMessage(ResultMessages.PERSON_NOT_EXIST);
-					result.setSuccess(false);
+					result.addError(ResultMessagesJTask.PERSON_NOT_EXIST);
 				}
 			}else{
-				result.addMessage(ResultMessages.PERSON_NOT_DETECTED);
-				result.setSuccess(false);
+				result.addError(ResultMessagesJTask.PERSON_NOT_DETECTED);
 			}
 		}else{
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.PROJECT_NOT_FOUND);
+			result.addError(ResultMessagesJTask.PROJECT_NOT_FOUND);
 			LOG.warn(result.getMessages());
 		}
 		return result;
@@ -154,13 +151,11 @@ public class JTaskRestServiceHelper {
 			if(person != null){
 				jTask.setUser(person);
 			}else{
-				result.setSuccess(false);
-				result.addMessage(ResultMessages.PERSON_NOT_EXIST);
+				result.addError(ResultMessages.PERSON_NOT_EXIST);
 				return result;
 			}
 		}else{
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.PERSON_NOT_DETECTED);
+			result.addError(ResultMessages.PERSON_NOT_DETECTED);
 			return result;
 		}
 		jTask.setName(project.getPrefix()+"-"+nextIdName);
@@ -180,7 +175,7 @@ public class JTaskRestServiceHelper {
 		if(result.isSuccess() == null || result.isSuccess()){
 			boolean save = jTaskDAO.save(jTask);
 			if(!save){
-				result.addMessage(ResultMessages.TASK_NOT_ADDED);
+				result.addError(ResultMessagesJTask.TASK_NOT_ADDED);
 			}
 			result.setSuccess(save);
 		}else{
@@ -332,15 +327,14 @@ public class JTaskRestServiceHelper {
 				try{
 					jTaskDAO.update(jTask);
 				}catch(Exception ex){
-					serviceResult.setSuccess(false);
+					serviceResult.addError(ResultMessagesJTask.DATABASE_ISSUE);
 				}
 			}
 			
 			JTaskDTO dto = new JTaskDTO(jTaskDAO.getById(jTask.getId()));
 			serviceResult.setObject(dto);
 		}else{
-			serviceResult.setSuccess(false);
-			serviceResult.addMessage(ResultMessages.TASK_CANNOT_BE_FOUND_TASK);
+			serviceResult.addError(ResultMessagesJTask.TASK_CANNOT_BE_FOUND_TASK);
 		}
 		return serviceResult;
 	}
@@ -392,8 +386,7 @@ public class JTaskRestServiceHelper {
 			result.setSuccess(jNoteDAO.save(entity));
 			result.setSuccess(true);
 		}else{
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.TASK_CANNOT_BE_FOUND_TASK);
+			result.addError(ResultMessagesJTask.TASK_CANNOT_BE_FOUND_TASK);
 		}
 		return result;
 	}
@@ -457,9 +450,8 @@ public class JTaskRestServiceHelper {
 		try{
 			jTaskDAO.update(jTask);
 		}catch(Exception ex){
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.CANNOT_UPDATE_TASK);
-			LOG.error(ResultMessages.CANNOT_UPDATE_TASK, ex);
+			result.addError(ResultMessagesJTask.CANNOT_UPDATE_TASK);
+			LOG.error(ResultMessagesJTask.CANNOT_UPDATE_TASK, ex);
 			return result;
 		}
 		
@@ -481,9 +473,8 @@ public class JTaskRestServiceHelper {
 			jHistoryDAO.save(history);
 			result.setSuccess(true);
 		}catch(Exception ex){
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.CANNOT_UPDATE_TASK);
-			LOG.error(ResultMessages.CANNOT_UPDATE_TASK, ex);
+			result.addError(ResultMessagesJTask.CANNOT_UPDATE_TASK);
+			LOG.error(ResultMessagesJTask.CANNOT_UPDATE_TASK, ex);
 			return result;
 		}
 		result.setObject(jTaskDAO.getById(dto.getTaskId()));
@@ -504,13 +495,11 @@ public class JTaskRestServiceHelper {
 				result.addMessage(ResultMessagesWallet.RECORD_ADDED);
 				result.setObject(new JTaskDTO(task));
 			}else{
-				result.setSuccess(false);
-				result.addMessage(ResultMessages.PROJECTS_ARE_DIFFERENT);
+				result.addError(ResultMessagesJTask.PROJECTS_ARE_DIFFERENT);
 			}
 			
 		}else{
-			result.setSuccess(false);
-			result.addMessage(ResultMessages.TASK_CANNOT_BE_FOUND_TASK);
+			result.addError(ResultMessagesJTask.TASK_CANNOT_BE_FOUND_TASK);
 		}
 		return result;
 	}
@@ -526,7 +515,7 @@ public class JTaskRestServiceHelper {
 			}
 			result.setObject(usersDTO);
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesJTask.DATABASE_ISSUE);
 			ex.printStackTrace();
 		}
 		return result;
@@ -565,7 +554,7 @@ public class JTaskRestServiceHelper {
 			userLists.setUsers2(usersAvailableToAddDTO);
 			result.setObject(userLists);
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesJTask.DATABASE_ISSUE);
 			ex.printStackTrace();
 		}
 		return result;
@@ -587,7 +576,7 @@ public class JTaskRestServiceHelper {
 				jUserProjectDAO.save(jUserProject);
 			}
 		}catch(Exception ex){
-			result.setSuccess(false);
+			result.addError(ResultMessagesJTask.DATABASE_ISSUE);
 			ex.printStackTrace();
 		}
 		return result;
@@ -600,7 +589,7 @@ public class JTaskRestServiceHelper {
 			result.setObject(subTasks);
 		}catch(Exception ex){
 			ex.printStackTrace();
-			result.setSuccess(false);
+			result.addError(ResultMessagesJTask.DATABASE_ISSUE);
 		}
 		return result;
 	}

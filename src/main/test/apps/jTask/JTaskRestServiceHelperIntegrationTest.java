@@ -27,6 +27,7 @@ import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusVersionDAO;
+import com.timeron.nexus.apps.jTask.constant.ResultMessagesJTask;
 import com.timeron.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JNoteDTO;
@@ -328,7 +329,7 @@ public class JTaskRestServiceHelperIntegrationTest {
 		assertNotNull(result);
 		assertFalse(result.isSuccess());
 		assertEquals(1, result.getMessages().size());
-		assertEquals(ResultMessages.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
+		assertEquals(ResultMessagesJTask.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
 	}
 	
 	@Test
@@ -508,7 +509,7 @@ public class JTaskRestServiceHelperIntegrationTest {
 		assertNull(jTaskDAO.getById(2).getMainTask());
 		assertFalse(result.isSuccess());
 		assertEquals(1, result.getMessages().size());
-		assertEquals(ResultMessages.PROJECTS_ARE_DIFFERENT, result.getMessages().get(0));
+		assertEquals(ResultMessagesJTask.PROJECTS_ARE_DIFFERENT, result.getMessages().get(0));
 	}
 	
 	@Test
@@ -526,7 +527,7 @@ public class JTaskRestServiceHelperIntegrationTest {
 		assertNull(jTaskDAO.getById(2).getMainTask());
 		assertFalse(result.isSuccess());
 		assertEquals(1, result.getMessages().size());
-		assertEquals(ResultMessages.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
+		assertEquals(ResultMessagesJTask.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
 	}
 	
 	@Test
@@ -540,7 +541,7 @@ public class JTaskRestServiceHelperIntegrationTest {
 		assertNull(jTaskDAO.getById(2).getMainTask());
 		assertFalse(result.isSuccess());
 		assertEquals(1, result.getMessages().size());
-		assertEquals(ResultMessages.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
+		assertEquals(ResultMessagesJTask.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
 	}
 
 }
