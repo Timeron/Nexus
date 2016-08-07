@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataset>
+
+	<nexus_person id="1" nick="timeron" />
+	<nexus_person id="2" nick="domyslny" />
+	
+	<wallet_account id="1" description="Prywatne konto 1" name="Moje konto 1" timestamp="2015-08-19 11:04:50" owner="1" />
+	<wallet_account id="2" description="Prywatne konto 2" name="Moje konto 2" timestamp="2015-08-19 11:04:50" owner="1" />
+
+	<wallet_type id="2" color="#090" default_value="0" icon="glyphicon-usd" name="Świnka" timestamp="2015-10-17 00:38:28" updated="2016-02-06 21:42:29"  />
+	<wallet_type id="3" color="#00F" default_value="0" icon="glyphicon-heart-empty" name="Anita" timestamp="2015-10-17 00:40:48" updated="2016-02-06 21:42:29"  />
+	<wallet_type id="6" color="#F00" default_value="0" icon="glyphicon-shopping-cart" name="Artykuły spożywcze" timestamp="2015-10-17 00:40:49" updated="2016-02-06 21:42:29"  />
+	<wallet_type id="8" color="#F80" default_value="0" icon="glyphicon-glass" name="Rozrywka, kultura" timestamp="2015-10-17 00:40:49" updated="2016-02-06 21:42:29"  />
+	<wallet_type id="9" color="#00F" default_value="0" icon="glyphicon-gift" name="Prezenty" timestamp="2015-10-17 00:40:49" updated="2016-02-06 21:42:29"  />
+	<wallet_type id="10" color="#FF5" default_value="0" name="Poszukiwanie" timestamp="2015-10-17 00:40:50" updated="2016-02-06 21:42:29"  />
+	<wallet_type id="11" color="#090" default_value="1" icon="glyphicon-briefcase" name="Wynagrodzenie, przychód" timestamp="2015-10-17 00:40:50" updated="2016-02-06 21:42:29"  />
+	<wallet_type id="14" color="#808" default_value="0" icon="glyphicon-road" name="Transport" timestamp="2015-10-17 00:40:51" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="15" color="#F76" default_value="0" icon="glyphicon-phone" name="Telefon, internet" timestamp="2015-10-17 00:40:52" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="16" color="#0FF" default_value="0" name="Sport" timestamp="2015-10-17 00:40:52" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="18" color="#88F" default_value="0" icon="glyphicon-plane" name="Wakacje" timestamp="2015-10-17 00:40:53" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="19" color="#DDF" default_value="0" icon="glyphicon-star" name="Inne" timestamp="2015-10-17 00:40:54" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="20" color="#642" default_value="0" icon="glyphicon-paperclip" name="Administracja" timestamp="2015-10-17 00:40:54" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="22" color="#148" default_value="0" icon="glyphicon-signal" name="Doskonalenie" timestamp="2015-10-17 00:40:57" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="25" color="#F00" default_value="0" icon="glyphicon-plus" name="Med" timestamp="2015-10-17 00:41:03" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="26" color="#FF0" default_value="0" name="Samochód" timestamp="2015-10-17 00:41:05" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="27" color="#00D" default_value="0" icon="glyphicon-hdd" name="Elektronika" timestamp="2015-10-17 00:41:09" updated="2016-02-06 21:42:30"  />
+	<wallet_type id="28" color="#444" default_value="0" icon="glyphicon-home" name="Dom" timestamp="2015-10-17 00:41:14" updated="2016-02-06 21:42:31"  />
+	<wallet_type id="4" color="#F50" default_value="0" icon="glyphicon-cutlery" name="Sodexo" timestamp="2015-10-17 00:40:48" updated="2016-02-06 21:42:29" parent_type="6" />
+	<wallet_type id="5" color="#FA0" default_value="0" name="Pizza" timestamp="2015-10-17 00:40:49" updated="2016-02-06 21:42:29" parent_type="6" />
+	<wallet_type id="12" color="#F80" default_value="0" name="Jedzenie poza domem" timestamp="2015-10-17 00:40:50" updated="2016-02-06 21:42:30" parent_type="6" />
+	<wallet_type id="7" color="#FC0" default_value="0" name="Piwo" timestamp="2015-10-17 00:40:49" updated="2016-02-06 21:42:29" parent_type="8" />
+	<wallet_type id="23" color="#946" default_value="0" name="Zaklady" timestamp="2015-10-17 00:41:01" updated="2016-02-06 21:42:30" parent_type="8" />
+	<wallet_type id="1" color="#DD0" default_value="0" icon="glyphicon-euro" name="Bank" timestamp="2015-10-17 00:38:26" updated="2016-02-06 21:42:29" parent_type="20" />
+	<wallet_type id="24" color="#000" default_value="0" icon="glyphicon-envelope" name="Podatek" timestamp="2015-10-17 00:41:03" updated="2016-02-06 21:42:30" parent_type="20" />
+	<wallet_type id="13" color="#FF8" default_value="0" icon="glyphicon-tint" name="Paliwo" timestamp="2015-10-17 00:40:51" updated="2016-02-06 21:42:30" parent_type="26" />
+	<wallet_type id="17" color="#666" default_value="0" name="Czynsz" timestamp="2015-10-17 00:40:52" updated="2016-02-06 21:42:30" parent_type="28" />
+	<wallet_type id="21" color="#555" default_value="0" name="Środki czystości" timestamp="2015-10-17 00:40:57" updated="2016-02-06 21:42:30" parent_type="28" />
+	<wallet_type id="29" color="#777" default_value="0" icon="glyphicon-user" name="Garderoba" timestamp="2015-10-29 00:00:00" updated="2016-02-06 21:42:31" parent_type="28" />
+	
+	<wallet_record id="1" date="2015-10-12 13:13:00" income="true" transfer="true" updated="2015-10-17 00:38:26" value="1000" destination_wallet_account="2" source_wallet_account="1" wallet_account="2" />
+	<wallet_record id="2" date="2015-09-25 14:14:00" income="true" transfer="false" updated="2015-10-17 00:38:26" value="23.54" wallet_account="1" wallet_type="1" />
+	<wallet_record id="3" date="2015-09-13 16:16:00" income="true" transfer="false" updated="2015-10-17 00:38:26" value="37.88" wallet_account="1" wallet_type="1" />
+	<wallet_record id="4" date="2015-07-24 19:19:00" income="true" transfer="false" updated="2015-10-17 00:38:26" value="31.61" wallet_account="1" wallet_type="1" />
+	<wallet_record id="5" date="2015-10-25 14:14:00" income="false" transfer="false" updated="2015-10-17 00:38:26" value="3.54" wallet_account="1" wallet_type="6" />
+	<wallet_record id="6" date="2015-10-13 16:16:00" income="false" transfer="false" updated="2015-10-17 00:38:26" value="7.88" wallet_account="1" wallet_type="4" />
+	<wallet_record id="7" date="2015-10-24 19:19:00" income="false" transfer="false" updated="2015-10-17 00:38:26" value="3.61" wallet_account="1" wallet_type="4" />
+	<wallet_record id="8" date="2015-10-25 14:14:00" income="false" transfer="false" updated="2015-10-17 00:38:26" value="13.54" wallet_account="1" wallet_type="6" />
+	<wallet_record id="9" date="2015-10-13 16:16:00" income="false" transfer="false" updated="2015-10-17 00:38:26" value="17.88" wallet_account="1" wallet_type="4" />
+	<wallet_record id="10" date="2015-10-24 19:19:00" income="false" transfer="false" updated="2015-10-17 00:38:26" value="10.61" wallet_account="1" wallet_type="4" />
+	<wallet_record id="11" date="2015-11-13 16:16:00" income="false" transfer="false" updated="2015-11-17 00:38:26" value="17.88" wallet_account="1" wallet_type="4" />
+	<wallet_record id="12" date="2015-11-24 19:19:00" income="false" transfer="false" updated="2015-11-17 00:38:26" value="10.61" wallet_account="1" wallet_type="4" />
+</dataset>

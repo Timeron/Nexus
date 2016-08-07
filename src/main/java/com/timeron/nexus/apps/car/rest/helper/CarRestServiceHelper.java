@@ -33,7 +33,7 @@ public class CarRestServiceHelper {
 		fuel.setLiters(recordDTO.getLiters());
 		result.setSuccess(fuelDAO.save(fuel));
 		if(result.isSuccess()){
-			result.addMessage(ResultCarMessages.SUCCESS_DAO);
+			result.addMessage(ResultCarMessages.RECORD_ADDED);
 		}
 		return result;
 	}

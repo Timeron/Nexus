@@ -114,5 +114,12 @@ app.factory("CurrentUserPOST", function($resource){
 		);
 });
 
+//Charts
+app.factory("GetSumForTypesForStatistics", function($resource){
+	return $resource("/nexus/v1/wallet/getSumForTypesForStatistics", 
+			{},
+			{query: {method: "POST", isArray: false}}
+		);
+});
 
 

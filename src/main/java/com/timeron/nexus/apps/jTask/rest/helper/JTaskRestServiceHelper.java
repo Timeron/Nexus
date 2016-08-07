@@ -41,7 +41,7 @@ import com.timeron.nexus.apps.jTask.dto.bean.TwoListOfUsers;
 import com.timeron.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
 import com.timeron.nexus.apps.jTask.project.ProjectImpl;
 import com.timeron.nexus.apps.jTask.task.TaskImpl;
-import com.timeron.nexus.apps.wallet.constant.MessageResources;
+import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
 import com.timeron.nexus.common.dto.NexusPersonDTO;
 import com.timeron.nexus.common.service.ResultMessages;
 import com.timeron.nexus.common.service.ServiceResult;
@@ -501,8 +501,7 @@ public class JTaskRestServiceHelper {
 				jTaskDAO.update(task);
 				task = jTaskDAO.getById(dto.getTaskId());
 				
-				result.setSuccess(true);
-				result.addMessage(MessageResources.OPERATION_SUCCESS);
+				result.addMessage(ResultMessagesWallet.RECORD_ADDED);
 				result.setObject(new JTaskDTO(task));
 			}else{
 				result.setSuccess(false);

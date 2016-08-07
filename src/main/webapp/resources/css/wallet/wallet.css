@@ -149,3 +149,32 @@ section{
 	width: 200px;
 	text-align: right;
 }
+/*statystyki*/
+.multiBarChartMenu{
+	margin:20px 0px 50px 0px;
+}
+.multiBarChartMenu .legendRow{
+	width: 210px;
+	margin-top: 5px;
+	float: left;
+	font-size: 12px;
+}
+.multiBarChartMenu .legendRow .legendColor{
+	border: 1px solid #000;
+	float: left;
+	width: 20px;
+	height: 20px;
+	margin-right: 5px;
+}
+.multiBarChartMenu .checkbox{
+	margin-right: 20px;
+	float:right;
+}
+.legendRow:hover{
+	background-color: #CCD;
+}
+.multiBarChartMenu .btn-filter{
+	float: left;
+	margin: 30px 210px 0px 0px;
+}
+

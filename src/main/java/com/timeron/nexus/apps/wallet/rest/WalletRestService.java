@@ -19,6 +19,7 @@ import com.timeron.nexus.apps.wallet.service.dto.RecordTypeDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordTypeListDTO;
 import com.timeron.nexus.apps.wallet.service.dto.SumForAccountByType;
 import com.timeron.nexus.apps.wallet.service.dto.TypeForStatistics;
+import com.timeron.nexus.apps.wallet.service.dto.TypesForStatistics;
 
 @RestController
 @RequestMapping("/v1/wallet")
@@ -117,14 +118,14 @@ public class WalletRestService {
 	public String getRecordsForAccountByDay(@RequestBody String json, Principal principal){
 		LOG.info("service: getRecordsForAccountByDay");
 		AccountDTO accountDTO = gson.fromJson(json, AccountDTO.class);
-		String result = gson.toJson(helper.getRecordsForAccountByDay(accountDTO, principal));
+		String result = gson.toJson(helper.getRecordsForAccountByDay(accountDTO.getId(), principal));
 		LOG.info("service response: getRecordsForAccountByDay -> "+result);
 		return result;
 	}
 	
 	@RequestMapping(value="/getSumForAccountByType", method = RequestMethod.POST)
 	public String getSumForAccountByType(@RequestBody String json, Principal principal){
-		LOG.info("service: getSumForAccountByType");
+		LOG.info("service: getSumForAccountByType <- "+json);
 		SumForAccountByType sumForAccountByType = gson.fromJson(json, SumForAccountByType.class);
 		String result = gson.toJson(helper.getSumForAccountByType(sumForAccountByType, principal));
 		LOG.info("service response: getSumForAccountByType -> "+result);
@@ -155,6 +156,15 @@ public class WalletRestService {
 		TypeForStatistics sumForAccountByType = gson.fromJson(json, TypeForStatistics.class);
 		String result = gson.toJson(helper.getSumForTypeForStatistics(sumForAccountByType, principal));
 		LOG.info("service response: getSumForTypeForStatistics -> "+result);
+		return result;
+	}
+	
+	@RequestMapping(value="/getSumForTypesForStatistics", method = RequestMethod.POST)
+	public String getSumForTypesForStatistics(@RequestBody String json, Principal principal){
+		LOG.info("service: getSumForTypesForStatistics  <- "+json);
+		TypesForStatistics sumForAccountByTypes = gson.fromJson(json, TypesForStatistics.class);
+		String result = gson.toJson(helper.getSumForTypesForStatisticsPerMonth(sumForAccountByTypes, principal.getName()));
+		LOG.info("service response: getSumForTypesForStatistics !!! -> "+result);
 		return result;
 	}
 

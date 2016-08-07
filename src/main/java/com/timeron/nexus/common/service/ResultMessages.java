@@ -2,7 +2,18 @@ package com.timeron.nexus.common.service;
 
 public class ResultMessages {
 
-	public static final String SUCCESS_DAO = "Rekord pomyślnie dodany";
+
+	public static final String RECORD_ADDED = "Rekord pomyślnie dodany";
+	public static final String RECORD_ADD_ERROR = "Operacja nie zostało dodana";
+	
+	/**
+	 * Account
+	 */
+	public static final String RECORD_ADD_NO_ACCOUNT = "Brakuje danych o koncie";
+	public static final String ACCOUNT_ADDED = "Konto dodane pomyślnie";
+	public static final String ACCOUNT_ADD_ERROR = "Konto nie zostało dodane";
+	
+
 	public static final String PERSON_NOT_DETECTED = "Błąd! Proszę się przelogować";
 	public static final String PERSON_NOT_EXIST = "Błąd! Użytkownik nie istnieje w bazie danych";
 	public static final String TASK_NOT_ADDED = "Wystąpił błąd: Task nie dodany!";

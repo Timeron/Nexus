@@ -37,7 +37,7 @@
 	</named-query>
 
 	<named-query name="GetRecordByTypeIncome">
-		<query>SELECT r FROM WalletRecord r WHERE r.walletType.id = :typeId and r.income = :income</query>
+		<query>SELECT r FROM WalletRecord r WHERE r.walletType.id = :typeId and r.income = :income ORDER BY r.date ASC</query>
 	</named-query>
 
 	<named-query name="GetIdOrderForTypes">

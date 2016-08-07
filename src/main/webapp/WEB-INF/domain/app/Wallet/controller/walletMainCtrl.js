@@ -1,6 +1,6 @@
 var app = angular.module('WalletMain', []);
 
-app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy, GetSumForTypeForStatistics) {
+app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy, GetSumForTypeForStatistics, GetSumForTypesForStatistics) {
 	$scope.accounts = [];
 	$rootScope.selectedAccount;
 	$scope.user = "-";
@@ -14,6 +14,7 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	$scope.selectedTypeTemp;
 	$scope.incomeViewFlag = "false";
 	$rootScope.recordToEdit = {};
+	$scope.testtest = [];
 	
 	
 	
@@ -71,6 +72,7 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 		GetSumForTypeForStatistics.query({account: account.id, type:$scope.selectedType, income: $scope.incomeViewFlag}, function(data){ //9
 			$scope.typeStatisticData = data;
 		});
+		
 	};
 	
 	$scope.getStats = function(income){
@@ -140,6 +142,30 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 				$scope.typeStatisticData = data;
 			});
 		};
+	};
+	
+	$scope.multiBarChartSearch = function(){
+		var types = [];
+		angular.forEach($scope.types, function(t){
+			if(t.multiBarChartMenu == true){
+				types.push(t.id);
+			}
+		});
+		console.log(types);
+
+		GetSumForTypesForStatistics.query({account: 1, types: types, income: false}, function(d){
+			var data = [];
+			angular.forEach(d.object.kayValues, function(o){
+				var row = {};
+				row['key'] = o.key;
+				angular.forEach(o.values, function(v){
+					row[v.key] = v.value;
+				});
+				data.push(row);
+			});
+			$scope.testtest.chart = data;
+			$scope.testtest.property = d.object.property;
+		});
 	};
 	
 	$scope.loadTypeStats = function(type){

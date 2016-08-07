@@ -21,6 +21,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonElement;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
@@ -31,11 +32,11 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 import com.timeron.NexusDatabaseLibrary.dto.IdOrderDTO;
-import com.timeron.nexus.apps.wallet.constant.MessageResources;
+import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
+import com.timeron.nexus.apps.wallet.service.WalletService;
 import com.timeron.nexus.apps.wallet.service.dto.AccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
 import com.timeron.nexus.apps.wallet.service.dto.HierarchyPieChartDTO;
-import com.timeron.nexus.apps.wallet.service.dto.KeyValueDTO;
 import com.timeron.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.PieChartDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordDTO;
@@ -43,6 +44,14 @@ import com.timeron.nexus.apps.wallet.service.dto.RecordTypeDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordTypeListDTO;
 import com.timeron.nexus.apps.wallet.service.dto.SumForAccountByType;
 import com.timeron.nexus.apps.wallet.service.dto.TypeForStatistics;
+import com.timeron.nexus.apps.wallet.service.dto.TypesForStatistics;
+import com.timeron.nexus.apps.wallet.service.dto.WalletTypeDTO;
+import com.timeron.nexus.apps.wallet.service.dto.graph.GraphListOfKeyValuesAndProperties;
+import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValueDTO;
+import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValuePropertyDTO;
+import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValuesByObjectDTO;
+import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValuesDTO;
+import com.timeron.nexus.common.service.ResultMessages;
 import com.timeron.nexus.common.service.ServiceResult;
 
 @Component
@@ -58,6 +67,8 @@ public class WalletRestServiceHelper {
 	WalletTypeDAO walletTypeDAO;
 	@Autowired
 	WalletRecordDAO walletRecordDAO;
+	@Autowired
+	WalletService walletService;
 
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
 	SimpleDateFormat formatMonth = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
@@ -66,7 +77,7 @@ public class WalletRestServiceHelper {
 		ServiceResult result = new ServiceResult();
 		NexusPerson nexusPerson = nexusPersonDAO.getByNick(principal.getName());
 		if(!walletAccountDAO.checkIfNameIsAvailable(accountDTO.getName(), nexusPerson)){
-			result.addMessage(MessageResources.ACCOUNT_ADDED);
+			result.addMessage(ResultMessagesWallet.ACCOUNT_ADDED);
 			result.setSuccess(false);
 			return result;
 		}else{
@@ -77,13 +88,13 @@ public class WalletRestServiceHelper {
 			walletAccount.setName(accountDTO.getName());
 			walletAccount.setTimestamp(now);
 			walletAccount.setUpdated(now);
-			walletAccount.setUser(nexusPerson);
+			walletAccount.setOwner(nexusPerson);
 			try{
 				walletAccountDAO.save(walletAccount);
-				result.addMessage(MessageResources.ACCOUNT_ADDED);
+				result.addMessage(ResultMessagesWallet.ACCOUNT_ADDED);
 				result.setSuccess(true);
 			}catch(Exception ex){
-				result.addMessage(MessageResources.ACCOUNT_ADD_ERROR);
+				result.addMessage(ResultMessagesWallet.ACCOUNT_ADD_ERROR);
 				result.setSuccess(false);
 				ex.printStackTrace();
 			}
@@ -116,13 +127,20 @@ public class WalletRestServiceHelper {
 
 	private List<RecordTypeDTO> getTypeByOrder(List<RecordTypeDTO> recordTypeDTOs, List<IdOrderDTO> typeOrder) {
 		List<RecordTypeDTO> typeByOrderDTOs = new ArrayList<RecordTypeDTO>();
-		for(IdOrderDTO entry : typeOrder){
-			for(RecordTypeDTO record : recordTypeDTOs){
+		List<RecordTypeDTO> typeWithoutSortOrder = new ArrayList<RecordTypeDTO>();
+		boolean added = false;
+		for(RecordTypeDTO record : recordTypeDTOs){
+			for(IdOrderDTO entry : typeOrder){
 				if(entry.getId() == record.getId()){
 					typeByOrderDTOs.add(record);
+					added = true;
 				}
+			}if(!added){
+				typeWithoutSortOrder.add(record);
 			}
+			added = false;
 		}
+		typeByOrderDTOs.addAll(typeWithoutSortOrder);
 		return typeByOrderDTOs;
 	}
 
@@ -143,7 +161,7 @@ public class WalletRestServiceHelper {
 			walletRecord.setWalletAccount(walletAccountDAO.getById(recordDTO.getAccountId()));
 		}else{
 			result.setSuccess(false);
-			result.addMessage(MessageResources.RECORD_ADD_NO_ACCOUNT);
+			result.addMessage(ResultMessagesWallet.RECORD_ADD_NO_ACCOUNT);
 			return result;
 		}
 		if(recordDTO.getRecordTypeId() != 0){
@@ -178,11 +196,11 @@ public class WalletRestServiceHelper {
 				walletRecordDAO.save(walletTransferRecord);
 			}
 			result.setSuccess(true);
-			result.addMessage(MessageResources.RECORD_ADDED);
+			result.addMessage(ResultMessagesWallet.RECORD_ADDED);
 		}catch(Exception ex){
 			ex.printStackTrace();
 			result.setSuccess(false);
-			result.addMessage(MessageResources.RECORD_ADD_ERROR);
+			result.addMessage(ResultMessagesWallet.RECORD_ADD_ERROR);
 		}
 		return result;
 	}
@@ -236,8 +254,8 @@ public class WalletRestServiceHelper {
 		return result;
 	}
 
-	public List<KeyValueDTO> getRecordsForAccountByDay(AccountDTO accountDTO, Principal principal) {
-		WalletAccount account = walletAccountDAO.getById(accountDTO.getId());
+	public List<KeyValueDTO> getRecordsForAccountByDay(int accountId, Principal principal) {
+		WalletAccount account = walletAccountDAO.getById(accountId);
 		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccount(account, Direction.ASC);
 		List<KeyValueDTO> chartData = transformToDayPeriod(records);
 		if(chartData.size() > 0){
@@ -255,9 +273,9 @@ public class WalletRestServiceHelper {
         return bd;
     }
 	
-	public List<PieChartDTO> getSumForAccountByType(SumForAccountByType sumForAccountByType, Principal principal) {
-		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
-		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByType.getIncome());
+	public List<PieChartDTO> getSumForAccountByType(SumForAccountByType sumForAccountByTypeDto, Principal principal) {
+		WalletAccount account = walletAccountDAO.getById(sumForAccountByTypeDto.getId());
+		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByTypeDto.getIncome());
 		return transformToPieChartByType(records);
 	}
 	
@@ -324,6 +342,14 @@ public class WalletRestServiceHelper {
 		}
 		return sum.toString();
 	}
+	
+	private String sumRecordDTOs(List<RecordDTO> records) {
+		BigDecimal sum = new BigDecimal(0);
+		for(RecordDTO record : records){
+			sum = sum.add(round(record.getValue(), 2));
+		}
+		return sum.toString();
+	}
 
 	private List<PieChartDTO> transformToPieChartByParentType(List<WalletRecord> records) {
 		Map<Integer, List<RecordDTO>> recordDTOsMap = new HashMap<Integer, List<RecordDTO>>();
@@ -356,13 +382,13 @@ public class WalletRestServiceHelper {
 		}
 		
 		for(Entry<Integer, List<RecordDTO>> recordEntryList : recordDTOsMap.entrySet()){
-			Float sum = 0f;
+			BigDecimal sum = new BigDecimal(0);
 			chartDTO = new PieChartDTO();
 			RecordTypeDTO recordTypeDTO = new RecordTypeDTO(walletTypeDAO.getById(recordEntryList.getKey()));
 			chartDTO.setColor(recordTypeDTO.getColor());
 			chartDTO.setKey(recordTypeDTO.getName());
 			for(RecordDTO recordDTOEntry : recordEntryList.getValue()){
-				sum += recordDTOEntry.getValue();
+				sum = sum.add(round(recordDTOEntry.getValue(), 2));
 			}
 			chartDTO.setValue(sum.toString());
 			chartDTO.setOrder(recordTypeDTO.getId());
@@ -481,22 +507,33 @@ public class WalletRestServiceHelper {
 
 	public ServiceResult addNewType(RecordTypeDTO typeDTO) {
 		ServiceResult result = new ServiceResult();
-		result.setSuccess(true);
-		WalletType type = new WalletType();
-		type.setColor(typeDTO.getColor());
-		type.setDefaultValue(typeDTO.getDefaultValue());
-		type.setIcon(typeDTO.getIcon());
-		type.setName(typeDTO.getName());
-		type.setParentType(walletTypeDAO.getById(typeDTO.getParentId()));
-		type.setTimestamp(new Date());
-		type.setUpdated(new Date());
-		try{
-			walletTypeDAO.save(type);
-		}catch(Exception e){
-			result.setSuccess(false);
-			result.getMessages().add(e.getMessage());
+		validateNewType(typeDTO, result);
+		if(result.isSuccess()){
+			WalletType type = new WalletType();
+			type.setColor(typeDTO.getColor());
+			type.setDefaultValue(typeDTO.getDefaultValue());
+			type.setIcon(typeDTO.getIcon());
+			type.setName(typeDTO.getName());
+			type.setParentType(walletTypeDAO.getById(typeDTO.getParentId()));
+			type.setTimestamp(new Date());
+			type.setUpdated(new Date());
+			try{
+				walletTypeDAO.save(type);
+				result.addMessage(ResultMessagesWallet.RECORD_ADDED);
+			}catch(Exception e){
+				result.setSuccess(false);
+				result.getMessages().add(e.getMessage());
+			}
 		}
 		return result;
+	}
+
+	private void validateNewType(RecordTypeDTO typeDTO, ServiceResult result) {
+		if(walletTypeDAO.getById(typeDTO.getParentId()) != null){
+			
+		}else{
+			result.addError(ResultMessagesWallet.TYPE_NOT_ADDED_PARENT_DOESNOT_EXIST);
+		}
 	}
 
 	public List<RecordTypeDTO> getTypesValidForParent(Principal principal) {
@@ -591,6 +628,105 @@ public class WalletRestServiceHelper {
 		}catch(Exception ex){
 			result.setSuccess(false);
 			LOG.error("Can not update Record", ex);
+		}
+		return result;
+	}
+
+	
+	/**
+	 * Metoda zwraca sume wartości wydatkow/dochodow dla zadanych typow dla każdego miesiąca od pierwszego wpisu dla zadanych typów
+	 *  
+	 * @param sumForAccountByTypes - zadane typy
+	 * @param principal - nazwa użytkownika
+	 * @return ServiceResult
+	 */
+	public ServiceResult getSumForTypesForStatisticsPerMonth(TypesForStatistics sumForAccountByTypes, String principal) {
+		ServiceResult result = new ServiceResult();
+		SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM");
+		GraphListOfKeyValuesAndProperties graphData = new GraphListOfKeyValuesAndProperties();
+		
+		List<KeyValuesByObjectDTO> keyValuesList = new ArrayList<KeyValuesByObjectDTO>();
+		Map<String, String> colors = new HashMap<String, String>();
+		Map<String, List<RecordDTO>> dataRecordsForTypeMap;
+		
+		
+		Map<WalletTypeDTO, List<RecordDTO>> recordsByType = new HashMap<WalletTypeDTO, List<RecordDTO>>();
+		//get records by type
+		for(Integer typeId : sumForAccountByTypes.getTypes()){
+			WalletTypeDTO type = new WalletTypeDTO(walletTypeDAO.getById(typeId));
+			colors.put(type.getName(), type.getColor());
+			List<RecordDTO> records = walletService.getRecordsByType(typeId, sumForAccountByTypes.isIncome());
+			recordsByType.put(type, records);
+		}
+		
+		DateTime dateForGraph = findMinDateOfValues(recordsByType);
+		
+		while(dateForGraph.isBeforeNow()){
+			KeyValuesByObjectDTO keyValues = new KeyValuesByObjectDTO();
+			keyValues.setKey(dateFormatter.format(dateForGraph.getMillis()));
+			keyValuesList.add(keyValues);
+			dateForGraph = dateForGraph.plusMonths(1);
+		}
+		
+		//build key multivalue dto for statistics
+		for(Entry<WalletTypeDTO, List<RecordDTO>> entryByType : recordsByType.entrySet()){
+			dataRecordsForTypeMap = transferToDataValueMap(entryByType.getValue(), dateFormatter);
+			
+			for(KeyValuesByObjectDTO kv : keyValuesList){
+				if(dataRecordsForTypeMap.containsKey(kv.getKey())){
+					KeyValueDTO record = new KeyValueDTO();
+					record.setKey(entryByType.getKey().getName());
+					record.setValue(sumRecordDTOs(dataRecordsForTypeMap.get(kv.getKey())));
+					kv.addValue(record);
+				}else{
+					KeyValueDTO record = new KeyValueDTO();
+					record.setKey(entryByType.getKey().getName());
+					record.setValue("0");
+					kv.addValue(record);
+				}
+			}
+		}
+		
+		graphData.setProperty(colors);
+		graphData.setKayValues(keyValuesList);
+		result.setObject(graphData);
+		result.setSuccess(true);
+		result.addMessage("message");
+		
+		return result;
+	}
+
+	
+	private DateTime findMinDateOfValues(Map<WalletTypeDTO, List<RecordDTO>> recordsByType) {
+		DateTime minDate = new DateTime();
+		for(Entry<WalletTypeDTO, List<RecordDTO>> entry : recordsByType.entrySet()){
+			for(RecordDTO record : entry.getValue()){
+				if(minDate.isAfter(entry.getValue().get(0).getDate())){
+					minDate = new DateTime(entry.getValue().get(0).getDate());
+				}
+			}
+		}
+		return minDate;
+	}
+
+	/**
+	 * Sortowanie rekordów po formacie daty.
+	 * @param values lista rekordów
+	 * @return
+	 */
+	private Map<String, List<RecordDTO>> transferToDataValueMap(List<RecordDTO> records, SimpleDateFormat dateFormatter) {
+		Map<String, List<RecordDTO>> result = new HashMap<String, List<RecordDTO>>();
+		
+		String tempData = "";
+		for(RecordDTO record : records){
+			tempData = dateFormatter.format(record.getDate());
+			if(result.containsKey(tempData)){
+				result.get(tempData).add(record);
+			}else{
+				List<RecordDTO> values = new ArrayList<RecordDTO>();
+				values.add(record);
+				result.put(tempData, values);
+			}
 		}
 		return result;
 	}

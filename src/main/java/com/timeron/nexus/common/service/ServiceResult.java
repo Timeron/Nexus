@@ -11,7 +11,15 @@ public class ServiceResult {
 	@Expose
 	private List<String> messages = new ArrayList<String>();
 	@Expose
+	private List<String> errors = new ArrayList<String>();
+	@Expose
 	private Object object;
+	@Expose
+	private List<String> properties;
+	
+	public ServiceResult(){
+		this.setSuccess(true);
+	}
 	
 	public Boolean isSuccess() {
 		return success;
@@ -34,7 +42,35 @@ public class ServiceResult {
 	public void addMessage(String message){
 		this.messages.add(message);
 	}
-	
-	
+	public List<String> getProperties() {
+		return properties;
+	}
+	public void setProperties(List<String> properties) {
+		this.properties = properties;
+	}	
+	public List<String> getErrors() {
+		return errors;
+	}
+	public void setErrors(List<String> errors) {
+		this.errors = errors;
+	}
+	public void addError(String message){
+		this.setSuccess(false);
+		this.errors.add(message);
+	}
+	public String getFirstMessage(){
+		String result = "";
+		if(messages.size() > 0){
+			return messages.get(0);
+		}
+		return result;
+	}
+	public String getFirstError(){
+		String result = "";
+		if(errors.size() > 0){
+			return errors.get(0);
+		}
+		return result;
+	}
 	
 }

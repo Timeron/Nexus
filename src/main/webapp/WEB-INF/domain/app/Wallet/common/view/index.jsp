@@ -412,6 +412,27 @@
 									<div class="typeStatisticChart"></div>
 									<div barChart data="{{typeStatisticData}}"></div>
 								</div>
+								<div>
+									<div>Statystyka grupy typów</div>
+									<div class="col-md-12 multiBarChartMenu">
+										<div class="col-md-12 ">
+											<div class="bold border-bottom">Typy operacji</div>
+											<div ng-repeat="type in types">
+												<div class="legendRow clickable" data-toggle="tooltip" data-placement="top">
+													<input type="checkbox" class="checkbox" ng-model="type.multiBarChartMenu">
+													<div style="background-color: {{type.color}}; color: {{type.color}};" class="legendColor">X</div>
+													<div class="legendLabel">{{type.name}}</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 ">
+											<button class="btn btn-sm btn-default btn-filter" ng-click="multiBarChartSearch()">Filtruj</button>
+										</div>
+									</div>
+									
+									</div>
+									<div multiBarChart class="multiBarChart" data="{{testtest.chart}}" colors="{{testtest.chart}}" ></div>
+								</div>
 							</div>
 						</section>
 						<section role="tabpanel" class="operations tab-pane fade" id="Records">
