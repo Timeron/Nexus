@@ -10,6 +10,8 @@ public class ResultMessages {
 	
 	public static final String NO_CONNECTION = "CONNECTION_ERROR";
 	public static final String DATABASE_ISSUE = "Błąd bazy danych";
+	public static final String DATA_ERROR = "Nieprawidłowe dane";
+	public static final String DATE_ERROR = "Nieprawidłowa data";
 	
 	/**
 	 * Account

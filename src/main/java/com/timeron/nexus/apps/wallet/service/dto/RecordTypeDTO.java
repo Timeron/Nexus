@@ -13,7 +13,7 @@ public class RecordTypeDTO {
 	private String icon;
 	private Date timestamp;
 	private Date updated;
-	private int parentId;
+	private Integer parentId;
 	
 	public RecordTypeDTO() {}
 	
@@ -72,11 +72,11 @@ public class RecordTypeDTO {
 		this.updated = updated;
 	}
 
-	public int getParentId() {
+	public Integer getParentId() {
 		return parentId;
 	}
 
-	public void setParentId(int parentId) {
+	public void setParentId(Integer parentId) {
 		this.parentId = parentId;
 	}
 	

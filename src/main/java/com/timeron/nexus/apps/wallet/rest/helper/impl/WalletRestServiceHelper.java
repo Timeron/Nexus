@@ -1,4 +1,4 @@
-package com.timeron.nexus.apps.wallet.rest.helper;
+package com.timeron.nexus.apps.wallet.rest.helper.impl;
 
 import java.math.BigDecimal;
 import java.security.Principal;
@@ -21,7 +21,6 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonElement;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
@@ -33,7 +32,10 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 import com.timeron.NexusDatabaseLibrary.dto.IdOrderDTO;
 import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
-import com.timeron.nexus.apps.wallet.service.WalletService;
+import com.timeron.nexus.apps.wallet.rest.helper.WalletRestServiceHelperInterface;
+import com.timeron.nexus.apps.wallet.service.WalletAccountService;
+import com.timeron.nexus.apps.wallet.service.WalletRecordService;
+import com.timeron.nexus.apps.wallet.service.WalletTypeService;
 import com.timeron.nexus.apps.wallet.service.dto.AccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
 import com.timeron.nexus.apps.wallet.service.dto.HierarchyPieChartDTO;
@@ -48,14 +50,11 @@ import com.timeron.nexus.apps.wallet.service.dto.TypesForStatistics;
 import com.timeron.nexus.apps.wallet.service.dto.WalletTypeDTO;
 import com.timeron.nexus.apps.wallet.service.dto.graph.GraphListOfKeyValuesAndProperties;
 import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValueDTO;
-import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValuePropertyDTO;
 import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValuesByObjectDTO;
-import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValuesDTO;
-import com.timeron.nexus.common.service.ResultMessages;
 import com.timeron.nexus.common.service.ServiceResult;
 
 @Component
-public class WalletRestServiceHelper {
+public class WalletRestServiceHelper implements WalletRestServiceHelperInterface{
 	
 	static Logger LOG = Logger.getLogger(WalletRestServiceHelper.class);
 	
@@ -68,150 +67,48 @@ public class WalletRestServiceHelper {
 	@Autowired
 	WalletRecordDAO walletRecordDAO;
 	@Autowired
-	WalletService walletService;
+	WalletRecordService walletRecordService;
+	@Autowired
+	WalletAccountService walletAccountService;
+	@Autowired
+	WalletTypeService walletTypeService;
 
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
 	SimpleDateFormat formatMonth = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
 	
 	public ServiceResult addAccount(NewAccountDTO accountDTO, Principal principal) {
-		ServiceResult result = new ServiceResult();
 		NexusPerson nexusPerson = nexusPersonDAO.getByNick(principal.getName());
-		if(!walletAccountDAO.checkIfNameIsAvailable(accountDTO.getName(), nexusPerson)){
-			result.addError(ResultMessagesWallet.ACCOUNT_ADDED);
-			return result;
-		}else{
-			Date now = new Date();
-			WalletAccount walletAccount = new WalletAccount();
-			walletAccount.setCurrency("PLN");
-			walletAccount.setDescription(accountDTO.getDescription());
-			walletAccount.setName(accountDTO.getName());
-			walletAccount.setTimestamp(now);
-			walletAccount.setUpdated(now);
-			walletAccount.setOwner(nexusPerson);
-			try{
-				walletAccountDAO.save(walletAccount);
-				result.addMessage(ResultMessagesWallet.ACCOUNT_ADDED);
-			}catch(Exception ex){
-				result.addError(ResultMessagesWallet.ACCOUNT_ADD_ERROR);
-				ex.printStackTrace();
-			}
-			return result;
-		}
-		
-	}
-
-	public List<RecordTypeDTO> getAllRecordTypes() {
-		List<RecordTypeDTO> recordTypeDTOs = new ArrayList<RecordTypeDTO>();
-		List<WalletType> walletTypes =  walletTypeDAO.getAll();
-		List<IdOrderDTO> typeOrder = walletTypeDAO.getIdOrder();
-		for(WalletType type : walletTypes){
-			RecordTypeDTO recordTypeDTO = new RecordTypeDTO();
-			recordTypeDTO.setId(type.getId());
-			recordTypeDTO.setColor(type.getColor());
-			recordTypeDTO.setDefaultValue(type.getDefaultValue());
-			recordTypeDTO.setIcon(type.getIcon());
-			recordTypeDTO.setName(type.getName());
-			recordTypeDTO.setTimestamp(type.getTimestamp());
-			recordTypeDTO.setUpdated(type.getUpdated());
-			if(type.getParentType() != null){
-				recordTypeDTO.setParentId(type.getParentType().getId());
-			}
-			recordTypeDTOs.add(recordTypeDTO);
-		}
-		recordTypeDTOs = getTypeByOrder(recordTypeDTOs, typeOrder);
-		return recordTypeDTOs;
-	}
-
-	private List<RecordTypeDTO> getTypeByOrder(List<RecordTypeDTO> recordTypeDTOs, List<IdOrderDTO> typeOrder) {
-		List<RecordTypeDTO> typeByOrderDTOs = new ArrayList<RecordTypeDTO>();
-		List<RecordTypeDTO> typeWithoutSortOrder = new ArrayList<RecordTypeDTO>();
-		boolean added = false;
-		for(RecordTypeDTO record : recordTypeDTOs){
-			for(IdOrderDTO entry : typeOrder){
-				if(entry.getId() == record.getId()){
-					typeByOrderDTOs.add(record);
-					added = true;
-				}
-			}if(!added){
-				typeWithoutSortOrder.add(record);
-			}
-			added = false;
-		}
-		typeByOrderDTOs.addAll(typeWithoutSortOrder);
-		return typeByOrderDTOs;
-	}
-
-	public ServiceResult addNewRecord(RecordDTO recordDTO) {
-		ServiceResult result = new ServiceResult();
-		WalletRecord walletRecord = new WalletRecord();
-		WalletRecord walletTransferRecord = new WalletRecord();
-		
-		if(recordDTO.getDate() != 0){
-			walletRecord.setDate(new Date(recordDTO.getDate()));
-		}else{
-			walletRecord.setDate(new Date());
-		}
-		
-		walletRecord.setDescription(recordDTO.getDescription());
-		walletRecord.setValue(recordDTO.getValue());
-		if(recordDTO.getAccountId() != 0){
-			walletRecord.setWalletAccount(walletAccountDAO.getById(recordDTO.getAccountId()));
-		}else{
-			result.addError(ResultMessagesWallet.RECORD_ADD_NO_ACCOUNT);
-			return result;
-		}
-		if(recordDTO.getRecordTypeId() != 0){
-			walletRecord.setWalletType(walletTypeDAO.getById(recordDTO.getRecordTypeId()));
-		}
-		if(recordDTO.isTransfer()){
-			walletRecord.setTransfer(true);
-			walletRecord.setIncome(false);
-			if(recordDTO.getDestynationAccountId() != 0){
-				walletRecord.setDestinationWalletAccount(walletAccountDAO.getById(recordDTO.getDestynationAccountId()));
-			}
-			if(recordDTO.getAccountId() != 0){
-				walletRecord.setSourceWalletAccount(walletRecord.getWalletAccount());
-			}
-			
-			walletTransferRecord.setDate(walletRecord.getDate());
-			walletTransferRecord.setDescription(walletRecord.getDescription());
-			walletTransferRecord.setDestinationWalletAccount(walletRecord.getDestinationWalletAccount());
-			walletTransferRecord.setIncome(true);
-			walletTransferRecord.setSourceWalletAccount(walletRecord.getSourceWalletAccount());
-			walletTransferRecord.setTransfer(true);
-			walletTransferRecord.setValue(walletRecord.getValue());
-			walletTransferRecord.setWalletAccount(walletRecord.getDestinationWalletAccount());
-			walletTransferRecord.setWalletType(walletRecord.getWalletType());			
-		}else{
-			walletRecord.setTransfer(false);
-			walletRecord.setIncome(recordDTO.isIncome());
-		}
-		try{
-			walletRecordDAO.save(walletRecord);
-			if(walletRecord.isTransfer()){
-				walletRecordDAO.save(walletTransferRecord);
-			}
-			result.addMessage(ResultMessagesWallet.RECORD_ADDED);
-		}catch(Exception ex){
-			ex.printStackTrace();
-			result.addError(ResultMessagesWallet.RECORD_ADD_ERROR);
-		}
-		return result;
+		return walletAccountService.addAccount(accountDTO, nexusPerson);
 	}
 
 	public List<AccountForDropdownDTO> getAllUserAccounts(Principal principal) {
-		List<WalletAccount> walletAccounts = walletAccountDAO.getByUser(nexusPersonDAO.getByNick(principal.getName()));
-		List<AccountForDropdownDTO> accountDTOs = new ArrayList<AccountForDropdownDTO>();
-		for(WalletAccount walletAccount : walletAccounts){
-			AccountForDropdownDTO accountDTO = new AccountForDropdownDTO();
-			accountDTO.setDescription(walletAccount.getDescription());
-			accountDTO.setName(walletAccount.getName());
-			accountDTO.setId(walletAccount.getId());
-			accountDTOs.add(accountDTO);
-		}
-		return accountDTOs;
+		return walletAccountService.getAllUserAccounts(principal);
+	}
+	
+	public ServiceResult addNewRecord(RecordDTO recordDTO) {
+		return walletRecordService.addNewRecord(recordDTO);
 	}
 
+	public ServiceResult updateRecord(RecordDTO recordDTO) {
+		return walletRecordService.updateRecord(recordDTO);
+	}
+	
+	public List<RecordTypeDTO> updateTypes(RecordTypeListDTO typeListDTO) {
+		return walletTypeService.updateTypes(typeListDTO);
+	}
+
+	public ServiceResult addNewType(RecordTypeDTO typeDTO) {
+		return walletTypeService.addNewType(typeDTO);
+	}
+
+	public List<RecordTypeDTO> getAllRecordTypes() {
+		return walletTypeService.getAllRecordTypes();
+	}
+
+	public List<RecordTypeDTO> getTypesValidForParent(Principal principal) {
+		return walletTypeService.getTypesValidForParent(principal);
+	}
+	
 	public ServiceResult getAllAccountsAndRecords(Principal principal) {
 		ServiceResult result = new ServiceResult();
 		List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
@@ -273,6 +170,7 @@ public class WalletRestServiceHelper {
 		return transformToPieChartByType(records);
 	}
 	
+	@Override
 	public List<PieChartDTO> getSumForAccountByParentType(SumForAccountByType sumForAccountByType, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(sumForAccountByType.getId());
 		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByType.getIncome());
@@ -499,69 +397,6 @@ public class WalletRestServiceHelper {
 		return dataValueDTOs;
 	}
 
-	public ServiceResult addNewType(RecordTypeDTO typeDTO) {
-		ServiceResult result = new ServiceResult();
-		validateNewType(typeDTO, result);
-		if(result.isSuccess()){
-			WalletType type = new WalletType();
-			type.setColor(typeDTO.getColor());
-			type.setDefaultValue(typeDTO.getDefaultValue());
-			type.setIcon(typeDTO.getIcon());
-			type.setName(typeDTO.getName());
-			type.setParentType(walletTypeDAO.getById(typeDTO.getParentId()));
-			type.setTimestamp(new Date());
-			type.setUpdated(new Date());
-			try{
-				walletTypeDAO.save(type);
-				result.addMessage(ResultMessagesWallet.RECORD_ADDED);
-			}catch(Exception e){
-				result.addError(ResultMessagesWallet.DATABASE_ISSUE);
-				LOG.error(e.getMessage());
-			}
-		}
-		return result;
-	}
-
-	private void validateNewType(RecordTypeDTO typeDTO, ServiceResult result) {
-		if(walletTypeDAO.getById(typeDTO.getParentId()) != null){
-			
-		}else{
-			result.addError(ResultMessagesWallet.TYPE_NOT_ADDED_PARENT_DOESNOT_EXIST);
-		}
-	}
-
-	public List<RecordTypeDTO> getTypesValidForParent(Principal principal) {
-		List<WalletType> walletTypes = walletTypeDAO.getAllParents();
-		List<RecordTypeDTO> recordTypeDTOs = new ArrayList<RecordTypeDTO>();
-		RecordTypeDTO typeDTO;
-		for(WalletType type : walletTypes){
-			typeDTO = new RecordTypeDTO(type);
-			recordTypeDTOs.add(typeDTO);
-		}
-		return recordTypeDTOs;
-	}
-
-	public List<RecordTypeDTO> updateTypes(RecordTypeListDTO typeListDTO) {
-		List<RecordTypeDTO> uTypes = new ArrayList<RecordTypeDTO>();
-		WalletType walletType;
-		for(RecordTypeDTO type : typeListDTO.getTypes()){
-			walletType = walletTypeDAO.getById(type.getId());
-			walletType.setColor(type.getColor());
-			walletType.setDefaultValue(type.getDefaultValue());
-			walletType.setIcon(type.getIcon());
-			walletType.setName(type.getName());
-//			walletType.setParentType(parentType);
-			walletType.setUpdated(new Date());
-			walletTypeDAO.update(walletType);
-		}
-		RecordTypeDTO uType;
-		for(WalletType wType : walletTypeDAO.getAll()){
-			uType = new RecordTypeDTO(wType);
-			uTypes.add(uType);
-		}
-		return uTypes;
-	}
-
 	public List<KeyValueDTO> getSumForTypeForStatistics(TypeForStatistics typeForStatistics, Principal principal) {
 		
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yy, MMM");
@@ -601,32 +436,6 @@ public class WalletRestServiceHelper {
 		}
 	}
 
-	public ServiceResult updateRecord(RecordDTO recordDTO) {
-		ServiceResult result = new ServiceResult();
-		WalletRecord record = new WalletRecord();
-		record.setId(recordDTO.getId());
-		record.setValue(recordDTO.getValue());
-		record.setDescription(recordDTO.getDescription());
-		record.setIncome(recordDTO.isIncome());
-		record.setTransfer(recordDTO.isTransfer());
-		record.setDate(new Date(recordDTO.getDate()));
-		record.setUpdated(new Date());
-		record.setWalletType(walletTypeDAO.getById(recordDTO.getRecordTypeId()));
-		record.setWalletAccount(walletAccountDAO.getById(recordDTO.getAccountId()));
-		record.setDestinationWalletAccount(walletAccountDAO.getById(recordDTO.getDestynationAccountId()));
-		record.setSourceWalletAccount(walletAccountDAO.getById(recordDTO.getSourceWalletAccountId()));
-		try{
-			walletRecordDAO.update(record);
-			result.setSuccess(true);
-			LOG.info("Record has been updated");
-		}catch(Exception ex){
-			result.addError(ResultMessagesWallet.DATABASE_ISSUE);
-			LOG.error("Can not update Record", ex);
-		}
-		return result;
-	}
-
-	
 	/**
 	 * Metoda zwraca sume wartości wydatkow/dochodow dla zadanych typow dla każdego miesiąca od pierwszego wpisu dla zadanych typów
 	 *  
@@ -649,7 +458,7 @@ public class WalletRestServiceHelper {
 		for(Integer typeId : sumForAccountByTypes.getTypes()){
 			WalletTypeDTO type = new WalletTypeDTO(walletTypeDAO.getById(typeId));
 			colors.put(type.getName(), type.getColor());
-			List<RecordDTO> records = walletService.getRecordsByType(typeId, sumForAccountByTypes.isIncome());
+			List<RecordDTO> records = walletRecordService.getRecordsByType(typeId, sumForAccountByTypes.isIncome());
 			recordsByType.put(type, records);
 		}
 		

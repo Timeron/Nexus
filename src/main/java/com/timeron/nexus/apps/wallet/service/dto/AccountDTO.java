@@ -20,6 +20,10 @@ public class AccountDTO{
 	
 	public AccountDTO(){}
 	
+	public AccountDTO(int id){
+		this.id = id;
+	}
+	
 	public AccountDTO(WalletAccount account) {
 		this.id = account.getId();
 		this.name = account.getName();
@@ -85,5 +89,29 @@ public class AccountDTO{
 	public void setSum(double sum) {
 		this.sum = sum;
 	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		AccountDTO other = (AccountDTO) obj;
+		if (id != other.id)
+			return false;
+		return true;
+	}
+	
+	
 	
 }

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
-import com.timeron.nexus.apps.wallet.rest.helper.WalletRestServiceHelper;
+import com.timeron.nexus.apps.wallet.rest.helper.impl.WalletRestServiceHelper;
 import com.timeron.nexus.apps.wallet.service.dto.AccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordDTO;
