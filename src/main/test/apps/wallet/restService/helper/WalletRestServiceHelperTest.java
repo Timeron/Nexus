@@ -15,7 +15,8 @@ import java.util.List;
 import java.util.Map;
 
 import org.joda.time.DateTime;
-import org.junit.Ignore;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,7 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletAccountDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
+import com.timeron.nexus.apps.wallet.exception.ValidationException;
 import com.timeron.nexus.apps.wallet.rest.helper.impl.WalletRestServiceHelper;
 import com.timeron.nexus.apps.wallet.service.WalletRecordService;
 import com.timeron.nexus.apps.wallet.service.dto.AccountDTO;
@@ -61,7 +63,7 @@ import dbUnit.ColumnSensingFlatXMLDataSetLoader;
 @DatabaseSetup("/dbMock/Wallet.xml")
 public class WalletRestServiceHelperTest {
 	
-	private static final int RECORDS_START_NUMBER = 12;
+	private static final int RECORDS_START_NUMBER = 13;
 
 	@Autowired
 	private WalletRestServiceHelper walletRestSeriveHelper;
@@ -86,7 +88,6 @@ public class WalletRestServiceHelperTest {
 		}
 	};
 	
-	@Ignore
 	@Test
 	public void getSumForTypesForStatisticsPerMonth(){
 		List<Integer> typeIds = new ArrayList<Integer>();
@@ -105,23 +106,29 @@ public class WalletRestServiceHelperTest {
 		assertTrue(object.getKayValues().size() >= 10);
 		assertEquals(2, object.getProperty().size());
 		
-		assertEquals("2015-10", object.getKayValues().get(0).getKey());
-		KeyValueDTO kv = new KeyValueDTO("Sodexo", "39.98");
+		assertEquals("2015-09", object.getKayValues().get(0).getKey());
+		KeyValueDTO kv = new KeyValueDTO("Sodexo", "6.80");
 		assertTrue(object.getKayValues().get(0).getValues().contains(kv));
 		kv = new KeyValueDTO("Bank", "0");
 		assertTrue(object.getKayValues().get(0).getValues().contains(kv));
 		
-		assertEquals("2015-11", object.getKayValues().get(1).getKey());
-		kv = new KeyValueDTO("Sodexo", "28,49");
+		assertEquals("2015-10", object.getKayValues().get(1).getKey());
+		kv = new KeyValueDTO("Sodexo", "0");
 		assertTrue(object.getKayValues().get(1).getValues().contains(kv));
 		kv = new KeyValueDTO("Bank", "0");
 		assertTrue(object.getKayValues().get(1).getValues().contains(kv));
 
-		assertEquals("2015-12", object.getKayValues().get(2).getKey());
+		assertEquals("2015-11", object.getKayValues().get(2).getKey());
 		kv = new KeyValueDTO("Sodexo", "0");
 		assertTrue(object.getKayValues().get(2).getValues().contains(kv));
-		kv = new KeyValueDTO("Bank", "0");
+		kv = new KeyValueDTO("Bank", "8.00");
 		assertTrue(object.getKayValues().get(2).getValues().contains(kv));
+		
+		assertEquals("2015-12", object.getKayValues().get(3).getKey());
+		kv = new KeyValueDTO("Sodexo", "62.05");
+		assertTrue(object.getKayValues().get(3).getValues().contains(kv));
+		kv = new KeyValueDTO("Bank", "0");
+		assertTrue(object.getKayValues().get(3).getValues().contains(kv));
 		
 	}
 	
@@ -165,7 +172,6 @@ public class WalletRestServiceHelperTest {
 		assertEquals(0, result.getMessages().size());
 	}
 	
-	@Ignore
 	@Test
 	public void getAllRecordTypes() {
 		List<RecordTypeDTO> types = walletRestSeriveHelper.getAllRecordTypes();
@@ -197,7 +203,7 @@ public class WalletRestServiceHelperTest {
 		WalletRecord record = walletRecordDAO.getById(walletRecordDAO.getLastId()); 
 
 		assertEquals(RECORDS_START_NUMBER+1, walletRecordDAO.getAll().size());
-		assertEquals(recordDTO.getDate(), record.getDate().getTime());
+		assertEquals(recordDTO.getDate(), record.getDate().getMillis());
 		assertEquals(recordDTO.getDescription(), record.getDescription());
 		assertEquals(recordDTO.getAccountId(), record.getWalletAccount().getId());
 		assertFalse(record.isIncome());
@@ -228,7 +234,7 @@ public class WalletRestServiceHelperTest {
 		WalletRecord record = walletRecordDAO.getById(walletRecordDAO.getLastId()); 
 		
 		assertEquals(RECORDS_START_NUMBER+1, walletRecordDAO.getAll().size());
-		assertTrue(record.getDate().getTime() > 0);
+		assertTrue(record.getDate().getMillis() > 0);
 		assertEquals(recordDTO.getDescription(), record.getDescription());
 		assertEquals(recordDTO.getAccountId(), record.getWalletAccount().getId());
 		assertFalse(record.isIncome());
@@ -259,7 +265,7 @@ public class WalletRestServiceHelperTest {
 		WalletRecord record = walletRecordDAO.getById(walletRecordDAO.getLastId()); 
 		
 		assertEquals(RECORDS_START_NUMBER+1, walletRecordDAO.getAll().size());
-		assertTrue(record.getDate().getTime() > 0);
+		assertTrue(record.getDate().getMillis()> 0);
 		assertEquals(recordDTO.getDescription(), record.getDescription());
 		assertEquals(recordDTO.getAccountId(), record.getWalletAccount().getId());
 		assertTrue(record.isIncome());
@@ -291,7 +297,7 @@ public class WalletRestServiceHelperTest {
 		WalletRecord record = walletRecordDAO.getById(walletRecordDAO.getLastId()); 
 		
 		assertEquals(RECORDS_START_NUMBER+1, walletRecordDAO.getAll().size());
-		assertTrue(record.getDate().getTime() > 0);
+		assertTrue(record.getDate().getMillis() > 0);
 		assertEquals(recordDTO.getDescription(), record.getDescription());
 		assertEquals(recordDTO.getAccountId(), record.getWalletAccount().getId());
 		assertFalse(record.isIncome());
@@ -323,7 +329,7 @@ public class WalletRestServiceHelperTest {
 		WalletRecord record = walletRecordDAO.getById(walletRecordDAO.getLastId()); 
 
 		assertEquals(RECORDS_START_NUMBER+1, walletRecordDAO.getAll().size());
-		assertTrue(record.getDate().getTime() > 0);
+		assertTrue(record.getDate().getMillis() > 0);
 		assertEquals(recordDTO.getDescription(), record.getDescription());
 		assertEquals(recordDTO.getAccountId(), record.getWalletAccount().getId());
 		assertFalse(record.isIncome());
@@ -428,7 +434,7 @@ public class WalletRestServiceHelperTest {
 
 		assertEquals(RECORDS_START_NUMBER+2, walletRecordDAO.getAll().size());
 		
-		assertEquals(recordDTO.getDate(), destinationRecord.getDate().getTime());
+		assertEquals(recordDTO.getDate(), destinationRecord.getDate().getMillis());
 		assertEquals(recordDTO.getDescription(), destinationRecord.getDescription());
 		assertEquals(2, destinationRecord.getWalletAccount().getId());
 		assertTrue(destinationRecord.isIncome());
@@ -438,7 +444,7 @@ public class WalletRestServiceHelperTest {
 		assertEquals(1, destinationRecord.getSourceWalletAccount().getId());
 		assertEquals(2, destinationRecord.getDestinationWalletAccount().getId());
 		
-		assertEquals(recordDTO.getDate(), SourceRecord.getDate().getTime());
+		assertEquals(recordDTO.getDate(), SourceRecord.getDate().getMillis());
 		assertEquals(recordDTO.getDescription(), SourceRecord.getDescription());
 		assertEquals(1, SourceRecord.getWalletAccount().getId());
 		assertFalse(SourceRecord.isIncome());
@@ -476,7 +482,7 @@ public class WalletRestServiceHelperTest {
 
 		assertEquals(RECORDS_START_NUMBER+2, walletRecordDAO.getAll().size());
 		
-		assertEquals(recordDTO.getDate(), destinationRecord.getDate().getTime());
+		assertEquals(recordDTO.getDate(), destinationRecord.getDate().getMillis());
 		assertEquals(recordDTO.getDescription(), destinationRecord.getDescription());
 		assertEquals(2, destinationRecord.getWalletAccount().getId());
 		assertTrue(destinationRecord.isIncome());
@@ -486,7 +492,7 @@ public class WalletRestServiceHelperTest {
 		assertEquals(1, destinationRecord.getSourceWalletAccount().getId());
 		assertEquals(2, destinationRecord.getDestinationWalletAccount().getId());
 		
-		assertEquals(recordDTO.getDate(), SourceRecord.getDate().getTime());
+		assertEquals(recordDTO.getDate(), SourceRecord.getDate().getMillis());
 		assertEquals(recordDTO.getDescription(), SourceRecord.getDescription());
 		assertEquals(1, SourceRecord.getWalletAccount().getId());
 		assertFalse(SourceRecord.isIncome());
@@ -599,16 +605,17 @@ public class WalletRestServiceHelperTest {
 		assertEquals(RECORDS_START_NUMBER, walletRecordDAO.getAll().size());
 	}
 	
-	@Ignore
 	@Test
 	public void getAllUserAccounts() {
 		List<AccountForDropdownDTO> accounts = walletRestSeriveHelper.getAllUserAccounts(principal);
 		
-		assertEquals(2, accounts.size());
+		assertEquals(3, accounts.size());
 		assertEquals("Moje konto 1", accounts.get(0).getName());
 		assertEquals("Prywatne konto 1", accounts.get(0).getDescription());
 		assertEquals("Moje konto 2", accounts.get(1).getName());
 		assertEquals("Prywatne konto 2", accounts.get(1).getDescription());
+		assertEquals("Moje konto 3", accounts.get(2).getName());
+		assertEquals("Prywatne konto 3", accounts.get(2).getDescription());
 		
 	}
 	
@@ -621,37 +628,51 @@ public class WalletRestServiceHelperTest {
 		assertEquals(3, accounts.size());
 		assertEquals(9, getAccount(accounts, 1).getRecords().size());
 		assertEquals(1, getAccount(accounts, 2).getRecords().size());
-		assertEquals(2, getAccount(accounts, 3).getRecords().size());
+		assertEquals(3, getAccount(accounts, 3).getRecords().size());
 	}
 
-	
-	@Ignore
 	@Test
 	public void getRecordsForAccountByDay() {
 		List<KeyValueDTO> data = walletRestSeriveHelper.getRecordsForAccountByDay(1, principal);
+		DateTime date = new DateTime();
+		DateTimeFormatter fmt = DateTimeFormat.forPattern("yyyy-MMM-dd");
+		String dateStr = fmt.print(date);
 		
-		assertEquals(8, data.size());
-		assertEquals("69.49", data.get(0).getValue());
-		assertEquals("93.03", data.get(1).getValue());
-		assertEquals("85.15", data.get(2).getValue());
-		assertEquals("63.66", data.get(3).getValue());
-		assertEquals("49.51", data.get(4).getValue());
-		assertEquals("18.09", data.get(5).getValue());
+		assertEquals(7, data.size());
+		assertEquals("4993.20", data.get(0).getValue());
+		assertEquals("2015-Sep-02", data.get(0).getKey());
+		assertEquals("3993.20", data.get(1).getValue());
+		assertEquals("2015-Oct-02", data.get(1).getKey());
+		assertEquals("3935.45", data.get(2).getValue());
+		assertEquals("2015-Nov-02", data.get(2).getKey());
+		assertEquals("3877.70", data.get(3).getValue());
+		assertEquals("2015-Dec-02", data.get(3).getKey());
+		assertEquals("3873.40", data.get(4).getValue());
+		assertEquals("2015-Dec-04", data.get(4).getKey());
+		assertEquals("8066.90", data.get(5).getValue());
+		assertEquals("2015-Dec-09", data.get(5).getKey());
+		assertEquals("8066.90", data.get(6).getValue());
+		assertEquals(dateStr, data.get(6).getKey());
 	}
 	
-	@Ignore
 	@Test
 	public void getSumForAccountByType() {
 		SumForAccountByType dto = new SumForAccountByType();
 		dto.setId(1);
 		dto.setIncome(false);
 		List<PieChartDTO> data = walletRestSeriveHelper.getSumForAccountByType(dto, principal);
-		assertEquals(2, data.size());
-		assertEquals("17.08", data.get(0).getValue());
-		assertEquals("68.47", data.get(1).getValue());
+		assertEquals(3, data.size());
+		assertEquals("8.00", data.get(0).getValue());
+		assertEquals("#DD0", data.get(0).getColor());
+		assertEquals("Bank", data.get(0).getKey());
+		assertEquals("49.75", data.get(1).getValue());
+		assertEquals("#F00", data.get(1).getColor());
+		assertEquals("Artykuły spożywcze", data.get(1).getKey());
+		assertEquals("68.85", data.get(2).getValue());
+		assertEquals("#F50", data.get(2).getColor());
+		assertEquals("Sodexo", data.get(2).getKey());
 	}
 	
-	@Ignore
 	@Test
 	public void getSumForAccountByType_Income() {
 		SumForAccountByType dto = new SumForAccountByType();
@@ -659,7 +680,7 @@ public class WalletRestServiceHelperTest {
 		dto.setIncome(true);
 		List<PieChartDTO> data = walletRestSeriveHelper.getSumForAccountByType(dto, principal);
 		assertEquals(1, data.size());
-		assertEquals("93.03", data.get(0).getValue());
+		assertEquals("9193.50", data.get(0).getValue());
 	}
 	
 	@Test
@@ -673,21 +694,98 @@ public class WalletRestServiceHelperTest {
 		assertEquals("8.00", data.get(1).getValue());
 	}
 	
-	@Ignore
 	@Test
-	public void getSumForTypeInTypeHierarchy() {
+	public void getSumForTypeInTypeHierarchy_expenditure() {
 		SumForAccountByType dto = new SumForAccountByType();
 		dto.setId(1);
 		dto.setIncome(false);
 		List<HierarchyPieChartDTO> data = walletRestSeriveHelper.getSumForTypeInTypeHierarchy(dto, principal);
 		
+		assertEquals(2, data.size());
+		
+		HierarchyPieChartDTO tree1 = data.get(0);
+		HierarchyPieChartDTO tree2 = data.get(1);
+		
+		assertEquals("118.60", tree1.getValue());
+		assertEquals("Artykuły spożywcze", tree1.getKey());
+		assertEquals("#F00", tree1.getColor());
+		assertEquals(6, tree1.getOrder());
+		assertEquals(4, tree1.getChildren().size());
+		
+		assertEquals("Sodexo", tree1.getChildren().get(0).getKey());
+		assertEquals("68.85", tree1.getChildren().get(0).getValue());
+		assertEquals("#F50", tree1.getChildren().get(0).getColor());
+		assertEquals(4, tree1.getChildren().get(0).getOrder());
+		assertEquals(0, tree1.getChildren().get(0).getChildren().size());
+		
+		assertEquals("Artykuły spożywcze", tree1.getChildren().get(1).getKey());
+		assertEquals("49.75", tree1.getChildren().get(1).getValue());
+		assertEquals("#F00", tree1.getChildren().get(1).getColor());
+		assertEquals(6, tree1.getChildren().get(1).getOrder());
+		assertEquals(0, tree1.getChildren().get(1).getChildren().size());
+		
+		assertEquals("Pizza", tree1.getChildren().get(2).getKey());
+		assertEquals("0", tree1.getChildren().get(2).getValue());
+		assertEquals("#FA0", tree1.getChildren().get(2).getColor());
+		assertEquals(5, tree1.getChildren().get(2).getOrder());
+		assertEquals(0, tree1.getChildren().get(2).getChildren().size());
+		
+		assertEquals("Jedzenie poza domem", tree1.getChildren().get(3).getKey());
+		assertEquals("0", tree1.getChildren().get(3).getValue());
+		assertEquals("#F80", tree1.getChildren().get(3).getColor());
+		assertEquals(12, tree1.getChildren().get(3).getOrder());
+		assertEquals(0, tree1.getChildren().get(3).getChildren().size());
+		
+		//tree 2
+		
+		assertEquals("8.00", tree2.getValue());
+		assertEquals("Administracja", tree2.getKey());
+		assertEquals("#642", tree2.getColor());
+		assertEquals(20, tree2.getOrder());
+		assertEquals(3, tree2.getChildren().size());
+		
+		assertEquals("Bank", tree2.getChildren().get(0).getKey());
+		assertEquals("8.00", tree2.getChildren().get(0).getValue());
+		assertEquals("#DD0", tree2.getChildren().get(0).getColor());
+		assertEquals(1, tree2.getChildren().get(0).getOrder());
+		assertEquals(0, tree1.getChildren().get(0).getChildren().size());
+		
+		assertEquals("Podatek", tree2.getChildren().get(1).getKey());
+		assertEquals("0", tree2.getChildren().get(1).getValue());
+		assertEquals("#000", tree2.getChildren().get(1).getColor());
+		assertEquals(24, tree2.getChildren().get(1).getOrder());
+		assertEquals(0, tree1.getChildren().get(1).getChildren().size());
+		
+		assertEquals("Administracja", tree2.getChildren().get(2).getKey());
+		assertEquals("0", tree2.getChildren().get(2).getValue());
+		assertEquals("#642", tree2.getChildren().get(2).getColor());
+		assertEquals(20, tree2.getChildren().get(2).getOrder());
+		assertEquals(0, tree1.getChildren().get(2).getChildren().size());
+	}
+	
+	@Test
+	public void getSumForTypeInTypeHierarchy_income() {
+		SumForAccountByType dto = new SumForAccountByType();
+		dto.setId(1);
+		dto.setIncome(true);
+		List<HierarchyPieChartDTO> data = walletRestSeriveHelper.getSumForTypeInTypeHierarchy(dto, principal);
+		
 		assertEquals(1, data.size());
-		assertEquals("85.55", data.get(0).getValue());
-		assertEquals(4, data.get(0).getChildren().size());
-		assertEquals("68.47", data.get(0).getChildren().get(0).getValue());
-		assertEquals("17.08", data.get(0).getChildren().get(1).getValue());
-		assertEquals("0", data.get(0).getChildren().get(2).getValue());
-		assertEquals("0", data.get(0).getChildren().get(3).getValue());
+		
+		HierarchyPieChartDTO tree1 = data.get(0);
+		
+		assertEquals("9193.50", tree1.getValue());
+		assertEquals("Wynagrodzenie, przychód", tree1.getKey());
+		assertEquals("#090", tree1.getColor());
+		assertEquals(11, tree1.getOrder());
+		assertEquals(1, tree1.getChildren().size());
+		
+		assertEquals("Wynagrodzenie, przychód", tree1.getChildren().get(0).getKey());
+		assertEquals("9193.50", tree1.getChildren().get(0).getValue());
+		assertEquals("#090", tree1.getChildren().get(0).getColor());
+		assertEquals(11, tree1.getChildren().get(0).getOrder());
+		assertEquals(0, tree1.getChildren().get(0).getChildren().size());
+		
 	}
 	
 	@Test
@@ -729,7 +827,6 @@ public class WalletRestServiceHelperTest {
 		assertEquals(29, walletTypeDAO.getAll().size());
 	}
 	
-	@Ignore
 	@Test
 	public void getTypesValidForParent() {
 		List<RecordTypeDTO> data = walletRestSeriveHelper.getTypesValidForParent(principal);
@@ -738,7 +835,8 @@ public class WalletRestServiceHelperTest {
 		assertEquals("Administracja", data.get(0).getName());
 	}
 	
-	@Ignore
+	//TODO zmieniłem zrwacany typ na serviceResult
+	@SuppressWarnings("unchecked")
 	@Test
 	public void updateTypes() {
 		WalletType type1;
@@ -754,102 +852,157 @@ public class WalletRestServiceHelperTest {
 		typeDto.setColor("newColor");
 		typeList.getTypes().add(typeDto);
 		
-		List<RecordTypeDTO> result = walletRestSeriveHelper.updateTypes(typeList);
+		ServiceResult result = walletRestSeriveHelper.updateTypes(typeList);
+		List<RecordTypeDTO> types = (List<RecordTypeDTO>) result.getObject();
 		
-		assertEquals(29, result.size());
-		assertEquals("newName", result.get(3).getName());
-		assertEquals(type1.getColor(), result.get(3).getColor());
-		assertEquals(type1.getDefaultValue(), result.get(3).getDefaultValue());
-		assertEquals(type1.getIcon(), result.get(3).getIcon());
-		assertEquals(type1.getId(), result.get(3).getId());
-		assertEquals(new Integer(type1.getParentType().getId()), result.get(3).getParentId());
-		assertEquals(type1.getTimestamp(), result.get(3).getTimestamp());
-		assertTrue(result.get(3).getUpdated().after(type1.getTimestamp()));
-		assertEquals("newColor", result.get(8).getColor());
+		assertEquals(29, types.size());
+		assertEquals("newName", types.get(3).getName());
+		assertEquals(type1.getColor(), types.get(3).getColor());
+		assertEquals(type1.getDefaultValue(), types.get(3).getDefaultValue());
+		assertEquals(type1.getIcon(), types.get(3).getIcon());
+		assertEquals(type1.getId(), types.get(3).getId());
+		assertEquals(new Integer(type1.getParentType().getId()), types.get(3).getParentId());
+		assertEquals(type1.getTimestamp(), types.get(3).getTimestamp());
+		assertTrue(types.get(3).getUpdated().after(type1.getTimestamp()));
+		assertEquals("newColor", types.get(8).getColor());
 	}
 	
-	@Ignore
+	@SuppressWarnings("unchecked")
+	@Test
+	public void updateTypes_failOnNotExistingType() {
+		WalletType type1;
+		WalletType type2;
+		RecordTypeDTO typeDto;
+		RecordTypeListDTO typeList = new RecordTypeListDTO();
+		type1 = walletTypeDAO.getById(4);
+		typeDto = new RecordTypeDTO(type1);
+		typeDto.setId(50);
+		typeDto.setName("newName");
+		typeList.getTypes().add(typeDto);
+		type2 = walletTypeDAO.getById(5);
+		typeDto = new RecordTypeDTO(type2);
+		typeDto.setColor("newColor");
+		typeList.getTypes().add(typeDto);
+		
+		ServiceResult result = walletRestSeriveHelper.updateTypes(typeList);
+		List<RecordTypeDTO> types = (List<RecordTypeDTO>) result.getObject();
+		
+		assertFalse(result.isSuccess());
+		assertEquals(3, result.getErrors().size());
+		assertTrue(result.getErrors().contains(ResultMessagesWallet.TYPE_ID_MISSING));
+		assertTrue(result.getErrors().contains(ResultMessagesWallet.TYPE_TIMESTAMP_MISSING));
+		
+		assertEquals(29, types.size());
+		assertEquals("Sodexo", types.get(3).getName());
+		assertEquals(type1.getColor(), types.get(3).getColor());
+		assertEquals(type1.getDefaultValue(), types.get(3).getDefaultValue());
+		assertEquals(type1.getIcon(), types.get(3).getIcon());
+		assertEquals(type1.getId(), types.get(3).getId());
+		assertEquals(new Integer(type1.getParentType().getId()), types.get(3).getParentId());
+		assertEquals(type1.getTimestamp(), types.get(3).getTimestamp());
+		assertTrue(types.get(3).getUpdated().after(type1.getTimestamp()));
+		assertEquals("#FA0", types.get(8).getColor());
+	}
+	
 	@Test
 	public void getSumForTypeForStatistics() {
-		//TODO sprawdzić czy wynik jest napewno poprawny
 		TypeForStatistics type = new TypeForStatistics();
 		type.setAccount(1);
 		type.setIncome(false);
 		type.setType(4);
 		List<KeyValueDTO> data = walletRestSeriveHelper.getSumForTypeForStatistics(type, principal);
 		
-		DateTime tempDate = new DateTime(2015, 11, 1, 0, 0);
+		DateTime tempDate = new DateTime(2015, 9, 1, 0, 0);
 		DateTime months = new DateTime();
-		int numberOfMonths = 1;
+		int numberOfMonths = 0;
 		while(tempDate.isBefore(months)){
 			numberOfMonths++;
 			tempDate = tempDate.plusMonths(1);
-			System.out.println(tempDate);
-			System.out.println(months);
-			System.out.println(numberOfMonths);
 		}
 		
 		assertEquals(numberOfMonths, data.size());
-		assertEquals("39.98", data.get(0).getValue());
-		assertEquals("28.49", data.get(1).getValue());
+		assertEquals("6.80", data.get(0).getValue());
+		assertEquals("62.05", data.get(3).getValue());
+		assertEquals("0", data.get(1).getValue());
 		assertEquals("0", data.get(2).getValue());
-		assertEquals("0", data.get(3).getValue());
 		assertEquals("0", data.get(4).getValue());
 		assertEquals("0", data.get(5).getValue());
 		assertEquals("0", data.get(6).getValue());
 		assertEquals("0", data.get(7).getValue());
 		assertEquals("0", data.get(8).getValue());
 		assertEquals("0", data.get(9).getValue());
-		
 	}
 	
-	@Ignore
 	@Test
 	public void updateRecord_transfer() {
-		WalletRecord record = walletRecordDAO.getById(1);
-		RecordDTO recordBefore = new RecordDTO(record);
+		WalletRecord transfer1 = walletRecordDAO.getById(3);
+		WalletRecord transfer2 = walletRecordDAO.getById(4);
+		RecordDTO recordBefore1 = new RecordDTO(transfer1);
+		RecordDTO recordBefore2 = new RecordDTO(transfer2);
 		
-		assertEquals(0, recordBefore.getAccountId());
-		assertEquals(1444648380000L, recordBefore.getDate());
-		assertEquals(null, recordBefore.getDescription());
-		assertEquals(2, recordBefore.getDestynationAccountId());
-		assertEquals(1, recordBefore.getSourceWalletAccountId());
-		assertEquals(1445035106000L, recordBefore.getUpdated());
-		assertTrue(1000.0F == recordBefore.getValue());
-		assertTrue(recordBefore.isTransfer());
+		assertEquals(0, recordBefore1.getAccountId());
+		assertEquals(1443796800000L, recordBefore1.getDate());
+		assertEquals(null, recordBefore1.getDescription());
+		assertEquals(2, recordBefore1.getDestynationAccountId());
+		assertEquals(1, recordBefore1.getSourceWalletAccountId());
+		assertEquals(1445035106000L, recordBefore1.getUpdated());
+		assertTrue(1000.0F == recordBefore1.getValue());
+		assertTrue(recordBefore1.isTransfer());
+		assertEquals(false, recordBefore1.isIncome());
 		
-		long update = new Date().getTime();
+		assertEquals(0, recordBefore2.getAccountId());
+		assertEquals(1443796800000L, recordBefore2.getDate());
+		assertEquals(null, recordBefore2.getDescription());
+		assertEquals(2, recordBefore2.getDestynationAccountId());
+		assertEquals(1, recordBefore2.getSourceWalletAccountId());
+		assertEquals(1445035106000L, recordBefore2.getUpdated());
+		assertTrue(1000.0F == recordBefore2.getValue());
+		assertTrue(recordBefore2.isTransfer());
+		assertEquals(true, recordBefore2.isIncome());
 		
-		recordBefore.setAccountId(1);
-		recordBefore.setDate(1444648390000L);
-		recordBefore.setDescription("description");
-		recordBefore.setDestynationAccountId(0);
-		recordBefore.setSourceWalletAccountId(2);
-		recordBefore.setUpdated(update);
-		recordBefore.setValue(5000);
+		recordBefore1.setDate(1444648390000L);
+		recordBefore1.setDescription("update");
+		recordBefore1.setDestynationAccountId(3);
+		recordBefore1.setSourceWalletAccountId(1);
+		recordBefore1.setValue(5000);
 		
-		recordBefore.setIncome(!record.isIncome());
+		ServiceResult result = walletRestSeriveHelper.updateRecord(recordBefore1);
 		
-		ServiceResult result = walletRestSeriveHelper.updateRecord(recordBefore);
+		WalletRecord transferAfter1 = walletRecordDAO.getById(3);
+		WalletRecord transferAfter2 = walletRecordDAO.getById(4);
+		RecordDTO recordAfter1 = new RecordDTO(transferAfter1);
+		RecordDTO recordAfter2 = new RecordDTO(transferAfter2);
 		
-		assertTrue(result.isSuccess());
+		assertEquals(true, result.isSuccess());
 		assertEquals(0, result.getMessages().size());
+
+		assertEquals(recordBefore1.getAccountId(), recordAfter1.getAccountId());
+		assertEquals(recordBefore1.getDate(), recordAfter1.getDate());
+		assertEquals(recordBefore1.getDescription(), recordAfter1.getDescription());
+		assertEquals(recordBefore1.getDestynationAccountId(), recordAfter1.getDestynationAccountId());
+		assertEquals(recordBefore1.getId(), recordAfter1.getId());
+		assertEquals(recordBefore1.getRecordTypeId(), recordAfter1.getRecordTypeId());
+		assertEquals(recordBefore1.getSourceWalletAccountId(), recordAfter1.getSourceWalletAccountId());
+		assertTrue(recordBefore1.getUpdated() < recordAfter1.getUpdated());
+		assertEquals(recordBefore1.getValue(), recordAfter1.getValue(), 0);
+		assertEquals(recordBefore1.isIncome(), recordAfter1.isIncome());
+		assertEquals(recordBefore1.isTransfer(), recordAfter1.isTransfer());
 		
-		assertEquals(1, recordBefore.getAccountId());
-		assertEquals(1444648390000L, recordBefore.getDate());
-		assertEquals("description", recordBefore.getDescription());
-		assertEquals(0, recordBefore.getDestynationAccountId());
-		assertEquals(2, recordBefore.getSourceWalletAccountId());
-		assertEquals(update, recordBefore.getUpdated());
-		assertTrue(5000.0F == recordBefore.getValue());
-		assertTrue(recordBefore.isTransfer());
+		assertEquals(recordBefore2.getAccountId(), recordAfter2.getAccountId());
+		assertEquals(1444648390000L, recordAfter2.getDate());
+		assertEquals("update", recordAfter2.getDescription());
+		assertEquals(3, recordAfter2.getDestynationAccountId());
+		assertEquals(recordBefore2.getId(), recordAfter2.getId());
+		assertEquals(recordBefore2.getRecordTypeId(), recordAfter2.getRecordTypeId());
+		assertEquals(recordBefore2.getSourceWalletAccountId(), recordAfter2.getSourceWalletAccountId());
+		assertTrue(recordBefore1.getUpdated() < recordAfter2.getUpdated());
+		assertTrue(new Float(5000).equals(recordAfter2.getValue()));
 		
 	}
 	
-	@Ignore
 	@SuppressWarnings("unchecked")
 	@Test
-	public void transferToDataValueMap_perDay(){
+	public void transferToDataValueMap_perDay() throws ValidationException{
 		Map<String, List<RecordDTO>> result = null;
 		Method method = null;
 		try {
@@ -863,7 +1016,7 @@ public class WalletRestServiceHelperTest {
 			e.printStackTrace();
 		}
 		
-		List<RecordDTO> records = walletService.getRecordsByType(4, false);
+		List<RecordDTO> records = walletService.getRecordsByType(4, 1, false);
 		
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
@@ -880,29 +1033,26 @@ public class WalletRestServiceHelperTest {
 		}
 		
 		assertFalse(result.isEmpty());
-		assertEquals(4, result.size());
-		assertTrue(result.containsKey("2015-10-13"));
-		assertEquals(2, result.get("2015-10-13").size());
-		assertEquals(new Integer(6), result.get("2015-10-13").get(0).getId());
-		assertEquals(new Integer(9), result.get("2015-10-13").get(1).getId());
-		assertTrue(result.containsKey("2015-10-24"));
-		assertEquals(2, result.get("2015-10-24").size());
-		assertEquals(new Integer(7), result.get("2015-10-24").get(0).getId());
-		assertEquals(new Integer(10), result.get("2015-10-24").get(1).getId());
-		assertEquals(1, result.get("2015-11-13").size());
-		assertEquals(new Integer(11), result.get("2015-11-13").get(0).getId());
-		assertEquals(1, result.get("2015-11-24").size());
-		assertEquals(new Integer(12), result.get("2015-11-24").get(0).getId());
+		assertEquals(3, result.size());
+		assertTrue(result.containsKey("2015-09-02"));
+		assertEquals(1, result.get("2015-09-02").size());
+		assertEquals(new Integer(2), result.get("2015-09-02").get(0).getId());
+		assertTrue(result.containsKey("2015-12-02"));
+		assertEquals(2, result.get("2015-12-02").size());
+		assertEquals(new Integer(11), result.get("2015-12-02").get(0).getId());
+		assertEquals(new Integer(12), result.get("2015-12-02").get(1).getId());
+		assertTrue(result.containsKey("2015-12-04"));
+		assertEquals(1, result.get("2015-12-04").size());
+		assertEquals(new Integer(10), result.get("2015-12-04").get(0).getId());
 	}
 	
 	//*****************************************
 	// Private methods
 	//*****************************************
 	
-	@Ignore
-	@SuppressWarnings("unchecked")
 	@Test
-	public void transferToDataValueMap_perMonth(){
+	@SuppressWarnings("unchecked")
+	public void transferToDataValueMap_perMonth() throws ValidationException{
 		Map<String, List<RecordDTO>> result = null;
 		Method method = null;
 		try {
@@ -911,9 +1061,7 @@ public class WalletRestServiceHelperTest {
 		} catch (NoSuchMethodException | SecurityException e) {
 			e.printStackTrace();
 		}
-		//TODO pobieramy dla wszystkich kont zamiast dla wybranego konta (przy kilku userach pobierzemy typ z wszystkich userów)
-		//TODO getRecordsByType powinno być przetestowane (nie ma testu)
-		List<RecordDTO> records = walletService.getRecordsByType(4, false);
+		List<RecordDTO> records = walletService.getRecordsByType(4, 1, false);
 		
 		try {
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM");
@@ -926,14 +1074,37 @@ public class WalletRestServiceHelperTest {
 		assertEquals(2, result.size());
 		assertTrue(result.containsKey("2015-09"));
 		assertTrue(result.containsKey("2015-12"));
-		assertEquals(4, result.get("2015-12").size());
-		assertTrue(result.get("2015-12").contains(new RecordDTO(8)));
+		assertEquals(3, result.get("2015-12").size());
 		assertTrue(result.get("2015-12").contains(new RecordDTO(10)));
 		assertTrue(result.get("2015-12").contains(new RecordDTO(11)));
 		assertTrue(result.get("2015-12").contains(new RecordDTO(12)));
 		assertTrue(result.containsKey("2015-09"));
 		assertEquals(1, result.get("2015-09").size());
 		assertTrue(result.get("2015-09").contains(new RecordDTO(2)));
+	}
+	
+	@Test(expected = ValidationException.class)
+	public void transferToDataValueMap_perMonth_failOnNoAccount() throws ValidationException{
+		Method method = null;
+		try {
+			method = WalletRestServiceHelper.class.getDeclaredMethod("transferToDataValueMap", List.class, SimpleDateFormat.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		walletService.getRecordsByType(4, 10, false);
+	}
+	
+	@Test(expected = ValidationException.class)
+	public void transferToDataValueMap_perMonth_failOnNoType() throws ValidationException{
+		Method method = null;
+		try {
+			method = WalletRestServiceHelper.class.getDeclaredMethod("transferToDataValueMap", List.class, SimpleDateFormat.class);
+			method.setAccessible(true);
+		} catch (NoSuchMethodException | SecurityException e) {
+			e.printStackTrace();
+		}
+		walletService.getRecordsByType(40, 1, false);
 	}
 	
 	private AccountDTO getAccount(List<AccountDTO> accounts, int id) {
