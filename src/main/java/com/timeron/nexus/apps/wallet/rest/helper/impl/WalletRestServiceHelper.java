@@ -4,11 +4,11 @@ import java.math.BigDecimal;
 import java.security.Principal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
@@ -30,8 +30,7 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletAccountDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
-import com.timeron.NexusDatabaseLibrary.dto.IdOrderDTO;
-import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
+import com.timeron.nexus.apps.wallet.exception.ValidationException;
 import com.timeron.nexus.apps.wallet.rest.helper.WalletRestServiceHelperInterface;
 import com.timeron.nexus.apps.wallet.service.WalletAccountService;
 import com.timeron.nexus.apps.wallet.service.WalletRecordService;
@@ -73,7 +72,7 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 	@Autowired
 	WalletTypeService walletTypeService;
 
-	SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
+	SimpleDateFormat formatDay = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
 	SimpleDateFormat formatMonth = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
 	
 	public ServiceResult addAccount(NewAccountDTO accountDTO, Principal principal) {
@@ -90,10 +89,16 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 	}
 
 	public ServiceResult updateRecord(RecordDTO recordDTO) {
-		return walletRecordService.updateRecord(recordDTO);
+		ServiceResult result;
+		if(recordDTO.isTransfer()){
+			result = walletRecordService.updateTransferRecord(recordDTO);
+		}else{
+			result = walletRecordService.updateRecord(recordDTO);
+		}
+		return result;
 	}
 	
-	public List<RecordTypeDTO> updateTypes(RecordTypeListDTO typeListDTO) {
+	public ServiceResult updateTypes(RecordTypeListDTO typeListDTO) {
 		return walletTypeService.updateTypes(typeListDTO);
 	}
 
@@ -109,6 +114,7 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 		return walletTypeService.getTypesValidForParent(principal);
 	}
 	
+	//TODO co to robi?
 	public ServiceResult getAllAccountsAndRecords(Principal principal) {
 		ServiceResult result = new ServiceResult();
 		List<AccountDTO> accountDTOs = new ArrayList<AccountDTO>();
@@ -151,7 +157,7 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 		List<KeyValueDTO> chartData = transformToDayPeriod(records);
 		if(chartData.size() > 0){
 			KeyValueDTO toDay = new KeyValueDTO();
-			toDay.setKey(format.format(new Date()));
+			toDay.setKey(formatDay.format(new Date()));
 			toDay.setValue(chartData.get(chartData.size()-1).getValue());
 			chartData.add(toDay);
 		}
@@ -166,8 +172,11 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 	
 	public List<PieChartDTO> getSumForAccountByType(SumForAccountByType sumForAccountByTypeDto, Principal principal) {
 		WalletAccount account = walletAccountDAO.getById(sumForAccountByTypeDto.getId());
-		List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByTypeDto.getIncome());
-		return transformToPieChartByType(records);
+		if(account != null){
+			List<WalletRecord> records = walletRecordDAO.getRecordsFromAccountWithAllTypes(account, sumForAccountByTypeDto.getIncome());
+			return transformToPieChartByType(records);
+		}
+		return null;
 	}
 	
 	@Override
@@ -347,53 +356,82 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 	private List<KeyValueDTO> transformToDayPeriod(List<WalletRecord> records){
 		
 		List<KeyValueDTO> dataValueDTOs = new ArrayList<KeyValueDTO>();
-		Calendar tempDate = Calendar.getInstance();
-		tempDate.setTimeInMillis(0);
-		BigDecimal valueBD = new BigDecimal(0);
-		Calendar currentDate = Calendar.getInstance();
-		
-		KeyValueDTO dataValueDTO = new KeyValueDTO();
+		Map<String, List<WalletRecord>> tempRecordMap = new LinkedHashMap<String, List<WalletRecord>>();
+
+		List<WalletRecord> recordInDayList;
 		for(WalletRecord record : records){
-			boolean multirow = false;
-			currentDate.setTime(record.getDate());
-			if(tempDate.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR) && tempDate.get(Calendar.DAY_OF_YEAR) == currentDate.get(Calendar.DAY_OF_YEAR)){
-				multirow = true;
-				if(record.isIncome()){
-					valueBD = valueBD.add(round(record.getValue(), 2));
-				}else{
-					valueBD = valueBD.add(round(record.getValue(), 2).negate());
-				}
+			if(tempRecordMap.containsKey(formatDay.format(record.getDate().getMillis()))){
+				tempRecordMap.get(formatDay.format(record.getDate().getMillis())).add(record);
 			}else{
-				if(tempDate.getTimeInMillis()!=0){
-					String formatted = format.format(tempDate.getTime());
-					dataValueDTO.setKey(formatted);
-					if(multirow){
-						dataValueDTO.setValue(valueBD.toString());
-					}else{
-						if(record.isIncome()){
-							valueBD = valueBD.add(round(record.getValue(), 2));
-						}else{
-							valueBD = valueBD.add(round(record.getValue(), 2).negate());
-						}
-						dataValueDTO.setValue(valueBD.toString());
-						multirow = false;
-					}
-					
-					dataValueDTOs.add(dataValueDTO);
-				}else{
-					String formatted = format.format(currentDate.getTime());
-					dataValueDTO.setKey(formatted);
-					if(record.isIncome()){
-						valueBD = valueBD.add(round(record.getValue(), 2));
-					}else{
-						valueBD = valueBD.add(round(record.getValue(), 2).negate());
-					}
-					dataValueDTO.setValue(valueBD.toString());
-				}
-				tempDate.setTimeInMillis(currentDate.getTimeInMillis());
-				dataValueDTO = new KeyValueDTO();						
+				recordInDayList = new ArrayList<WalletRecord>();
+				recordInDayList.add(record);
+				tempRecordMap.put(formatDay.format(record.getDate().getMillis()), recordInDayList);
 			}
 		}
+		
+		BigDecimal valueBD = new BigDecimal(0);
+		for(Entry<String, List<WalletRecord>> entry : tempRecordMap.entrySet()){
+			KeyValueDTO keyValueDTO;
+			if(entry.getValue().size() > 1){
+				for(WalletRecord record : entry.getValue()){
+					valueBD = record.isIncome() ? valueBD.add(round(record.getValue(), 2)) : valueBD.add(round(record.getValue(), 2).negate());
+				}
+				keyValueDTO = new KeyValueDTO(entry.getKey(), valueBD.toString());
+			}else{
+				WalletRecord record = entry.getValue().get(0);
+				valueBD = record.isIncome() ? valueBD.add(round(record.getValue(), 2)) : valueBD.add(round(record.getValue(), 2).negate());
+				keyValueDTO = new KeyValueDTO(entry.getKey(), valueBD.toString());
+			}
+			dataValueDTOs.add(keyValueDTO);
+		}
+		
+//		Calendar tempDate = Calendar.getInstance();
+//		tempDate.setTimeInMillis(0);
+//		BigDecimal valueBD = new BigDecimal(0);
+//		Calendar currentDate = Calendar.getInstance();
+//		
+//		KeyValueDTO dataValueDTO = new KeyValueDTO();
+//		for(WalletRecord record : records){
+//			boolean multirow = false;
+//			currentDate.setTime(record.getDate());
+//			if(tempDate.get(Calendar.YEAR) == currentDate.get(Calendar.YEAR) && tempDate.get(Calendar.DAY_OF_YEAR) == currentDate.get(Calendar.DAY_OF_YEAR)){
+//				multirow = true;
+//				if(record.isIncome()){
+//					valueBD = valueBD.add(round(record.getValue(), 2));
+//				}else{
+//					valueBD = valueBD.add(round(record.getValue(), 2).negate());
+//				}
+//			}else{
+//				if(tempDate.getTimeInMillis()!=0){
+//					String formatted = format.format(tempDate.getTime());
+//					dataValueDTO.setKey(formatted);
+//					if(multirow){
+//						dataValueDTO.setValue(valueBD.toString());
+//					}else{
+//						if(record.isIncome()){
+//							valueBD = valueBD.add(round(record.getValue(), 2));
+//						}else{
+//							valueBD = valueBD.add(round(record.getValue(), 2).negate());
+//						}
+//						dataValueDTO.setValue(valueBD.toString());
+//						multirow = false;
+//					}
+//					
+//					dataValueDTOs.add(dataValueDTO);
+//				}else{
+//					String formatted = format.format(currentDate.getTime());
+//					dataValueDTO.setKey(formatted);
+//					if(record.isIncome()){
+//						valueBD = valueBD.add(round(record.getValue(), 2));
+//					}else{
+//						valueBD = valueBD.add(round(record.getValue(), 2).negate());
+//					}
+//					dataValueDTO.setValue(valueBD.toString());
+//				}
+//				tempDate.setTimeInMillis(currentDate.getTimeInMillis());
+//				dataValueDTO = new KeyValueDTO();						
+//			}
+//		}
 		return dataValueDTOs;
 	}
 
@@ -402,7 +440,6 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 		DateTimeFormatter fmt = DateTimeFormat.forPattern("yy, MMM");
 		
 		List<KeyValueDTO> results = new ArrayList<KeyValueDTO>();
-		Integer tempMonth = null;
 		KeyValueDTO keyValueDTO;
 		List<DateTime> dateValues = new ArrayList<DateTime>();
 		WalletAccount account = walletAccountDAO.getById(typeForStatistics.getAccount());
@@ -410,12 +447,11 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 		if(type == null){
 			return null;
 		}
-//		TODO records pobiera tylko pierwszy rekord
 		List<WalletRecord> recortTypeLastDate = walletRecordDAO.getRecordsFromAccountWithType(account, type, typeForStatistics.isIncome());
 		if(recortTypeLastDate.size() > 0){
-			DateTime tempDataTime = new DateTime(recortTypeLastDate.get(0).getDate().getTime());
+			DateTime tempDataTime = new DateTime(recortTypeLastDate.get(0).getDate().getMillis());
 			DateTime date = new DateTime(tempDataTime.getYear(), tempDataTime.getMonthOfYear(), 1, 0, 0, 0, 0);
-			while(date.isBefore(new Date().getTime())){
+			while(date.isBefore(new DateTime())){
 				dateValues.add(date);
 				date = date.plusMonths(1);
 			}
@@ -458,8 +494,13 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 		for(Integer typeId : sumForAccountByTypes.getTypes()){
 			WalletTypeDTO type = new WalletTypeDTO(walletTypeDAO.getById(typeId));
 			colors.put(type.getName(), type.getColor());
-			List<RecordDTO> records = walletRecordService.getRecordsByType(typeId, sumForAccountByTypes.isIncome());
-			recordsByType.put(type, records);
+			List<RecordDTO> records;
+			try {
+				records = walletRecordService.getRecordsByType(typeId, sumForAccountByTypes.getAccount(), sumForAccountByTypes.isIncome());
+				recordsByType.put(type, records);
+			} catch (ValidationException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		DateTime dateForGraph = findMinDateOfValues(recordsByType);

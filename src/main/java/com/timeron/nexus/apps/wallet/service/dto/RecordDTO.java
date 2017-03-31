@@ -31,7 +31,7 @@ public class RecordDTO {
 		this.income = record.isIncome();
 		this.transfer = record.isTransfer();
 		if(record.getDate() != null){
-			this.date = record.getDate().getTime();
+			this.date = record.getDate().getMillis();
 		}
 		if(record.getUpdated() != null){
 			this.updated = record.getUpdated().getTime();

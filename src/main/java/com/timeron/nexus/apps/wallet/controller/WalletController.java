@@ -141,7 +141,7 @@ public class WalletController {
 	public String walletShowTypes(ModelMap model){
 		WalletShowTypesForm walletShowTypesForm = new WalletShowTypesForm();
 		
-		walletShowTypesForm.setWalletTypes(walletTypeDAO.getAllParents());
+		walletShowTypesForm.setWalletTypes(walletTypeDAO.getAllTypesAvailableForParent());
 		
 		model.addAttribute("form", walletShowTypesForm);
 
@@ -314,7 +314,7 @@ public class WalletController {
 	public String walletEditType(ModelMap model, HttpServletRequest request, HttpServletResponse response){
 		WalletEditTypeForm walletEditTypeForm = new WalletEditTypeForm();
 		
-		walletEditTypeForm.setWalletTypes(walletTypeDAO.getAllParents());
+		walletEditTypeForm.setWalletTypes(walletTypeDAO.getAllTypesAvailableForParent());
 		walletEditTypeForm.setWalletType(walletTypeDAO.getById(Integer.parseInt(request.getParameter("id"))));
 		
 		model.addAttribute("form", walletEditTypeForm);
@@ -328,7 +328,7 @@ public class WalletController {
 		WalletShowTypesForm walletShowTypesForm = new WalletShowTypesForm();
 		
 		walletTypeDAO.removeById(Integer.parseInt(request.getParameter("id")));
-		walletShowTypesForm.setWalletTypes(walletTypeDAO.getAllParents());
+		walletShowTypesForm.setWalletTypes(walletTypeDAO.getAllTypesAvailableForParent());
 		
 		model.addAttribute("form", walletShowTypesForm);
 
@@ -363,7 +363,7 @@ public class WalletController {
 				if(!record.isTransfer()){
 					value += record.getValue();
 					walletChart = new WalletChart();
-					walletChart.setDate(record.getDate());
+					walletChart.setDate(new Date(record.getDate().getMillis()));
 					walletChart.setValue(value);
 				}
 			}else{
@@ -374,12 +374,12 @@ public class WalletController {
 						value += record.getValue();
 					}
 					walletChart = new WalletChart();
-					walletChart.setDate(record.getDate());
+					walletChart.setDate(new Date(record.getDate().getMillis()));
 					walletChart.setValue(value);
 				}else{
 					value += record.getValue();
 					walletChart = new WalletChart();
-					walletChart.setDate(record.getDate());
+					walletChart.setDate(new Date(record.getDate().getMillis()));
 					walletChart.setValue(value);
 				}
 			}

@@ -2,7 +2,7 @@ package com.timeron.nexus.apps.wallet.service.dto.graph;
 
 public class KeyDTO {
 
-	private String key = "";
+	protected String key = "";
 	
 	public KeyDTO() {}
 	
