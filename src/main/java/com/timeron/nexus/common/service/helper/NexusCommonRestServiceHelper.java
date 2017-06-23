@@ -7,10 +7,8 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.google.gson.JsonElement;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusConfig;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
-import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusApplicationDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusConfigDAO;
 import com.timeron.NexusDatabaseLibrary.dao.NexusPersonDAO;

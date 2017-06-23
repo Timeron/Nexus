@@ -2,7 +2,8 @@ package com.timeron.nexus.common.service;
 
 public class ResultMessages {
 
-
+	public static final String WORKING = "working";
+	
 	public static final String RECORD_ADDED = "Rekord pomyślnie dodany";
 	public static final String RECORD_ADD_ERROR = "Operacja nie zostało dodana";
 	
@@ -28,5 +29,6 @@ public class ResultMessages {
 	 */
 	public static final String APPLICATION_CANNOT_BE_ADDED = "aplikacja nie dodana! Wystąpił błąd";
 	public static final String USER_CANNOT_BE_CONNECTED_TO_APPLICATION = "nie udało się połączyć usera z aplikacją.";
+	
 	
 }
