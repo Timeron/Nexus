@@ -4,8 +4,7 @@
 
   <!-- Default, standalone DataSources configuration -->
   
-  
-<!-- PROD -->
+ <!-- PROD RASBERRY PI -->
 <!--   <bean id="dataSource" -->
 <!--     class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
 <!--     <property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
@@ -14,26 +13,36 @@
 <!--     <property name="password" value="zawsze666" /> -->
 <!--   </bean> -->
 
+  
+<!-- PROD -->
+<!--   <bean id="dataSource" -->
+<!--     class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
+<!--     <property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
+<!--     <property name="url" value="jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8" /> -->
+<!--     <property name="username" value="root" /> -->
+<!--     <property name="password" value="" /> -->
+<!--   </bean> -->
+
 
 <!-- PROD local Copy-->
-	<bean id="dataSource"
-		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url"
-			value="jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8" />
-		<property name="username" value="root" />
-		<property name="password" value="" />
-	</bean>
-
-
-<!-- Test -->
 <!-- 	<bean id="dataSource" -->
 <!-- 		class="org.springframework.jdbc.datasource.DriverManagerDataSource"> -->
 <!-- 		<property name="driverClassName" value="com.mysql.jdbc.Driver" /> -->
 <!-- 		<property name="url" -->
-<!-- 			value="jdbc:mysql://localhost:3306/test_nexus?characterEncoding=utf8" /> -->
+<!-- 			value="jdbc:mysql://localhost:3306/nexus?characterEncoding=utf8" /> -->
 <!-- 		<property name="username" value="root" /> -->
 <!-- 		<property name="password" value="" /> -->
 <!-- 	</bean> -->
+
+
+<!-- Test -->
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/test_nexus?characterEncoding=utf8" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>
   
 </beans>
