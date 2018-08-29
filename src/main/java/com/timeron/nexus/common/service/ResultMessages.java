@@ -14,6 +14,9 @@ public class ResultMessages {
 	public static final String DATA_ERROR = "Nieprawidłowe dane";
 	public static final String DATE_ERROR = "Nieprawidłowa data";
 	
+
+	public static final String APPLICATION_ERROR = "Błąd aplikacji";
+	
 	/**
 	 * Account
 	 */
@@ -29,6 +32,7 @@ public class ResultMessages {
 	 */
 	public static final String APPLICATION_CANNOT_BE_ADDED = "aplikacja nie dodana! Wystąpił błąd";
 	public static final String USER_CANNOT_BE_CONNECTED_TO_APPLICATION = "nie udało się połączyć usera z aplikacją.";
+
 	
 	
 }

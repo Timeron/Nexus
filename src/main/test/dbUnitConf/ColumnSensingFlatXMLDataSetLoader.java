@@ -1,4 +1,4 @@
-package dbUnit;
+package dbUnitConf;
 
 import com.github.springtestdbunit.dataset.AbstractDataSetLoader;
 

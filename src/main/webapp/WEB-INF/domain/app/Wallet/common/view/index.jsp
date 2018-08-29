@@ -335,7 +335,6 @@
 					</div>
 				</aside>
 				<main id="main">
-				
 					<section class="details" id="details">
 						<div class="sectionName">Szczegóły:</div>
 						<div class="accountSum">
@@ -356,6 +355,7 @@
 		    			<li role="presentation"><a href="#Charts" aria-controls="Charts" role="tab" data-toggle="tab">Wykresy</a></li>
 		    			<li role="presentation"><a href="#Records" aria-controls="Records" role="tab" data-toggle="tab">Operacje</a></li>
 		    			<li role="presentation"><a href="#Statistics" aria-controls="Statistics" role="tab" data-toggle="tab">Statystyka</a></li>
+		    			<li role="presentation"><a href="#Calendar" aria-controls="Calendar" role="tab" data-toggle="tab" ng-click="calendar()">Kalendarz</a></li>
 		  			</ul>
 					
 					<div class="tab-content">
@@ -429,10 +429,8 @@
 											<button class="btn btn-sm btn-default btn-filter" ng-click="multiBarChartSearch()">Filtruj</button>
 										</div>
 									</div>
-									
-									</div>
-									<div multiBarChart class="multiBarChart" data="{{testtest.chart}}" colors="{{testtest.chart}}" ></div>
 								</div>
+								<div multiBarChart class="multiBarChart" data="{{testtest.chart}}" colors="{{testtest.chart}}" ></div>
 							</div>
 						</section>
 						<section role="tabpanel" class="operations tab-pane fade" id="Records">
@@ -463,7 +461,37 @@
 								</div>
 							</div>
 						</section>
-					</div>
+					<section role="tabpanel" class="calendar tab-pane fade"
+						id="Calendar">
+						<div class="sectionContainer">
+							<div class="sectionName">Kalendarz:</div>
+							<div class="calendarTable">
+								<div class="headerRow">
+									<div class="menuBar">
+										<div class="menuItem goBack" ng-click="goBack()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="font-size:25px;"></span></div>
+										<div class="date">
+											<div class="menuItem year">{{calendarYear}}</div>
+											<div class="menuItem month">{{calendarMonthMap[calendarMonth]}}</div>
+										</div>
+										<div class="menuItem goNext" ng-click="goNext()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true" style="font-size:25px;"></span></div>
+									</div>
+									<div class="header">Poniedziałek</div>
+									<div class="header">Wtorek</div>
+									<div class="header">Środa</div>
+									<div class="header">Czwartek</div>
+									<div class="header">Piątek</div>
+									<div class="header">Sobota</div>
+									<div class="header">Niedziela</div>
+								</div>
+								<div class="days">
+									<div class="day" ng-repeat="entry in calendarData">
+										<div calendar-day key="entry.key" values="entry.value" ></div>
+									</div>
+								</div>
+							</div>
+					</section>
+
+				</div>
 				</main>
 
 			</div>

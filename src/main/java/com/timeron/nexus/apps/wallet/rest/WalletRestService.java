@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.timeron.nexus.apps.wallet.rest.helper.impl.WalletRestServiceHelper;
 import com.timeron.nexus.apps.wallet.service.dto.AccountDTO;
+import com.timeron.nexus.apps.wallet.service.dto.AccountWithPeriodDTO;
 import com.timeron.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordTypeDTO;
@@ -164,7 +165,16 @@ public class WalletRestService {
 		LOG.info("service: getSumForTypesForStatistics  <- "+json);
 		TypesForStatistics sumForAccountByTypes = gson.fromJson(json, TypesForStatistics.class);
 		String result = gson.toJson(helper.getSumForTypesForStatisticsPerMonth(sumForAccountByTypes, principal.getName()));
-		LOG.info("service response: getSumForTypesForStatistics !!! -> "+result);
+		LOG.info("service response: getSumForTypesForStatistics -> "+result);
+		return result;
+	}
+	
+	@RequestMapping(value="/getRecordsByDay", method = RequestMethod.POST)
+	public String getRecordsByDay(@RequestBody String json, Principal principal){
+		LOG.info("service: getRecordsByDay  <- "+json);
+		AccountWithPeriodDTO requestDTO = gson.fromJson(json, AccountWithPeriodDTO.class);
+		String result = gson.toJson(helper.getRecordsByDay(requestDTO.getAccountId(), requestDTO.getYear(), requestDTO.getMonth()));
+		LOG.info("service response: getRecordsByDay -> "+result);
 		return result;
 	}
 

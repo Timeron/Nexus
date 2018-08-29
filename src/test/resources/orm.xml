@@ -64,5 +64,11 @@
 	<named-query name="CheckIfUserHasApplication">
 		<query>SELECT uApp FROM NexusUserApplicationRef uApp WHERE uApp.application.id = :appId AND uApp.user.id = :userId</query>
 	</named-query>
+	
+	<!-- 	release -->
+	<named-query name="getAllReleasesForProjectInNameOrder">
+		<query>SELECT r FROM JRelease r WHERE r.project.id = :projectId ORDER BY r.version ASC</query>
+	</named-query>
+	
 
 </entity-mappings>

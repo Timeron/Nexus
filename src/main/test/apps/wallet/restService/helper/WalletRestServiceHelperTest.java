@@ -1,9 +1,6 @@
 package apps.wallet.restService.helper;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,11 +10,13 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
 import org.joda.time.format.DateTimeFormatter;
 import org.junit.Test;
+import org.junit.internal.runners.statements.Fail;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
@@ -28,6 +27,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.github.springtestdbunit.annotation.DbUnitConfiguration;
+import com.google.gson.Gson;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletType;
 import com.timeron.NexusDatabaseLibrary.dao.WalletAccountDAO;
@@ -36,10 +36,10 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
 import com.timeron.nexus.apps.wallet.exception.ValidationException;
 import com.timeron.nexus.apps.wallet.rest.helper.impl.WalletRestServiceHelper;
-import com.timeron.nexus.apps.wallet.service.WalletRecordService;
 import com.timeron.nexus.apps.wallet.service.dto.AccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
 import com.timeron.nexus.apps.wallet.service.dto.HierarchyPieChartDTO;
+import com.timeron.nexus.apps.wallet.service.dto.KeyValueListDTO;
 import com.timeron.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.PieChartDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordDTO;
@@ -50,10 +50,10 @@ import com.timeron.nexus.apps.wallet.service.dto.TypeForStatistics;
 import com.timeron.nexus.apps.wallet.service.dto.TypesForStatistics;
 import com.timeron.nexus.apps.wallet.service.dto.graph.GraphListOfKeyValuesAndProperties;
 import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValueDTO;
+import com.timeron.nexus.apps.wallet.service.impl.WalletRecordServiceImpl;
 import com.timeron.nexus.common.service.ServiceResult;
 
-import dbUnit.ColumnSensingFlatXMLDataSetLoader;
-
+import dbUnitConf.ColumnSensingFlatXMLDataSetLoader;
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "/simple-job-launcher-context.xml" })
@@ -62,8 +62,8 @@ import dbUnit.ColumnSensingFlatXMLDataSetLoader;
 @DbUnitConfiguration(dataSetLoader = ColumnSensingFlatXMLDataSetLoader.class)
 @DatabaseSetup("/dbMock/Wallet.xml")
 public class WalletRestServiceHelperTest {
-	
 	private static final int RECORDS_START_NUMBER = 13;
+	Gson gson = new Gson();
 
 	@Autowired
 	private WalletRestServiceHelper walletRestSeriveHelper;
@@ -78,7 +78,7 @@ public class WalletRestServiceHelperTest {
 	private WalletRecordDAO walletRecordDAO;
 	
 	@Autowired
-	private WalletRecordService walletService;
+	private WalletRecordServiceImpl walletService;
 	
 	private Principal principal = new Principal() {
 
@@ -180,7 +180,7 @@ public class WalletRestServiceHelperTest {
 		assertEquals("Bank", types.get(0).getName());
 		assertEquals("Sodexo", types.get(1).getName());
 	}
-	
+
 	@Test
 	public void addNewRecord() {
 		RecordDTO recordDTO = new RecordDTO();
@@ -193,6 +193,31 @@ public class WalletRestServiceHelperTest {
 		recordDTO.setUpdated(new Date().getTime());
 		recordDTO.setValue(20.56F);
 
+		assertEquals(RECORDS_START_NUMBER, walletRecordDAO.getAll().size());
+		
+		ServiceResult result = walletRestSeriveHelper.addNewRecord(recordDTO);
+		assertTrue(result.isSuccess());
+		assertEquals(1, result.getMessages().size());
+		assertTrue(result.getMessages().get(0).equals(ResultMessagesWallet.RECORD_ADDED));
+		
+		WalletRecord record = walletRecordDAO.getById(walletRecordDAO.getLastId()); 
+
+		assertEquals(RECORDS_START_NUMBER+1, walletRecordDAO.getAll().size());
+		assertEquals(recordDTO.getDate(), record.getDate().getMillis());
+		assertEquals(recordDTO.getDescription(), record.getDescription());
+		assertEquals(recordDTO.getAccountId(), record.getWalletAccount().getId());
+		assertFalse(record.isIncome());
+		assertEquals(recordDTO.getRecordTypeId(), record.getWalletType().getId());
+		assertFalse(record.isTransfer());
+		assertEquals((Float)recordDTO.getValue(), (Float)record.getValue());
+	}
+	
+	@Test
+	public void addNewRecord_fromJson() {
+		String json = "{\"accountId\":1,\"date\":1530527864804,\"destynationAccountId\":0,\"id\":0,\"income\":false,\"recordTypeId\":4,\"sourceWalletAccountId\":0,\"transfer\":false,\"updated\":1530527864804,\"value\":9.1}";
+
+		RecordDTO recordDTO = gson.fromJson(json, RecordDTO.class);
+		
 		assertEquals(RECORDS_START_NUMBER, walletRecordDAO.getAll().size());
 		
 		ServiceResult result = walletRestSeriveHelper.addNewRecord(recordDTO);
@@ -1105,6 +1130,35 @@ public class WalletRestServiceHelperTest {
 			e.printStackTrace();
 		}
 		walletService.getRecordsByType(40, 1, false);
+	}
+	
+	/**
+	 * Wyciąga rekordy przypisane do konkretnego dnia jako mapę dni i listę rekordów
+	 * Zakres jeden miesiąc od 1 do ostatniego dnia miesiąca.
+	 */
+	@Test
+	public void getRecordsByDay(){
+		List<KeyValueListDTO<Integer, RecordDTO>> result = walletService.getRecordsByDay(1, 2015, 12);
+		assertEquals(42,result.size());
+		for (KeyValueListDTO<Integer, RecordDTO> entry : result) {
+			if(((List<RecordDTO>) entry.getValue()).size() > 0){
+				if((int)entry.getKey() == 2){
+					assertEquals(2, ((List<RecordDTO>) entry.getValue()).size());
+				}
+				if((int)entry.getKey() == 4){
+					assertEquals(1, ((List<RecordDTO>) entry.getValue()).size());
+				}
+				if((int)entry.getKey() == 9){
+					assertEquals(1, ((List<RecordDTO>) entry.getValue()).size());
+				}
+				System.out.println(entry.getKey() +" - "+((List<RecordDTO>) entry.getValue()).size());
+			}else{
+				if((int)entry.getKey() == 2 || (int)entry.getKey() == 4 || (int)entry.getKey() == 9){
+					fail("list should be empty");
+				}
+			}
+		}
+		
 	}
 	
 	private AccountDTO getAccount(List<AccountDTO> accounts, int id) {

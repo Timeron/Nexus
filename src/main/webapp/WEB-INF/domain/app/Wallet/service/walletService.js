@@ -121,5 +121,11 @@ app.factory("GetSumForTypesForStatistics", function($resource){
 			{query: {method: "POST", isArray: false}}
 		);
 });
-
+//Calendar
+app.factory("GetRecordsByDay", function($resource){
+	return $resource("/nexus/v1/wallet/getRecordsByDay", 
+			{},
+			{query: {method: "POST", isArray: false}}
+		);
+});
 

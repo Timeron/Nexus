@@ -1,8 +1,11 @@
-package com.timeron.nexus.apps.wallet.service;
+package com.timeron.nexus.apps.wallet.service.impl;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.joda.time.DateTime;
@@ -17,12 +20,14 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletRecordDAO;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
 import com.timeron.nexus.apps.wallet.exception.ValidationException;
+import com.timeron.nexus.apps.wallet.service.dto.KeyValueListDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordDTO;
+import com.timeron.nexus.apps.wallet.service.interfaces.WalletRecordService;
 import com.timeron.nexus.apps.wallet.validator.RecordValidator;
 import com.timeron.nexus.common.service.ServiceResult;
 
 @Component
-public class WalletRecordService {
+public class WalletRecordServiceImpl implements WalletRecordService{
 
 	@Autowired
 	private WalletRecordDAO walletRecordDAO;
@@ -33,7 +38,7 @@ public class WalletRecordService {
 	@Autowired
 	private WalletTypeDAO walletTypeDAO;
 
-	static Logger LOG = Logger.getLogger(WalletRecordService.class);
+	static Logger LOG = Logger.getLogger(WalletRecordServiceImpl.class);
 
 	public List<RecordDTO> getRecordsByType(Integer typeId, int accountId, Boolean income) throws ValidationException {
 		List<RecordDTO> result = new ArrayList<RecordDTO>();
@@ -195,6 +200,57 @@ public class WalletRecordService {
 	private WalletRecord getDestinationRecordForSource(Integer id) {
 		WalletRecord record = walletRecordDAO.getById(id);
 		return walletRecordDAO.getDestinationSourceForRecord(record, record.isIncome());
+	}
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public List<KeyValueListDTO<Integer, RecordDTO>> getRecordsByDay(int accountId, int year, int month ) {
+		List<KeyValueListDTO<Integer, RecordDTO>> result = new ArrayList<KeyValueListDTO<Integer, RecordDTO>>();
+		DateTime from = null;
+		DateTime to = null;
+		int daysInMonth = daysOfMonth(year, month);
+		int maxDaysInMonth = 42;
+		int firstDayInMonth = firstDaysOfMonth(year, month);
+		
+		WalletAccount account = walletAccountDAO.getById(accountId);
+		
+		int counter = 0;
+		for(int i = 0; i < maxDaysInMonth; i++){
+			if(i >= firstDayInMonth && counter < daysInMonth){
+				counter++;
+				from = new DateTime(year, month, counter, 0, 0, 0, 000);
+				to = new DateTime(year, month, counter, 23, 59, 59, 999);
+				List<WalletRecord> records = walletRecordDAO.getAllRecordsFromDay(account, from, to);
+				result.add(new KeyValueListDTO<Integer, RecordDTO>(counter, transformRecordsToDto(records)));
+			}else{
+				result.add(new KeyValueListDTO<Integer, RecordDTO>(0, Collections.<RecordDTO> emptyList()));
+			}
+		}
+		
+		return result;
+		
+	}
+	
+	private List<RecordDTO> transformRecordsToDto(List<WalletRecord> records) {
+		List<RecordDTO> results = new ArrayList<RecordDTO>();
+		RecordDTO record = null;
+		for (WalletRecord r : records) {
+			record = new RecordDTO(r);
+			results.add(record);
+		}
+		return results;
+	}
+
+	private static int daysOfMonth(int year, int month) {
+		DateTime dateTime = new DateTime(year, month, 14, 12, 0, 0, 000);
+		return dateTime.dayOfMonth().getMaximumValue();
+	}
+	
+	private static int firstDaysOfMonth(int year, int month) {
+		DateTime dateTime = new DateTime(year, month, 14, 12, 0, 0, 000);
+		return dateTime.getDayOfWeek();
 	}
 
 }

@@ -15,4 +15,11 @@ public class ResultMessagesJTask extends ResultMessages{
 	public static final String TASK_CANNOT_BE_FOUND_TASK = "Task nie istnieje w bazie";
 	public static final String PROJECTS_ARE_DIFFERENT = "nie można wykonać dla różnych projektów";
 	
+	/**
+	 * Release
+	 */
+	public static final String NEED_PROJECT_SELECTED = "Projekt jest wymagany";
+	public static final String VERSION_EMPTY = "Wersja jest wymagana";
+	public static final String VERSION_TOO_LONG = "Wersja może mieć tylko 10 znaków";
+	
 }

@@ -5,8 +5,8 @@ import org.springframework.stereotype.Component;
 
 import com.timeron.NexusDatabaseLibrary.Entity.NexusConfig;
 import com.timeron.NexusDatabaseLibrary.dao.NexusConfigDAO;
-import com.timeron.nexus.apps.wallet.service.WalletRecordService;
 import com.timeron.nexus.apps.wallet.service.dto.RecordDTO;
+import com.timeron.nexus.apps.wallet.service.impl.WalletRecordServiceImpl;
 import com.timeron.nexus.common.service.ResultMessages;
 import com.timeron.nexus.common.service.ServiceResult;
 
@@ -14,14 +14,13 @@ import com.timeron.nexus.common.service.ServiceResult;
 public class WalletRestAndroidServiceHelper {
 
 	@Autowired
-	WalletRecordService walletRecordService;
+	WalletRecordServiceImpl walletRecordService;
 	
 	@Autowired
 	NexusConfigDAO configDAO;
 	
 	public ServiceResult addNewRecord(RecordDTO recordDTO) {
-//		return walletRecordService.addNewRecord(recordDTO);
-		return null;
+		return walletRecordService.addNewRecord(recordDTO);
 	}
 
 	public ServiceResult availability() {

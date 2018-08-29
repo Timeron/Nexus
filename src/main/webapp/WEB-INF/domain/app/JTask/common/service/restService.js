@@ -159,6 +159,28 @@ app.factory("SaveAccessToProject", function($resource){
 });
 
 //******
+//Release
+//******
+
+app.factory("GetAllReleases", function($resource){
+	return $resource("/nexus/v1/jt/getAllReleases", 
+			{}, 
+			{
+				query: { method: "GET", isArray: false }
+			}
+		);
+});
+
+app.factory("SaveRelease", function($resource){
+	return $resource("/nexus/v1/jt/saveRelease", 
+			{}, 
+			{
+				query: { method: "POST", isArray: false }
+			}
+		);
+});
+
+//******
 //Common
 //******
 

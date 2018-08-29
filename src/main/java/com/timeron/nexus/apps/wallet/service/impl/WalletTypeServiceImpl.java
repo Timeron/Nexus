@@ -1,4 +1,4 @@
-package com.timeron.nexus.apps.wallet.service;
+package com.timeron.nexus.apps.wallet.service.impl;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -13,19 +13,19 @@ import com.timeron.NexusDatabaseLibrary.Entity.WalletType;
 import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.NexusDatabaseLibrary.dto.IdOrderDTO;
 import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
-import com.timeron.nexus.apps.wallet.exception.ValidationException;
 import com.timeron.nexus.apps.wallet.service.dto.RecordTypeDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordTypeListDTO;
+import com.timeron.nexus.apps.wallet.service.interfaces.WalletTypeService;
 import com.timeron.nexus.apps.wallet.validator.TypeValidator;
 import com.timeron.nexus.common.service.ServiceResult;
 
 @Component
-public class WalletTypeService {
+public class WalletTypeServiceImpl implements WalletTypeService {
 
 	@Autowired
 	private WalletTypeDAO walletTypeDAO;
 
-	static Logger LOG = Logger.getLogger(WalletTypeService.class);
+	static Logger LOG = Logger.getLogger(WalletTypeServiceImpl.class);
 
 	public Object getById(int parentId) {
 		walletTypeDAO.getById(parentId);

@@ -7,8 +7,10 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,6 +23,7 @@ import org.springframework.test.context.support.DependencyInjectionTestExecution
 import com.github.springtestdbunit.DbUnitTestExecutionListener;
 import com.github.springtestdbunit.annotation.DatabaseSetup;
 import com.timeron.NexusDatabaseLibrary.Entity.JNote;
+import com.timeron.NexusDatabaseLibrary.Entity.JRelease;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
@@ -32,6 +35,7 @@ import com.timeron.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JProjectDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.JReleaseDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.NexusVersionDTO;
@@ -542,6 +546,82 @@ public class JTaskRestServiceHelperIntegrationTest {
 		assertFalse(result.isSuccess());
 		assertEquals(1, result.getMessages().size());
 		assertEquals(ResultMessagesJTask.TASK_CANNOT_BE_FOUND_TASK, result.getMessages().get(0));
+	}
+	
+	@Test
+	public void getRelease(){
+		ServiceResult result = new ServiceResult();
+		result = testClass.getAllReleases(result, 1);
+		
+		JRelease r1 = (JRelease) testClass.getRelease(new ServiceResult(), 1).getObject();
+		
+		assertEquals(new Integer(1), r1.getId());
+		assertEquals("some comment", r1.getComment());
+		assertEquals(1, r1.getProject().getId());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void getAllReleases(){
+		ServiceResult result = new ServiceResult();
+		result = testClass.getAllReleases(result, 1);
+		List<JRelease> releases = (List<JRelease>) result.getObject();
+		
+		JRelease r1 = (JRelease) testClass.getRelease(new ServiceResult(), 1).getObject();
+		JRelease r2 = (JRelease) testClass.getRelease(new ServiceResult(), 2).getObject();
+		
+		assertTrue(result.isSuccess());
+		assertEquals(2, releases.size());
+		assertTrue(releases.contains(r1));
+		assertTrue(releases.contains(r2));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void getAllReleases_notExistingProject(){
+		ServiceResult result = new ServiceResult();
+		result = testClass.getAllReleases(result, 10);
+		List<JRelease> releases = (List<JRelease>) result.getObject();
+		
+		JRelease r1 = (JRelease) testClass.getRelease(new ServiceResult(), 1).getObject();
+		JRelease r2 = (JRelease) testClass.getRelease(new ServiceResult(), 2).getObject();
+		
+		assertFalse(result.isSuccess());
+		assertEquals(ResultMessagesJTask.PROJECT_NOT_FOUND, result.getFirstError());
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void saveRelease(){
+		ServiceResult saveResult = new ServiceResult();
+		saveResult = testClass.saveRelease(new JReleaseDTO(null, "1.2", "new comment", 1), saveResult);
+		List<JRelease> releases = (List<JRelease>) testClass.getAllReleases(new ServiceResult(), 1).getObject();
+		
+		JRelease r1 = (JRelease) testClass.getRelease(new ServiceResult(), 3).getObject();
+		
+		assertEquals(3, releases.size());
+		assertNotNull(r1);
+		assertEquals("1.2", r1.getVersion());
+		assertTrue(releases.contains(r1));
+	}
+	
+	@SuppressWarnings("unchecked")
+	@Test
+	public void updateRelease(){
+		ServiceResult saveResult = new ServiceResult();
+		saveResult = testClass.updateRelease(new JReleaseDTO(1, "1.2", "new comment", 2), saveResult);
+		List<JRelease> releases1 = (List<JRelease>) testClass.getAllReleases(new ServiceResult(), 1).getObject();
+		List<JRelease> releases2 = (List<JRelease>) testClass.getAllReleases(new ServiceResult(), 2).getObject();
+		
+		JRelease r1 = (JRelease) testClass.getRelease(new ServiceResult(), 1).getObject();
+		
+		assertEquals(1, releases1.size());
+		assertNotNull(r1);
+		assertEquals("1.2", r1.getVersion());
+		assertEquals("new comment", r1.getComment());
+		assertEquals(2, r1.getProject().getId());
+		assertFalse(releases1.contains(r1));
+		assertTrue(releases2.contains(r1));
 	}
 
 }

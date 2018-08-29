@@ -4,7 +4,8 @@
 	<groupId>nexus</groupId>
 	<artifactId>nexus</artifactId> <!-- Wartość ta bedzie poźniej w podstawie linku (localhost:8080/timeron-nexus) -->
 	<packaging>war</packaging>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>0.0.4</version>
+<!-- 	<version>0.0.2-SNAPSHOT</version> -->
 	<name>Nexus Maven Webapp</name>
 	<url>http://maven.apache.org</url>
 
@@ -358,7 +359,7 @@
 		<dependency>
 			<groupId>com.timeron</groupId>
 			<artifactId>NexusDatabaseLibrary</artifactId>
-			<version>0.0.8-SNAPSHOT</version>
+			<version>0.0.10-SNAPSHOT</version>
 			<!-- <scope>import</scope> -->
 		</dependency>
 
@@ -382,10 +383,32 @@
 					<url>http://192.168.1.226:8080/manager/text</url>
 					<server>TomcatServer</server>
 					<path>/nexus</path>
-					<username>tomcat</username>
-        			<password>tomcat</password>
+					<username>Timeron</username>
+        			<password>Zawsze666mp</password>
+        			<update>true</update>
 				</configuration>
 			</plugin>
+			<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <version>2.20</version>
+        <configuration>
+          <parallel>methods</parallel>
+          <threadCount>10</threadCount>
+        </configuration>
+      </plugin>
+<!-- 		  	<plugin> -->
+<!-- 				<groupId>org.apache.maven.plugins</groupId> -->
+<!-- 				<artifactId>maven-surefire-plugin</artifactId> -->
+<!-- 				<version>2.20</version> -->
+<!-- 				<dependencies> -->
+<!-- 					<dependency> -->
+<!-- 						<groupId>org.apache.maven.surefire</groupId> -->
+<!-- 						<artifactId>surefire-junit47</artifactId> -->
+<!-- 						<version>2.20</version> -->
+<!-- 					</dependency> -->
+<!-- 				</dependencies> -->
+<!-- 			</plugin> -->
 		</plugins>
 	</build>
 </project>

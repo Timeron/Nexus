@@ -21,6 +21,7 @@ import org.joda.time.format.DateTimeFormatter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.google.gson.JsonElement;
 import com.timeron.NexusDatabaseLibrary.Entity.NexusPerson;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletAccount;
 import com.timeron.NexusDatabaseLibrary.Entity.WalletRecord;
@@ -32,12 +33,10 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.NexusDatabaseLibrary.dao.Enum.Direction;
 import com.timeron.nexus.apps.wallet.exception.ValidationException;
 import com.timeron.nexus.apps.wallet.rest.helper.WalletRestServiceHelperInterface;
-import com.timeron.nexus.apps.wallet.service.WalletAccountService;
-import com.timeron.nexus.apps.wallet.service.WalletRecordService;
-import com.timeron.nexus.apps.wallet.service.WalletTypeService;
 import com.timeron.nexus.apps.wallet.service.dto.AccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
 import com.timeron.nexus.apps.wallet.service.dto.HierarchyPieChartDTO;
+import com.timeron.nexus.apps.wallet.service.dto.KeyValueListDTO;
 import com.timeron.nexus.apps.wallet.service.dto.NewAccountDTO;
 import com.timeron.nexus.apps.wallet.service.dto.PieChartDTO;
 import com.timeron.nexus.apps.wallet.service.dto.RecordDTO;
@@ -50,6 +49,9 @@ import com.timeron.nexus.apps.wallet.service.dto.WalletTypeDTO;
 import com.timeron.nexus.apps.wallet.service.dto.graph.GraphListOfKeyValuesAndProperties;
 import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValueDTO;
 import com.timeron.nexus.apps.wallet.service.dto.graph.KeyValuesByObjectDTO;
+import com.timeron.nexus.apps.wallet.service.impl.WalletAccountServiceImpl;
+import com.timeron.nexus.apps.wallet.service.impl.WalletRecordServiceImpl;
+import com.timeron.nexus.apps.wallet.service.impl.WalletTypeServiceImpl;
 import com.timeron.nexus.common.service.ServiceResult;
 
 @Component
@@ -66,11 +68,11 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 	@Autowired
 	WalletRecordDAO walletRecordDAO;
 	@Autowired
-	WalletRecordService walletRecordService;
+	WalletRecordServiceImpl walletRecordService;
 	@Autowired
-	WalletAccountService walletAccountService;
+	WalletAccountServiceImpl walletAccountService;
 	@Autowired
-	WalletTypeService walletTypeService;
+	WalletTypeServiceImpl walletTypeService;
 
 	SimpleDateFormat formatDay = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
 	SimpleDateFormat formatMonth = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);
@@ -539,6 +541,14 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 		return result;
 	}
 
+	public ServiceResult getRecordsByDay(int accountId, int year, int month) {
+		ServiceResult result = new ServiceResult();
+		List<KeyValueListDTO<Integer, RecordDTO>> records = walletRecordService.getRecordsByDay(accountId, year, month);
+		result.setSuccess(true);
+		result.setObject(records);
+		return result;
+	}
+
 	
 	private DateTime findMinDateOfValues(Map<WalletTypeDTO, List<RecordDTO>> recordsByType) {
 		DateTime minDate = new DateTime();
@@ -573,5 +583,6 @@ public class WalletRestServiceHelper implements WalletRestServiceHelperInterface
 		}
 		return result;
 	}
+
 
 }

@@ -54,7 +54,7 @@ div span .icon {
 }
 
 .projectName{
-	padding: 35px 0px 60px 150px;
+	padding: 35px 0px 60px 100px;
 	float: left;
 	font-size: 30px;
 	font-weight: bold;
@@ -169,6 +169,27 @@ div span .icon {
 /*     right: 16px; */
 }
 
+
+/* Realease Panel */
+#releasePanel {
+	margin: 3px;
+	height: 100%;
+	width: 75px;
+	float: left;
+}
+
+#releasePanel .releasePanelColumnName {
+	height: 54px;
+	background-color: #ccc;
+	padding-top: 17px;
+	text-align: center;
+	font-weight: bold;
+}
+
+#releasePanel .btn-group-vertical {
+	width: 100%;
+	margin: 3px 0px 3px 0px;
+}
 
 /* Modals */
 

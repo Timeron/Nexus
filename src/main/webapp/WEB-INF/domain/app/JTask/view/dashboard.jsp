@@ -136,6 +136,41 @@
 		</div>
 	</div>
 	
+	<!-- Modal add Release-->
+	<div class="modal fade" id="addReleaseModal" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true" data-ng-controller="ReleaseCtr">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Dodaj Wersje</h4>
+				</div>
+				<div class="modal-body">
+					<table class="formContainer">
+						<tbody>
+							<tr>
+								<td>wersja: <span class="mandatory">*</span></td>
+							<td>
+								<input type="text" data-ng-model="version" class="form-control"	>
+							</tr>
+							<tr class="separator"><td colspan="2"><hr></td></tr>
+							<tr>
+								<td>komentarz:</td>
+								<td><textarea cols="40" rows="5" data-ng-model="comment"></textarea></td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Anuluj</button>
+					<button type="button" class="btn btn-primary" data-ng-click="addRelease()" data-dismiss="modal">Zapisz</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
 <div id="dashboard" class="view" >	
 	
 <!-- 	lista projektów -->
@@ -172,6 +207,16 @@
 				<div class="addTask btn btn-primary btn-xs" data-ng-click="projectConfig()">Ustawienia <span class="glyphicon glyphicon-plus" aria-hidden="true"></div>
 				<div class="addTask btn btn-primary btn-xs" data-toggle="modal" data-target="#newTaskModal">Dodaj Task <span class="glyphicon glyphicon-plus" aria-hidden="true"></div>
 				<div class="addTask btn btn-primary btn-xs" data-ng-click="searchTask()">Szukaj Tasków <span class="glyphicon glyphicon-search" aria-hidden="true"></div>
+				<div class="addTask btn btn-primary btn-xs" data-toggle="modal" data-target="#addReleaseModal">Dodaj Wersje <span class="glyphicon glyphicon-plus" aria-hidden="true"></div>
+			</div>
+		</div>
+		<div id="releasePanel">
+			<div class="releasePanelColumnName">
+				<p>Wersja</p>
+			</div>
+			<div class="btn-group-vertical" role="group" >
+				<button type="button" class="btn btn-default btn-xs" >All</button>
+				<button ng-repeat="release in releases" type="button" class="btn btn-default btn-xs" >{{release.version}}</button>
 			</div>
 		</div>
 		<div>

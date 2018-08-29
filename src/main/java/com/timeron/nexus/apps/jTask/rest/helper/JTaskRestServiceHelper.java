@@ -9,10 +9,12 @@ import java.util.List;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.timeron.NexusDatabaseLibrary.Entity.JHistory;
 import com.timeron.NexusDatabaseLibrary.Entity.JNote;
 import com.timeron.NexusDatabaseLibrary.Entity.JProject;
+import com.timeron.NexusDatabaseLibrary.Entity.JRelease;
 import com.timeron.NexusDatabaseLibrary.Entity.JTask;
 import com.timeron.NexusDatabaseLibrary.Entity.JTaskType;
 import com.timeron.NexusDatabaseLibrary.Entity.JUserProject;
@@ -21,6 +23,7 @@ import com.timeron.NexusDatabaseLibrary.Entity.NexusVersion;
 import com.timeron.NexusDatabaseLibrary.dao.JHistoryDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JNoteDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JProjectDAO;
+import com.timeron.NexusDatabaseLibrary.dao.JReleaseDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JStatusDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskDAO;
 import com.timeron.NexusDatabaseLibrary.dao.JTaskTypeDAO;
@@ -35,6 +38,7 @@ import com.timeron.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JHistoryDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JProjectDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.JReleaseDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.NexusVersionDTO;
@@ -42,6 +46,7 @@ import com.timeron.nexus.apps.jTask.dto.bean.TwoListOfUsers;
 import com.timeron.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
 import com.timeron.nexus.apps.jTask.project.ProjectImpl;
 import com.timeron.nexus.apps.jTask.task.TaskImpl;
+import com.timeron.nexus.apps.jTask.validator.JReleaseValidator;
 import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
 import com.timeron.nexus.common.dto.NexusPersonDTO;
 import com.timeron.nexus.common.service.ResultMessages;
@@ -74,6 +79,8 @@ public class JTaskRestServiceHelper {
 	NexusUserApplicationDAO nexusUserApplicationDAO;
 	@Autowired
 	NexusApplicationDAO nexusApplicationDAO;
+	@Autowired
+	JReleaseDAO jReleaseDAO;
 	
 	@Autowired
 	ProjectImpl projectImpl;
@@ -590,6 +597,62 @@ public class JTaskRestServiceHelper {
 		}catch(Exception ex){
 			ex.printStackTrace();
 			result.addError(ResultMessagesJTask.DATABASE_ISSUE);
+		}
+		return result;
+	}
+
+	
+	public ServiceResult saveRelease(JReleaseDTO dto, ServiceResult result) {
+		JReleaseValidator validator = new JReleaseValidator();
+		JRelease entity = new JRelease();
+		entity.setComment(dto.getComment());
+		entity.setProject(jProjectDAO.getById(dto.getProjectId()));
+		entity.setVersion(dto.getVersion());
+		
+		result = validator.validate(entity);
+		if(result.isSuccess()){
+			jReleaseDAO.save(entity);
+		}
+		return result;
+	}
+
+	@Transactional
+	public ServiceResult getAllReleases(ServiceResult result, Integer projectId) {
+		JProject project = jProjectDAO.getById(projectId);
+		if(project != null){
+			List<JReleaseDTO> releases = transformToDto(jReleaseDAO.getAllReleasesForProjectInNameOrder(projectId));
+			result.setObject(releases);
+		}else{
+			result.addError(ResultMessagesJTask.PROJECT_NOT_FOUND);
+		}
+		return result;
+	}
+	
+	private List<JReleaseDTO> transformToDto(List<JRelease> jReleases) {
+		List<JReleaseDTO> releaseDTOs = new ArrayList<JReleaseDTO>();
+		for(JRelease release : jReleases){
+			releaseDTOs.add(new JReleaseDTO(release));
+		}
+		return releaseDTOs;
+	}
+
+	public ServiceResult getRelease(ServiceResult result, Integer releaseId) {
+		JRelease release = jReleaseDAO.getById(releaseId);
+		result.setObject(release);
+		return result;
+	}
+
+	public ServiceResult updateRelease(JReleaseDTO jReleaseDTO,	ServiceResult result) {
+		JReleaseValidator validator = new JReleaseValidator();
+		JRelease entity = new JRelease();
+		entity.setId(jReleaseDTO.getId());
+		entity.setComment(jReleaseDTO.getComment());
+		entity.setProject(jProjectDAO.getById(jReleaseDTO.getProjectId()));
+		entity.setVersion(jReleaseDTO.getVersion());
+		
+		result = validator.validate(entity);
+		if(result.isSuccess()){
+			jReleaseDAO.update(entity);
 		}
 		return result;
 	}

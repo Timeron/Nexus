@@ -1,4 +1,4 @@
-package com.timeron.nexus.apps.wallet.service;
+package com.timeron.nexus.apps.wallet.service.impl;
 
 import java.security.Principal;
 import java.text.SimpleDateFormat;
@@ -20,10 +20,11 @@ import com.timeron.NexusDatabaseLibrary.dao.WalletTypeDAO;
 import com.timeron.nexus.apps.wallet.constant.ResultMessagesWallet;
 import com.timeron.nexus.apps.wallet.service.dto.AccountForDropdownDTO;
 import com.timeron.nexus.apps.wallet.service.dto.NewAccountDTO;
+import com.timeron.nexus.apps.wallet.service.interfaces.WalletAccountService;
 import com.timeron.nexus.common.service.ServiceResult;
 
 @Component
-public class WalletAccountService {
+public class WalletAccountServiceImpl implements WalletAccountService{
 
 	@Autowired
 	WalletAccountDAO walletAccountDAO;
@@ -34,9 +35,9 @@ public class WalletAccountService {
 	@Autowired
 	WalletRecordDAO walletRecordDAO;
 	@Autowired
-	WalletRecordService walletService;
+	WalletRecordServiceImpl walletService;
 	
-	static Logger LOG = Logger.getLogger(WalletAccountService.class);
+	static Logger LOG = Logger.getLogger(WalletAccountServiceImpl.class);
 	
 	SimpleDateFormat format = new SimpleDateFormat("yyyy-MMM-dd", Locale.ENGLISH);
 	SimpleDateFormat formatMonth = new SimpleDateFormat("yyyy-MM", Locale.ENGLISH);

@@ -1,6 +1,6 @@
 var app = angular.module('WalletMain', []);
 
-app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy, GetSumForTypeForStatistics, GetSumForTypesForStatistics) {
+app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndRecords, CurrentUser, CurrentUserPOST, GetRecordsForAccountByDayPOST, GetSumForAccountByType, GetSumForAccountByParentType, GetAllRecordTypes, GetSumForTypeInTypeHierarchy, GetSumForTypeForStatistics, GetSumForTypesForStatistics, GetRecordsByDay) {
 	$scope.accounts = [];
 	$rootScope.selectedAccount;
 	$scope.user = "-";
@@ -9,14 +9,16 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	$scope.pieData = [];
 	$scope.subPieData = [];
 	$scope.typeStatisticData = [];
-	$scope.types = GetAllRecordTypes.query();
+	$rootScope.types = GetAllRecordTypes.query();
 	$scope.selectedType;
 	$scope.selectedTypeTemp;
 	$scope.incomeViewFlag = "false";
 	$rootScope.recordToEdit = {};
 	$scope.testtest = [];
-	
-	
+	$scope.calendarData = [];
+	$scope.calendarYear = 2018;
+	$scope.calendarMonth = 8;
+	$scope.calendarMonthMap = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 	
 	CurrentUser.query({}, function(data){
 		$scope.user = data;
@@ -24,7 +26,6 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	
 	CurrentUserPOST.query({}, function(data){
 		$scope.userPOST = data;
-		
 	});
 	
 	GetAllAccountsAndRecords.query({}, function(data) {
@@ -194,6 +195,37 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 			}
 		});
 		return typeName;
+	};
+	
+	$scope.calendar = function(){
+		GetRecordsByDay.query({accountId: $rootScope.selectedAccount.id, year: $scope.calendarYear, month: $scope.calendarMonth}, function(data){
+			if (data.success) {
+				$scope.calendarData = data.object;
+			} else {
+				$scope.errorMessage = data.message;
+				return null;
+			}
+		});
+	};
+	
+	$scope.goBack = function(){
+		$scope.calendarMonth--;
+		if($scope.calendarMonth <= 0){
+			$scope.calendarMonth = 12;
+			$scope.calendarYear--;
+		}
+		console.log($scope.calendarYear +" - "+$scope.calendarMonth );
+		$scope.calendar();
+	};
+	
+	$scope.goNext = function(){
+		$scope.calendarMonth--;
+		if($scope.calendarMonth > 12){
+			$scope.calendarMonth = 1;
+			$scope.calendarYear++;
+		}
+		console.log($scope.calendarYear +" - "+$scope.calendarMonth );
+		$scope.calendar();
 	};
 	
 });

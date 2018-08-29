@@ -1,4 +1,4 @@
-var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl', 'CommonJTaskDirective', 'CurtainDir', 'NexusConnection']);
+var app = angular.module("nexus", ['ngResource', 'ngRoute', 'Config', 'Search', 'JTaskHelp', 'DatePicker', 'EditTask', 'MPImage', 'UserCrtl', 'CommonJTaskDirective', 'CurtainDir', 'NexusConnection', 'Release']);
 //Filter
 app.filter('trusted', ['$sce', function($sce){
     return function(text) {
@@ -48,6 +48,7 @@ app.directive("projectcolumn", function($window){
 });
 
 app.directive("projectboardcolumn", function($window){
+	var releasePanelWidth = 75+6; //6 margins
 	return {
 		restrict: "AE",
 		link: function(scope, element, attrs){
@@ -62,8 +63,8 @@ app.directive("projectboardcolumn", function($window){
 	        scope.$watch(scope.getWindowDimensions, function (newValue, oldValue) {
 	            scope.windowHeight = newValue.h;
 	            scope.windowWidth = newValue.w;
-	            scrWidth = scope.windowWidth-6;
-				width = scrWidth / 6;
+	            scrWidth = scope.windowWidth - releasePanelWidth -6; //6 pix in right and left side of table
+				width = scrWidth / 6; //6 number of columns
 				element[0].style.float = "left";
 				element[0].style.width = width+"px";
 				element[0].style.padding = "3px";
@@ -232,18 +233,23 @@ app.controller("JTaskBoardCtr", function($rootScope, $scope, $http, $element, Ge
 	};
 });
 
-app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, UpdateTask, GetAllTasksInOneProject, AllProjectTasks, $location){
+app.controller("JTaskProjectCtr", function($rootScope, $scope, $http, UpdateTask, GetAllTasksInOneProject, AllProjectTasks, GetAllReleases, $location){
 	$scope.wait = [];
 	$scope.toDo = [];
 	$scope.inProgress = [];
 	$scope.inReview = [];
 	$scope.done = [];
+	$scope.releases = [];
 	
 	$scope.taskDetails;
 	
 	$rootScope.setProjectInScope = function(){
 		$rootScope.project.tasks = AllProjectTasks.query({id: $rootScope.project.id}, function(){
 			$rootScope.splitToColumn($rootScope.project.tasks);
+		});
+		
+		GetAllReleases.query({projectId: $rootScope.projectId}, function(data){
+			$scope.releases = data.object;
 		});
 		
 	};
@@ -664,5 +670,7 @@ app.controller("TaskController", function($rootScope, $scope, $q, Histories, Not
 			}
 		});
 	};
+	
+//	Release Panel
 	
 });

@@ -27,6 +27,7 @@
 <script src="<c:url value="/domain/app/Wallet/directive/ChartsDir.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/directive/toggleDir.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/directive/typeDir.js" />"></script>
+<script src="<c:url value="/domain/app/Wallet/directive/calendarMonthDir.js" />"></script>
 <script src="<c:url value="/domain/app/Wallet/service/walletService.js" />"></script>
 
 <%-- <script src="<c:url value="/domain/timeronAngular/directive/commonDir.js" />"></script> --%>

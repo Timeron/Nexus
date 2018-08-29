@@ -20,6 +20,7 @@ import com.google.gson.Gson;
 import com.timeron.nexus.apps.jTask.dto.bean.AssignUserTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JNoteDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JProjectDTO;
+import com.timeron.nexus.apps.jTask.dto.bean.JReleaseDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.JTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.MainTaskDTO;
 import com.timeron.nexus.apps.jTask.dto.bean.UsersWithProjectDTO;
@@ -244,6 +245,28 @@ public class JTaskRestService extends NexusCommonRestService{
 		result = helper.saveAccessToProject(dto, result);
 		String response = prepareForHtml(gson.toJson(result));
 		LOG.info("service response: saveAccessToProject -> "+response);
+		return response;
+	}
+	
+	@RequestMapping(value = "/saveRelease", method = RequestMethod.POST)
+	public String saveRelease(@RequestBody String json){
+		LOG.info("service: saveRelease <- "+json);
+		ServiceResult result = new ServiceResult();
+		JReleaseDTO dto = gson.fromJson(json, JReleaseDTO.class);
+		result = helper.saveRelease(dto, result);
+		String response = prepareForHtml(gson.toJson(result));
+		LOG.info("service response: saveRelease -> "+response);
+		return response;
+	}
+	
+	@RequestMapping(value = "/getAllReleases", method = RequestMethod.GET)
+	public String getAllReleases(HttpServletRequest request){
+		LOG.info("service: getAllReleases <- "+request.getParameter("projectId"));
+		Integer projectId = Integer.parseInt(request.getParameter("projectId"));
+		ServiceResult result = new ServiceResult();
+		result = helper.getAllReleases(result, projectId);
+		String response = prepareForHtml(gson.toJson(result));
+		LOG.info("service response: getAllReleases -> "+response);
 		return response;
 	}
 	
