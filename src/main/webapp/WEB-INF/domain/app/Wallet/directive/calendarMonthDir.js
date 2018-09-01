@@ -1,6 +1,3 @@
-/**
- * 
- */
 var app = angular.module('CalendarMonthDir', []);
 
 app.directive("calendarDay", function($rootScope){
@@ -8,14 +5,13 @@ app.directive("calendarDay", function($rootScope){
 	return {
 		restrict: "AE",
 		template: 	'<div class="calendarDayContent day{{key}}"><div class="key">{{key}}</div>'+
-		'<div ng-repeat="value in values"><div class="record income_{{value.income}}" style="background-color: {{getTypeColor(value.recordTypeId)}};" title="{{getTypeName(value.recordTypeId)}} 1&#013;{{value.value}} zł">'+
+		'<div ng-repeat="value in values"><div class="record income_{{value.income}}" style="background-color: {{getTypeColor(value.recordTypeId)}};" title="{{getTypeName(value.recordTypeId)}} &#013;{{value.value}} zł">'+
 		'<span class="glyphicon {{getTypeIcon(value.recordTypeId)}}" aria-hidden="true"></span>'+
 		'<div></div>'+
 		'</div>',
 		scope: {
 			key: "=",
 			values: "="
-//			types: "="
 					
 		},
 		link : function(scope, element, attrs){
@@ -23,24 +19,33 @@ app.directive("calendarDay", function($rootScope){
 		},
 		controller : function($scope, $element, $attrs) {
 			console.log("!!!!!!!!!!!!"+ $rootScope.types);
-//			$attrs.$observe('key', function(e) {
-//				console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!111111"+ $scope.key);
-//			});
-//			$attrs.$observe('values', function(e) {
-//				console.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!222222"+ e);
-//			});
-			
+		
 			$scope.getTypeColor = function(id){
-				return $rootScope.types[id].color;
+				var type = getType(id);
+				return type.color;
 			}
 			
 			$scope.getTypeName = function(id){
-				return $rootScope.types[id].name;
+				var type = getType(id);
+				return type.name;
 			}
 			
 			$scope.getTypeIcon = function(id){
-				return $rootScope.types[id].icon;
+				var type = getType(id);
+				return type.icon;
+			}
+			
+			var getType = function(id){
+				var type;
+				angular.forEach($rootScope.types, function(t){
+					if(id === t.id){
+						type = t;
+					}
+				});
+				return type;
 			}
 		}
+		
+		
 	};
 });
