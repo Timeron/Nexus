@@ -471,7 +471,7 @@
 										<div class="menuItem goBack" ng-click="goBack()"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true" style="font-size:25px;"></span></div>
 										<div class="date">
 											<div class="menuItem year">{{calendarYear}}</div>
-											<div class="menuItem month">{{calendarMonthMap[calendarMonth]}}</div>
+											<div class="menuItem month">{{calendarMonthMap[calendarMonth-1]}}</div>
 										</div>
 										<div class="menuItem goNext" ng-click="goNext()"><span class="glyphicon glyphicon-arrow-right" aria-hidden="true" style="font-size:25px;"></span></div>
 									</div>

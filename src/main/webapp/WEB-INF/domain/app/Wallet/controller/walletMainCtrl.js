@@ -16,8 +16,8 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	$rootScope.recordToEdit = {};
 	$scope.testtest = [];
 	$scope.calendarData = [];
-	$scope.calendarYear = 2018;
-	$scope.calendarMonth = 8;
+	$scope.calendarYear = (new Date()).getFullYear();
+	$scope.calendarMonth = (new Date()).getMonth() + 1; //get month (value is counted from 0)
 	$scope.calendarMonthMap = ["Styczeń", "Luty", "Marzec", "Kwiecień", "Maj", "Czerwiec", "Lipiec", "Sierpień", "Wrzesień", "Październik", "Listopad", "Grudzień"];
 	
 	CurrentUser.query({}, function(data){
@@ -219,7 +219,7 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	};
 	
 	$scope.goNext = function(){
-		$scope.calendarMonth--;
+		$scope.calendarMonth++;
 		if($scope.calendarMonth > 12){
 			$scope.calendarMonth = 1;
 			$scope.calendarYear++;
