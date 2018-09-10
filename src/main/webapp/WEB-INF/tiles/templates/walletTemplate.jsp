@@ -15,9 +15,15 @@
 	<a href="/nexus/">
 		<div>NEXUS</div>
 	</a>
+	
 </div>
 </head>
 <body>
+	<div id="waitBox">
+		<div id="wait"></div>
+		<div id="waitCenter"></div>
+	</div>
+	
 	<div id="body">
 		<div id="menu">
 			<tiles:insertAttribute name="menu" />
@@ -30,5 +36,6 @@
 	<div id="footer">
 		<tiles:insertAttribute name="footer" />
 	</div>
+	
 </body>
 </html>

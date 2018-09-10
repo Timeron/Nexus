@@ -1,8 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
-<div data-ng-app="wallet">
-	<div>
+<div data-ng-app="wallet" class="body">
 
 		<!-- 	menu -->
 		<div class="menu" data-ng-controller="WalletMenuCtrl">
@@ -327,6 +326,9 @@
 				</div>
 			</div>
 		</div>
+		
+		
+		
 		<div id="presentation">
 			<div data-ng-controller="WalletMainCtrl">
 				<aside id="leftAside">
@@ -496,11 +498,9 @@
 
 			</div>
 		</div>
-		<div data-ng-view></div>
-	</div>
+<!-- 		<div data-ng-view></div> -->
 	
 	
-	<div>
-</div>
+
 
 </div>

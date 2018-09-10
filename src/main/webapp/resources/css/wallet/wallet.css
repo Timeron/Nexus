@@ -1,3 +1,28 @@
+.body{
+	float: left;
+}
+#wait{
+	position: absolute;
+	z-index: 10;
+	background-color: #333;
+	height: 100%;
+	width: 100%;
+	opacity: 0.5;
+}
+#waitCenter{
+	height: 150px;
+	width: 20%;
+	margin: 0;
+    background-image: url("/nexus/resources/image/loading.gif");
+    background-position: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+    opacity: 1;
+    z-index: 11;
+}
 .redFont {
 	color: #FF0000;
 }

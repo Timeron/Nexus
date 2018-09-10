@@ -29,13 +29,15 @@ app.controller('WalletMainCtrl', function($scope, $rootScope, GetAllAccountsAndR
 	});
 	
 	GetAllAccountsAndRecords.query({}, function(data) {
+		var waitBox = angular.element('#waitBox');
+		
 		if (data.success) {
 			$scope.accounts = data.object;
 		} else {
 			$scope.errorMessage = data.message;
 			return null;
 		}
-
+		waitBox.hide();
 	});
 	
 	$scope.selectAccount = function(account){
