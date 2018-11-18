@@ -30,14 +30,14 @@
 	float: left;
 	width: 18vw;
 	height: 100%px;
-	padding: 40px 10px 40px 40px;
-	background-color: #CCC;
+	padding: 20px 10px 20px 40px;
+	background-color: #555;
 }
 #presentation{
 	float: left;
 	height: 100%;
 	width: 100vw;
-	background-color: #EEE;
+	background-color: #555;
 }
 #main{
 	width:80vw;
@@ -47,7 +47,9 @@
 #leftAside .accounts{
 	padding: 5px 5px 5px 5px;
 	font-size: 16px;
-	border: solid 1px #EEE;
+	color: #BBB;
+	font-weight: bold;
+	border: solid 1px #777;
 }
 
 section{
@@ -56,8 +58,8 @@ section{
 	height: 100%;
 	padding: 50px 50px 0px 40px;
 }
-#Charts, #Records, #Statistics{
-	background-color: #FFF;
+#Charts, #Records, #Statistics, #Calendar{
+	background-color: #AAA;
 }
 #menuSectionContainer{
 	background-color: #DDD;
@@ -305,3 +307,15 @@ section{
 	height: 80px;
 	color: #999
 }
+
+footer{
+/* 	float: left; */
+	background-color: #333;
+	width: 100%;
+	height: 100%;
+	bottom: 0;
+}
+
+/* footer{ */
+/* 	background-color: #222; */
+/* } */

@@ -445,7 +445,7 @@
 									<div class="recordDate recordHeader">data</div>
 									<div class="recordOption recordHeader"></div>
 								</div>
-								<div mark-line mark="#A0C0DC" nmark="#FFF" class="recordRow"
+								<div mark-line mark="#A0C0DC" nmark="#AAA" class="recordRow"
 									ng-repeat="record in selectedAccount.records">
 									<div recordTypeIcon type="{{recordTypeIcon(record.recordTypeId)}}" class="recordTypeIcon">{{record.recordTypeId}}</div>
 									<div class="recordTransfer">{{setTransferAccount(record.destynationAccountId,
